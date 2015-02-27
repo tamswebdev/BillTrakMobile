@@ -1,10 +1,10 @@
-# Demo Equipment Status Request
+# BillTrak Mobile
 
-_Description: Demo Equipment Status Request
+_Description: BillTrak Mobile
 
 ## Project Setup
 
-_How do I, as a developer, start working on the project?_ 
+Got assigned to create a Mobile version of the web application
 
 1. _What dependencies does it have (where are they expressed) and how do I install them?_
 2. _How can I see the project working before I change anything?_
