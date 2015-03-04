@@ -143,7 +143,7 @@ var localstorage = {
 		return this.getHistoryDefault();
 	},
 	getUserInfoDefault: function() {
-		return {"AuthenticationHeader" : "", "DisplayName" : "", "Email" : "", "Phone" : "", "Expiration" : 0 };
+		return {"AuthenticationHeader" : "", "DisplayName" : "", "Email" : "", "Phone" : "", "UserID" : "", "Expiration" : 0 };
 	},
 	getHistoryDefault: function() {
 		return {"History" : "", "Expiration" : 0 };

@@ -135,6 +135,7 @@ function callbackLogin( data ){
 			userInfoData.DisplayName = data.d.results.name;
 			userInfoData.Email = data.d.results.email;
 			userInfoData.Phone = data.d.results.phone;
+			userInfoData.UserID = data.d.results.userid;
 			$(".spanLoginUser").text("" +userInfoData.DisplayName);
 			
 			if ($('#rememberMe').is(':checked'))
