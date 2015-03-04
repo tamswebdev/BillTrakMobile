@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="Scripts/jquery.mobile/jquery.mobile-1.4.3.min.css" />
 	<link rel="stylesheet" href="Scripts/simpledialog/jquery.mobile.simpledialog.min.css" />
     <link rel="stylesheet" href="Content/main.css" />
+    <link rel="stylesheet" href="Content/bootstrap.min.css" />
 	<script src="Scripts/environment-configs.js"></script>
     <script src="Scripts/jquery-2.1.0.min.js"></script>
     <script src="Scripts/jquery.mobile/jquery.mobile-1.4.3.min.js"></script>
@@ -125,14 +126,15 @@
 						</td>
 					</tr>
 				</table>
-				Can’t find system? <a href="javascript:void(0)" onclick="$.mobile.navigate('#pgAddStatus');">Add Manually</a>
 			</div>
 			<div class="div-modality">
                 <table width="100%">
                     <tr>
                         <td>
                             <select class="form-control" id="filterDocumentType" name="filterDocumentType" data-overlay-theme="b" data-theme="a" data-native-menu="false" tabindex="-1">
-                                <option value="All">Sort by: Project</option>
+                                <option value="PROJECT">Sort by: Project</option>
+                                <option value="ZONE">Sort by: Zone</option>
+                                <option value="MODALITY">Sort by: Modality</option>
                             </select>
                         </td>
                     </tr>
@@ -145,7 +147,6 @@
 			</center>
         </div>
     </div>
-	
 
 	
 	<div data-role="page" id="pgAddStatus">

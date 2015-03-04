@@ -181,7 +181,7 @@ function initSystemTypes()
 function LoadSystemTypes()
 {
 	var _url = serviceRootUrl + "svc.aspx?op=GetSystemTypes&SPUrl=" + spwebRootUrl + "sites/busops";
-	Jsonp_Call(_url, true, "callbackPopulateSystemTypes");	
+	//Jsonp_Call(_url, true, "callbackPopulateSystemTypes");	
 }
 
 function callbackPopulateSystemTypes(data)
@@ -220,7 +220,7 @@ function searchAction()
 	userSearchText = $("#searchCatalogs").val();
 	userSearchSystemType = $("#filterDocumentType").val();
 	
-	var searchURL = serviceRootUrl + "svc.aspx?op=SearchCatalogs&SPUrl=" + spwebRootUrl + "sites/busops&authInfo=" + userInfoData.AuthenticationHeader + "&searchText=" + userSearchText + "&modality=All&documentType=" + userSearchSystemType;
+	var searchURL = serviceRootUrl + "svc.aspx?op=SearchProjects&SPUrl=" + spwebRootUrl + "sites/busops&authInfo=" + userInfoData.AuthenticationHeader + "&searchText=" + userSearchText + "&sortby=" + userSearchSortBy;
 	
 	Jsonp_Call(searchURL, false, "callbackPopulateSearchResults");
 }
@@ -236,6 +236,25 @@ function callbackPopulateSearchResults(data)
 			{
 				var catalog = data.d.results[i];
 				var temp = "";
+				
+				
+					temp += '<div class="panel-body" style="padding-bottom: 0">';
+					temp += '<h2 style="color: blue; margin-top: 2px; margin-bottom: 2px;">';
+					temp += catalog.AccountName + '</h2>';
+					temp += '<div class="row"><div class="col-lg-6 col-md-6"><h3 style="margin-top: 2px; margin-bottom: 2px;">';
+					temp += catalog.SystemVal + '</h3>';
+					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">$'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
+					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
+					temp += '<input type="hidden" name="hfCurrentMode" id="hfCurrentMode" value="READONLY"></div><div class="col-lg-6 col-md-6 pull-right" style="padding-right: 0; margin-right: 0;">';
+					temp += '<style>table td, table th {border: 1px solid #dddddd;}</style><table class="table table-condensed" style="margin-bottom:0; margin-right:0; border:0px; margin-top:0;"><tbody>';
+					temp += '<tr><td style="text-align: center; width: 100px;">X</td></tr>';
+					temp += '<tr><td style="text-align: center; width: 100px;">XX</td></tr>';
+					temp += '<tr><td style="text-align: center; width: 100px;">XXX</td></tr>';
+					temp += '<tr><td style="text-align: center; width: 100px;">XXXX</td></tr>';
+					temp += '</tbody></table></div></div></div>';
+				
+				
+				/*
 				temp += '<table class="search-item">';
 					temp += '<tr>';
 						if (catalog.ImageURL != "")
@@ -260,7 +279,7 @@ function callbackPopulateSearchResults(data)
 						temp += '</td>';
 					temp += '</tr>';
 				temp += '</table>';
-			
+			*/
 				$( "#divSearchResults" ).append(temp);
 			}
 			
