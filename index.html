@@ -84,6 +84,7 @@
 	
 	<div data-role="page" id="pgHome">
         <div data-role="header" data-position="fixed">
+		<script>NavigatePage('#pgSearch');</script>
             <table width="100%" cellspacing="0" cellpadding="0" class="header-table">
 				<tr>
 					<td class="header-left">
@@ -179,11 +180,8 @@
 						<td>
 							<input type="search" name="search" id="searchCatalogs" value="" />
 						</td>
-						<td style="width: 45px;padding-top: 3px;" align="right">
+						<td style="width: 90px;padding-top: 3px;" align="right">
 							<a href="javascript: void(0);" onclick="performSearch();" style="" class="appSearchBtnLink"><img src="Images/search.png" id="img-search-btn" /></a>
-						</td>
-						<td style="width: 45px;padding-top: 3px;" align="right">
-							<a href="javascript: void(0);" onclick="scanBarcode();" style="" class="appScanBarcodeLink"><img src="Images/barcode.png" id="img-barcode-btn" /></a>
 						</td>
 					</tr>
 				</table>
@@ -194,7 +192,7 @@
                     <tr>
                         <td>
                             <select class="form-control" id="filterDocumentType" name="filterDocumentType" data-overlay-theme="b" data-theme="a" data-native-menu="false" tabindex="-1">
-                                <option value="All">All System Types</option>
+                                <option value="All">Sort by: Project</option>
                             </select>
                         </td>
                     </tr>
