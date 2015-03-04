@@ -84,64 +84,6 @@
 	
 	<div data-role="page" id="pgHome">
         <div data-role="header" data-position="fixed">
-		
-            <table width="100%" cellspacing="0" cellpadding="0" class="header-table">
-				<tr>
-					<td class="header-left">
-						<div class="header-menu-button">
-							<a href="#popupMenu" data-rel="popup" data-transition="slideup"><img src="Images/menu-button2.png" id="img-left-bars"></a>
-							<div data-role="popup" id="popupMenu" data-theme="a">
-									<ul data-role="listview" data-inset="true" style="min-width:210px;">
-										<li data-role="list-divider">Choose an action</li>
-										<li><span class="spanLoginUser"></span></li>
-										<!--<li class="menu-back-btn"><a href="javascript:void(0);" onclick="goBack();">Back</a></li>-->
-										<li><a href="javascript:void(0);" onclick="goHome();">Home</a></li>
-										<li><a href="javascript:void(0);" onclick="NavigatePage('#pgSearch');">Add Status</a></li>
-										<li><a href="javascript:void(0);" onclick="NavigatePage('#pgHistory');">View History</a></li>
-										<li><a href="javascript:void(0);" onclick="ShowHelp();">Help</a></li>
-										<li><a href="javascript:void(0);" onclick="RefrestApp();">Refresh App</a></li>
-										<li><a href="javascript:void(0);" onclick="SignOut();">Sign Out</a></li>
-									</ul>
-							</div>
-						</div>
-                    </td>
-					<td class="header-middle">
-						<a href="javascript: void(0);" onclick="goHome();" style="" class="appLogoLink"><img src="Images/toshiba-logo.png" id="img-toshiba-logo"></a>
-                    </td>
-                    <td class="header-right">
-						&nbsp;
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-        <div role="main" class="ui-content">
-            <br />
-			<br />
-			<button class="btn btn-default btn-danger-custom  btn-lg btn-block" onclick="$.mobile.navigate('#pgSearch');"><span class="glyphicon glyphicon-plus"></span> Add Status</button>
-			<br />
-			<button class="btn btn-default btn-danger-custom2  btn-lg btn-block" onclick="$.mobile.navigate('#pgHistory');"><span class="glyphicon glyphicon-file"></span> View My History</button>
-			<br />
-			<br />
-			<center>
-				<div class="home-tip-box">
-					<div><b>Steps to add a status:</b></div>
-					<div align="left">
-						<ol>
-							<li>Click on "Add Status"</li>
-							<li>Select your system or search by name or serial number or scan the bar code</li>
-							<li>You can also click on "Add Manually" if the system is not found</li>
-							<li>Fill the form and submit</li>
-						</ol>
-					</div>
-				</div>
-			</center>
-        </div>
-    </div>
-	
-	
-	<div data-role="page" id="pgSearch">
-        <div data-role="header" data-position="fixed">
             <table width="100%" cellspacing="0" cellpadding="0" class="header-table">
 				<tr>
 					<td class="header-left">
@@ -154,8 +96,6 @@
 										<li><span class="spanLoginUser"></span></li>
 										<!--<li class="menu-back-btn"><a href="javascript:void(0);" onclick="goBack();">Back</a></li>-->
 										<li><a href="javascript:void(0);" onclick="goHome();">Home</a></li>
-										<li><a href="javascript:void(0);" onclick="NavigatePage('#pgSearch');">Add Status</a></li>
-										<li><a href="javascript:void(0);" onclick="NavigatePage('#pgHistory');">View History</a></li>
 										<li><a href="javascript:void(0);" onclick="ShowHelp();">Help</a></li>
 										<li><a href="javascript:void(0);" onclick="RefrestApp()">Refresh App</a></li>
 										<li><a href="javascript:void(0);" onclick="SignOut();">Sign Out</a></li>
@@ -206,47 +146,7 @@
         </div>
     </div>
 	
-	<div data-role="page" id="pgHistory">
-        <div data-role="header" data-position="fixed">
-            <table width="100%" cellspacing="0" cellpadding="0" class="header-table">
-				<tr>
-					<td class="header-left">
-						<!--<div class="header-back-button"><a onclick="goBack();" href="javascript:void(0);" class="appLogoBackLink"><img src="Images/logo-back.png"></a></div>-->
-						<div class="header-menu-button">
-							<a href="#popupMenu2" data-rel="popup" data-transition="slideup"><img src="Images/menu-button2.png" id="img-left-bars"></a>
-							<div data-role="popup" id="popupMenu2" data-theme="a">
-									<ul data-role="listview" data-inset="true" style="min-width:210px;">
-										<li data-role="list-divider">Choose an action</li>
-										<li><span class="spanLoginUser"></span></li>
-										<!--<li class="menu-back-btn"><a href="javascript:void(0);" onclick="goBack();">Back</a></li>-->
-										<li><a href="javascript:void(0);" onclick="goHome();">Home</a></li>
-										<li><a href="javascript:void(0);" onclick="NavigatePage('#pgSearch');">Add Status</a></li>
-										<li><a href="javascript:void(0);" onclick="NavigatePage('#pgHistory');">View History</a></li>
-										<li><a href="javascript:void(0);" onclick="ShowHelp();">Help</a></li>
-										<li><a href="javascript:void(0);" onclick="RefrestApp();">Refresh App</a></li>
-										<li><a href="javascript:void(0);" onclick="SignOut();">Sign Out</a></li>
-									</ul>
-							</div>
-						</div>
-                    </td>
-					<td class="header-middle">
-						<a href="javascript: void(0);" onclick="goHome();" style="" class="appLogoLink"><img src="Images/toshiba-logo.png" id="img-toshiba-logo"></a>
-                    </td>
-                    <td class="header-right">
-						&nbsp;
-                    </td>
-                </tr>
-            </table>
-        </div>
 
-        <div role="main" class="ui-content">
-			<center>
-				<div id="divHistoryResults">
-					<img src="Images/ajax-loader.gif" border="0" />
-				</div>
-			</center>
-        </div>
-    </div>
 	
 	<div data-role="page" id="pgAddStatus">
         <div data-role="header" data-position="fixed">
