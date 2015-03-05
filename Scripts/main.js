@@ -62,7 +62,7 @@ function onDeviceReady() {
 $( document ).on( "pagebeforeshow", "#pgHome", function(event) {
 	checkUserLogin();
 
-	var _url = serviceRootUrl + "svc.aspx?op=LogHomePage&SPUrl=" + spwebRootUrl + "sites/busops&authInfo=" + userInfoData.AuthenticationHeader;
+	var _url = serviceRootUrl + "svc.aspx?op=LogHomePage&SPUrl=" + spwebRootUrl + "sites/busops&authInfo=" + userInfoData.Email;
 	Jsonp_Call(_url, false, "");	
 });
 
@@ -210,7 +210,9 @@ function callbackPopulateSystemTypes(data)
 
 function performSearch()
 {
+	
 	NavigatePage("#pgRedirect?url=#pgSearch");
+
 }
 
 function searchAction()
@@ -219,8 +221,8 @@ function searchAction()
 	$( "#divSearchResults" ).text("").append( getLoadingImg() );
 	
 	userSearchText = $("#searchCatalogs").val();
-	userSearchSystemType = $("#filterDocumentType").val();
-	
+	userSearchSortBy = $("#userSearchSortBy").val();
+
 	var searchURL = serviceRootUrl + "svc.aspx?op=SearchProjects&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&userid=" + userInfoData.UserID + "&searchText=" + userSearchText + "&sortby=" + userSearchSortBy;
 	
 	Jsonp_Call(searchURL, false, "callbackPopulateSearchResults");
@@ -238,7 +240,7 @@ function callbackPopulateSearchResults(data)
 				var catalog = data.d.results[i];
 				var temp = "";
 				
-				
+					temp += '<table class="search-item"><tr><td>';
 					temp += '<div class="panel-body" style="padding-bottom: 0">';
 					temp += '<h2 style="color: blue; margin-top: 2px; margin-bottom: 2px;">';
 					temp += catalog.AccountName + '</h2>';
@@ -253,6 +255,7 @@ function callbackPopulateSearchResults(data)
 					temp += '<tr><td style="text-align: center; width: 100px;">XXX</td></tr>';
 					temp += '<tr><td style="text-align: center; width: 100px;">XXXX</td></tr>';
 					temp += '</tbody></table></div></div></div>';
+					temp += '</td></tr></table>';
 				
 				
 				/*

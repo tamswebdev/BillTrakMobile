@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="Scripts/jquery.mobile/jquery.mobile-1.4.3.min.css" />
 	<link rel="stylesheet" href="Scripts/simpledialog/jquery.mobile.simpledialog.min.css" />
     <link rel="stylesheet" href="Content/main.css" />
-    <link rel="stylesheet" href="Content/bootstrap.min.css" />
+
 	<script src="Scripts/environment-configs.js"></script>
     <script src="Scripts/jquery-2.1.0.min.js"></script>
     <script src="Scripts/jquery.mobile/jquery.mobile-1.4.3.min.js"></script>
@@ -82,8 +82,63 @@
     </div>
 	
 	 
-	
 	<div data-role="page" id="pgHome">
+        <div data-role="header" data-position="fixed">
+            <table width="100%" cellspacing="0" cellpadding="0" class="header-table">
+				<tr>
+					<td class="header-left">
+						<div class="header-menu-button">
+							<a href="#popupMenu" data-rel="popup" data-transition="slideup"><img src="Images/menu-button2.png" id="img-left-bars"></a>
+							<div data-role="popup" id="popupMenu" data-theme="a">
+									<ul data-role="listview" data-inset="true" style="min-width:210px;">
+										<li data-role="list-divider">Choose an action</li>
+										<li><span class="spanLoginUser"></span></li>
+										<!--<li class="menu-back-btn"><a href="javascript:void(0);" onclick="goBack();">Back</a></li>-->
+										<li><a href="javascript:void(0);" onclick="goHome();">Home</a></li>
+										<li><a href="javascript:void(0);" onclick="NavigatePage('#pgSearch');">Search Projects</a></li>
+										<li><a href="javascript:void(0);" onclick="ShowHelp();">Help</a></li>
+										<li><a href="javascript:void(0);" onclick="RefrestApp();">Refresh App</a></li>
+										<li><a href="javascript:void(0);" onclick="SignOut();">Sign Out</a></li>
+									</ul>
+							</div>
+						</div>
+                    </td>
+					<td class="header-middle">
+						<a href="javascript: void(0);" onclick="goHome();" style="" class="appLogoLink"><img src="Images/toshiba-logo.png" id="img-toshiba-logo"></a>
+                    </td>
+                    <td class="header-right">
+						&nbsp;
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div role="main" class="ui-content">
+            <br />
+			<br />
+			<button class="btn btn-default btn-danger-custom  btn-lg btn-block" onclick="$.mobile.navigate('#pgSearch');"><span class="glyphicon glyphicon-plus"></span> Add Status</button>
+			<br />
+
+			<br />
+
+			<center>
+				<div class="home-tip-box">
+					<div><b>Steps to edit project information:</b></div>
+					<div align="left">
+						<ol>
+							<li>Click on "Search Projects"</li>
+							<li>Select your project or search by project or system name</li>
+							<li>You can also search by SID or Opp ID if the system is not found</li>
+							<li>Edit the form and save</li>
+						</ol>
+					</div>
+				</div>
+			</center>
+        </div>
+    </div>
+	
+	
+	<div data-role="page" id="pgSearch">
         <div data-role="header" data-position="fixed">
             <table width="100%" cellspacing="0" cellpadding="0" class="header-table">
 				<tr>
@@ -97,6 +152,7 @@
 										<li><span class="spanLoginUser"></span></li>
 										<!--<li class="menu-back-btn"><a href="javascript:void(0);" onclick="goBack();">Back</a></li>-->
 										<li><a href="javascript:void(0);" onclick="goHome();">Home</a></li>
+										<li><a href="javascript:void(0);" onclick="NavigatePage('#pgSearch');">Search Projects</a></li>
 										<li><a href="javascript:void(0);" onclick="ShowHelp();">Help</a></li>
 										<li><a href="javascript:void(0);" onclick="RefrestApp()">Refresh App</a></li>
 										<li><a href="javascript:void(0);" onclick="SignOut();">Sign Out</a></li>
@@ -124,6 +180,9 @@
 						<td style="width: 90px;padding-top: 3px;" align="right">
 							<a href="javascript: void(0);" onclick="performSearch();" style="" class="appSearchBtnLink"><img src="Images/search.png" id="img-search-btn" /></a>
 						</td>
+						<td style="width: 0px;padding-top: 3px;" align="right">
+							&nbsp;
+						</td>
 					</tr>
 				</table>
 			</div>
@@ -131,10 +190,10 @@
                 <table width="100%">
                     <tr>
                         <td>
-                            <select class="form-control" id="filterDocumentType" name="filterDocumentType" data-overlay-theme="b" data-theme="a" data-native-menu="false" tabindex="-1">
-                                <option value="PROJECT">Sort by: Project</option>
-                                <option value="ZONE">Sort by: Zone</option>
-                                <option value="MODALITY">Sort by: Modality</option>
+                            <select class="form-control" id="userSearchSortBy" name="userSearchSortBy" data-overlay-theme="b" data-theme="a" data-native-menu="false" tabindex="-1">
+                                <option value="ACCOUNTNAME">Sort by: Project</option>
+                                <option value="ZONENAME">Sort by: Zone</option>
+                                <option value="OPPORTUNITYMODALITY">Sort by: Modality</option>
                             </select>
                         </td>
                     </tr>
@@ -147,6 +206,13 @@
 			</center>
         </div>
     </div>
+	
+	
+	
+	
+	
+	
+	
 
 	
 	<div data-role="page" id="pgAddStatus">
@@ -164,8 +230,7 @@
 										<li><span class="spanLoginUser"></span></li>
 										<!--<li class="menu-back-btn"><a href="javascript:void(0);" onclick="goBack();">Back</a></li>-->
 										<li><a href="javascript:void(0);" onclick="goHome();">Home</a></li>
-										<li><a href="javascript:void(0);" onclick="NavigatePage('#pgSearch');">Add Status</a></li>
-										<li><a href="javascript:void(0);" onclick="NavigatePage('#pgHistory');">View History</a></li>
+										<li><a href="javascript:void(0);" onclick="NavigatePage('#pgSearch');">Search Projects</a></li>
 										<li><a href="javascript:void(0);" onclick="ShowHelp();">Help</a></li>
 										<li><a href="javascript:void(0);" onclick="RefrestApp();">Refresh App</a></li>
 										<li><a href="javascript:void(0);" onclick="SignOut();">Sign Out</a></li>
@@ -413,8 +478,6 @@
 										<li><span class="spanLoginUser"></span></li>
 										<!--<li class="menu-back-btn"><a href="javascript:void(0);" onclick="goBack();">Back</a></li>-->
 										<li><a href="javascript:void(0);" onclick="goHome();">Home</a></li>
-										<li><a href="javascript:void(0);" onclick="NavigatePage('#pgSearch');">Add Status</a></li>
-										<li><a href="javascript:void(0);" onclick="NavigatePage('#pgHistory');">View History</a></li>
 										<li><a href="javascript:void(0);" onclick="ShowHelp();">Help</a></li>
 										<li><a href="javascript:void(0);" onclick="RefrestApp();">Refresh App</a></li>
 										<li><a href="javascript:void(0);" onclick="SignOut();">Sign Out</a></li>

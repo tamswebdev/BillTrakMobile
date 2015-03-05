@@ -2647,10 +2647,11 @@ input[type=search] {
     box-sizing: border-box;
 }
 
+///// UMER: Taking this out as it conflicts with JQM
 input[type=radio], input[type=checkbox] {
-    margin: 4px 0 0;
-    margin-top: 1px \9;
-    line-height: normal;
+//    margin: 4px 0 0;
+//    margin-top: 1px \9;
+//    line-height: normal;
 }
 
 input[type=file] {
