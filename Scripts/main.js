@@ -62,7 +62,7 @@ function onDeviceReady() {
 $( document ).on( "pagebeforeshow", "#pgHome", function(event) {
 	checkUserLogin();
 
-	var _url = serviceRootUrl + "svc.aspx?op=LogHomePage&SPUrl=" + spwebRootUrl + "sites/marketing&authInfo=" + userInfoData.AuthenticationHeader;
+	var _url = serviceRootUrl + "svc.aspx?op=LogHomePage&SPUrl=" + spwebRootUrl + "sites/busops&authInfo=" + userInfoData.AuthenticationHeader;
 	Jsonp_Call(_url, false, "");	
 });
 
@@ -123,7 +123,7 @@ function LoginUser()
 	loginname = (loginname.indexOf("\\") > 0) ? loginname : "tamsdomain\\" + loginname;
 	
 	userInfoData.AuthenticationHeader = Base64.encode(loginname + ":" + $('#password').val());
-	var _url = serviceRootUrl + "svc.aspx?op=Authenticate&SPUrl=" + spwebRootUrl + "sites/marketing&authInfo=" + userInfoData.AuthenticationHeader + "&currentURL=" + serviceRootUrl + "main.html"
+	var _url = serviceRootUrl + "svc.aspx?op=Authenticate&SPUrl=" + spwebRootUrl + "sites/busops&authInfo=" + userInfoData.AuthenticationHeader + "&currentURL=" + serviceRootUrl + "main.html"
 
 	Jsonp_Call(_url, true, "callbackLogin");
 }
@@ -215,12 +215,13 @@ function performSearch()
 
 function searchAction()
 {
+	var userInfoData=localstorage.get("userInfoData");
 	$( "#divSearchResults" ).text("").append( getLoadingImg() );
 	
 	userSearchText = $("#searchCatalogs").val();
 	userSearchSystemType = $("#filterDocumentType").val();
 	
-	var searchURL = serviceRootUrl + "svc.aspx?op=SearchProjects&SPUrl=" + spwebRootUrl + "sites/busops&authInfo=" + userInfoData.AuthenticationHeader + "&searchText=" + userSearchText + "&sortby=" + userSearchSortBy;
+	var searchURL = serviceRootUrl + "svc.aspx?op=SearchProjects&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&userid=" + userInfoData.UserID + "&searchText=" + userSearchText + "&sortby=" + userSearchSortBy;
 	
 	Jsonp_Call(searchURL, false, "callbackPopulateSearchResults");
 }
@@ -978,7 +979,7 @@ function Jsonp_Call_Process(_url, _async, callback)
 
 function SignOut()
 {
-	var _url = serviceRootUrl + "svc.aspx?op=LogOut&SPUrl=" + spwebRootUrl + "sites/marketing&authInfo=" + userInfoData.AuthenticationHeader;
+	var _url = serviceRootUrl + "svc.aspx?op=LogOut&SPUrl=" + spwebRootUrl + "sites/busops&authInfo=" + userInfoData.AuthenticationHeader;
 	Jsonp_Call(_url, false, "");
 
 	userInfoData = localstorage.clear("userInfoData");
