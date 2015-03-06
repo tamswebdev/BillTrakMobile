@@ -4,6 +4,7 @@
     font-size:12px;
 }
 
+
 .ui-header {
 	min-height: 72px;
 }
@@ -170,6 +171,13 @@
 
 #pgSearch #divSearchResults td {
 	font-size: 14px;
+}
+
+#pgSearch .panel-body{
+  background: -webkit-linear-gradient(#E9E9E9, white); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#E9E9E9, white); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#E9E9E9, white); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#E9E9E9, white); /* Standard syntax */
 }
 
 

@@ -99,6 +99,7 @@ $( document ).on( "pagebeforeshow", "#pgSearch", function(event) {
 		performSearch();
 	});
 
+	
 	searchAction();
 });
 
@@ -263,8 +264,12 @@ function callbackPopulateSearchResults(data)
 					break;
 				}
 				
-					temp += '<table class="search-item"><tr><td style="width:3px;background-color:'+ ModalityColorCode +'">&nbsp;</td><td>';
-					temp += '<div class="panel-body" style="padding-bottom: 0">';
+				//<a data-mini="true" data-inline="true" data-role="button" href="javascript: addStatusAction('+catalog.ID+');" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" class="ui-btn ui-shadow ui-btn-corner-all ui-mini ui-btn-inline ui-btn-up-c">
+				
+				
+					temp += '<table class="search-item" ><tr><td style="width:3px;background-color:'+ ModalityColorCode +'">&nbsp;</td><td>';
+					temp += '<div id="ProjectCard" class="panel-body" style="padding-bottom: 0">';
+					temp += '<a href="javascript: addStatusAction('+catalog.ID+');" style="text-decoration:none;color: inherit; display: block;">'
 					temp += '<h2 style="color: blue; margin-top: 2px; margin-bottom: 2px;">';
 					temp += catalog.AccountName + '</h2>';
 					temp += '<div class="row"><div class="col-lg-6 col-md-6"><h3 style="margin-top: 2px; margin-bottom: 2px;">';
@@ -277,38 +282,14 @@ function callbackPopulateSearchResults(data)
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
 					temp += '<input type="hidden" name="hfCurrentMode" id="hfCurrentMode" value="READONLY"></div><div class="col-lg-6 col-md-6 pull-right" style="padding-right: 0; margin-right: 0;">';
-					temp += '<style>table td, table th {border: 1px solid #dddddd;}</style><table class="table table-condensed" style="margin-bottom:0; margin-right:0; border:0px; margin-top:0;"><tbody>';
-					temp += '<tr><td style="text-align: left; width: 250px;">Last Modified: ' + catalog.Modified +'</td></tr>';
-					temp += '</tbody></table></div></div></div>';
+					//temp += '<style>table td, table th {border: 1px solid #dddddd;}</style>';
+					temp += '<table class="table table-condensed" style="margin-bottom:0; margin-right:0; border:0px; margin-top:0;"><tbody>';
+					temp += '<tr><td style="text-align: left; width: 250px;border: 1px solid #dddddd;">Last Modified: ' + catalog.Modified +'</td></tr>';
+					temp += '</tbody></table></div></div></a></div>';
 					temp += '</td></tr></table>';
 				
 				
-				/*
-				temp += '<table class="search-item">';
-					temp += '<tr>';
-						if (catalog.ImageURL != "")
-							temp += '<td class="catalog-img"><div><img class="img-icon" src="' + serviceRootUrl + catalog.ImageURL + '" /></div></td>';
-						else
-							temp += '<td class="catalog-img"><div><img class="img-icon" src="images/no_image.jpg" /></div></td>';
-						temp += '<td class="catalog-info">';
-							temp += '<div class="div-catalog-info">';
-								temp += '<span class="head-cat">' + catalog.Modality + ' (' + catalog.SystemType + ')</span><br />';
-								temp += 'Serial Number: ' + catalog.Product + '<br />';
-								temp += 'Software Version: ' + catalog.Software_x0020_Version + ' (Revision ' + catalog.Revision_x0020_Level + ')<br />';
-								temp += 'Last Updated By: ' + catalog.MCSS.substring(catalog.MCSS.indexOf("#") + 1) + '<br /><br />';
-								temp += 'Last Updated: ' + catalog.System_x0020_Date.substring(0, catalog.System_x0020_Date.indexOf(" ")) + '';
-							temp += '</div>';
-						temp += '</td>';
-					temp += '</tr>';
-					temp += '<tr>';
-						temp += '<td class="td-add-to-cart" valign="bottom" colspan="4">';
-							temp += '<div class="div-catalog-add">';
-								temp += '<a data-mini="true" data-inline="true" data-role="button" href="javascript: addStatusAction('+catalog.ID+');" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" class="ui-btn ui-shadow ui-btn-corner-all ui-mini ui-btn-inline ui-btn-up-c"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Add Status</span></span></a>';
-							temp += '</div>';
-						temp += '</td>';
-					temp += '</tr>';
-				temp += '</table>';
-			*/
+
 				$( "#divSearchResults" ).append(temp);
 			}
 			
