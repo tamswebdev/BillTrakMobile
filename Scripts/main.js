@@ -95,8 +95,8 @@ $( document ).on( "pagebeforeshow", "#pgSearch", function(event) {
         }
 	});
 	
-	$("#filterDocumentType").bind( "change", function(event, ui) {
-		//performSearch();
+	$("#userSearchSortBy").bind( "change", function(event, ui) {
+		performSearch();
 	});
 
 	searchAction();
@@ -240,20 +240,45 @@ function callbackPopulateSearchResults(data)
 				var catalog = data.d.results[i];
 				var temp = "";
 				
-					temp += '<table class="search-item"><tr><td>';
+				var ModalityColorCode="Transparent";
+				switch (catalog.OpportunityModality)
+				{
+					case 'CT':
+					ModalityColorCode='green';
+					break;
+					case 'MR':
+					ModalityColorCode='blue';
+					break;
+					case 'UL':
+					ModalityColorCode='red';
+					break;
+					case 'VL':
+					ModalityColorCode='violet';
+					break;
+					case 'XR':
+					ModalityColorCode='orange';
+					break;
+					default:
+					ModalityColorCode='Transparent';
+					break;
+				}
+				
+					temp += '<table class="search-item"><tr><td style="width:3px;background-color:'+ ModalityColorCode +'">&nbsp;</td><td>';
 					temp += '<div class="panel-body" style="padding-bottom: 0">';
 					temp += '<h2 style="color: blue; margin-top: 2px; margin-bottom: 2px;">';
 					temp += catalog.AccountName + '</h2>';
 					temp += '<div class="row"><div class="col-lg-6 col-md-6"><h3 style="margin-top: 2px; margin-bottom: 2px;">';
 					temp += catalog.SystemVal + '</h3>';
-					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">$'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
+					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
 					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
+					if (catalog.ConfirmedDeliveryDate!='')
+						temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Delivery Date '+ catalog.ConfirmedDeliveryDate+'</h4>';
+					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
+					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
+					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
 					temp += '<input type="hidden" name="hfCurrentMode" id="hfCurrentMode" value="READONLY"></div><div class="col-lg-6 col-md-6 pull-right" style="padding-right: 0; margin-right: 0;">';
 					temp += '<style>table td, table th {border: 1px solid #dddddd;}</style><table class="table table-condensed" style="margin-bottom:0; margin-right:0; border:0px; margin-top:0;"><tbody>';
-					temp += '<tr><td style="text-align: center; width: 100px;">X</td></tr>';
-					temp += '<tr><td style="text-align: center; width: 100px;">XX</td></tr>';
-					temp += '<tr><td style="text-align: center; width: 100px;">XXX</td></tr>';
-					temp += '<tr><td style="text-align: center; width: 100px;">XXXX</td></tr>';
+					temp += '<tr><td style="text-align: left; width: 250px;">Last Modified: ' + catalog.Modified +'</td></tr>';
 					temp += '</tbody></table></div></div></div>';
 					temp += '</td></tr></table>';
 				
