@@ -778,13 +778,13 @@ function callbackLoadDraftStatus(data)
 function cancelStatus() {
 	$('<div>').simpledialog2({
 		mode: 'blank',
-		headerText: 'Confirmation',
+		headerText: 'Cancel',
 		headerClose: false,
 		transition: 'flip',
 		themeDialog: 'a',
 		zindex: 2000,
 		blankContent : 
-		  "<div style='padding: 15px;'><p>Cancel the status update and go back to main screen?</p>"+
+		  "<div style='padding: 15px;'><p>Cancel changes and go back to main screen?</p>"+
 		  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"NavigatePage('#pgHome');\">OK</a></td>" + 
 		  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
     }); 

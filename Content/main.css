@@ -64,9 +64,18 @@
 }
 
 .ui-radio .ui-btn-active {
-    background-color: red !important;
-    border-color: red !important;
+    background-color: #navyblue !important;
+    border-color: #navyblue !important;
+		
 }
+
+.ui-radio .Horizontal {
+    background-color: #navyblue !important;
+    border-color: #navyblue !important;
+//		width: 12px !important;
+		
+}
+
 
 #pgLogin > div
 {
