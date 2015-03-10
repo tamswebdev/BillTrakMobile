@@ -11,6 +11,21 @@ function addStatusAction(id)
 	NavigatePage('#pgAddStatus?id=' + id);
 }
 
+function GoToSectionWithID(section)
+{
+	var id=($.urlParam("id"));
+	//if (id == "")
+	//	id='0';
+
+	var path='#pg' + section + '?id='+ id;
+	NavigatePage(path);
+}
+
+function EditProjectDetailsAction(Projectid)
+{
+	NavigatePage('#pgProjectOptions?id=' + Projectid);
+}
+
 function showAboutMeMenu() 
 {
 	$( "#popupAboutMe" ).popup( "open" )

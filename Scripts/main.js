@@ -27,6 +27,7 @@ if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/) 
 	
 }
 
+
 function onDeviceReady() {
 	$.mobile.pageLoadErrorMessage = "";
 	
@@ -58,6 +59,13 @@ function onDeviceReady() {
 	isPageLoadReady = true;
 	
 };
+
+  //reset type=date inputs to text
+  $( document ).bind( "mobileinit", function(){
+    $.mobile.page.prototype.options.degradeInputs.date = true;
+  });	
+
+
 
 $( document ).on( "pagebeforeshow", "#pgHome", function(event) {
 	checkUserLogin();
@@ -269,7 +277,7 @@ function callbackPopulateSearchResults(data)
 				
 					temp += '<table class="search-item" ><tr><td style="width:3px;background-color:'+ ModalityColorCode +'">&nbsp;</td><td>';
 					temp += '<div id="ProjectCard" class="panel-body" style="padding-bottom: 0">';
-					temp += '<a href="javascript: addStatusAction('+catalog.ID+');" style="text-decoration:none;color: inherit; display: block;">'
+					temp += '<a href="javascript: EditProjectDetailsAction('+catalog.ProjectID+');" style="text-decoration:none;color: inherit; display: block;">'
 					temp += '<h2 style="color: blue; margin-top: 2px; margin-bottom: 2px;">';
 					temp += catalog.AccountName + '</h2>';
 					temp += '<div class="row"><div class="col-lg-6 col-md-6"><h3 style="margin-top: 2px; margin-bottom: 2px;">';
@@ -284,7 +292,7 @@ function callbackPopulateSearchResults(data)
 					temp += '<input type="hidden" name="hfCurrentMode" id="hfCurrentMode" value="READONLY"></div><div class="col-lg-6 col-md-6 pull-right" style="padding-right: 0; margin-right: 0;">';
 					//temp += '<style>table td, table th {border: 1px solid #dddddd;}</style>';
 					temp += '<table class="table table-condensed" style="margin-bottom:0; margin-right:0; border:0px; margin-top:0;"><tbody>';
-					temp += '<tr><td style="text-align: left; width: 250px;border: 1px solid #dddddd;">Last Modified: ' + catalog.Modified +'</td></tr>';
+					temp += '<tr><td style="text-align: left; width: 250px;	border: 1px solid #dddddd;">Last Modified: ' + catalog.Modified +'</td></tr>';
 					temp += '</tbody></table></div></div></a></div>';
 					temp += '</td></tr></table>';
 				
@@ -550,6 +558,14 @@ function callbackAddComment(data)
 		}
 	}
 	catch(err) { }
+}
+
+
+/******************* Project Options ***********************/
+
+function GoToProjectDetails() {
+	var ProjectID= ($.urlParam("ProjectID"));
+	NavigatePage('#pgProjectDetails?id=' + ProjectID);
 }
 
 
