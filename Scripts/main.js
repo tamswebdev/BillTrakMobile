@@ -779,7 +779,7 @@ function callbackLoadProjectDetail(data)
 				
 					temp += '<table class="search-item" ><tr><td style="width:3px;">&nbsp;</td><td>';
 					temp += '<div id="ProjectCard" class="panel-body" style="padding-bottom: 0">';
-					temp += '<a href="javascript: EditProjectDetailsAction('+catalog.ProjectID+');" style="text-decoration:none;color: inherit; display: block;">'
+					temp += ''
 					temp += '<h2 style="color: silver; margin-top: 2px; margin-bottom: 2px;">';
 					temp += catalog.AccountName + '</h2>';
 					temp += '<div class="row"><div class="col-lg-6 col-md-6"><h3 style="margin-top: 2px; margin-bottom: 2px;">';
@@ -794,7 +794,7 @@ function callbackLoadProjectDetail(data)
 					temp += '<input type="hidden" name="hfCurrentMode" id="hfCurrentMode" value="READONLY"></div><div class="col-lg-6 col-md-6 pull-right" style="padding-right: 0; margin-right: 0;">';
 					temp += '<table class="table table-condensed" style="margin-bottom:0; margin-right:0; border:0px; margin-top:0;"><tbody>';
 					temp += '<tr><td style="text-align: left; width: 250px;	border: 1px solid #dddddd;">Last Modified: ' + catalog.Modified +'</td></tr>';
-					temp += '</tbody></table></div></div></a></div>';
+					temp += '</tbody></table></div></div></div>';
 					temp += '</td></tr></table>';
 
 				$("#pnlProjectDetails" ).html(temp);
