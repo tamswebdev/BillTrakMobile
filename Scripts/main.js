@@ -569,13 +569,13 @@ function GoToProjectDetails() {
 }
 
 
-/******************* Add Status ***********************/
-$( document ).on( "pagebeforeshow", "#pgAddStatus", function(event) {
+/******************* Edit Construction ***********************/
+$( document ).on( "pagebeforeshow", "#pgConstruction", function(event) {
 	checkUserLogin();
-	
+	/*
 	//clear the form
 	$("table.table-add-status").find("input").each(function() {
-		if ($(this).attr("type") == "text")
+		if ($(this).attr("type") == "text" || $(this).attr("type") == "date")
 			$(this).val("");
 		if ($(this).attr("type") == "radio")
 			$(this).filter('[value=Yes]').prop('checked', true);
@@ -670,6 +670,22 @@ $( document ).on( "pagebeforeshow", "#pgAddStatus", function(event) {
 	{
 		///
 	}
+	
+	*/
+	
+	var id = $.urlParam("id");
+	if (id > 0)
+	{
+		var _url2 = serviceRootUrl + "svc.aspx?op=GetProjectById&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+		Jsonp_Call(_url2, true, "callbackLoadProjectDetail");
+	}
+	else 
+	{
+		///
+	}
+	
+	
+	
 });
 
 function callbackLoadAddStatus(data)
@@ -695,6 +711,31 @@ function callbackLoadAddStatus(data)
 	catch(err) {}
 }
 
+
+function callbackLoadProjectDetail(data)
+{
+	try {
+		if (data.d.results.length > 0)
+		{
+			var catalog = data.d.results[0];
+			
+	//alert(catalog.ContractorSelectedDate);
+		
+			$("#txtSR_Contractor_Selected_Date").val(catalog.ContractorSelectedDate);
+	//alert($("#txtSR_Contractor_Selected_Date").text());
+			//$("#SR_Contractor_Selected").text(catalog.ContractorSelected);
+			SetRadioValue('rbIP_Installation_Status', catalog.IPMStatus);
+	//alert(catalog.IPMStatus);
+			
+			
+		}
+		else
+		{
+			//
+		}
+	}
+	catch(err) {}
+}
 function callbackGetCPLValues(data)
 {
 	try {
@@ -788,6 +829,9 @@ function cancelStatus() {
 		  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"NavigatePage('#pgHome');\">OK</a></td>" + 
 		  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
     }); 
+}
+function backStatus() {
+		GoToSectionWithID('ProjectOptions')
 }
 
 function saveStatus(isFinal) {

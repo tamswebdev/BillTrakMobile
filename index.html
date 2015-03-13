@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="Content/main.css" />
     <!--<link rel="stylesheet" href="Content/bootstrap.css" />-->
     <link rel="stylesheet" href="Content/jquery.ui.datepicker.mobile.css" /> 
-
+	<link rel="stylesheet" href="Scripts/jquery-datepicker/jquery.mobile.datepicker.css" />
+	<link rel="stylesheet" href="Scripts/jquery-datepicker/jquery.mobile.datepicker.theme.css" />
+	
 	<script src="Scripts/environment-configs.js"></script>
     <script src="Scripts/jquery-2.1.0.min.js"></script>
 	<script src="Scripts/jquery-ui/jQuery-ui.js"></script>
@@ -20,6 +22,8 @@
     <script src="Scripts/Base64Converter.js"></script>
 	<script src="Scripts/utilities.js"></script>
     <script src="Scripts/main.js"></script>
+	<script src="Scripts/jquery-datepicker/jquery.mobile.datepicker.js"></script>	
+	<script src="Scripts/jquery-datepicker/datepicker.js"></script>	
 	
 	<script type="text/javascript" src="cordova.js"></script>
 </head>
@@ -248,30 +252,30 @@
 			<center>
 				<div id="divProjectOptions">
 					<table class="table add-status-buttons">
-						<tr><td colspan="3" class="td-error-message" id="error-div2"></td></tr>
+						<tr><td colspan="3" class="td-error-message" id="error-div2" style="border-top: 0px;"></td></tr>
 
 						<tr>						
-							<td id="btnGoToConstruction">
+							<td id="btnGoToConstruction" style="border-top: 0px;">
 								<a href="javascript:void(0);" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c"  data-role="button" onclick="GoToSectionWithID('Construction')">Construction</a>
 							</td>
 						</tr>
 						<tr>
-							<td id="btnGoToIPMActivity">
+							<td id="btnGoToIPMActivity" style="border-top: 0px;">
 								<a href="javascript:void(0);"  data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  onclick="GoToIPMActivity()">IPM Activity</a>
 							</td>
 						</tr>
 						<tr>
-							<td id="btnSitePlanRequests">
+							<td id="btnSitePlanRequests" style="border-top: 0px;">
 								<a href="javascript:void(0);"  data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  onclick="GoToSitePlanRequests()">Site Plan Requests</a>
 							</td>
 						</tr>
 						<tr>						
-							 <td id="btnGoToEMRF">
+							 <td id="btnGoToEMRF" style="border-top: 0px;">
 								<a href="javascript:void(0);"  data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  onclick="GoToEMRF()">EMRF</a>
 							</td>
 						</tr>
 						<tr>
-							 <td id="btnGoToContacts">
+							 <td id="btnGoToContacts" style="border-top: 0px;">
 								<a href="javascript:void(0);"  data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  onclick="GoToContacts()">Contacts</a>
 							</td>
 							
@@ -347,12 +351,12 @@
                                                                         
 
 																				<td colspan="3" class="radio-button-td">
-																					<fieldset data-role="controlgroup" data-type="vertical" >
-																						<input type="radio" name="SR_Construction_Progress" id="rbSR_Construction_Progress1" value="rbSR_Construction_Progress1"/><label for="rbSR_Construction_Progress1">Complete - Site Ready for installation</label>
+																					<fieldset data-role="controlgroup" data-theme="c"  data-type="vertical" >
+																						<input type="radio" name="SR_Construction_Progress" id="rbSR_Construction_Progress1" value="COMPLETE"/><label for="rbSR_Construction_Progress1">Complete - Site Ready for installation</label>
 																						
-																						<input type="radio" name="SR_Construction_Progress" id="rbSR_Construction_Progress2" value="rbSR_Construction_Progress2" /><label for="rbSR_Construction_Progress2">On Target - Site Ready progressing on target with customer</label>
+																						<input type="radio" name="SR_Construction_Progress" id="rbSR_Construction_Progress2" value="ON TARGET" /><label for="rbSR_Construction_Progress2">On Target - Site Ready progressing on target with customer</label>
 																						
-																						<input type="radio" name="SR_Construction_Progress" id="rbSR_Construction_Progress3" value="rbSR_Construction_Progress3" /><label for="rbSR_Construction_Progress3">Risk - Site Ready Date at Risk</label>
+																						<input type="radio" name="SR_Construction_Progress" id="rbSR_Construction_Progress3" value="RISK" /><label for="rbSR_Construction_Progress3">Risk - Site Ready Date at Risk</label>
 																					</fieldset>
 																				</td>																		
                                                                         </td>
@@ -361,8 +365,8 @@
                                                                         <td class="col-sm-3 text-right active">IPM Status (In Progress)</td>
 																				<td colspan="2" class="radio-button-td">
 																					<fieldset data-role="controlgroup" data-type="horizontal" >
-																						<input type="radio" name="rbIP_Installation_Status" id="rbIP_Installation_Status1" value="In Progress" /><label for="rbIP_Installation_Status1">Yes</label>
-																						<input type="radio" name="rbIP_Installation_Status" id="rbIP_Installation_Status2" value="Closed" /><label for="rbIP_Installation_Status2">No</label>
+																						<input type="radio" name="rbIP_Installation_Status" id="rbIP_Installation_Status1" value="IN PROGRESS" /><label for="rbIP_Installation_Status1">Yes</label>
+																						<input type="radio" name="rbIP_Installation_Status" id="rbIP_Installation_Status2" value="CLOSED" /><label for="rbIP_Installation_Status2">No</label>
 																					</fieldset>
 																				</td>
 
@@ -402,8 +406,8 @@
                                                                         <td class="col-sm-3 text-right active">Contractor Selected?</td>
 																				<td colspan="2" class="radio-button-td">
 																					<fieldset data-role="controlgroup"  >
-																						<input type="radio" name="SR_Contractor_Selected" id="rbSR_Contractor_Selected1" value="Yes" onclick="javascript:document.getElementById('txtSR_Contractor_Selected_Date').removeAttribute('disabled');"/><label for="rbSR_Contractor_Selected1">Yes</label>
-																						<input type="radio" name="SR_Contractor_Selected" id="rbSR_Contractor_Selected2" value="No" onclick="javascript:document.getElementById('txtSR_Contractor_Selected_Date').setAttribute('disabled', 'disabled');"/><label for="rbSR_Contractor_Selected2">No</label>
+																						<input type="radio" name="SR_Contractor_Selected" id="rbSR_Contractor_Selected1" value="YES" onclick="javascript:document.getElementById('txtSR_Contractor_Selected_Date').removeAttribute('disabled');"/><label for="rbSR_Contractor_Selected1">Yes</label>
+																						<input type="radio" name="SR_Contractor_Selected" id="rbSR_Contractor_Selected2" value="NO" onclick="javascript:document.getElementById('txtSR_Contractor_Selected_Date').setAttribute('disabled', 'disabled');"/><label for="rbSR_Contractor_Selected2">No</label>
 																						<input type="radio" name="SR_Contractor_Selected" id="rbSR_Contractor_Selected3" value="N/A" onclick="javascript:document.getElementById('txtSR_Contractor_Selected_Date').setAttribute('disabled', 'disabled');"/><label for="rbSR_Contractor_Selected3">N/A</label>
 																					</fieldset>
 																				</td>																		
@@ -413,7 +417,7 @@
                                                                     <tr>
                                                                         <td class="col-sm-3 text-right active">Date</td>
 																				<td colspan="2" class="explain-field">
-																					<input type="date" name="txtSR_Contractor_Selected_Date" id="txtSR_Contractor_Selected_Date"  value=""  />
+																					<input type="text"  data-role="date" name="txtSR_Contractor_Selected_Date" id="txtSR_Contractor_Selected_Date"  value=""  />
 																				</td>																		
 
                                                                     </tr>																	
@@ -533,9 +537,7 @@
 
                                                                     </tr>	
 
-															
-															
-													
+
                                                                     <tr class="tr-title" id="MRSpecific1">
                                                                         <td colspan="3" >MR Specific Fields</td>
                                                                     </tr>
@@ -575,41 +577,31 @@
 																				<td colspan="2" class="explain-field">
 																					<input type="date" name="txtSR_Pre_Installation_Date" id="txtSR_Pre_Installation_Date"  value=""  />
 																				</td>																		
-
                                                                     </tr>																			
 
-																	
-																	
-																	
-																	
-																	
-																	
                                                                 </tbody>
                                                             </table>
 															
 															
-					<table class="table add-status-buttons">
-						<tr><td colspan="2" class="td-error-message" id="error-div2"></td></tr>
-						<tr>
+					<table class="table add-status-buttons" >
+						<tr ><td colspan="2" class="td-error-message" id="error-div2" style="border-top: 0px;"></td></tr>
+						<tr >
 
-							<td id="btnSubmitFinal">
+							<td id="btnSubmitFinal" style="border-top: 0px;">
 								<a href="javascript:void(0);" data-role="button" onclick="saveStatus('Yes')">Save Changes</a>
 							</td>
-							 <td id="btnSubmitCancel">
+							 <td id="btnSubmitCancel" style="border-top: 0px;">
 								<a href="javascript:void(0);" data-role="button" onclick="cancelStatus()">Cancel</a>
+							</td>
+							 <td id="btnSubmitCancel" style="border-top: 0px;">
+								<a href="javascript:void(0);" data-role="button" onclick="backStatus()">Back</a>
 							</td>
 							
 						</tr>
 						
 					</table>															
-																														
-															
-                                                        
+                           
 					</div>
-                                             
-                                                        
-                                                    											 
-
 
 				<input id="rmpSiteReadiness_ClientState" name="rmpSiteReadiness_ClientState" type="hidden" autocomplete="off">
 
