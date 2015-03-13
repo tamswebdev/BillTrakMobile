@@ -569,6 +569,15 @@ function GoToProjectDetails() {
 }
 
 
+/******************* Swipe Construction ***********************/
+$(document).on('pageinit',"#pgConstruction",function(event){
+
+	$("#divAddStatus").on("swipeleft",function(){
+		$("#pnlProjectDetails").panel( "open");
+	});
+});
+
+
 /******************* Edit Construction ***********************/
 $( document ).on( "pagebeforeshow", "#pgConstruction", function(event) {
 	checkUserLogin();
@@ -701,6 +710,7 @@ function callbackLoadAddStatus(data)
 			$("#catalog_System_x0020_Date").text(catalog.System_x0020_Date.substring(0, catalog.System_x0020_Date.indexOf(" ")));
 			$("#catalog_MCSS").text(catalog.MCSS.substring(catalog.MCSS.indexOf("#") + 1));
 			$("#catalog_Modality").text(catalog.Modality);
+
 			
 		}
 		else
@@ -718,17 +728,85 @@ function callbackLoadProjectDetail(data)
 		if (data.d.results.length > 0)
 		{
 			var catalog = data.d.results[0];
-			
-	//alert(catalog.ContractorSelectedDate);
+
+
 		
-			$("#txtSR_Contractor_Selected_Date").val(catalog.ContractorSelectedDate);
-	//alert($("#txtSR_Contractor_Selected_Date").text());
-			//$("#SR_Contractor_Selected").text(catalog.ContractorSelected);
+			SetRadioValue('SR_Construction_Progress', catalog.ConstructionProgress);
 			SetRadioValue('rbIP_Installation_Status', catalog.IPMStatus);
-	//alert(catalog.IPMStatus);
+			SetRadioValue('SR_Required', catalog.ConstructionRequired);
+
 			
+			$("#ddlSR_Government_Agencies").val(catalog.GovernmentAgencies).selectmenu('refresh', true);
+			SetRadioValue('SR_Contractor_Selected', catalog.ContractorSelected);
+			$("#txtSR_Contractor_Selected_Date").val(getISODateString(catalog.ContractorSelectedDate));
+
+			SetRadioValue('SR_PreConstruction_Meeting_Scheduled', catalog.PreConstructionMeetingScheduled);
+			$("#txtSR_PreConstruction_Meeting_Scheduled_Date").val(getISODateString(catalog.PreConstructionMeetingScheduledDate));
+
+			$("#txtSR_Construction_Weeks").val(catalog.ConstructionWeeks);
 			
-		}
+			SetRadioValue('SR_Final_Drawing_Reviewed', catalog.FinalDrawingsReviewedByCustomer);
+			$("#txtSR_Final_Drawings_Reviewed_Date").val(getISODateString(catalog.FinalDrawingsReviewedByCustomerDate));
+
+			SetRadioValue('rbSR_Drawing_Approved', catalog.ConstructionDrawingsApproved);
+			SetRadioValue('SR_Building_Permit_Approved', catalog.BuildingPermitApproved);
+
+			SetRadioValue('SR_Timeline_Published', catalog.ConstructionTimelinePublished);
+			$("#txtSR_Timeline_Published_Date").val(getISODateString(catalog.ConstructionTimelinePublishedDate));
+
+			$("#txtSR_Forecasted_Site_Ready_Date").val(getISODateString(catalog.ForecastedSiteReadyDate));
+			$("#txtSR_Riggers_Date").val(getISODateString(catalog.RiggersDate));
+			SetRadioValue('SR_Installation_Kit', catalog.PreShipmentOfInstallationKitEpoxyKit);
+
+			SetRadioValue('SR_Electronic_Checked', catalog.Electronic);
+			$("#txtSR_Electronic_Date").val(getISODateString(catalog.ElectronicDate));
+			
+			SetRadioValue('SR_Pre_Installation_Checked', catalog.PreInstallation);
+			$("#txtSR_Pre_Installation_Date").val(getISODateString(catalog.PreInstallationDate));
+			if (catalog.PreInstallation=="YES")
+			{
+				$("#txtSR_Pre_Installation_Date").removeAttr('disabled');
+			}
+			else
+			{
+				$("#txtSR_Pre_Installation_Date").attr('disabled', 'disabled');
+			}
+			
+
+				var temp = "";
+				
+
+				
+					temp += '<table class="search-item" ><tr><td style="width:3px;">&nbsp;</td><td>';
+					temp += '<div id="ProjectCard" class="panel-body" style="padding-bottom: 0">';
+					temp += '<a href="javascript: EditProjectDetailsAction('+catalog.ProjectID+');" style="text-decoration:none;color: inherit; display: block;">'
+					temp += '<h2 style="color: silver; margin-top: 2px; margin-bottom: 2px;">';
+					temp += catalog.AccountName + '</h2>';
+					temp += '<div class="row"><div class="col-lg-6 col-md-6"><h3 style="margin-top: 2px; margin-bottom: 2px;">';
+					temp += catalog.SystemVal + '</h3>';
+					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
+					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
+					if (catalog.ConfirmedDeliveryDate!='')
+						temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Delivery Date '+ catalog.ConfirmedDeliveryDate+'</h4>';
+					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
+					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
+					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
+					temp += '<input type="hidden" name="hfCurrentMode" id="hfCurrentMode" value="READONLY"></div><div class="col-lg-6 col-md-6 pull-right" style="padding-right: 0; margin-right: 0;">';
+					temp += '<table class="table table-condensed" style="margin-bottom:0; margin-right:0; border:0px; margin-top:0;"><tbody>';
+					temp += '<tr><td style="text-align: left; width: 250px;	border: 1px solid #dddddd;">Last Modified: ' + catalog.Modified +'</td></tr>';
+					temp += '</tbody></table></div></div></a></div>';
+					temp += '</td></tr></table>';
+
+				$("#pnlProjectDetails" ).html(temp);
+
+
+
+
+
+
+
+
+			}
 		else
 		{
 			//
@@ -831,8 +909,22 @@ function cancelStatus() {
     }); 
 }
 function backStatus() {
-		GoToSectionWithID('ProjectOptions')
+		
+	$('<div>').simpledialog2({
+		mode: 'blank',
+		headerText: 'Back',
+		headerClose: false,
+		transition: 'flip',
+		themeDialog: 'a',
+		zindex: 2000,
+		blankContent : 
+		  "<div style='padding: 15px;'><p>Discard changes and go back to project options?</p>"+
+		  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"GoToSectionWithID('ProjectOptions');\">OK</a></td>" + 
+		  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
+    }); 
 }
+
+
 
 function saveStatus(isFinal) {
 	$scope = {

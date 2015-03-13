@@ -171,12 +171,27 @@ function getTimestamp()
 	return d.getTime();
 }
 
+function getISODateString(DateString)
+{
+	if (DateString)
+	{
+		var d = new Date(DateString);
+		return d.toISOString().substring(0,10);
+	}
+	else
+	{
+		return "";
+	}
+}
+
+
 function isNumber(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
 function SetRadioValue(name, SelectdValue) {
     $('input[name="' + name+ '"][value="' + SelectdValue + '"]').prop('checked', true);
+	$('input[name="' + name+ '"][value="' + SelectdValue + '"]').checkboxradio("refresh");
 }
 
 navigator.browserDetail = (function(){

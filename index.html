@@ -9,21 +9,16 @@
 	<link rel="stylesheet" href="Scripts/simpledialog/jquery.mobile.simpledialog.min.css" />
     <link rel="stylesheet" href="Content/main.css" />
     <!--<link rel="stylesheet" href="Content/bootstrap.css" />-->
-    <link rel="stylesheet" href="Content/jquery.ui.datepicker.mobile.css" /> 
-	<link rel="stylesheet" href="Scripts/jquery-datepicker/jquery.mobile.datepicker.css" />
-	<link rel="stylesheet" href="Scripts/jquery-datepicker/jquery.mobile.datepicker.theme.css" />
 	
 	<script src="Scripts/environment-configs.js"></script>
     <script src="Scripts/jquery-2.1.0.min.js"></script>
 	<script src="Scripts/jquery-ui/jQuery-ui.js"></script>
-	<script src="Scripts/jquery.mobile/jquery.ui.datepicker.mobile.js"></script>	
     <script src="Scripts/jquery.mobile/jquery.mobile-1.4.3.min.js"></script>
 	<script src="Scripts/simpledialog/jquery.mobile.simpledialog2.min.js"></script>
     <script src="Scripts/Base64Converter.js"></script>
 	<script src="Scripts/utilities.js"></script>
     <script src="Scripts/main.js"></script>
-	<script src="Scripts/jquery-datepicker/jquery.mobile.datepicker.js"></script>	
-	<script src="Scripts/jquery-datepicker/datepicker.js"></script>	
+
 	
 	<script type="text/javascript" src="cordova.js"></script>
 </head>
@@ -302,6 +297,10 @@
 
 
 	<div data-role="page" id="pgConstruction">
+	
+	    <div data-role="panel" id="pnlProjectDetails" name="pnlProjectDetails" style='height:200px;' data-theme="b" data-position="right" data-display="overlay"></div>
+	
+	
         <div data-role="header" data-position="fixed">
 			<div style="display:none;"><div id="divStatusId"></div></div>
 			<table width="100%" cellspacing="0" cellpadding="0" class="header-table">
@@ -378,8 +377,8 @@
                                                                         <td class="col-sm-3 text-right active">Required?</td>
 																				<td colspan="2" class="radio-button-td">
 																					<fieldset data-role="controlgroup" data-type="horizontal" >
-																						<input type="radio" name="SR_Required" id="rbSR_Required1" value="Yes" /><label for="rbSR_Required1">Yes</label>
-																						<input type="radio" name="SR_Required" id="rbSR_Required2" value="No" /><label for="rbSR_Required2">No</label>
+																						<input type="radio" name="SR_Required" id="rbSR_Required1" value="YES" /><label for="rbSR_Required1">Yes</label>
+																						<input type="radio" name="SR_Required" id="rbSR_Required2" value="NO" /><label for="rbSR_Required2">No</label>
 																					</fieldset>
 																				</td>																		
 
@@ -390,7 +389,7 @@
 																		<td colspan="2" >
 																			<div id="catalog_Modality" class="add-status"></div>
 																			<div class="add-new-status">
-																				<select class="form-control" id="selectModality" data-overlay-theme="b" data-theme="a" data-native-menu="false" tabindex="-1">
+																				<select class="form-control" id="ddlSR_Government_Agencies" name="ddlSR_Government_Agencies" data-overlay-theme="b" data-theme="a" data-native-menu="false" tabindex="-1">
 																					<option value="None">None</option>
 																					<option value="OSHPD">OSHPD</option>
 																					<option value="DCA">DCA</option>
@@ -417,7 +416,7 @@
                                                                     <tr>
                                                                         <td class="col-sm-3 text-right active">Date</td>
 																				<td colspan="2" class="explain-field">
-																					<input type="text"  data-role="date" name="txtSR_Contractor_Selected_Date" id="txtSR_Contractor_Selected_Date"  value=""  />
+																					<input type="date"  name="txtSR_Contractor_Selected_Date" id="txtSR_Contractor_Selected_Date"  value=""  />
 																				</td>																		
 
                                                                     </tr>																	
@@ -426,8 +425,8 @@
                                                                         <td class="col-sm-3 text-right active">Pre construction meeting scheduled?</td>
 																				<td colspan="2" class="radio-button-td">
 																					<fieldset data-role="controlgroup" >
-																						<input type="radio" name="SR_PreConstruction_Meeting_Scheduled" id="rbSR_PreConstruction_Meeting_Scheduled1" value="Yes" onclick="javascript:document.getElementById('txtSR_PreConstruction_Meeting_Scheduled_Date').removeAttribute('disabled');"/><label for="rbSR_PreConstruction_Meeting_Scheduled1">Yes</label>
-																						<input type="radio" name="SR_PreConstruction_Meeting_Scheduled" id="rbSR_PreConstruction_Meeting_Scheduled2" value="No" onclick="javascript:document.getElementById('txtSR_PreConstruction_Meeting_Scheduled_Date').setAttribute('disabled', 'disabled');"/><label for="rbSR_PreConstruction_Meeting_Scheduled2">No</label>
+																						<input type="radio" name="SR_PreConstruction_Meeting_Scheduled" id="rbSR_PreConstruction_Meeting_Scheduled1" value="YES" onclick="javascript:document.getElementById('txtSR_PreConstruction_Meeting_Scheduled_Date').removeAttribute('disabled');"/><label for="rbSR_PreConstruction_Meeting_Scheduled1">Yes</label>
+																						<input type="radio" name="SR_PreConstruction_Meeting_Scheduled" id="rbSR_PreConstruction_Meeting_Scheduled2" value="NO" onclick="javascript:document.getElementById('txtSR_PreConstruction_Meeting_Scheduled_Date').setAttribute('disabled', 'disabled');"/><label for="rbSR_PreConstruction_Meeting_Scheduled2">No</label>
 																						<input type="radio" name="SR_PreConstruction_Meeting_Scheduled" id="rbSR_PreConstruction_Meeting_Scheduled3" value="N/A" onclick="javascript:document.getElementById('txtSR_PreConstruction_Meeting_Scheduled_Date').setAttribute('disabled', 'disabled');"/><label for="rbSR_PreConstruction_Meeting_Scheduled3">N/A</label>
 																					</fieldset>
 																				</td>																		
@@ -445,7 +444,7 @@
 																	<tr>
                                                                         <td class="col-sm-3 text-right active">Number of weeks for construction?</td>
 																				<td colspan="2" class="explain-field">
-																					<input type="date" name="txtSR_Construction_Weeks" id="txtSR_Construction_Weeks"  value=""  />
+																					<input type="text" name="txtSR_Construction_Weeks" id="txtSR_Construction_Weeks"  value=""  />
 																				</td>																		
 
                                                                     </tr>		
@@ -453,8 +452,8 @@
                                                                         <td class="col-sm-3 text-right active">Final Drawings Reviewed By Customer?</td>
 																				<td colspan="2" class="radio-button-td">
 																					<fieldset data-role="controlgroup" >
-																						<input type="radio" name="SR_Final_Drawing_Reviewed" id="rbSR_Final_Drawing_Reviewed1" value="Yes" onclick="javascript:document.getElementById('txtSR_Final_Drawings_Reviewed_Date').removeAttribute('disabled');"/><label for="rbSR_Final_Drawing_Reviewed1">Yes</label>
-																						<input type="radio" name="SR_Final_Drawing_Reviewed" id="rbSR_Final_Drawing_Reviewed2" value="No" onclick="javascript:document.getElementById('txtSR_Final_Drawings_Reviewed_Date').setAttribute('disabled', 'disabled');"/><label for="rbSR_Final_Drawing_Reviewed2">No</label>
+																						<input type="radio" name="SR_Final_Drawing_Reviewed" id="rbSR_Final_Drawing_Reviewed1" value="YES" onclick="javascript:document.getElementById('txtSR_Final_Drawings_Reviewed_Date').removeAttribute('disabled');"/><label for="rbSR_Final_Drawing_Reviewed1">Yes</label>
+																						<input type="radio" name="SR_Final_Drawing_Reviewed" id="rbSR_Final_Drawing_Reviewed2" value="NO" onclick="javascript:document.getElementById('txtSR_Final_Drawings_Reviewed_Date').setAttribute('disabled', 'disabled');"/><label for="rbSR_Final_Drawing_Reviewed2">No</label>
 																						<input type="radio" name="SR_Final_Drawing_Reviewed" id="rbSR_Final_Drawing_Reviewed3" value="N/A" onclick="javascript:document.getElementById('txtSR_Final_Drawings_Reviewed_Date').setAttribute('disabled', 'disabled');"/><label for="rbSR_Final_Drawing_Reviewed3">N/A</label>
 																					</fieldset>
 																				</td>																		
@@ -473,8 +472,8 @@
                                                                         <td class="col-sm-3 text-right active">Construction Drawings Approved By Local &amp; State Authorities?</td>
 																				<td colspan="2" class="radio-button-td">
 																					<fieldset data-role="controlgroup" >
-																						<input type="radio" name="rbSR_Drawing_Approved" id="rbSR_Drawing_Approved1" value="Yes" /><label for="rbSR_Drawing_Approved1">Yes</label>
-																						<input type="radio" name="rbSR_Drawing_Approved" id="rbSR_Drawing_Approved2" value="No" /><label for="rbSR_Drawing_Approved2">No</label>
+																						<input type="radio" name="rbSR_Drawing_Approved" id="rbSR_Drawing_Approved1" value="YES" /><label for="rbSR_Drawing_Approved1">Yes</label>
+																						<input type="radio" name="rbSR_Drawing_Approved" id="rbSR_Drawing_Approved2" value="NO" /><label for="rbSR_Drawing_Approved2">No</label>
 																						<input type="radio" name="rbSR_Drawing_Approved" id="rbSR_Drawing_Approved3" value="N/A" /><label for="rbSR_Drawing_Approved3">N/A</label>
 																					</fieldset>
 																				</td>																		
@@ -484,8 +483,8 @@
                                                                         <td class="col-sm-3 text-right active">Building Permit Approved?</td>
 																				<td colspan="2" class="radio-button-td">
 																					<fieldset data-role="controlgroup"  >
-																						<input type="radio" name="SR_Building_Permit_Approved" id="rbSR_Building_Permit_Approved1" value="Yes" /><label for="rbSR_Building_Permit_Approved1">Yes</label>
-																						<input type="radio" name="SR_Building_Permit_Approved" id="rbSR_Building_Permit_Approved2" value="No" /><label for="rbSR_Building_Permit_Approved2">No</label>
+																						<input type="radio" name="SR_Building_Permit_Approved" id="rbSR_Building_Permit_Approved1" value="YES" /><label for="rbSR_Building_Permit_Approved1">Yes</label>
+																						<input type="radio" name="SR_Building_Permit_Approved" id="rbSR_Building_Permit_Approved2" value="NO" /><label for="rbSR_Building_Permit_Approved2">No</label>
 																						<input type="radio" name="SR_Building_Permit_Approved" id="rbSR_Building_Permit_Approved3" value="N/A" /><label for="rbSR_Building_Permit_Approved3">N/A</label>
 																					</fieldset>
 																				</td>																		
@@ -495,8 +494,8 @@
                                                                         <td class="col-sm-3 text-right active">Published Construction Timeline - Approved By All Involved Parties (provided by TAMS/Customer/Contract)?</td>
 																				<td colspan="2" class="radio-button-td">
 																					<fieldset data-role="controlgroup"  >
-																						<input type="radio" name="SR_Timeline_Published" id="rbSR_Timeline_Published1" value="Yes" onclick="javascript:document.getElementById('txtSR_Timeline_Published_Date').removeAttribute('disabled');"/><label for="rbSR_Timeline_Published1">Yes</label>
-																						<input type="radio" name="SR_Timeline_Published" id="rbSR_Timeline_Published2" value="No" onclick="javascript:document.getElementById('txtSR_Timeline_Published_Date').setAttribute('disabled', 'disabled');"/><label for="rbSR_Timeline_Published2">No</label>
+																						<input type="radio" name="SR_Timeline_Published" id="rbSR_Timeline_Published1" value="YES" onclick="javascript:document.getElementById('txtSR_Timeline_Published_Date').removeAttribute('disabled');"/><label for="rbSR_Timeline_Published1">Yes</label>
+																						<input type="radio" name="SR_Timeline_Published" id="rbSR_Timeline_Published2" value="NO" onclick="javascript:document.getElementById('txtSR_Timeline_Published_Date').setAttribute('disabled', 'disabled');"/><label for="rbSR_Timeline_Published2">No</label>
 																						<input type="radio" name="SR_Timeline_Published" id="rbSR_Timeline_Published3" value="N/A" onclick="javascript:document.getElementById('txtSR_Timeline_Published_Date').setAttribute('disabled', 'disabled');"/><label for="rbSR_Timeline_Published3">N/A</label>
 																					</fieldset>
 																				</td>																		
@@ -529,8 +528,8 @@
                                                                         <td class="col-sm-3 text-right active">Pre-Shipment Of Installation Kit/Epoxy Kit?</td>
 																				<td colspan="2" class="radio-button-td">
 																					<fieldset data-role="controlgroup"  >
-																						<input type="radio" name="SR_Installation_Kit" id="rbSR_Installation_Kit1" value="Yes" /><label for="rbSR_Installation_Kit1">Yes</label>
-																						<input type="radio" name="SR_Installation_Kit" id="rbSR_Installation_Kit2" value="No" /><label for="rbSR_Installation_Kit2">No</label>
+																						<input type="radio" name="SR_Installation_Kit" id="rbSR_Installation_Kit1" value="YES" /><label for="rbSR_Installation_Kit1">Yes</label>
+																						<input type="radio" name="SR_Installation_Kit" id="rbSR_Installation_Kit2" value="NO" /><label for="rbSR_Installation_Kit2">No</label>
 																						<input type="radio" name="SR_Installation_Kit" id="rbSR_Installation_Kit3" value="N/A" /><label for="rbSR_Installation_Kit3">N/A</label>
 																					</fieldset>
 																				</td>																		
@@ -545,8 +544,8 @@
                                                                         <td class="col-sm-3 text-right active">Electronic</td>
 																				<td colspan="2" class="radio-button-td">
 																					<fieldset data-role="controlgroup"  >
-																						<input type="radio" name="SR_Electronic_Checked" id="rbSR_Electronic_Checked1" value="Yes" onclick="javascript:document.getElementById('txtSR_Electronic_Date').removeAttribute('disabled');"/><label for="rbSR_Electronic_Checked1">Yes</label>
-																						<input type="radio" name="SR_Electronic_Checked" id="rbSR_Electronic_Checked2" value="No" onclick="javascript:document.getElementById('txtSR_Electronic_Date').setAttribute('disabled', 'disabled');"/><label for="rbSR_Electronic_Checked2">No</label>
+																						<input type="radio" name="SR_Electronic_Checked" id="rbSR_Electronic_Checked1" value="YES" onclick="javascript:document.getElementById('txtSR_Electronic_Date').removeAttribute('disabled');"/><label for="rbSR_Electronic_Checked1">Yes</label>
+																						<input type="radio" name="SR_Electronic_Checked" id="rbSR_Electronic_Checked2" value="NO" onclick="javascript:document.getElementById('txtSR_Electronic_Date').setAttribute('disabled', 'disabled');"/><label for="rbSR_Electronic_Checked2">No</label>
 																						<input type="radio" name="SR_Electronic_Checked" id="rbSR_Electronic_Checked3" value="N/A" onclick="javascript:document.getElementById('txtSR_Electronic_Date').setAttribute('disabled', 'disabled');"/><label for="rbSR_Electronic_Checked3">N/A</label>
 																					</fieldset>
 																				</td>																		
@@ -564,8 +563,8 @@
                                                                         <td class="col-sm-3 text-right active">Pre Installation</td>
 																				<td colspan="2" class="radio-button-td">
 																					<fieldset data-role="controlgroup"  >
-																						<input type="radio" name="SR_Pre_Installation_Checked" id="rbSR_Pre_Installation_Checked1" value="Yes" onclick="javascript:document.getElementById('txtSR_Pre_Installation_Date').removeAttribute('disabled');"/><label for="rbSR_Pre_Installation_Checked1">Yes</label>
-																						<input type="radio" name="SR_Pre_Installation_Checked" id="rbSR_Pre_Installation_Checked2" value="No" onclick="javascript:document.getElementById('txtSR_Pre_Installation_Date').setAttribute('disabled', 'disabled');"/><label for="rbSR_Pre_Installation_Checked2">No</label>
+																						<input type="radio" name="SR_Pre_Installation_Checked" id="rbSR_Pre_Installation_Checked1" value="YES" onclick="javascript:document.getElementById('txtSR_Pre_Installation_Date').removeAttribute('disabled');"/><label for="rbSR_Pre_Installation_Checked1">Yes</label>
+																						<input type="radio" name="SR_Pre_Installation_Checked" id="rbSR_Pre_Installation_Checked2" value="NO" onclick="javascript:document.getElementById('txtSR_Pre_Installation_Date').setAttribute('disabled', 'disabled');"/><label for="rbSR_Pre_Installation_Checked2">No</label>
 																						<input type="radio" name="SR_Pre_Installation_Checked" id="rbSR_Pre_Installation_Checked3" value="N/A" onclick="javascript:document.getElementById('txtSR_Pre_Installation_Date').setAttribute('disabled', 'disabled');"/><label for="rbSR_Pre_Installation_Checked3">N/A</label>
 																					</fieldset>
 																				</td>																		
