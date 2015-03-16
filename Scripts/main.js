@@ -778,7 +778,7 @@ function callbackLoadProjectDetail(data)
 
 				
 					temp += '<table class="search-item" ><tr><td style="width:3px;">&nbsp;</td><td>';
-					temp += '<div id="ProjectCard" class="panel-body" style="padding-bottom: 0">';
+					temp += '<div id="ProjectCard" class="panel-body" style="padding-bottom: 0px;padding-top: 30px;">';
 					temp += ''
 					temp += '<h2 style="color: silver; margin-top: 2px; margin-bottom: 2px;">';
 					temp += catalog.AccountName + '</h2>';
