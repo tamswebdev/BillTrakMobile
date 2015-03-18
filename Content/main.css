@@ -313,7 +313,7 @@
 }
 
 #pgAddStatus .td-error-message {
-    color: red;
+    color: red !important;
     border: none !important;
     display:none;
     padding:0px !important;
