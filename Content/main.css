@@ -373,16 +373,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
 body {
 font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 font-size: 14px;
@@ -469,3 +459,6 @@ border-collapse: collapse;
 }
 
 
+.ui-icon-myapp-camera {
+	background: url("../Images/camera.png") 5% 50%  no-repeat;
+}
