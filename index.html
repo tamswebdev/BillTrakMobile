@@ -77,7 +77,7 @@
                     <tr><td id="td-error"></td></tr>
                     <tr><td class="login-button"><input class="common-button" type="button" id="btnLoginSubmit" value="LOGIN" onclick="LoginUser()" /></td></tr>
                 </table>
-				<div class="copyright">TOSHIBA CORPORATION 2015. ALL RIGHTS RESERVED<br />V0.02<br />FOR INTERNAL USE ONLY</div>
+				<div class="copyright">TOSHIBA CORPORATION 2015. ALL RIGHTS RESERVED<br />V0.03<br />FOR INTERNAL USE ONLY</div>
 				</center>
             </div>
 	    </div>
@@ -256,7 +256,7 @@
 						</tr>
 						<tr>
 							<td id="btnGoToIPMActivity" style="border-top: 0px;">
-								<a href="javascript:void(0);"  data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  onclick="GoToIPMActivity()">IPM Activity</a>
+								<a href="javascript:void(0);"  data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  onclick="GoToSectionWithID('IPMActivity')">IPM Activity</a>
 							</td>
 						</tr>
 						<tr>
@@ -304,6 +304,7 @@
 	<div data-role="page" id="pgConstruction">
 	
 	    <div data-role="panel" id="pnlProjectDetails" name="pnlProjectDetails" style='height:200px;' data-theme="b" data-position="right" data-display="overlay"></div>
+	    <div data-role="panel" id="pnlProjectActivity" name="pnlProjectActivity" style='height:200px;' data-theme="b" data-position="left" data-display="overlay"></div>
 	
 	
         <div data-role="header" data-position="fixed">
@@ -587,7 +588,7 @@
                                                             </table>
 															
 															
-					<table class="table add-status-buttons" >
+					<table class="table add-status-buttons" id="tblConstructionsButtons" >
 						<tr ><td colspan="2" class="td-error-message" id="error-div2" style="border-top: 0px;"></td></tr>
 						<tr >
 
@@ -627,6 +628,137 @@
 
 
 
+
+
+
+
+
+
+	<div data-role="page" id="pgIPMActivity">
+	
+	    <div data-role="panel" id="pnlProjectDetails-IPMActivity" name="pnlProjectDetails-IPMActivity" style='height:200px;' data-theme="b" data-position="right" data-display="overlay"></div>
+	    <div data-role="panel" id="pnlProjectActivity-IPMActivity" name="pnlProjectActivity-IPMActivity" style='height:200px;' data-theme="b" data-position="left" data-display="overlay"></div>
+	
+	
+        <div data-role="header" data-position="fixed">
+			<div style="display:none;"></div>
+			<table width="100%" cellspacing="0" cellpadding="0" class="header-table">
+				<tr>
+					<td class="header-left">
+						<div class="header-menu-button">
+							<a href="#popupMenu4" data-rel="popup" data-transition="slideup"><img src="Images/menu-button2.png" id="img-left-bars"></a>
+							<div data-role="popup" id="popupMenu4" data-theme="a">
+									<ul data-role="listview" data-inset="true" style="min-width:210px;">
+										<li data-role="list-divider">Choose an action</li>
+										<li><span class="spanLoginUser"></span></li>
+										<!--<li class="menu-back-btn"><a href="javascript:void(0);" onclick="goBack();">Back</a></li>-->
+										<li><a href="javascript:void(0);" onclick="goHome();">Home</a></li>
+										<li><a href="javascript:void(0);" onclick="NavigatePage('#pgSearch');">Search Projects</a></li>
+										<li><a href="javascript:void(0);" onclick="ShowHelp();">Help</a></li>
+										<li><a href="javascript:void(0);" onclick="RefrestApp();">Refresh App</a></li>
+										<li><a href="javascript:void(0);" onclick="SignOut();">Sign Out</a></li>
+									</ul>
+							</div>
+						</div>
+                    </td>
+					<td class="header-middle">
+						<a href="javascript: void(0);" onclick="goHome();" style="" class="appLogoLink"><img src="Images/toshiba-logo.png" id="img-toshiba-logo"></a>
+                    </td>
+                    <td class="header-right">
+						&nbsp;
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div role="main" class="ui-content">
+			<center>
+				<div id="divAddIPMActivity">
+					<div class="div-catalogs-list error-message" id="error-div-IPMActivity"></div>
+					<div class="div-catalogs-list success-message" id="success-div-IPMActivity"></div>
+
+
+						
+                                                            <table class="table table-condensed table-bordered" id="tblIPMActivity">
+                                                                <tbody>
+                                                                    <tr class="tr-title">
+                                                                        <td colspan="3" >Add IPM Activity</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="col-sm-3 text-right active">Type</td>
+																		
+																		<td colspan="2" >
+																			<div class="add-new-status">
+																				<select class="form-control" id="ddlActivityType" name="ddlActivityType" data-overlay-theme="b" data-theme="a" data-native-menu="false" tabindex="-1">
+																					<option value="7">Architect Meetings</option>
+																					<option value="3">Contractor Meetings</option>
+																					<option value="2">Customer Relations</option>
+																					<option value="4">Phone Call/Email</option>
+																					<option value="5">Site Plans</option>
+																					<option value="6">Site Visit</option>
+																					<option value="1">Other</option>
+																				</select>
+																			</div>
+																		</td>
+
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td class="col-sm-3 text-right active">Date</td>
+																				<td colspan="2" class="explain-field">
+																					<input type="date"  name="txtActivityDate" id="txtActivityDate"  value=""  />
+																				</td>																		
+
+                                                                    </tr>																	
+
+																	<tr>
+																				<td colspan="3" class="explain-field">
+																					
+																					<textarea class="form-control" name="txtComments" id="txtComments" rows="6" style="width: 100%" value=""></textarea>
+																				</td>																		
+
+                                                                    </tr>		
+
+                                                                </tbody>
+                                                            </table>
+															
+															
+					<table class="table add-status-buttons" id="tblIPMActivityButtons" >
+						<tr ><td colspan="2" class="td-error-message" id="error-div2-IPMActivity" style="border-top: 0px;"></td></tr>
+						<tr >
+
+							<td id="btnSubmitFinal" style="border-top: 0px;">
+								<a href="javascript:void(0);" data-role="button" onclick="saveIPMActivity('Yes')">Save</a>
+							</td>
+							 <td id="btnSubmitCancel" style="border-top: 0px;">
+								<a href="javascript:void(0);" data-role="button" onclick="cancelStatusIPMActivity()">Cancel</a>
+							</td>
+							 <td id="btnSubmitCancel" style="border-top: 0px;">
+								<a href="javascript:void(0);" data-role="button" onclick="backStatusIPMActivity()">Back</a>
+							</td>
+							
+						</tr>
+						
+					</table>															
+
+
+
+
+
+					<div class="ui-grid-b ui-responsive" id="IPMActivityGrid" name="IPMActivityGrid"></div>
+
+
+					
+					</div>
+
+
+
+
+				</div>
+			</center>
+        </div>
+    </div>
+	
 
 
 

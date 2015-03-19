@@ -575,114 +575,307 @@ $(document).on('pageinit',"#pgConstruction",function(event){
 	$("#divAddStatus").on("swipeleft",function(){
 		$("#pnlProjectDetails").panel( "open");
 	});
+	$("#divAddStatus").on("swiperight",function(){
+		$("#pnlProjectActivity").panel( "open");
+	});
 });
 
+/******************* Swipe IPM Activity ***********************/
+$(document).on('pageinit',"#pgIPMActivity",function(event){
+
+	$("#divAddIPMActivity").on("swipeleft",function(){
+		$("#pnlProjectDetails-IPMActivity").panel( "open");
+	});
+	$("#divAddIPMActivity").on("swiperight",function(){
+		$("#pnlProjectActivity-IPMActivity").panel( "open");
+	});
+});
+
+
+/******************* Add IPM Activity ***********************/
+$( document ).on( "pagebeforeshow", "#pgIPMActivity", function(event) {
+	checkUserLogin();
+	
+	
+	
+	$('#tblIPMActivity').hide();
+	$('#tblIPMActivityButtons').hide();
+
+	$('#error-div-IPMActivity').text("").append(getLoadingMini());
+	
+	$("#tblIPMActivity").find("input").each(function() {
+		if ($(this).attr("type") == "text" || $(this).attr("type") == "date")
+			$(this).val("");
+	});	
+	$("#ddlActivityType").val('7').selectmenu('refresh', true);
+	$("#txtComments").val("");
+	
+		
+	$("#IPMActivityGrid").text("");
+	var id = $.urlParam("id");
+	if (id > 0)
+	{
+	
+		var _url2 = serviceRootUrl + "svc.aspx?op=GetIPMActivity&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+		Jsonp_Call(_url2, false, "callbackLoadIPMActivity");
+	}
+	else 
+	{
+		///
+			alert("App Error");
+	}
+	
+
+	
+});
+
+
+
+function callbackLoadIPMActivity(data)
+{
+
+
+	try {
+
+		
+		if (data.d.results.length > 0)
+		{
+			var temp = '<div class="ui-grid-b ui-responsive" id="IPMActivityGridSidePanel" name="IPMActivityGridSidePanel" style="padding-right:10px;">';
+			for(var i=0; i < data.d.results.length; i++)
+			{
+				var catalog = data.d.results[i];
+				var TableRow = $('<div style="margin: 5px 5px 5px 5px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ActivityDate +' - '+ catalog.CreatedBy +' - '+ catalog.ActivityType +'</span><br><span style="font-size:x-small;">'+ catalog.Comments  +'</span></div>');
+				TableRow.appendTo($("#IPMActivityGrid"));
+				
+				temp += '<div style="margin: 5px 5px 5px 5px;padding: 2px 2px 2px 2px;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ActivityDate +' - '+ catalog.CreatedBy +' - '+ catalog.ActivityType +'</span><br><span style="font-size:x-small;">'+ catalog.Comments  +'</span></div>';
+
+			}
+			
+			temp += '</div>';
+			$("#pnlProjectActivity-IPMActivity" ).html(temp);
+
+
+			var id = $.urlParam("id");
+			if (id > 0)
+			{
+			
+				var _url2 = serviceRootUrl + "svc.aspx?op=GetProjectById&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+				Jsonp_Call(_url2, false, "callbackLoadIPMActivitySidePanel");
+			}
+			else 
+			{
+				///
+					alert("App Error");
+			}
+					
+		}
+		else
+		{
+			//
+		}
+	}
+	catch(err) {}
+}
+
+
+function callbackLoadIPMActivitySidePanel(data)
+{
+
+
+
+	try {
+
+	
+			if (data.d.results.length > 0)
+			{
+
+				var temp = "";
+				
+				var catalog = data.d.results[0];
+				
+					temp += '<table class="search-item" ><tr><td style="width:3px;">&nbsp;</td><td>';
+					temp += '<div id="ProjectCard" class="panel-body" style="padding-bottom: 0px;padding-top: 30px;">';
+					temp += ''
+					temp += '<h2 style="color: silver; margin-top: 2px; margin-bottom: 2px;">';
+					temp += catalog.AccountName + '</h2>';
+					temp += '<div class="row"><div class="col-lg-6 col-md-6"><h3 style="margin-top: 2px; margin-bottom: 2px;">';
+					temp += catalog.SystemVal + '</h3>';
+					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
+					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
+					if (catalog.ConfirmedDeliveryDate!='')
+						temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Delivery Date '+ catalog.ConfirmedDeliveryDate+'</h4>';
+					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
+					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
+					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
+					temp += '<input type="hidden" name="hfCurrentMode" id="hfCurrentMode" value="READONLY"></div><div class="col-lg-6 col-md-6 pull-right" style="padding-right: 0; margin-right: 0;">';
+					temp += '<table class="table table-condensed" style="margin-bottom:0; margin-right:0; border:0px; margin-top:0;"><tbody>';
+					temp += '<tr><td style="text-align: left; width: 200px;	border: 0px solid #dddddd;font-size:small;"><em>Last Update: ' + catalog.Modified +'</em></td></tr>';
+					temp += '</tbody></table></div></div></div>';
+					temp += '</td></tr></table>';
+					
+				$("#pnlProjectDetails-IPMActivity" ).html(temp);
+
+
+				$('#error-div2-IPMActivity').text("");
+				$('#error-div-IPMActivity').text("");
+					
+				$('#tblIPMActivity').show();
+				$('#tblIPMActivityButtons').show();
+				
+			}
+		}
+	catch(err) {}
+}
+
+
+
+function cancelStatusIPMActivity() {
+	if ($("#txtComments").val()!=""){
+
+		$('<div>').simpledialog2({
+			mode: 'blank',
+			headerText: 'Cancel',
+			headerClose: false,
+			transition: 'flip',
+			themeDialog: 'a',
+			zindex: 2000,
+			blankContent : 
+			  "<div style='padding: 15px;'><p>Cancel changes and go back to main screen?</p>"+
+			  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"NavigatePage('#pgHome');\">OK</a></td>" + 
+			  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
+			  }); 
+	}
+	else
+	{
+		NavigatePage('#pgHome');
+	}
+
+}
+function backStatusIPMActivity() {
+
+
+	if ($("#txtComments").val() != ""){		
+			$('<div>').simpledialog2({
+				mode: 'blank',
+				headerText: 'Back',
+				headerClose: false,
+				transition: 'flip',
+				themeDialog: 'a',
+				zindex: 2000,
+				blankContent : 
+				  "<div style='padding: 15px;'><p>Discard changes and go back to project options?</p>"+
+				  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"GoToSectionWithID('ProjectOptions');\">OK</a></td>" + 
+				  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
+			  }); 
+	}
+	else
+	{
+		GoToSectionWithID('ProjectOptions');
+	}
+}
+
+
+
+
+function saveIPMActivity(isFinal) {
+
+	if ($("#txtComments").val() != ""){		
+
+		$scope = {
+			recordId : $.urlParam("id"),
+			ddlActivityType : $("#ddlActivityType").val(),
+			txtComments : $("#txtComments").val(),		
+			txtActivityDate : $("#txtActivityDate").val(),
+
+		};
+
+		
+		
+
+
+		var	confirmMessage="";
+		
+
+		
+		
+		confirmMessage=confirmMessage + "Add activity and go back to project options?";
+		$('<div>').simpledialog2({
+			mode: 'blank',
+			headerText: 'Add activity',
+			headerClose: false,
+			transition: 'flip',
+			themeDialog: 'a',
+			width: 300,
+			zindex: 2000,
+			blankContent : 
+			  "<div style='padding: 15px;'><p>" + confirmMessage + "</p>"+
+			  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"SaveIPMActivityProcess('" + isFinal + "');\">OK</a></td>" + 
+			  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
+		});
+		
+	}
+	else
+	{
+		//Do Nothing
+	}
+	
+}
+
+
+
+	
+function SaveIPMActivityProcess(isFinal)
+{
+	if ($scope) {
+		
+		//show saving animation
+		$('#error-div-IPMActivity').text("").append(getLoadingMini());
+		showTimedElem('error-div-IPMActivity');
+		
+		$('#tblIPMActivity').hide();
+		$('#tblIPMActivitysButtons').hide();
+	
+		if ($scope.recordId != "" && parseInt($scope.recordId) > 0)
+		{
+			//showLoading(true);
+			var _url =  serviceRootUrl + "svc.aspx?op=AddIPMActivity&SPUrl=" + spwebRootUrl + "sites/busops&recordId=" + $scope.recordId + "&ActivityTypeID=" + $scope.ddlActivityType + "&Comments=" + $scope.txtComments + "&ActivityDate=" + $scope.txtActivityDate + "&username=" + userInfoData.Email + "&userid=" + userInfoData.UserID + "&authInfo=" + userInfoData.AuthenticationHeader + "&statusId=" + $scope.StatusId;
+			
+			console.log(_url);
+			
+			Jsonp_Call(_url, true, "callbackSaveIPMActivity");
+		}
+
+
+		
+	}
+}
+
+
+
+
+
+function callbackSaveIPMActivity(data)
+{
+	try {
+
+			$('#error-div2-IPMActivity').text("");
+			$('#error-div-IPMActivity').text("");
+			GoToSectionWithID('ProjectOptions');
+
+	}
+	catch(err) { }
+}
 
 /******************* Edit Construction ***********************/
 $( document ).on( "pagebeforeshow", "#pgConstruction", function(event) {
 	checkUserLogin();
 	
-	/*
-	//clear the form
-	$("table.table-add-status").find("input").each(function() {
-		if ($(this).attr("type") == "text" || $(this).attr("type") == "date")
-			$(this).val("");
-		if ($(this).attr("type") == "radio")
-			$(this).filter('[value=Yes]').prop('checked', true);
-	});	
-	$("table.table-add-status").find("input[type=radio]").checkboxradio("refresh");
-	$("#allSoftwareLoadedAndFunctioningReasonTR").hide();
-	$("#LayoutChangeExplainTR").hide();
-	$("#systemPerformedNotAsExpectedExplainTR").hide();
-	$("#selectModality").val('UL').selectmenu('refresh', true);
-	$('#error-div2').text("");
-	$('#Comments').val("");
 	
 	
-	
-	if ($.urlParam("id") == "")
-	{
-		$(".add-new-status").show();
-		$(".add-status").hide();
-		//$("#btnSubmitFinal").hide();
-		
-		var today = new Date();
-		$("#catalog_System_x0020_Date").text((today.getMonth()+1) + '/' + today.getDate() + '/' + today.getFullYear());
-		$("#catalog_MCSS").text(userInfoData.DisplayName);
-	}
-	else 
-	{
-		$(".add-new-status").hide();
-		$(".add-status").show();
-		//$("#btnSubmitFinal").show();
-	}
-	
-	if ($.urlParam("sid") != "")
-	{
-		$("#divStatusId").text($.urlParam("sid"));
-		//$("#btnSubmitFinal").show();
-	}
-	else
-		$("#divStatusId").text("");
-	
-	$("#allSoftwareLoadedAndFunctioning1, #allSoftwareLoadedAndFunctioning2").change(function () {
-		if ($(this).val() == "No")
-			$("#allSoftwareLoadedAndFunctioningReasonTR").show();
-		else
-			$("#allSoftwareLoadedAndFunctioningReasonTR").hide();
-	});
-	$("#systemPerformedAsExpected1, #systemPerformedAsExpected2").change(function () {
-		if ($(this).val() == "No")
-			$("#systemPerformedNotAsExpectedExplainTR").show();
-		else
-			$("#systemPerformedNotAsExpectedExplainTR").hide();
-	});
-	
-	$("#controlPanelLayout").change(function () {
-		if ($(this).val() == "Control panel changed")
-			$("#LayoutChangeExplainTR").show();
-		else
-			$("#LayoutChangeExplainTR").hide();
-	});
-	
-	//Load CPL from localstorage
-	var lookupCPLValues = localstorage.get("lookupCPLValues");
-	if (lookupCPLValues != null && lookupCPLValues != "")
-	{
-		$('#controlPanelLayout option[value!="N/A"]').remove();
-		var _lookupCPLValues = lookupCPLValues.split(";");
-		for (var i = 0; i < _lookupCPLValues.length; i++)
-		{
-			if (_lookupCPLValues[i] != "")
-				$("#controlPanelLayout").append("<option value='" + _lookupCPLValues[i] + "'>" + _lookupCPLValues[i] + "</option>");
-		}
-		$("#controlPanelLayout").selectmenu('refresh', true);
-	}
-	
-	var _url1 = serviceRootUrl + "svc.aspx?op=GetCPLValues&SPUrl=" + spwebRootUrl + "sites/busops";
-	Jsonp_Call(_url1, false, "callbackGetCPLValues");
-	
-	//Populate the draft data
-	if (isNumber($("#divStatusId").text()))
-	{
-		var _url = serviceRootUrl + "svc.aspx?op=GetHistoryStatusById&SPUrl=" + spwebRootUrl + "sites/busops&authInfo=" + userInfoData.AuthenticationHeader + "&statusId=" + $("#divStatusId").text();
-		Jsonp_Call(_url, true, "callbackLoadDraftStatus");
-	}
-	
+	$('#tblConstruction').hide();
+	$('#tblConstructionsButtons').hide();
 
-	var id = $.urlParam("id");
-	if (id > 0)
-	{
-		var _url2 = serviceRootUrl + "svc.aspx?op=GetCatalogById&SPUrl=" + spwebRootUrl + "sites/busops&authInfo=" + userInfoData.AuthenticationHeader + "&id=" + id;
-		Jsonp_Call(_url2, true, "callbackLoadAddStatus");
-	}
-	else 
-	{
-		///
-	}
-	
-	*/
-	
+	$('#error-div').text("").append(getLoadingMini());
 	
 	$("#tblConstruction").find("input").each(function() {
 		if ($(this).attr("type") == "text" || $(this).attr("type") == "date")
@@ -700,7 +893,7 @@ $( document ).on( "pagebeforeshow", "#pgConstruction", function(event) {
 	{
 	
 		var _url2 = serviceRootUrl + "svc.aspx?op=GetProjectById&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
-		Jsonp_Call(_url2, true, "callbackLoadProjectDetail");
+		Jsonp_Call(_url2, false, "callbackLoadProjectDetail");
 	}
 	else 
 	{
@@ -708,37 +901,53 @@ $( document ).on( "pagebeforeshow", "#pgConstruction", function(event) {
 			alert("App Error");
 	}
 	
-	
+
 	
 });
 
-function callbackLoadAddStatus(data)
+
+function callbackLoadSidePanel(data)
 {
+
+
+
 	try {
+				
+				
+				
 		if (data.d.results.length > 0)
 		{
-			var catalog = data.d.results[0];
-			$("#catalog_SystemType").text(catalog.SystemType);
-			$("#catalog_Product").text(catalog.Product);
-			$("#catalog_Software_x0020_Version").text(catalog.Software_x0020_Version);
-			$("#catalog_Revision_x0020_Level").text(catalog.Revision_x0020_Level);
-			$("#catalog_System_x0020_Date").text(catalog.System_x0020_Date.substring(0, catalog.System_x0020_Date.indexOf(" ")));
-			$("#catalog_MCSS").text(catalog.MCSS.substring(catalog.MCSS.indexOf("#") + 1));
-			$("#catalog_Modality").text(catalog.Modality);
+			var temp = '<div class="ui-grid-b ui-responsive" id="ActivityGridSidePanel" name="ActivityGridSidePanel" style="padding-right:10px;">';
+			for(var i=0; i < data.d.results.length; i++)
+			{
+				var catalog = data.d.results[i];
+				var TableRow = $('<div style="margin: 5px 5px 5px 5px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ActivityDate +' - '+ catalog.CreatedBy +' - '+ catalog.ActivityType +'</span><br><span style="font-size:x-small;">'+ catalog.Comments  +'</span></div>');
+				TableRow.appendTo($("#IPMActivityGrid"));
+				
+				temp += '<div style="margin: 5px 5px 5px 5px;padding: 2px 2px 2px 2px;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ActivityDate +' - '+ catalog.CreatedBy +' - '+ catalog.ActivityType +'</span><br><span style="font-size:x-small;">'+ catalog.Comments  +'</span></div>';
 
+			}
 			
+			temp += '</div>';
+			$("#pnlProjectActivity" ).html(temp);
+	
+
+				$('#error-div2').text("");
+				$('#error-div').text("");
+					
+				$('#tblConstruction').show();
+				$('#tblConstructionsButtons').show();
+				
+			}
 		}
-		else
-		{
-			//
-		}
-	}
 	catch(err) {}
 }
 
-
 function callbackLoadProjectDetail(data)
 {
+
+
+
 	try {
 	$("#tblConstruction").find("input").each(function() {
 		if ($(this).attr("type") == "date")
@@ -751,7 +960,7 @@ function callbackLoadProjectDetail(data)
 	$("#tblConstruction").find("input[type=radio]").checkboxradio("refresh");
 	$("#ddlSR_Government_Agencies").val('None').selectmenu('refresh', true);
 	
-		
+
 
 	
 		if (data.d.results.length > 0)
@@ -913,6 +1122,20 @@ function callbackLoadProjectDetail(data)
 
 
 
+				var id = $.urlParam("id");
+				if (id > 0)
+				{
+					var _url2 = serviceRootUrl + "svc.aspx?op=GetIPMActivity&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+					Jsonp_Call(_url2, false, "callbackLoadSidePanel");				
+				}
+				else 
+				{
+					///
+						alert("App Error");
+				}				
+
+
+
 
 
 
@@ -923,84 +1146,6 @@ function callbackLoadProjectDetail(data)
 		}
 	}
 	catch(err) {}
-}
-function callbackGetCPLValues(data)
-{
-	try {
-		//console.log(data);
-		if (data.d.results.length > 0)
-		{
-			$('#controlPanelLayout option[value!="N/A"]').remove();
-			var lookupCPLValues = "";
-			for (var i = 0; i < data.d.results.length; i++)
-			{
-				$("#controlPanelLayout").append("<option value='" + data.d.results[i] + "'>" + data.d.results[i] + "</option>");
-				lookupCPLValues +=  data.d.results[i] + ";";
-			}
-			$("#controlPanelLayout").selectmenu('refresh', true);
-			localstorage.set("lookupCPLValues", lookupCPLValues);
-		}
-		else
-		{
-			//
-		}
-	}
-	catch(err) {}
-}
-
-function callbackLoadDraftStatus(data)
-{
-	try {
-		//console.log(data);
-		if (data.d.results.length > 0)
-		{
-			var item = data.d.results[0];
-			
-			$("#inputSystemType").val(item.SystemType);
-			$("#inputSystemSerialNumber").val(item.SerialNumber);
-			$("#inputSoftwareVersion").val(item.SoftwareVersion);
-			$("#inputRevisionLevel").val(item.RevisionLevel);
-			$("#selectModality").val(item.Modality).selectmenu('refresh', true);
-			
-			$("#Comments").val(item.Comments);
-			$("#controlPanelLayout").val(item.ControlPanelLayout).selectmenu('refresh', true);
-			SetRadioValue('modalityWorkListEmpty', item.ModalityWorkListEmpty);
-			SetRadioValue('allSoftwareLoadedAndFunctioning', item.AllSoftwareLoadedAndFunctioning);
-			$("#allSoftwareLoadedAndFunctioningReason").val(item.IfNoExplain);
-			SetRadioValue('nPDPresetsOnSystem', item.NPDPresetsOnSystem);
-			SetRadioValue('hDDFreeOfPatientStudies', item.HDDFreeOfPatientStudies);
-			SetRadioValue('demoImagesLoadedOnHardDrive', item.DemoImagesLoadedOnHardDrive);
-			SetRadioValue('systemPerformedAsExpected', item.SystemPerformedAsExpected);
-			$("#systemPerformedNotAsExpectedExplain").val(item.SystemPerformedNotAsExpectedExplain);
-			SetRadioValue('wereAnyIssuesDiscoveredWithSystemDuringDemo', item.AnyIssuesDuringDemo);
-			SetRadioValue('wasServiceContacted', item.wasServiceContacted);
-			SetRadioValue('ConfirmSystemHddEmptiedOfAllPatientStudies', item.ConfirmModalityWorkListRemoved);
-			SetRadioValue('ConfirmModalityWorkListRemovedFromSystem', item.ConfirmSystemHDDEmptied);
-			$("#LayoutChangeExplain").val(item.LayoutChangeExplain);
-			
-			$("table.table-add-status").find("input[type=radio]").checkboxradio("refresh");
-			
-			if ($('input[name=allSoftwareLoadedAndFunctioning]:checked').val() == "No")
-				$("#allSoftwareLoadedAndFunctioningReasonTR").show();
-			else
-				$("#allSoftwareLoadedAndFunctioningReasonTR").hide();
-				
-			if ($('input[name=systemPerformedAsExpected]:checked').val() == "No")
-				$("#systemPerformedNotAsExpectedExplainTR").show();
-			else
-				$("#systemPerformedNotAsExpectedExplainTR").hide();
-			
-			if ($("#controlPanelLayout").val() == "Control panel changed")
-				$("#LayoutChangeExplainTR").show();
-			else
-				$("#LayoutChangeExplainTR").hide();
-		}
-		else
-		{
-			//
-		}
-	}
-	catch(err) { }
 }
 
 
@@ -1032,109 +1177,6 @@ function backStatus() {
 		  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"GoToSectionWithID('ProjectOptions');\">OK</a></td>" + 
 		  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
     }); 
-}
-
-
-
-function saveStatus_Old(isFinal) {
-	$scope = {
-		recordId : $.urlParam("id"),
-		Comments : $("#Comments").val(),
-		controlPanelLayout : $("#controlPanelLayout").val(),
-		modalityWorkListEmpty : $('input[name=modalityWorkListEmpty]:checked').val(),
-		allSoftwareLoadedAndFunctioning : $('input[name=allSoftwareLoadedAndFunctioning]:checked').val(),
-		allSoftwareLoadedAndFunctioningReason : $("#allSoftwareLoadedAndFunctioningReason").val(),
-		nPDPresetsOnSystem : $('input[name=nPDPresetsOnSystem]:checked').val(),
-		hDDFreeOfPatientStudies : $('input[name=hDDFreeOfPatientStudies]:checked').val(),
-		demoImagesLoadedOnHardDrive : $('input[name=demoImagesLoadedOnHardDrive]:checked').val(),
-		systemPerformedAsExpected : $('input[name=systemPerformedAsExpected]:checked').val(),
-		systemPerformedNotAsExpectedExplain : $("#systemPerformedNotAsExpectedExplain").val(),
-		wereAnyIssuesDiscoveredWithSystemDuringDemo : $('input[name=wereAnyIssuesDiscoveredWithSystemDuringDemo]:checked').val(),
-		wasServiceContacted : $('input[name=wasServiceContacted]:checked').val(),
-		ConfirmSystemHddEmptiedOfAllPatientStudies : $('input[name=ConfirmSystemHddEmptiedOfAllPatientStudies]:checked').val(),
-		ConfirmModalityWorkListRemovedFromSystem : $('input[name=ConfirmModalityWorkListRemovedFromSystem]:checked').val(),
-		LayoutChangeExplain : $("#LayoutChangeExplain").val(),
-		userInfo: {WorkPhone: userInfoData.Phone},
-		
-		SystemType : $("#inputSystemType").val(),
-		SystemSerialNumber : $("#inputSystemSerialNumber").val(),
-		SoftwareVersion : $("#inputSoftwareVersion").val(),
-		RevisionLevel : $("#inputRevisionLevel").val(),
-		Modality : $("#selectModality").val(),
-		StatusId : $("#divStatusId").text()
-	};
-
-	//console.log($scope);
-	
-	if ($scope.recordId == "" || !($scope.recordId > 0))
-	{
-		if ((isFinal == "Yes") && ($scope.SystemType == "" || $scope.SystemSerialNumber == "" || $scope.SoftwareVersion == "" || $scope.Modality == ""))
-		{
-			$('#error-div').html('Please select all values.');
-			showTimedElem('error-div');
-			$('#error-div2').html('Please select all values.');
-			showTimedElem('error-div2');
-			//showLoading(false);
-			return;
-		}
-	}
-
-
-	if ((isFinal == "Yes") && ($scope.controlPanelLayout == "" || $scope.modalityWorkListEmpty == "" || $scope.allSoftwareLoadedAndFunctioning == "" || $scope.nPDPresetsOnSystem == "" || $scope.hDDFreeOfPatientStudies == "" || $scope.demoImagesLoadedOnHardDrive == "" || $scope.systemPerformedAsExpected == "" || $scope.wereAnyIssuesDiscoveredWithSystemDuringDemo == "" || $scope.ConfirmSystemHddEmptiedOfAllPatientStudies == "" || $scope.ConfirmModalityWorkListRemovedFromSystem == "")) {
-		$('#error-div').html('Please select all values.');
-		showTimedElem('error-div');
-		$('#error-div2').html('Please select all values.');
-		showTimedElem('error-div2');
-		//showLoading(false);
-		return;
-	}
-
-	if ((isFinal == "Yes") && ($scope.controlPanelLayout == "Control panel changed" && $scope.LayoutChangeExplain == "")) {
-		$('#error-div').html('Please fill all values.');
-		showTimedElem('error-div');
-		$('#error-div2').html('Please fill all values.');
-		showTimedElem('error-div2');
-		//showLoading(false);
-		return;
-	}
-
-	if ((isFinal == "Yes") && ($scope.allSoftwareLoadedAndFunctioning == "No" && $scope.allSoftwareLoadedAndFunctioningReason == "")) {
-		$('#error-div').html('Please fill all values.');
-		showTimedElem('error-div');
-		$('#error-div2').html('Please fill all values.');
-		showTimedElem('error-div2');
-		//showLoading(false);
-		return;
-	}
-
-	if ((isFinal == "Yes") && ($scope.wereAnyIssuesDiscoveredWithSystemDuringDemo == "Yes" && $scope.wasServiceContacted == "")) {
-		$('#error-div').html('Please fill all values.');
-		showTimedElem('error-div');
-		$('#error-div2').html('Please fill all values.');
-		showTimedElem('error-div2');
-		//showLoading(false);
-		return;
-	}
-
-	var confirmMessage = 'Do you want to save <b><u>draft</u></b>?<br />You can come back and edit it later';
-	if (isFinal == "Yes")
-		confirmMessage = 'Do you want to submit a <b><u>final</u></b> status?<br />The status will become read-only';
-
-
-	
-	$('<div>').simpledialog2({
-		mode: 'blank',
-		headerText: 'Confirmation',
-		headerClose: false,
-		transition: 'flip',
-		themeDialog: 'a',
-		width: 300,
-		zindex: 2000,
-		blankContent : 
-		  "<div style='padding: 15px;'><p>" + confirmMessage + "</p>"+
-		  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"SaveStatusProcess('" + isFinal + "');\">OK</a></td>" + 
-		  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
-    });
 }
 
 
@@ -1275,68 +1317,6 @@ var result = 0;
 	
 
 
-/*
-
-
-	
-	if ($scope.recordId == "" || !($scope.recordId > 0))
-	{
-		if ((isFinal == "Yes") && ($scope.SystemType == "" || $scope.SystemSerialNumber == "" || $scope.SoftwareVersion == "" || $scope.Modality == ""))
-		{
-			$('#error-div').html('Please select all values.');
-			showTimedElem('error-div');
-			$('#error-div2').html('Please select all values.');
-			showTimedElem('error-div2');
-			//showLoading(false);
-			return;
-		}
-	}
-
-
-	if ((isFinal == "Yes") && ($scope.controlPanelLayout == "" || $scope.modalityWorkListEmpty == "" || $scope.allSoftwareLoadedAndFunctioning == "" || $scope.nPDPresetsOnSystem == "" || $scope.hDDFreeOfPatientStudies == "" || $scope.demoImagesLoadedOnHardDrive == "" || $scope.systemPerformedAsExpected == "" || $scope.wereAnyIssuesDiscoveredWithSystemDuringDemo == "" || $scope.ConfirmSystemHddEmptiedOfAllPatientStudies == "" || $scope.ConfirmModalityWorkListRemovedFromSystem == "")) {
-		$('#error-div').html('Please select all values.');
-		showTimedElem('error-div');
-		$('#error-div2').html('Please select all values.');
-		showTimedElem('error-div2');
-		//showLoading(false);
-		return;
-	}
-
-	if ((isFinal == "Yes") && ($scope.controlPanelLayout == "Control panel changed" && $scope.LayoutChangeExplain == "")) {
-		$('#error-div').html('Please fill all values.');
-		showTimedElem('error-div');
-		$('#error-div2').html('Please fill all values.');
-		showTimedElem('error-div2');
-		//showLoading(false);
-		return;
-	}
-
-	if ((isFinal == "Yes") && ($scope.allSoftwareLoadedAndFunctioning == "No" && $scope.allSoftwareLoadedAndFunctioningReason == "")) {
-		$('#error-div').html('Please fill all values.');
-		showTimedElem('error-div');
-		$('#error-div2').html('Please fill all values.');
-		showTimedElem('error-div2');
-		//showLoading(false);
-		return;
-	}
-
-	if ((isFinal == "Yes") && ($scope.wereAnyIssuesDiscoveredWithSystemDuringDemo == "Yes" && $scope.wasServiceContacted == "")) {
-		$('#error-div').html('Please fill all values.');
-		showTimedElem('error-div');
-		$('#error-div2').html('Please fill all values.');
-		showTimedElem('error-div2');
-		//showLoading(false);
-		return;
-	}
-
-	var confirmMessage = 'Do you want to save <b><u>draft</u></b>?<br />You can come back and edit it later';
-	if (isFinal == "Yes")
-		confirmMessage = 'Do you want to submit a <b><u>final</u></b> status?<br />The status will become read-only';
-
-	//var sure = confirm(confirmMessage);
-	*/
-
-
 	var	confirmMessage="";
 	
 	if ($scope.ExpectedBillDate) 
@@ -1345,11 +1325,11 @@ var result = 0;
 		var NumberOfDays=Math.round((then - now) / (1000 * 60 * 60 * 24));
 	
 		if (txtSR_Forecasted_Site_Ready_Date!="" && NumberOfDays < 90){
-			$('#error-div').html('The Bill Date is within 90 days, please enter Site Ready Date');
+			/*$('#error-div').html('The Bill Date is within 90 days, please enter Site Ready Date');
 			showTimedElem('error-div');
 			$('#error-div2').html('The Bill Date is within 90 days, please enter Site Ready Date');
 			showTimedElem('error-div2');
-			
+			*/
 			confirmMessage="The Bill Date is within 90 days, it is advised to enter Site Ready Date<br><br>";
 			//showLoading(false);
 			//return;
@@ -1372,6 +1352,10 @@ var result = 0;
 		  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"SaveStatusProcess('" + isFinal + "');\">OK</a></td>" + 
 		  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
     });
+	
+
+	
+	
 }
 
 
@@ -1382,8 +1366,11 @@ function SaveStatusProcess(isFinal)
 	if ($scope) {
 		
 		//show saving animation
-		$('#error-div2').text("").append(getLoadingMini());
-		showTimedElem('error-div2');
+		$('#error-div').text("").append(getLoadingMini());
+		showTimedElem('error-div');
+		
+		$('#tblConstruction').hide();
+		$('#tblConstructionsButtons').hide();
 	
 		if ($scope.recordId != "" && parseInt($scope.recordId) > 0)
 		{
@@ -1405,35 +1392,12 @@ function SaveStatusProcess(isFinal)
 
 
 
-
-	
-function SaveStatusProcess_Old(isFinal)
-{
-	if ($scope) {
-		
-		//show saving animation
-		$('#error-div2').text("").append(getLoadingMini());
-		showTimedElem('error-div2');
-	
-		if ($scope.recordId != "" && parseInt($scope.recordId) > 0)
-		{
-			//showLoading(true);
-			var _url =  serviceRootUrl + "svc.aspx?op=AddStatus&SPUrl=" + spwebRootUrl + "sites/busops&recordId=" + $scope.recordId + "&ControlPanelLayout=" + $scope.controlPanelLayout + "&ModalityWorkListEmpty=" + $scope.modalityWorkListEmpty + "&AllSoftwareLoadedAndFunctioning=" + $scope.allSoftwareLoadedAndFunctioning + "&IfNoExplain=" + $scope.allSoftwareLoadedAndFunctioningReason + "&NPDPresetsOnSystem=" + $scope.nPDPresetsOnSystem + "&HDDFreeOfPatientStudies=" + $scope.hDDFreeOfPatientStudies + "&DemoImagesLoadedOnHardDrive=" + $scope.demoImagesLoadedOnHardDrive + "&SystemPerformedAsExpected=" + $scope.systemPerformedAsExpected + "&AnyIssuesDuringDemo=" + $scope.wereAnyIssuesDiscoveredWithSystemDuringDemo + "&wasServiceContacted=" + $scope.wasServiceContacted + "&ConfirmModalityWorkListRemoved=" + $scope.ConfirmModalityWorkListRemovedFromSystem + "&ConfirmSystemHDDEmptied=" + $scope.ConfirmSystemHddEmptiedOfAllPatientStudies + "&LayoutChangeExplain=" + $scope.LayoutChangeExplain + "&Comments=" + $scope.Comments + "&WorkPhone=" + $scope.userInfo.WorkPhone + "&SystemPerformedNotAsExpectedExplain=" + $scope.systemPerformedNotAsExpectedExplain + "&IsFinal=" + isFinal + "&authInfo=" + userInfoData.AuthenticationHeader + "&statusId=" + $scope.StatusId;
-			
-			Jsonp_Call(_url, true, "callbackSaveStatus");
-		}
-		else 
-		{
-			var _url =  serviceRootUrl + "svc.aspx?op=AddNewStatus&SPUrl=" + spwebRootUrl + "sites/busops&SerialNumber=" + $scope.SystemSerialNumber + "&SoftwareVersion=" + $scope.SoftwareVersion + "&RevisionLevel=" + $scope.RevisionLevel + "&SystemType=" + $scope.SystemType + "&Modality=" + $scope.Modality + "&ControlPanelLayout=" + $scope.controlPanelLayout + "&ModalityWorkListEmpty=" + $scope.modalityWorkListEmpty + "&AllSoftwareLoadedAndFunctioning=" + $scope.allSoftwareLoadedAndFunctioning + "&IfNoExplain=" + $scope.allSoftwareLoadedAndFunctioningReason + "&NPDPresetsOnSystem=" + $scope.nPDPresetsOnSystem + "&HDDFreeOfPatientStudies=" + $scope.hDDFreeOfPatientStudies + "&DemoImagesLoadedOnHardDrive=" + $scope.demoImagesLoadedOnHardDrive + "&SystemPerformedAsExpected=" + $scope.systemPerformedAsExpected + "&AnyIssuesDuringDemo=" + $scope.wereAnyIssuesDiscoveredWithSystemDuringDemo + "&wasServiceContacted=" + $scope.wasServiceContacted + "&ConfirmModalityWorkListRemoved=" + $scope.ConfirmModalityWorkListRemovedFromSystem + "&ConfirmSystemHDDEmptied=" + $scope.ConfirmSystemHddEmptiedOfAllPatientStudies + "&LayoutChangeExplain=" + $scope.LayoutChangeExplain + "&Comments=" + $scope.Comments + "&WorkPhone=" + $scope.userInfo.WorkPhone + "&SystemPerformedNotAsExpectedExplain=" + $scope.systemPerformedNotAsExpectedExplain + "&IsFinal=" + isFinal + "&authInfo=" + userInfoData.AuthenticationHeader + "&statusId=" + $scope.StatusId;
-			
-			Jsonp_Call(_url, true, "callbackSaveStatus");
-		}
-	}
-}
-
 function callbackSaveStatus(data)
 {
 	try {
+
+			$('#error-div2').text("");
+			$('#error-div').text("");
 			GoToSectionWithID('ProjectOptions');
 
 	}
