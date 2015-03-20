@@ -1562,7 +1562,7 @@ function SnapPhoto() {
 	   var options = new FileUploadOptions();  
    
        options.fileKey="file";  
-       options.FileName="c:\\logs\\MobileImages\\" + imageURI.substr(imageURI.lastIndexOf('/')+1);  
+       options.fileName="c:\\logs\\MobileImages\\" + imageURI.substr(imageURI.lastIndexOf('/')+1);  
        options.mimeType="image/jpeg";  
        var params = {};  
        params.value1 = "test";  
