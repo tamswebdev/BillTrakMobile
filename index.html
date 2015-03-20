@@ -277,7 +277,8 @@
 						</tr>
 						<tr>
 							 <td id="btnGoToContacts" style="border-top: 0px;">
-								<a href="javascript:void(0);" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" onclick="NavigatePage('#pgSearch');"  >&lt;&lt;&nbsp;Back to Search</a>
+									<a href="javascript:void(0);" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" data-icon="arrow-l" data-iconpos="left"  onclick="NavigatePage('#pgSearch');" >Back to Search</a>
+
 							</td>
 							
 						</tr>					
@@ -713,7 +714,10 @@
                                                                     </tr>		
                                                                     <tr>
 																				<td colspan="3" class="explain-field">
-																					<a href="javascript:void(0);" data-role="button" data-icon="camera" data-iconpos="left"  onclick="SnapPhoto()">Snap Photo</a>
+																					<div data-role="controlgroup" id="tblIPMActivityButtons" data-type="horizontal" >
+																					<a href="javascript:void(0);" data-role="button" data-icon="camera" data-iconpos="left"  onclick="SnapPhoto()">Snap</a>
+																					<a href="javascript:void(0);" data-role="button" data-icon="grid" data-iconpos="left"  onclick="SelectPhoto()">Select</a>
+																					</div>
 																				</td>																		
 
                                                                     </tr>		

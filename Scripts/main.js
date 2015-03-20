@@ -1546,11 +1546,21 @@ function checkConnection() {
 	
 }
 
-
 function SnapPhoto() {  
        navigator.camera.getPicture(  
          uploadPhoto,  
-         function(message) { alert('get picture failed'); },  
+         function(message) { alert('Camera failed'); },  
+         {  
+           quality     : 50,  
+           destinationType : navigator.camera.DestinationType.FILE_URI,  
+           sourceType   : navigator.camera.PictureSourceType.CAMERA  
+         }  
+       );  
+     }  
+function SelectPhoto() {  
+       navigator.camera.getPicture(  
+         uploadPhoto,  
+         function(message) { alert('Get picture failed'); },  
          {  
            quality     : 50,  
            destinationType : navigator.camera.DestinationType.FILE_URI,  
@@ -1580,14 +1590,11 @@ function SnapPhoto() {
 	   
      }  
      function snapwin(r) {  
-       console.log("Code = " + r.responseCode);  
-       console.log("Response = " + r.response);  
-       console.log("Sent = " + r.bytesSent);  
+		// Nothing to do
      }  
      function snapfail(error) {  
        alert("An error has occurred: Code = " + error.code);  
-       console.log("upload error source " + error.source);  
-       console.log("upload error target " + error.target);  
+
      }  
 
 
