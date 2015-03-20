@@ -1569,7 +1569,7 @@ function SnapPhoto() {
        params.value2 = "param";  
        options.params = params;  
        var ft = new FileTransfer();  
-	   var _url =  serviceRootUrl + "svc.aspx?op=UploadFile&file";
+	   var _url =  serviceRootUrl + "svc.aspx?op=UploadFile";
 	   
        ft.upload(imageURI, encodeURI(_url), snapwin, snapfail, options); 
 			console.log(_url);
