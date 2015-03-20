@@ -1559,16 +1559,18 @@ function SnapPhoto() {
        );  
      }  
      function uploadPhoto(imageURI) {  
-       var options = new FileUploadOptions();  
+	   var options = new FileUploadOptions();  
+   
        options.fileKey="file";  
-       options.fileName="c:\\logs\\MobileImages\\" + imageURI.substr(imageURI.lastIndexOf('/')+1);  
+       options.FileName="c:\\logs\\MobileImages\\" + imageURI.substr(imageURI.lastIndexOf('/')+1);  
        options.mimeType="image/jpeg";  
        var params = {};  
        params.value1 = "test";  
        params.value2 = "param";  
        options.params = params;  
        var ft = new FileTransfer();  
-	   var _url =  serviceRootUrl + "svc.aspx?op=UploadFile";
+	   var _url =  serviceRootUrl + "svc.aspx?op=UploadFile&file";
+	   
        ft.upload(imageURI, encodeURI(_url), snapwin, snapfail, options); 
 			console.log(_url);
 			
