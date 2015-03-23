@@ -261,17 +261,17 @@
 						</tr>
 						<tr>
 							<td id="btnSitePlanRequests" style="border-top: 0px;">
-								<a href="javascript:void(0);"  data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  onclick="GoToSitePlanRequests()">Site Plan Requests</a>
+								<a href="javascript:void(0);"  data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  onclick="GoToSectionWithID('SitePlanRequests')">Site Plan Requests</a>
 							</td>
 						</tr>
 						<tr>						
 							 <td id="btnGoToEMRF" style="border-top: 0px;">
-								<a href="javascript:void(0);"  data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  onclick="GoToEMRF()">EMRF</a>
+								<a href="javascript:void(0);"  data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  onclick="GoToSectionWithID('EMRF')">EMRF</a>
 							</td>
 						</tr>
 						<tr>
 							 <td id="btnGoToContacts" style="border-top: 0px;">
-								<a href="javascript:void(0);"  data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  onclick="GoToContacts()">Contacts</a>
+								<a href="javascript:void(0);"  data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  onclick="GoToSectionWithID('Contacts')">Contacts</a>
 							</td>
 							
 						</tr>
@@ -714,10 +714,10 @@
                                                                     </tr>		
                                                                     <tr>
 																				<td colspan="3" class="explain-field">
-																					<div data-role="controlgroup" id="tblIPMActivityButtons" data-type="horizontal" >
-																					<a href="javascript:void(0);" data-role="button" data-icon="camera" data-iconpos="left"  onclick="SnapPhoto()">Snap</a>
-																					<a href="javascript:void(0);" data-role="button" data-icon="grid" data-iconpos="left"  onclick="SelectPhoto()">Select</a>
-																					</div>
+																				<div data-role="controlgroup"  data-type="horizontal" align="center"  >
+																					<a href="javascript:void(0);" data-role="button" data-icon="camera" data-iconpos="left"  onclick="SnapPhoto()">Camera</a>
+																					<a href="javascript:void(0);" data-role="button" data-icon="grid" data-iconpos="left"  onclick="SelectPhoto()">Gallery</a>
+																				</div>
 																				</td>																		
 
                                                                     </tr>		
@@ -760,6 +760,88 @@
 	
 
 
+
+	<div data-role="page" id="pgSitePlanRequests">
+	
+	    <div data-role="panel" id="pnlProjectDetails-SitePlanRequests" name="pnlProjectDetails-SitePlanRequests" style='height:200px;' data-theme="b" data-position="right" data-display="overlay"></div>
+	    <div data-role="panel" id="pnlProjectActivity-SitePlanRequests" name="pnlProjectActivity-SitePlanRequests" style='height:200px;' data-theme="b" data-position="left" data-display="overlay"></div>
+	
+	
+        <div data-role="header" data-position="fixed">
+			<div style="display:none;"></div>
+			<table width="100%" cellspacing="0" cellpadding="0" class="header-table">
+				<tr>
+					<td class="header-left">
+						<div class="header-menu-button">
+							<a href="#popupMenu5" data-rel="popup" data-transition="slideup"><img src="Images/menu-button2.png" id="img-left-bars"></a>
+							<div data-role="popup" id="popupMenu5" data-theme="a">
+									<ul data-role="listview" data-inset="true" style="min-width:210px;">
+										<li data-role="list-divider">Choose an action</li>
+										<li><span class="spanLoginUser"></span></li>
+										<!--<li class="menu-back-btn"><a href="javascript:void(0);" onclick="goBack();">Back</a></li>-->
+										<li><a href="javascript:void(0);" onclick="goHome();">Home</a></li>
+										<li><a href="javascript:void(0);" onclick="NavigatePage('#pgSearch');">Search Projects</a></li>
+										<li><a href="javascript:void(0);" onclick="ShowHelp();">Help</a></li>
+										<li><a href="javascript:void(0);" onclick="RefrestApp();">Refresh App</a></li>
+										<li><a href="javascript:void(0);" onclick="SignOut();">Sign Out</a></li>
+									</ul>
+							</div>
+						</div>
+                    </td>
+					<td class="header-middle">
+						<a href="javascript: void(0);" onclick="goHome();" style="" class="appLogoLink"><img src="Images/toshiba-logo.png" id="img-toshiba-logo"></a>
+                    </td>
+                    <td class="header-right">
+						&nbsp;
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div role="main" class="ui-content">
+			<center>
+				<div id="divAddSitePlanRequests">
+					<div class="div-catalogs-list error-message" id="error-div-SitePlanRequests"></div>
+					<div class="div-catalogs-list success-message" id="success-div-SitePlanRequests"></div>
+
+
+						
+                                                            <table class="table table-condensed table-bordered" id="tblSitePlanRequests">
+
+                                                            </table>
+															
+															
+																					<div class="ui-grid-b ui-responsive" id="SitePlanRequestsGrid" name="SitePlanRequestsGrid" ></div>
+
+					
+					<div data-role="controlgroup" id="tblSitePlanRequestsButtons" data-type="horizontal" >
+						<a href="javascript:void(0);"  data-role="button" data-icon="delete" data-iconpos="left" onclick="cancelStatusSitePlanRequests()" style="padding-right:.5em !important;">Cancel</a>
+						<a href="javascript:void(0);" data-role="button" data-icon="back" data-iconpos="left" onclick="backStatusSitePlanRequests()" style="padding-right:.5em !important;">Back</a>
+					</div>
+					
+															
+					<table class="table add-status-buttons"  >
+						<tr ><td colspan="2" class="td-error-message" id="error-div2-SitePlanRequests" style="border-top: 0px;"></td></tr>
+
+						
+					</table>	
+
+
+
+
+
+
+					
+					</div>
+
+
+
+
+				</div>
+			</center>
+        </div>
+    </div>
+	
 
 
 

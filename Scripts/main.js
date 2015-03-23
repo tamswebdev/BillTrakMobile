@@ -591,6 +591,189 @@ $(document).on('pageinit',"#pgIPMActivity",function(event){
 	});
 });
 
+/******************* Swipe IPM Activity ***********************/
+$(document).on('pageinit',"#pgSitePlanRequests",function(event){
+
+	$("#divAddSitePlanRequests").on("swipeleft",function(){
+		$("#pnlProjectDetails-SitePlanRequests").panel( "open");
+	});
+	$("#divAddSitePlanRequests").on("swiperight",function(){
+		$("#pnlProjectActivity-SitePlanRequests").panel( "open");
+	});
+});
+
+/******************* Load Site Plan Requests ***********************/
+$( document ).on( "pagebeforeshow", "#pgSitePlanRequests", function(event) {
+	checkUserLogin();
+	
+	
+	
+	$('#tblSitePlanRequests').hide();
+	$('#tblSitePlanRequestsButtons').hide();
+
+	$('#error-div-SitePlanRequests').text("").append(getLoadingMini());
+	
+		
+	$("#SitePlanRequestsGrid").text("");
+	var id = $.urlParam("id");
+	if (id > 0)
+	{
+	
+		var _url2 = serviceRootUrl + "svc.aspx?op=GetSitePlanRequests&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+		Jsonp_Call(_url2, false, "callbackLoadSitePlanRequests");
+	}
+	else 
+	{
+		///
+			alert("App Error");
+	}
+	
+
+	
+});
+
+
+
+function callbackLoadSitePlanRequests(data)
+{
+
+
+	try {
+
+		
+		if (data.d.results.length > 0)
+		{
+			for(var i=0; i < data.d.results.length; i++)
+			{
+				var catalog = data.d.results[i];
+				var TableRow = $('<div style="margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ProjectNumber +' - '+ catalog.DrawingType +' - '+ catalog.Status +'</span><br><span style="font-size:x-small;">IPM:'+ catalog.IPM_Assigned  +'</span><br><span style="font-size:x-small;">Planner:'+catalog.Planner_Assigned +'</span></div>');
+				TableRow.appendTo($("#SitePlanRequestsGrid"));
+				
+
+			}
+
+			var id = $.urlParam("id");
+			if (id > 0)
+			{
+				var _url1 = serviceRootUrl + "svc.aspx?op=GetIPMActivity&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+				Jsonp_Call(_url1, true, "callbackLoadSitePlanRequestsSidePanelIPMActivity");
+
+				var _url2 = serviceRootUrl + "svc.aspx?op=GetProjectById&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+				Jsonp_Call(_url2, true, "callbackLoadSitePlanRequestsSidePanel");
+
+			}
+			else 
+			{
+				///
+					alert("App Error");
+			}
+					
+		}
+		else
+		{
+			//
+		}
+	}
+	catch(err) {}
+}
+
+function callbackLoadSitePlanRequestsSidePanelIPMActivity(data)
+{
+
+
+	try {
+
+	
+		if (data.d.results.length > 0)
+		{
+			var temp = '<div class="ui-grid-b ui-responsive" id="SitePlanRequestsGridSidePanel" name="SitePlanRequestsGridSidePanel" style="padding-right:10px;">';
+			for(var i=0; i < data.d.results.length; i++)
+			{
+				var catalog = data.d.results[i];
+				temp += '<div style="margin: 5px 5px 5px 5px;padding: 2px 2px 2px 2px;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ActivityDate +' - '+ catalog.CreatedBy +' - '+ catalog.ActivityType +'</span><br><span style="font-size:x-small;">'+ catalog.Comments  +'</span></div>';
+
+			}
+			
+			temp += '</div>';
+
+			$("#pnlProjectActivity-SitePlanRequests" ).html(temp);
+
+					
+		}
+		else
+		{
+			//
+		}
+	}
+	catch(err) {}
+}
+
+
+function callbackLoadSitePlanRequestsSidePanel(data)
+{
+
+
+
+	try {
+
+	
+			if (data.d.results.length > 0)
+			{
+
+				var temp = "";
+				
+				var catalog = data.d.results[0];
+				
+					temp += '<table class="search-item" ><tr><td style="width:3px;">&nbsp;</td><td>';
+					temp += '<div id="ProjectCard" class="panel-body" style="padding-bottom: 0px;padding-top: 30px;">';
+					temp += ''
+					temp += '<h2 style="color: silver; margin-top: 2px; margin-bottom: 2px;">';
+					temp += catalog.AccountName + '</h2>';
+					temp += '<div class="row"><div class="col-lg-6 col-md-6"><h3 style="margin-top: 2px; margin-bottom: 2px;">';
+					temp += catalog.SystemVal + '</h3>';
+					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
+					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
+					if (catalog.ConfirmedDeliveryDate!='')
+						temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Delivery Date '+ catalog.ConfirmedDeliveryDate+'</h4>';
+					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
+					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
+					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
+					temp += '<input type="hidden" name="hfCurrentMode" id="hfCurrentMode" value="READONLY"></div><div class="col-lg-6 col-md-6 pull-right" style="padding-right: 0; margin-right: 0;">';
+					temp += '<table class="table table-condensed" style="margin-bottom:0; margin-right:0; border:0px; margin-top:0;"><tbody>';
+					temp += '<tr><td style="text-align: left; width: 200px;	border: 0px solid #dddddd;font-size:small;"><em>Last Update: ' + catalog.Modified +'</em></td></tr>';
+					temp += '</tbody></table></div></div></div>';
+					temp += '</td></tr></table>';
+					
+				$("#pnlProjectDetails-SitePlanRequests" ).html(temp);
+
+
+				$('#error-div2-SitePlanRequests').text("");
+				$('#error-div-SitePlanRequests').text("");
+					
+				$('#tblSitePlanRequests').show();
+				$('#tblSitePlanRequestsButtons').show();
+				
+			}
+		}
+	catch(err) {}
+}
+
+
+
+function cancelStatusSitePlanRequests() {
+
+		NavigatePage('#pgHome');
+
+
+}
+function backStatusSitePlanRequests() {
+
+		GoToSectionWithID('ProjectOptions');
+
+}
+
+
+
 
 /******************* Add IPM Activity ***********************/
 $( document ).on( "pagebeforeshow", "#pgIPMActivity", function(event) {
@@ -1575,8 +1758,9 @@ function SelectPhoto() {
        options.fileName="c:\\logs\\MobileImages\\" + imageURI.substr(imageURI.lastIndexOf('/')+1);  
        options.mimeType="image/jpeg";  
        var params = {};  
-       params.value1 = "test";  
-       params.value2 = "param";  
+       params.ProjectID = $.urlParam("id");  
+       params.ProjectActivityID = "2";  
+       params.CreatedBy = userInfoData.UserID ;  
        options.params = params;  
        var ft = new FileTransfer();  
 	   var _url =  serviceRootUrl + "svc.aspx?op=UploadFile";
@@ -1590,7 +1774,7 @@ function SelectPhoto() {
 	   
      }  
      function snapwin(r) {  
-		// Nothing to do
+		saveIPMActivity(isFinal);
      }  
      function snapfail(error) {  
        alert("An error has occurred: Code = " + error.code);  
