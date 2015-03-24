@@ -1442,8 +1442,8 @@ function callbackLoadSidePanel(data)
 				
 				
 				
-		if (data.d.results.length > 0)
-		{
+		//if (data.d.results.length > 0)
+		//{
 			var temp = '<div class="ui-grid-b ui-responsive" id="ActivityGridSidePanel" name="ActivityGridSidePanel" style="padding-right:10px;">';
 			for(var i=0; i < data.d.results.length; i++)
 			{
@@ -1466,7 +1466,7 @@ function callbackLoadSidePanel(data)
 				$('#tblConstructionsButtons').show();
 				
 			}
-		}
+		//}
 	catch(err) {}
 }
 
@@ -1608,7 +1608,6 @@ function callbackLoadProjectDetail(data)
 				$("#txtSR_Pre_Installation_Date").attr('disabled', 'disabled');
 				$("#txtSR_Pre_Installation_Date").css({'background-color' : 'lightgray'});
 			}
-			
 			if (catalog.OpportunityModality == "MR")
 			{
 
@@ -1642,6 +1641,7 @@ function callbackLoadProjectDetail(data)
 					temp += '</td></tr></table>';
 
 				$("#pnlProjectDetails" ).html(temp);
+
 
 
 
