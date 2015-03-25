@@ -601,6 +601,8 @@ $(document).on('pageinit',"#pgSitePlanRequests",function(event){
 		$("#pnlProjectActivity-SitePlanRequests").panel( "open");
 	});
 });
+
+
 /******************* Swipe EMRF ***********************/
 $(document).on('pageinit',"#pgEMRF",function(event){
 
@@ -611,6 +613,267 @@ $(document).on('pageinit',"#pgEMRF",function(event){
 		$("#pnlProjectActivity-EMRF").panel( "open");
 	});
 });
+
+/******************* Swipe EquipmentList ***********************/
+$(document).on('pageinit',"#pgEquipmentList",function(event){
+
+	$("#divAddEquipmentList").on("swipeleft",function(){
+		$("#pnlProjectDetails-EquipmentList").panel( "open");
+	});
+	$("#divAddEquipmentList").on("swiperight",function(){
+		$("#pnlProjectActivity-EquipmentList").panel( "open");
+	});
+});
+
+
+/******************* Load EquipmentList ***********************/
+$( document ).on( "pagebeforeshow", "#pgEquipmentList", function(event) {
+	checkUserLogin();
+	
+	
+	
+	$('#tblEquipmentList').hide();
+	$('#tblEquipmentListButtons').hide();
+
+	$('#error-div-EquipmentList').text("").append(getLoadingMini());
+//	$("#ddlSortBy-EquipmentList").val('ShipToSite').selectmenu('refresh', true);
+	$("#txtEmailAddress").val('');
+
+		
+	//$("#EquipmentListGrid").text('');
+	//$("#EquipmentListGrid-regular").text('');
+	//$("#EquipmentListGrid-below").text('');
+	//$("#EquipmentListGrid-vital").text('');
+	//$("#EquipmentListGrid-power").text('');
+	var id = $.urlParam("id");
+	if (id > 0)
+	{
+	
+		var _url2 = serviceRootUrl + "svc.aspx?op=GetEquipmentList&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id + "&equipmenttype=regular" ;
+		Jsonp_Call(_url2, false, "callbackLoadEquipmentList_regular");
+
+		var _url3 = serviceRootUrl + "svc.aspx?op=GetEquipmentList&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id + "&equipmenttype=below" ;
+		Jsonp_Call(_url3, false, "callbackLoadEquipmentList_below");
+
+		var _url4 = serviceRootUrl + "svc.aspx?op=GetEquipmentList&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id + "&equipmenttype=vital" ;
+		Jsonp_Call(_url4, false, "callbackLoadEquipmentList_vital");
+
+		var _url5 = serviceRootUrl + "svc.aspx?op=GetEquipmentList&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id + "&equipmenttype=power" ;
+		Jsonp_Call(_url5, false, "callbackLoadEquipmentList_power");
+		
+
+
+		}
+	else 
+	{
+		///
+			alert("App Error");
+	}
+	
+
+	
+});
+
+
+function callbackLoadEquipmentList_below(data)
+{
+
+
+	try {
+
+
+			
+			for(var i=0; i < data.d.results.length; i++)
+			{
+				var catalog = data.d.results[i];
+
+				$('#EquipmentListGrid-below tbody').append('<tr><td>' + catalog.Item_Number + '</td><td>' + catalog.Description + '</td><td>' + catalog.Qty + '</td></tr>');
+
+			}
+
+
+
+	}
+	catch(err) {}
+}
+function callbackLoadEquipmentList_vital(data)
+{
+
+
+	try {
+
+			
+			for(var i=0; i < data.d.results.length; i++)
+			{
+				var catalog = data.d.results[i];
+				
+				$('#EquipmentListGrid-vital tbody').append('<tr><td>' + catalog.Item_Number + '</td><td>' + catalog.Description + '</td><td>' + catalog.Qty + '</td></tr>');
+
+			}
+
+
+
+	}
+	catch(err) {}
+}
+function callbackLoadEquipmentList_power(data)
+{
+
+
+	try {
+
+
+			
+			for(var i=0; i < data.d.results.length; i++)
+			{
+				var catalog = data.d.results[i];
+				$('#EquipmentListGrid-power tbody').append('<tr><td>' + catalog.Item_Number + '</td><td>' + catalog.Description + '</td><td>' + catalog.Qty + '</td></tr>');
+				
+
+			}
+
+
+			
+
+	}
+	catch(err) {}
+}
+function callbackLoadEquipmentList_regular(data)
+{
+
+
+	try {
+
+
+
+			for(var i=0; i < data.d.results.length; i++)
+			{
+				var catalog = data.d.results[i];
+//				$('#EquipmentListGrid-regular tr:last').after('<tr><td>' + catalog.Item_Number + '</td><td>' + catalog.Description + '</td><td>' + catalog.Flow_Status_Code + '</td><td>' + catalog.Qty + '</td></tr>');
+				$('#EquipmentListGrid-regular tbody').append('<tr><td>' + catalog.Item_Number + '</td><td >' + catalog.Description + '</td><td>' + catalog.Flow_Status_Code + '</td><td>' + catalog.Qty + '</td></tr>');				
+
+			}
+
+
+
+
+											
+			var id = $.urlParam("id");
+			if (id > 0)
+			{
+				var _url1 = serviceRootUrl + "svc.aspx?op=GetIPMActivity&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+				Jsonp_Call(_url1, true, "callbackLoadEquipmentListSidePanelIPMActivity");
+
+				var _url2 = serviceRootUrl + "svc.aspx?op=GetProjectById&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+				Jsonp_Call(_url2, true, "callbackLoadEquipmentListSidePanel");
+
+			}
+			else 
+			{
+				///
+					alert("App Error");
+			}
+					
+
+	}
+	catch(err) {}
+}
+
+function callbackLoadEquipmentListSidePanelIPMActivity(data)
+{
+
+
+	try {
+
+		
+		if (data.d.results.length > 0)
+		{
+			var temp = '<div class="ui-grid-b ui-responsive" id="EquipmentListGridSidePanel" name="EquipmentListGridSidePanel" style="padding-right:10px;">';
+			for(var i=0; i < data.d.results.length; i++)
+			{
+				var catalog = data.d.results[i];
+				temp += '<div style="margin: 5px 5px 5px 5px;padding: 2px 2px 2px 2px;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ActivityDate +' - '+ catalog.CreatedBy +' - '+ catalog.ActivityType +'</span><br><span style="font-size:x-small;">'+ catalog.Comments  +'</span></div>';
+
+			}
+			
+			temp += '</div>';
+
+			$("#pnlProjectActivity-EquipmentList" ).html(temp);
+
+					
+		}
+		else
+		{
+			//
+		}
+	}
+	catch(err) {}
+}
+
+
+function callbackLoadEquipmentListSidePanel(data)
+{
+
+
+
+	try {
+
+	
+			if (data.d.results.length > 0)
+			{
+
+				var temp = "";
+				
+				var catalog = data.d.results[0];
+				
+					temp += '<table class="search-item" ><tr><td style="width:3px;">&nbsp;</td><td>';
+					temp += '<div id="ProjectCard" class="panel-body" style="padding-bottom: 0px;padding-top: 30px;">';
+					temp += ''
+					temp += '<h2 style="color: silver; margin-top: 2px; margin-bottom: 2px;">';
+					temp += catalog.AccountName + '</h2>';
+					temp += '<div class="row"><div class="col-lg-6 col-md-6"><h3 style="margin-top: 2px; margin-bottom: 2px;">';
+					temp += catalog.SystemVal + '</h3>';
+					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
+					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
+					if (catalog.ConfirmedDeliveryDate!='')
+						temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Delivery Date '+ catalog.ConfirmedDeliveryDate+'</h4>';
+					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
+					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
+					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
+					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified +'</em></h6>';
+					temp += '</div></div></div>';
+					temp += '</td></tr></table>';
+					
+				$("#pnlProjectDetails-EquipmentList" ).html(temp);
+
+
+				$('#error-div2-EquipmentList').text("");
+				$('#error-div-EquipmentList').text("");
+					
+				$('#tblEquipmentList').show();
+				$('#tblEquipmentListButtons').show();
+				
+			}
+		}
+	catch(err) {}
+}
+
+
+
+function cancelStatusEquipmentList() {
+
+		NavigatePage('#pgHome');
+
+
+}
+function backStatusEquipmentList() {
+
+		GoToSectionWithID('ProjectOptions');
+
+}
+
+
+
 /******************* Load EMRF ***********************/
 $( document ).on( "pagebeforeshow", "#pgEMRF", function(event) {
 	checkUserLogin();

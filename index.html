@@ -277,13 +277,13 @@
 						</tr>
 						<tr>
 							 <td id="btnGoToEmailEquipment" style="border-top: 0px;padding:1px !important;">
-									<a href="javascript:void(0);" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" data-icon="mail" data-iconpos="left"  onclick="NavigatePage('#pgSearch');" >Email Equipment</a>
+									<a href="javascript:void(0);" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" data-icon="mail" data-iconpos="left"  onclick="GoToSectionWithID('EquipmentList')" >Email Equipment</a>
 
 							</td>
 							
 						</tr>					
 						<tr >
-							 <td id="btnGoToContacts" style="border-top: 0px;padding:1px !important;">
+							 <td id="btnGoBack" style="border-top: 0px;padding:1px !important;">
 									<a href="javascript:void(0);" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" data-icon="arrow-l" data-iconpos="left"  onclick="NavigatePage('#pgSearch');" >Back to Search</a>
 
 							</td>
@@ -1030,6 +1030,172 @@
 	
 
 
+
+
+
+
+
+	<div data-role="page" id="pgEquipmentList">
+	
+	    <div data-role="panel" id="pnlProjectDetails-EquipmentList" name="pnlProjectDetails-EquipmentList" style='height:200px;' data-theme="b" data-position="right" data-display="overlay"></div>
+	    <div data-role="panel" id="pnlProjectActivity-EquipmentList" name="pnlProjectActivity-EquipmentList"  data-theme="b" data-position="left" data-display="overlay"></div>
+	
+	
+        <div data-role="header" data-position="fixed">
+			<div style="display:none;"></div>
+			<table width="100%" cellspacing="0" cellpadding="0" class="header-table">
+				<tr>
+					<td class="header-left">
+						<div class="header-menu-button">
+							<a href="#popupMenu8" data-rel="popup" data-transition="slideup"><img src="Images/menu-button2.png" id="img-left-bars"></a>
+							<div data-role="popup" id="popupMenu8" data-theme="a">
+									<ul data-role="listview" data-inset="true" style="min-width:210px;">
+										<li data-role="list-divider">Choose an action</li>
+										<li><span class="spanLoginUser"></span></li>
+										<!--<li class="menu-back-btn"><a href="javascript:void(0);" onclick="goBack();">Back</a></li>-->
+										<li><a href="javascript:void(0);" onclick="goHome();">Home</a></li>
+										<li><a href="javascript:void(0);" onclick="NavigatePage('#pgSearch');">Search Projects</a></li>
+										<li><a href="javascript:void(0);" onclick="ShowHelp();">Help</a></li>
+										<li><a href="javascript:void(0);" onclick="RefrestApp();">Refresh App</a></li>
+										<li><a href="javascript:void(0);" onclick="SignOut();">Sign Out</a></li>
+									</ul>
+							</div>
+						</div>
+                    </td>
+					<td class="header-middle">
+						<a href="javascript: void(0);" onclick="goHome();" style="" class="appLogoLink"><img src="Images/toshiba-logo.png" id="img-toshiba-logo"></a>
+                    </td>
+                    <td class="header-right">
+						&nbsp;
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div role="main" class="ui-content" id="Content-EquipmentList">
+			<center>
+				<div id="divAddEquipmentList">
+					<div class="div-catalogs-list error-message" id="error-div-EquipmentList"></div>
+					<div class="div-catalogs-list success-message" id="success-div-EquipmentList"></div>
+
+
+						
+                                                            <table class="table table-condensed table-bordered" id="tblEquipmentList">
+                                                                <tbody>
+                                                                    <tr class="tr-title">
+                                                                        <td colspan="3" >Email To:</td>
+                                                                    </tr>
+														
+																	<tr>
+																				<td colspan="3" class="explain-field">
+																					
+																					<textarea class="form-control" name="txtEmailAddress" id="txtEmailAddress" rows="6" style="width: 100%;min-width:260px;" value=""></textarea>
+																				</td>																		
+
+                                                                    </tr>		
+   
+
+                                                                </tbody>
+                                                            </table>
+															
+
+					
+					<div data-role="controlgroup" id="tblEquipmentListButtons" data-type="horizontal" >
+						<a href="javascript:void(0);"  data-role="button" data-icon="mail" data-iconpos="left" style="padding-right:.5em !important;" onclick="EmailEquipmentList()">Email</a>
+						<a href="javascript:void(0);"  data-role="button" data-icon="delete" data-iconpos="left" onclick="cancelStatusEquipmentList()" style="padding-right:.5em !important;">Cancel</a>
+						<a href="javascript:void(0);" data-role="button" data-icon="back" data-iconpos="left" onclick="backStatusEquipmentList()" style="padding-right:.5em !important;">Back</a>
+					</div>
+					
+															
+					<table class="table add-status-buttons"  >
+						<tr ><td colspan="2" class="td-error-message" id="error-div2-EquipmentList" style="border-top: 0px;"></td></tr>
+
+						
+					</table>	
+
+					<style>
+					#EquipmentListGrid-regular th {
+						border-bottom: 1px solid #d6d6d6;
+					}
+
+					#EquipmentListGrid-regular tr:nth-child(even) {
+						background: #e9e9e9;
+					}
+					#EquipmentListGrid-regular tr {
+						font-size: xx-small;
+					}
+					
+					#EquipmentListGrid-below th {
+						border-bottom: 1px solid #d6d6d6;
+					}
+
+					#EquipmentListGrid-below tr:nth-child(even) {
+						background: #e9e9e9;
+					}
+					#EquipmentListGrid-below tr {
+						font-size: xx-small;
+					}
+
+					#EquipmentListGrid-vital th {
+						border-bottom: 1px solid #d6d6d6;
+					}
+
+					#EquipmentListGrid-vital tr:nth-child(even) {
+						background: #e9e9e9;
+					}
+					#EquipmentListGrid-vital tr {
+						font-size: xx-small;
+					}
+
+					#EquipmentListGrid-power th {
+						border-bottom: 1px solid #d6d6d6;
+					}
+
+					#EquipmentListGrid-power tr:nth-child(even) {
+						background: #e9e9e9;
+					}
+					#EquipmentListGrid-power tr {
+						font-size: xx-small;
+					}					
+					</style>
+										
+					
+					<div class="ui-grid-b ui-responsive" id="EquipmentListGrid" name="EquipmentListGrid" >
+				
+						<div  data-role="collapsible">
+							<h1>Regular Equipment List</h1>
+							<table id="EquipmentListGrid-regular" name="EquipmentListGrid-regular" data-role="table" data-mode="columntoggle" class="ui-responsive ui-shadow" ><thead><tr><th>Item</th><th>Description</th><th>Shipped</th><th>Qty</th></tr></thead><tbody></tbody></table>
+						</div>
+						<div  data-role="collapsible">
+							<h1>Below the Line Items</h1>
+							<table id="EquipmentListGrid-below" name="EquipmentListGrid-below" data-role="table" data-mode="columntoggle" class="ui-responsive ui-shadow" ><thead><tr><th>Item</th><th >Description</th><th >Qty</th></tr></thead><tbody></tbody></table>
+						</div>
+						<div  data-role="collapsible">
+							<h1>Vital Items</h1>
+							<table id="EquipmentListGrid-vital" name="EquipmentListGrid-vital" data-role="table" data-mode="columntoggle" class="ui-responsive ui-shadow" ><thead><tr><th>Item</th><th >Description</th><th >Qty</th></tr></thead><tbody></tbody></table>
+						</div>
+						<div  data-role="collapsible">
+							<h1>Powerware Items</h1>
+							<table id="EquipmentListGrid-power" name="EquipmentListGrid-power" data-role="table" data-mode="columntoggle" class="ui-responsive ui-shadow" ><thead><tr><th>Item</th><th d>Description</th><th >Qty</th></tr></thead><tbody></tbody></table>
+						</div>
+					
+					</div>
+
+
+
+
+
+					
+					</div>
+
+
+
+
+				</div>
+			</center>
+        </div>
+    </div>
+	
 
 
 
