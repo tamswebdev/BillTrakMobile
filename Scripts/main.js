@@ -645,6 +645,18 @@ $( document ).on( "pagebeforeshow", "#pgEquipmentList", function(event) {
 	//$("#EquipmentListGrid-below").text('');
 	//$("#EquipmentListGrid-vital").text('');
 	//$("#EquipmentListGrid-power").text('');
+	
+	$('#EquipmentListGrid-regular tbody').children("tr").remove();
+	$('#EquipmentListGrid-below tbody').children("tr").remove();
+	$('#EquipmentListGrid-vital tbody').children("tr").remove();
+	$('#EquipmentListGrid-power tbody').children("tr").remove();
+	
+	$('a[href="#EquipmentListGrid-regular-popup"]').hide();
+	$('a[href="#EquipmentListGrid-below-popup"]').hide();
+	$('a[href="#EquipmentListGrid-vital-popup"]').hide();
+	$('a[href="#EquipmentListGrid-power-popup"]').hide();
+	
+	
 	var id = $.urlParam("id");
 	if (id > 0)
 	{
@@ -764,7 +776,7 @@ function callbackLoadEquipmentList_regular(data)
 				var _url1 = serviceRootUrl + "svc.aspx?op=GetIPMActivity&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
 				Jsonp_Call(_url1, true, "callbackLoadEquipmentListSidePanelIPMActivity");
 
-				var _url2 = serviceRootUrl + "svc.aspx?op=GetProjectById&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+				var _url2 = serviceRootUrl + "svc.aspx?op=GetProjectHeaderById&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
 				Jsonp_Call(_url2, true, "callbackLoadEquipmentListSidePanel");
 
 			}
@@ -872,7 +884,81 @@ function backStatusEquipmentList() {
 
 }
 
+function EmailEquipmentList() {
 
+	if ($("#txtEmailAddress").val() != ""){		
+
+		$scope = {
+			recordId : $.urlParam("id"),
+			txtEmailAddress : $("#txtEmailAddress").val()
+		};
+
+
+		var	confirmMessage="";
+
+		
+		confirmMessage=confirmMessage + "Email equipment list and go back to project options?";
+		$('<div>').simpledialog2({
+			mode: 'blank',
+			headerText: 'Email equipment list',
+			headerClose: false,
+			transition: 'flip',
+			themeDialog: 'a',
+			width: 300,
+			zindex: 2000,
+			blankContent : 
+			  "<div style='padding: 15px;'><p>" + confirmMessage + "</p>"+
+			  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"EmailEquipmentListProcess('" + 'a' + "');\">OK</a></td>" + 
+			  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
+		});
+		
+	}
+	else
+	{
+		alert("Please enter email addresses.");
+	}
+	
+}
+
+	
+function EmailEquipmentListProcess(a)
+{
+	if ($scope) {
+		alert($scope.recordId);
+		//show saving animation
+		$('#error-div-EquipmentList').text("").append(getLoadingMini());
+		showTimedElem('error-div-EquipmentList');
+
+		
+		$('#tblEquipmentList').hide();
+		$('#tblEquipmentListsButtons').hide();
+
+		if ($scope.recordId != "" && parseInt($scope.recordId) > 0)
+		{
+			//showLoading(true);
+			var _url =  serviceRootUrl + "svc.aspx?op=EmailEquipmentList&SPUrl=" + spwebRootUrl + "sites/busops&id=" + $scope.recordId + "&emailaddress=" + $scope.txtEmailAddress+ "&username=" + userInfoData.Email + "&userid=" + userInfoData.UserID + "&authInfo=" + userInfoData.AuthenticationHeader + "&statusId=" + $scope.StatusId;
+			
+			console.log(_url);
+			
+			Jsonp_Call(_url, true, "callbackEmailEquipmentList");
+		}
+
+
+		
+	}
+}
+
+function callbackEmailEquipmentList(data)
+{
+	try {
+
+			$('#error-div2-EquipmentList').text("");
+			$('#error-div-EquipmentList').text("");
+			GoToSectionWithID('ProjectOptions');
+
+	}
+	catch(err) { }
+}
 
 /******************* Load EMRF ***********************/
 $( document ).on( "pagebeforeshow", "#pgEMRF", function(event) {
@@ -930,7 +1016,7 @@ function callbackLoadEMRF(data)
 				var _url1 = serviceRootUrl + "svc.aspx?op=GetIPMActivity&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
 				Jsonp_Call(_url1, true, "callbackLoadEMRFSidePanelIPMActivity");
 
-				var _url2 = serviceRootUrl + "svc.aspx?op=GetProjectById&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+				var _url2 = serviceRootUrl + "svc.aspx?op=GetProjectHeaderById&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
 				Jsonp_Call(_url2, true, "callbackLoadEMRFSidePanel");
 
 			}
@@ -1106,7 +1192,7 @@ function callbackLoadContacts(data)
 				var _url1 = serviceRootUrl + "svc.aspx?op=GetIPMActivity&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
 				Jsonp_Call(_url1, true, "callbackLoadContactsSidePanelIPMActivity");
 
-				var _url2 = serviceRootUrl + "svc.aspx?op=GetProjectById&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+				var _url2 = serviceRootUrl + "svc.aspx?op=GetProjectHeaderById&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
 				Jsonp_Call(_url2, true, "callbackLoadContactsSidePanel");
 
 			}
@@ -1270,7 +1356,7 @@ function callbackLoadSitePlanRequests(data)
 				var _url1 = serviceRootUrl + "svc.aspx?op=GetIPMActivity&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
 				Jsonp_Call(_url1, true, "callbackLoadSitePlanRequestsSidePanelIPMActivity");
 
-				var _url2 = serviceRootUrl + "svc.aspx?op=GetProjectById&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+				var _url2 = serviceRootUrl + "svc.aspx?op=GetProjectHeaderById&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
 				Jsonp_Call(_url2, true, "callbackLoadSitePlanRequestsSidePanel");
 
 			}
@@ -1452,7 +1538,7 @@ function callbackLoadIPMActivity(data)
 			if (id > 0)
 			{
 			
-				var _url2 = serviceRootUrl + "svc.aspx?op=GetProjectById&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+				var _url2 = serviceRootUrl + "svc.aspx?op=GetProjectHeaderById&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
 				Jsonp_Call(_url2, false, "callbackLoadIPMActivitySidePanel");
 			}
 
@@ -1566,7 +1652,6 @@ function backStatusIPMActivity() {
 
 
 
-
 function saveIPMActivity(isFinal) {
 
 	if ($("#txtComments").val() != ""){		
@@ -1575,7 +1660,7 @@ function saveIPMActivity(isFinal) {
 			recordId : $.urlParam("id"),
 			ddlActivityType : $("#ddlActivityType").val(),
 			txtComments : $("#txtComments").val(),		
-			txtActivityDate : $("#txtActivityDate").val(),
+			txtActivityDate : $("#txtActivityDate").val()
 
 		};
 
