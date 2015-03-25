@@ -924,7 +924,7 @@ function EmailEquipmentList() {
 function EmailEquipmentListProcess(a)
 {
 	if ($scope) {
-		alert($scope.recordId);
+	
 		//show saving animation
 		$('#error-div-EquipmentList').text("").append(getLoadingMini());
 		showTimedElem('error-div-EquipmentList');
