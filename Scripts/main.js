@@ -2464,7 +2464,7 @@ function SelectPhoto() {
 	   
      }  
      function snapwin(r) {  
-		saveIPMActivity(isFinal);
+		saveIPMActivity('Yes');
      }  
      function snapfail(error) {  
        alert("An error has occurred sending photo: Code = " + error.code);  
