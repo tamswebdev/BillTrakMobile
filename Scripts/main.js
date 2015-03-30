@@ -1943,9 +1943,9 @@ function saveIPMActivity(isFinal) {
 		confirmMessage=confirmMessage + "Add activity and go back to project options?";
 
 		
-		$('#error-div-IPMActivity').text("");
-		$('#tblIPMActivity').show();
-		$('#tblIPMActivitysButtons').show();	
+//		$('#error-div-IPMActivity').text("");
+//		$('#tblIPMActivity').show();
+//		$('#tblIPMActivitysButtons').show();	
 
 
 
@@ -1966,7 +1966,38 @@ function saveIPMActivity(isFinal) {
 	}
 	else
 	{
-		alert("Please enter some comments.");
+		if (isFinal=="CAM")
+		{
+				$scope = {
+					recordId : $.urlParam("id"),
+					ddlActivityType : $("#ddlActivityType").val(),
+					txtComments : "(Photo Uploaded)",		
+					txtActivityDate : $("#txtActivityDate").val()
+
+				};
+
+				var	confirmMessage="";
+				confirmMessage=confirmMessage + "Add activity and go back to project options?";
+
+
+				$('<div>').simpledialog2({
+					mode: 'blank',
+					headerText: 'Add activity',
+					headerClose: false,
+					transition: 'flip',
+					themeDialog: 'a',
+					width: 300,
+					zindex: 2000,
+					blankContent : 
+					  "<div style='padding: 15px;'><p>" + confirmMessage + "</p>"+
+					  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"SaveIPMActivityProcess('" + isFinal + "');\">OK</a></td>" + 
+					  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
+				});		
+		}
+		else
+		{
+			alert("Please enter some comments.");
+		}
 	}
 	
 }
@@ -2737,12 +2768,10 @@ function SelectPhoto() {
 	   var _url =  serviceRootUrl + "svc.aspx?op=UploadFile";
 
 	 
-		//show saving animation
-		$('#error-div-IPMActivity').text("").append(getLoadingMini());
-		showTimedElem('error-div-IPMActivity');
-		
-		$('#tblIPMActivity').hide();
-		$('#tblIPMActivitysButtons').hide();	
+//		$('#error-div-IPMActivity').text("").append(getLoadingMini());
+//		showTimedElem('error-div-IPMActivity');
+//		$('#tblIPMActivity').hide();
+	//	$('#tblIPMActivitysButtons').hide();	
 	   
        ft.upload(imageURI, encodeURI(_url), snapwin, snapfail, options); 
 			console.log(_url);
@@ -2755,7 +2784,7 @@ function SelectPhoto() {
      function snapwin(r) {  
  
 	 
-		saveIPMActivity('Yes');
+		saveIPMActivity('CAM');
      }  
      function snapfail(error) {  
        alert("An error has occurred sending photo: Code = " + error.code);  
