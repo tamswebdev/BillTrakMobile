@@ -2840,7 +2840,6 @@ function SelectPhoto() {
        var ft = new FileTransfer();  
 	   var _url =  serviceRootUrl + "svc.aspx?op=UploadFile";
 
-	 
 //		$('#error-div-IPMActivity').text("").append(getLoadingMini());
 //		showTimedElem('error-div-IPMActivity');
 //		$('#tblIPMActivity').hide();
