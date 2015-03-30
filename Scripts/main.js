@@ -381,7 +381,7 @@ function callbackPopulateSearchResults(data)
 					}
 					else
 					{
-								BookStatusIcon="empty_icon.gif";
+								BookStatusIcon="glyhicon-flag.png";
 					}
 					//Powered On Status
 					var PowerOnIcon="";					
@@ -1783,6 +1783,66 @@ $( document ).on( "pagebeforeshow", "#pgIPMActivity", function(event) {
 });
 
 
+function ShowPhoto(PhotoRecID) {
+
+	if (PhotoRecID && PhotoRecID > 0){		
+
+	
+	$('#tblIPMActivity').hide();
+	$('#tblIPMActivityButtons').hide();
+
+	$('#error-div-IPMActivity').text("").append(getLoadingMini());
+	
+		var _url = serviceRootUrl + "svc.aspx?op=GetIPMActivityPhoto&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + PhotoRecID ;
+		Jsonp_Call(_url, false, "ShowPhotoDialog");
+		
+
+		
+	}
+	else
+	{
+		alert("App Error.");
+	}
+	
+}
+
+
+function ShowPhotoDialog(data)
+{
+
+
+	try {
+
+
+				var catalog = data.d.results[0];
+
+								
+				$('<div>').simpledialog2({
+					mode: 'blank',
+					headerText: 'IPM Activity Photo',
+					headerClose: true,
+					transition: 'flip',
+					themeDialog: 'a',
+					useModal: true,
+					width: 300,
+					zindex: 2000,
+					blankContent : 
+					  "<div style='padding: 15px;'><img width='75%' alt='' title='' border=0 src=data:image/jpg;base64," + catalog.Base64ImageBytes +"></div>"
+				});
+						
+	$('#tblIPMActivity').show();
+	$('#tblIPMActivityButtons').show();
+
+	$('#error-div-IPMActivity').text("");
+							
+
+	}
+	catch(err) {}
+}
+
+
+
+
 
 function callbackLoadIPMActivity(data)
 {
@@ -1797,7 +1857,11 @@ function callbackLoadIPMActivity(data)
 			for(var i=0; i < data.d.results.length; i++)
 			{
 				var catalog = data.d.results[i];
-				var TableRow = $('<div style="margin: 5px 5px 5px 5px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ActivityDate +' - '+ catalog.CreatedBy +' - '+ catalog.ActivityType +'</span><br><span style="font-size:x-small;">'+ catalog.Comments  +'</span></div>');
+				var HasPhoto = "";
+
+				if (parseInt(catalog.HasPhoto) > 0)
+					HasPhoto = '<br><span style="font-size:x-small;"><a title="" style="text-decoration:none;" href="#" onclick="ShowPhoto('+ catalog.HasPhoto  +')"><u>View Photo</u></a></span>'
+				var TableRow = $('<div style="margin: 5px 5px 5px 5px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ActivityDate +' - '+ catalog.CreatedBy +' - '+ catalog.ActivityType +'</span><br><span style="font-size:x-small;">'+ catalog.Comments  +'</span>'+HasPhoto+'</div>');
 				TableRow.appendTo($("#IPMActivityGrid"));
 				
 				temp += '<div style="margin: 5px 5px 5px 5px;padding: 2px 2px 2px 2px;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ActivityDate +' - '+ catalog.CreatedBy +' - '+ catalog.ActivityType +'</span><br><span style="font-size:x-small;">'+ catalog.Comments  +'</span></div>';
@@ -1816,12 +1880,7 @@ function callbackLoadIPMActivity(data)
 				Jsonp_Call(_url2, false, "callbackLoadIPMActivitySidePanel");
 			}
 
-					
-//		}
-		else
-		{
-			//
-		}
+
 	}
 	catch(err) {}
 }
@@ -2755,6 +2814,14 @@ function SelectPhoto() {
      }  
      function uploadPhoto(imageURI) {  
 	   var options = new FileUploadOptions();  
+	   
+	   
+		var ddlActivityType = $("#ddlActivityType").val();
+		var txtComments = $("#txtComments").val();
+		var txtActivityDate = $("#txtActivityDate").val();
+		var SPURL=spwebRootUrl + "sites/busops";
+		if (!txtComments || txtComments=="" )
+			txtComments = "(Photo Uploaded)";
    
        options.fileKey="file";  
        options.fileName="c:\\logs\\MobileImages\\" + imageURI.substr(imageURI.lastIndexOf('/')+1);  
@@ -2763,6 +2830,12 @@ function SelectPhoto() {
        params.ProjectID = $.urlParam("id");  
        params.ProjectActivityID = "0";  
        params.CreatedBy = userInfoData.UserID ;  
+       params.ActivityType = ddlActivityType;  
+       params.Comments = txtComments;  
+       params.ActivityDate = txtActivityDate ;  
+       params.SPURL = SPURL ;  
+       params.UserName = userInfoData.Email ;  
+       params.authInfo = userInfoData.AuthenticationHeader ;  
        options.params = params;  
        var ft = new FileTransfer();  
 	   var _url =  serviceRootUrl + "svc.aspx?op=UploadFile";
@@ -2782,11 +2855,16 @@ function SelectPhoto() {
 	   
      }  
      function snapwin(r) {  
- 
+ 			$('#error-div2-IPMActivity').text("");
+			$('#error-div-IPMActivity').text("");
+			GoToSectionWithID('ProjectOptions');
 	 
-		saveIPMActivity('CAM');
+		//saveIPMActivity('CAM');
      }  
      function snapfail(error) {  
        alert("An error has occurred sending photo: Code = " + error.code);  
+		$('#error-div2-IPMActivity').text("");
+		$('#error-div-IPMActivity').text("");
+		GoToSectionWithID('ProjectOptions');
 
      }  
