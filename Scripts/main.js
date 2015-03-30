@@ -246,6 +246,7 @@ function callbackPopulateSearchResults(data)
 		{
 			for(var i=0; i < data.d.results.length; i++)
 			{
+		
 				var catalog = data.d.results[i];
 				var temp = "";
 				
@@ -273,7 +274,279 @@ function callbackPopulateSearchResults(data)
 				}
 				
 				//<a data-mini="true" data-inline="true" data-role="button" href="javascript: addStatusAction('+catalog.ID+');" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" class="ui-btn ui-shadow ui-btn-corner-all ui-mini ui-btn-inline ui-btn-up-c">
-				
+					
+
+					//installation status
+					var InstallationProgressIcon="";
+					if (catalog.InstallationProgress)
+					{
+						switch (catalog.InstallationProgress.toUpperCase())
+						{
+							case "COMPLETE":
+								InstallationProgressIcon="glyhicon-ok.png";
+								break;
+							case "ON TARGET":
+								InstallationProgressIcon="glyhicon-stop-green.png";
+								break;
+							default:
+								InstallationProgressIcon="glyhicon-stop-red.png";
+								break;
+						}
+					}
+					else
+					{
+						InstallationProgressIcon="glyhicon-stop-red.png";
+					
+					}					
+										
+					//site readiness status
+					var ConstructionProgressIcon="";
+
+					if (catalog.ConstructionProgress)
+					{					
+	
+						switch (catalog.ConstructionProgress.toUpperCase())
+						{
+							case "COMPLETE":
+								ConstructionProgressIcon="glyhicon-ok.png";
+								break;
+							case "ON TARGET":
+								ConstructionProgressIcon="glyhicon-stop-green.png";
+								break;
+							default:
+								ConstructionProgressIcon="glyhicon-stop-red.png";
+								break;
+						}
+					}
+					else
+					{
+						ConstructionProgressIcon="glyhicon-stop-red.png";
+					
+					}					
+					
+					
+					//finance status
+					var FinanceProgressIcon="";					
+					if (catalog.FinanceProgress)
+					{					
+						switch (catalog.FinanceProgress.toUpperCase())
+						{
+							case "COMPLETE":
+								FinanceProgressIcon="glyhicon-ok.png";
+								break;
+							case "ON TARGET":
+								FinanceProgressIcon="glyhicon-stop-green.png";
+								break;
+							default:
+								FinanceProgressIcon="glyhicon-stop-red.png";
+								break;
+								
+						}
+					}
+					else
+					{
+						FinanceProgressIcon="glyhicon-stop-red.png";
+					
+					}
+					
+					
+					//booking status
+					var BookStatusIcon="";					
+					if (catalog.BookStatus)
+					{					
+						switch (catalog.BookStatus.toUpperCase())
+						{
+							case "APPROVED":
+								BookStatusIcon="glyhicon-ok.png";
+								break;
+							case "CONTINGENT":
+								BookStatusIcon="empty_icon.gif";
+								break;							
+							case "C":
+								BookStatusIcon="glyhicon-stop-green.png";
+								break;
+							case "UNAPPROVED":
+								BookStatusIcon="glyhicon-stop-red.png";
+								break;
+							case "FORECASTED":
+								BookStatusIcon="empty_icon.gif";
+								break;
+							case "":
+								BookStatusIcon="glyhicon-flag.png";
+								break;
+							default:
+								BookStatusIcon="glyhicon-flag.png";
+								break;
+						}
+					}
+					else
+					{
+								BookStatusIcon="empty_icon.gif";
+					}
+					//Powered On Status
+					var PowerOnIcon="";					
+					if (!catalog.RDOPowerOn)
+					{					
+								PowerOnIcon="empty_icon.gif";
+					}
+					else {					
+
+								PowerOnIcon="glyhicon-ok.png";
+					}
+
+					
+					//Cfg. Validated Status
+					var ConfigIcon="";					
+					if (catalog.Config)
+					{					
+						switch (catalog.Config.toUpperCase())
+						{
+							case "VALID":
+								ConfigIcon="glyhicon-ok.png";
+								break;
+							case "INVALID":
+								ConfigIcon="glyhicon-remove.png";
+								break;							
+							default:
+								ConfigIcon="glyhicon-exclamation.png";
+								break;
+						}
+					}
+					else
+					{
+								ConfigIcon="glyhicon-exclamation.png";
+					}
+
+					//Cfm. Delivery Status            
+					var DeliveryIcon="";					
+					
+					var confirmedDeliveryDate =new Date();
+					var siteReadyDate = new Date();
+					
+					if (catalog.ConfirmedDeliveryDate)
+						confirmedDeliveryDate = new Date(catalog.ConfirmedDeliveryDate);
+					if (catalog.ForecastedSiteReadyDate)
+						siteReadyDate = new Date(catalog.ForecastedSiteReadyDate);
+
+
+			
+					if (catalog.ConfirmedDeliveryDate && catalog.ForecastedSiteReadyDate)
+					{
+
+						if ((siteReadyDate - confirmedDeliveryDate)/(1000*60*60*24) >= 0)
+						{
+								DeliveryIcon="glyhicon-ok.png";
+						}
+						else
+						{
+								DeliveryIcon="glyhicon-flag.png";
+						}    					
+					}
+					else if (catalog.ConfirmedDeliveryDate && !catalog.ForecastedSiteReadyDate)
+					{
+								DeliveryIcon="glyhicon-ok.png";
+					
+					}
+					else 
+					{
+								DeliveryIcon="empty_icon.gif";
+ 					
+					}	
+
+					//EMRF Status
+					var EMRFIcon="";
+					var RiggersDate = new Date();
+					var Now = new Date();
+					if (catalog.RiggersDate)
+						RiggersDate = new Date(catalog.RiggersDate);
+		
+					if (catalog.RiggersDate)
+					{
+						if ((RiggersDate - Now)/(1000*60*60*24) <= 14)
+						{
+							if (parseInt(catalog.NumberOfEMRs) > 0)
+							{
+								EMRFIcon="glyhicon-stop-green.png";
+							}
+							else
+							{
+								EMRFIcon="glyhicon-stop-red.png";
+							}
+						}
+						else
+						{
+							if (parseInt(catalog.NumberOfEMRs) > 0)
+							{
+								EMRFIcon="glyhicon-stop-green.png";
+							}
+							else
+							{
+								EMRFIcon="empty_icon.gif";
+							}
+						}
+					}
+					else if (parseInt(catalog.NumberOfEMRs) > 0)
+					{
+								EMRFIcon="glyhicon-stop-green.png";
+					}
+					else
+					{
+								EMRFIcon="empty_icon.gif";
+					}
+
+
+
+					temp += '<table class="search-item" ><tr><td style="width:3px;background-color:'+ ModalityColorCode +'">&nbsp;</td>';
+					temp += '<td><div id="ProjectCard" class="panel-body" style="padding-bottom: 0">';
+					temp += '<a href="javascript: EditProjectDetailsAction('+catalog.ProjectID+');" style="text-decoration:none;color: inherit; display: block;">'
+					temp += '<h2 style="color: blue; margin-top: 2px; margin-bottom: 2px;">';
+					temp += catalog.AccountName + '</h2>';
+					temp += '<div class="row"><div class="col-lg-6 col-md-6"><h3 style="margin-top: 2px; margin-bottom: 2px;">';
+					temp += catalog.SystemVal + '</h3>';
+					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
+					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
+					if (catalog.ConfirmedDeliveryDate!='')
+						temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Delivery Date '+ catalog.ConfirmedDeliveryDate+'</h4>';
+					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
+					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
+					temp += '<h6 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h6>';
+					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified +'</em></h6>';
+
+
+					temp += '<style>.tblDashboard {margin-top: 0px; margin-bottom: 0px;font-size:xx-small;} .tblDashboard td{text-align:center;border: 1px solid lightgrey;width:50px;font-size:xx-small !important;}</style>';
+					temp += '<table  class="tblDashboard" cellpadding=0 border=0 cellspacing=0><tr>';
+					temp += '<td style="border: 0px;"></td><td>BK</td><td>FN</td><td>CV</td><td>CD</td></tr>'
+					temp += '<tr style="height:25px;"><td style="border: 0px;"></td><td><img src="images/'+BookStatusIcon+'" border=0></td><td><img src="images/'+FinanceProgressIcon+'" border=0></td><td><img src="images/'+ConfigIcon+'" border=0></td><td><img src="images/'+DeliveryIcon+'" border=0></td></tr>'
+					temp += '<tr><td>Conf.Level</td><td>SR</td><td>EM</td><td>IN</td><td>PO</td></tr>';
+					temp += '<tr style="height:25px;"><td>'+catalog.Confidence+'</td><td><img src="images/'+ConstructionProgressIcon+'" border=0></td><td><img src="images/'+EMRFIcon+'" border=0></td><td><img src="images/'+InstallationProgressIcon+'" border=0></td><td><img src="images/'+PowerOnIcon+'" border=0></td></tr></table>';
+
+
+
+					temp += '</div></div></div>';
+					temp += '</td></tr></table>';
+					
+
+/*
+					temp += '<table class="search-item" ><tr><td style="width:3px;background-color:'+ ModalityColorCode +'">&nbsp;</td><td>';
+					temp += '<div id="ProjectCard" class="panel-body" style="padding-bottom: 0">';
+					temp += '<a href="javascript: EditProjectDetailsAction('+catalog.ProjectID+');" style="text-decoration:none;color: inherit; display: block;">'
+					temp += '<h2 style="color: blue; margin-top: 2px; margin-bottom: 2px;">';
+					temp += catalog.AccountName + '</h2>';
+					temp += '<div class="row"><div class="col-lg-6 col-md-6"><h3 style="margin-top: 2px; margin-bottom: 2px;">';
+					temp += catalog.SystemVal + '</h3>';
+					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
+					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
+					if (catalog.ConfirmedDeliveryDate!='')
+						temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Delivery Date '+ catalog.ConfirmedDeliveryDate+'</h4>';
+					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
+					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
+					temp += '<h6 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h6>';
+					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified +'</em></h6>';
+					temp += '</div></div></div>';
+					temp += '</td></tr></table>';
+
+
+
 				
 					temp += '<table class="search-item" ><tr><td style="width:3px;background-color:'+ ModalityColorCode +'">&nbsp;</td><td>';
 					temp += '<div id="ProjectCard" class="panel-body" style="padding-bottom: 0">';
@@ -288,15 +561,12 @@ function callbackPopulateSearchResults(data)
 						temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Delivery Date '+ catalog.ConfirmedDeliveryDate+'</h4>';
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
-					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
-					temp += '<input type="hidden" name="hfCurrentMode" id="hfCurrentMode" value="READONLY"></div><div class="col-lg-6 col-md-6 pull-right" style="padding-right: 0; margin-right: 0;">';
-					//temp += '<style>table td, table th {border: 1px solid #dddddd;}</style>';
-					temp += '<table class="table table-condensed" style="margin-bottom:0; margin-right:0; border:0px; margin-top:0;"><tbody>';
-					temp += '<tr><td style="text-align: left; width: 250px;	border: 1px solid #dddddd;">Last Modified: ' + catalog.Modified +'</td></tr>';
-					temp += '</tbody></table></div></div></a></div>';
+					temp += '<div style="margin-top: 2px;float:left;font-size:xx-small;">'+ catalog.ZoneName + ' Zone</div><div style="font-size:xx-small;float:right;margin-top: 2px;">';
+					temp += '<em>Last Update: ' + catalog.Modified +'</em></div>';
+					temp += '</div></div></div>';
 					temp += '</td></tr></table>';
-				
-				
+*/
+
 
 				$( "#divSearchResults" ).append(temp);
 			}
@@ -572,10 +842,10 @@ function GoToProjectDetails() {
 /******************* Swipe Construction ***********************/
 $(document).on('pageinit',"#pgConstruction",function(event){
 
-	$("#divAddStatus").on("swipeleft",function(){
+	$("#pgConstruction").on("swipeleft",function(){
 		$("#pnlProjectDetails").panel( "open");
 	});
-	$("#divAddStatus").on("swiperight",function(){
+	$("#pgConstruction").on("swiperight",function(){
 		$("#pnlProjectActivity").panel( "open");
 	});
 });
@@ -583,10 +853,10 @@ $(document).on('pageinit',"#pgConstruction",function(event){
 /******************* Swipe IPM Activity ***********************/
 $(document).on('pageinit',"#pgIPMActivity",function(event){
 
-	$("#divAddIPMActivity").on("swipeleft",function(){
+	$("#pgIPMActivity").on("swipeleft",function(){
 		$("#pnlProjectDetails-IPMActivity").panel( "open");
 	});
-	$("#divAddIPMActivity").on("swiperight",function(){
+	$("#pgIPMActivity").on("swiperight",function(){
 		$("#pnlProjectActivity-IPMActivity").panel( "open");
 	});
 });
@@ -594,10 +864,10 @@ $(document).on('pageinit',"#pgIPMActivity",function(event){
 /******************* Swipe SPR ***********************/
 $(document).on('pageinit',"#pgSitePlanRequests",function(event){
 
-	$("#divAddSitePlanRequests").on("swipeleft",function(){
+	$("#pgSitePlanRequests").on("swipeleft",function(){
 		$("#pnlProjectDetails-SitePlanRequests").panel( "open");
 	});
-	$("#divAddSitePlanRequests").on("swiperight",function(){
+	$("#pgSitePlanRequests").on("swiperight",function(){
 		$("#pnlProjectActivity-SitePlanRequests").panel( "open");
 	});
 });
@@ -606,10 +876,10 @@ $(document).on('pageinit',"#pgSitePlanRequests",function(event){
 /******************* Swipe EMRF ***********************/
 $(document).on('pageinit',"#pgEMRF",function(event){
 
-	$("#divAddEMRF").on("swipeleft",function(){
+	$("#pgEMRF").on("swipeleft",function(){
 		$("#pnlProjectDetails-EMRF").panel( "open");
 	});
-	$("#divAddEMRF").on("swiperight",function(){
+	$("#pgEMRF").on("swiperight",function(){
 		$("#pnlProjectActivity-EMRF").panel( "open");
 	});
 });
@@ -617,10 +887,10 @@ $(document).on('pageinit',"#pgEMRF",function(event){
 /******************* Swipe EquipmentList ***********************/
 $(document).on('pageinit',"#pgEquipmentList",function(event){
 
-	$("#divAddEquipmentList").on("swipeleft",function(){
+	$("#pgEquipmentList").on("swipeleft",function(){
 		$("#pnlProjectDetails-EquipmentList").panel( "open");
 	});
-	$("#divAddEquipmentList").on("swiperight",function(){
+	$("#pgEquipmentList").on("swiperight",function(){
 		$("#pnlProjectActivity-EquipmentList").panel( "open");
 	});
 });
@@ -639,7 +909,11 @@ $( document ).on( "pagebeforeshow", "#pgEquipmentList", function(event) {
 //	$("#ddlSortBy-EquipmentList").val('ShipToSite').selectmenu('refresh', true);
 	$("#txtEmailAddress").val('');
 
-		
+			
+	$('#divCollapsibleregular').collapsible( "option", 'collapsed',true );
+	$('#divCollapsiblebelow').collapsible( "option", 'collapsed',true );
+	$('#divCollapsiblevital').collapsible( "option", 'collapsed',true );
+	$('#divCollapsiblepower').collapsible( "option", 'collapsed',true );
 	//$("#EquipmentListGrid").text('');
 	//$("#EquipmentListGrid-regular").text('');
 	//$("#EquipmentListGrid-below").text('');
@@ -1128,10 +1402,10 @@ function backStatusEMRF() {
 /******************* Swipe Contacts ***********************/
 $(document).on('pageinit',"#pgContacts",function(event){
 
-	$("#divAddContacts").on("swipeleft",function(){
+	$("#pgContacts").on("swipeleft",function(){
 		$("#pnlProjectDetails-Contacts").panel( "open");
 	});
-	$("#divAddContacts").on("swiperight",function(){
+	$("#pgContacts").on("swiperight",function(){
 		$("#pnlProjectActivity-Contacts").panel( "open");
 	});
 });
@@ -1665,15 +1939,16 @@ function saveIPMActivity(isFinal) {
 		};
 
 		
-		
-
-
 		var	confirmMessage="";
-		
+		confirmMessage=confirmMessage + "Add activity and go back to project options?";
 
 		
-		
-		confirmMessage=confirmMessage + "Add activity and go back to project options?";
+		$('#error-div-IPMActivity').text("");
+		$('#tblIPMActivity').show();
+		$('#tblIPMActivitysButtons').show();	
+
+
+
 		$('<div>').simpledialog2({
 			mode: 'blank',
 			headerText: 'Add activity',
@@ -1847,8 +2122,8 @@ function callbackLoadProjectDetail(data)
 			$("#hdnExpectedBillDate").val(catalog.ExpectedBillDate);
 			$("#hdnBookStatus").val(catalog.BookStatus);
 
-		
-			SetRadioValue('SR_Construction_Progress', catalog.ConstructionProgress);
+			if (catalog.ConstructionProgress){
+				SetRadioValue('SR_Construction_Progress', catalog.ConstructionProgress);}
 			SetRadioValue('rbIP_Installation_Status', catalog.IPMStatus);
 			SetRadioValue('SR_Required', catalog.ConstructionRequired);
 
@@ -2426,7 +2701,10 @@ function SnapPhoto() {
          {  
            quality     : 50,  
            destinationType : navigator.camera.DestinationType.FILE_URI,  
-           sourceType   : navigator.camera.PictureSourceType.CAMERA  
+           sourceType   : navigator.camera.PictureSourceType.CAMERA,
+		   encodingType: navigator.camera.EncodingType.JPEG,
+		   targetWidth: 640,
+		   targetHeight: 480
          }  
        );  
      }  
@@ -2437,7 +2715,10 @@ function SelectPhoto() {
          {  
            quality     : 50,  
            destinationType : navigator.camera.DestinationType.FILE_URI,  
-           sourceType   : navigator.camera.PictureSourceType.PHOTOLIBRARY  
+           sourceType   : navigator.camera.PictureSourceType.PHOTOLIBRARY,  
+		   encodingType: navigator.camera.EncodingType.JPEG,
+		   targetWidth: 640,
+		   targetHeight: 480
          }  
        );  
      }  
@@ -2449,11 +2730,19 @@ function SelectPhoto() {
        options.mimeType="image/jpeg";  
        var params = {};  
        params.ProjectID = $.urlParam("id");  
-       params.ProjectActivityID = "2";  
+       params.ProjectActivityID = "0";  
        params.CreatedBy = userInfoData.UserID ;  
        options.params = params;  
        var ft = new FileTransfer();  
 	   var _url =  serviceRootUrl + "svc.aspx?op=UploadFile";
+
+	 
+		//show saving animation
+		$('#error-div-IPMActivity').text("").append(getLoadingMini());
+		showTimedElem('error-div-IPMActivity');
+		
+		$('#tblIPMActivity').hide();
+		$('#tblIPMActivitysButtons').hide();	
 	   
        ft.upload(imageURI, encodeURI(_url), snapwin, snapfail, options); 
 			console.log(_url);
@@ -2464,11 +2753,11 @@ function SelectPhoto() {
 	   
      }  
      function snapwin(r) {  
+ 
+	 
 		saveIPMActivity('Yes');
      }  
      function snapfail(error) {  
        alert("An error has occurred sending photo: Code = " + error.code);  
 
      }  
-
-

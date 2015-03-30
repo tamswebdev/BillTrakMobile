@@ -310,7 +310,7 @@
 
 
 
-	<div data-role="page" id="pgConstruction">
+	<div data-role="page" id="pgConstruction" style="min-height: 560px !important;">
 	
 	    <div data-role="panel" id="pnlProjectDetails" name="pnlProjectDetails" style='height:200px;' data-theme="b" data-position="right" data-display="overlay"></div>
 	    <div data-role="panel" id="pnlProjectActivity" name="pnlProjectActivity"  data-theme="b" data-position="left" data-display="overlay"></div>
@@ -637,7 +637,7 @@
 
 
 
-	<div data-role="page" id="pgIPMActivity">
+	<div data-role="page" id="pgIPMActivity" style="min-height: 560px !important;">
 	
 	    <div data-role="panel" id="pnlProjectDetails-IPMActivity" name="pnlProjectDetails-IPMActivity" style='height:200px;' data-theme="b" data-position="right" data-display="overlay"></div>
 	    <div data-role="panel" id="pnlProjectActivity-IPMActivity" name="pnlProjectActivity-IPMActivity"  data-theme="b" data-position="left" data-display="overlay"></div>
@@ -769,7 +769,7 @@
 
 
 
-	<div data-role="page" id="pgSitePlanRequests">
+	<div data-role="page" id="pgSitePlanRequests" style="min-height: 560px !important;">
 	
 	    <div data-role="panel" id="pnlProjectDetails-SitePlanRequests" name="pnlProjectDetails-SitePlanRequests" style='height:200px;' data-theme="b" data-position="right" data-display="overlay"></div>
 	    <div data-role="panel" id="pnlProjectActivity-SitePlanRequests" name="pnlProjectActivity-SitePlanRequests"  data-theme="b" data-position="left" data-display="overlay"></div>
@@ -859,7 +859,7 @@
 
 
 
-	<div data-role="page" id="pgEMRF">
+	<div data-role="page" id="pgEMRF"  style="min-height: 560px !important;">
 	
 	    <div data-role="panel" id="pnlProjectDetails-EMRF" name="pnlProjectDetails-EMRF" style='height:200px;' data-theme="b" data-position="right" data-display="overlay"></div>
 	    <div data-role="panel" id="pnlProjectActivity-EMRF" name="pnlProjectActivity-EMRF"  data-theme="b" data-position="left" data-display="overlay"></div>
@@ -946,7 +946,7 @@
 
 
 
-	<div data-role="page" id="pgContacts">
+	<div data-role="page" id="pgContacts" style="min-height: 560px !important;">
 	
 	    <div data-role="panel" id="pnlProjectDetails-Contacts" name="pnlProjectDetails-Contacts" style='height:200px;' data-theme="b" data-position="right" data-display="overlay"></div>
 	    <div data-role="panel" id="pnlProjectActivity-Contacts" name="pnlProjectActivity-Contacts"  data-theme="b" data-position="left" data-display="overlay"></div>
@@ -1036,7 +1036,7 @@
 
 
 
-	<div data-role="page" id="pgEquipmentList">
+	<div data-role="page" id="pgEquipmentList"  style="min-height: 560px !important;">
 	
 	    <div data-role="panel" id="pnlProjectDetails-EquipmentList" name="pnlProjectDetails-EquipmentList" style='height:200px;' data-theme="b" data-position="right" data-display="overlay"></div>
 	    <div data-role="panel" id="pnlProjectActivity-EquipmentList" name="pnlProjectActivity-EquipmentList"  data-theme="b" data-position="left" data-display="overlay"></div>
@@ -1163,19 +1163,19 @@
 					
 					<div class="ui-grid-b ui-responsive" id="EquipmentListGrid" name="EquipmentListGrid" >
 				
-						<div  data-role="collapsible">
+						<div  data-role="collapsible"  id="divCollapsibleregular" name="divCollapsibleregular" >
 							<h1>Regular Equipment List</h1>
-							<table id="EquipmentListGrid-regular" name="EquipmentListGrid-regular" data-role="table" data-mode="columntoggle" class="ui-responsive ui-shadow" ><thead><tr><th>Item</th><th>Description</th><th>Shipped</th><th>Qty</th></tr></thead><tbody></tbody></table>
+							<table id="EquipmentListGrid-regular" name="EquipmentListGrid-regular"  data-role="table" data-mode="columntoggle" class="ui-responsive ui-shadow" ><thead><tr><th>Item</th><th>Description</th><th>Shipped</th><th>Qty</th></tr></thead><tbody></tbody></table>
 						</div>
-						<div  data-role="collapsible">
+						<div  data-role="collapsible" id="divCollapsiblebelow" name="divCollapsiblebelow" >
 							<h1>Below the Line Items</h1>
 							<table id="EquipmentListGrid-below" name="EquipmentListGrid-below" data-role="table" data-mode="columntoggle" class="ui-responsive ui-shadow" ><thead><tr><th>Item</th><th >Description</th><th >Qty</th></tr></thead><tbody></tbody></table>
 						</div>
-						<div  data-role="collapsible">
+						<div  data-role="collapsible" id="divCollapsiblevital" name="divCollapsiblevital" >
 							<h1>Vital Items</h1>
-							<table id="EquipmentListGrid-vital" name="EquipmentListGrid-vital" data-role="table" data-mode="columntoggle" class="ui-responsive ui-shadow" ><thead><tr><th>Item</th><th >Description</th><th >Qty</th></tr></thead><tbody></tbody></table>
+							<table id="EquipmentListGrid-vital" name="EquipmentListGrid-vital"  data-role="table" data-mode="columntoggle" class="ui-responsive ui-shadow" ><thead><tr><th>Item</th><th >Description</th><th >Qty</th></tr></thead><tbody></tbody></table>
 						</div>
-						<div  data-role="collapsible">
+						<div  data-role="collapsible" id="divCollapsiblepower" name="divCollapsiblepower" >
 							<h1>Powerware Items</h1>
 							<table id="EquipmentListGrid-power" name="EquipmentListGrid-power" data-role="table" data-mode="columntoggle" class="ui-responsive ui-shadow" ><thead><tr><th>Item</th><th d>Description</th><th >Qty</th></tr></thead><tbody></tbody></table>
 						</div>
