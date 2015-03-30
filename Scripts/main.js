@@ -516,9 +516,9 @@ function callbackPopulateSearchResults(data)
 					temp += '<style>.tblDashboard {margin-top: 0px; margin-bottom: 0px;font-size:xx-small;} .tblDashboard td{text-align:center;border: 1px solid lightgrey;width:50px;font-size:xx-small !important;}</style>';
 					temp += '<table  class="tblDashboard" cellpadding=0 border=0 cellspacing=0><tr>';
 					temp += '<td style="border: 0px;"></td><td>BK</td><td>FN</td><td>CV</td><td>CD</td></tr>'
-					temp += '<tr style="height:25px;"><td style="border: 0px;"></td><td><img src="images/'+BookStatusIcon+'" border=0></td><td><img src="images/'+FinanceProgressIcon+'" border=0></td><td><img src="images/'+ConfigIcon+'" border=0></td><td><img src="images/'+DeliveryIcon+'" border=0></td></tr>'
+					temp += '<tr style="height:25px;"><td style="border: 0px;"></td><td><img src="Images/'+BookStatusIcon+'" border=0></td><td><img src="Images/'+FinanceProgressIcon+'" border=0></td><td><img src="Images/'+ConfigIcon+'" border=0></td><td><img src="Images/'+DeliveryIcon+'" border=0></td></tr>'
 					temp += '<tr><td>Conf.Level</td><td>SR</td><td>EM</td><td>IN</td><td>PO</td></tr>';
-					temp += '<tr style="height:25px;"><td>'+catalog.Confidence+'</td><td><img src="images/'+ConstructionProgressIcon+'" border=0></td><td><img src="images/'+EMRFIcon+'" border=0></td><td><img src="images/'+InstallationProgressIcon+'" border=0></td><td><img src="images/'+PowerOnIcon+'" border=0></td></tr></table>';
+					temp += '<tr style="height:25px;"><td>'+catalog.Confidence+'</td><td><img src="Images/'+ConstructionProgressIcon+'" border=0></td><td><img src="Images/'+EMRFIcon+'" border=0></td><td><img src="Images/'+InstallationProgressIcon+'" border=0></td><td><img src="Images/'+PowerOnIcon+'" border=0></td></tr></table>';
 
 
 
