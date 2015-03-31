@@ -1270,11 +1270,8 @@ $( document ).on( "pagebeforeshow", "#pgEMRF", function(event) {
 		///
 			alert("App Error");
 	}
-	
 
-	
 });
-
 
 
 function callbackLoadEMRF(data)
@@ -1458,7 +1455,6 @@ function callbackLoadContacts(data)
 
 	try {
 
-		
 //		if (data.d.results.length > 0)
 //		{
 			for(var i=0; i < data.d.results.length; i++)
@@ -1513,7 +1509,6 @@ function callbackLoadContactsSidePanelIPMActivity(data)
 
 			$("#pnlProjectActivity-Contacts" ).html(temp);
 
-					
 		}
 		else
 		{
@@ -1530,6 +1525,7 @@ function callbackLoadContactsSidePanel(data)
 
 
 	try {
+		
 		
 	
 			if (data.d.results.length > 0)
@@ -1556,7 +1552,6 @@ function callbackLoadContactsSidePanel(data)
 					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified +'</em></h6>';
 					temp += '</div></div></div>';
 					temp += '</td></tr></table>';
-					
 				$("#pnlProjectDetails-Contacts" ).html(temp);
 
 
@@ -1566,6 +1561,10 @@ function callbackLoadContactsSidePanel(data)
 				$('#tblContacts').show();
 				$('#tblContactsButtons').show();
 				
+			}
+			else
+			{
+				alert("App error");
 			}
 		}
 	catch(err) {}
@@ -1829,7 +1828,7 @@ function ShowPhotoDialog(data)
 								
 				$('<div>').simpledialog2({
 					mode: 'blank',
-					headerText: 'IPM Activity Photo',
+					headerText: 'View Photo',
 					headerClose: true,
 					transition: 'flip',
 					themeDialog: 'a',
