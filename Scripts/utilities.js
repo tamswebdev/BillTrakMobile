@@ -184,6 +184,11 @@ function getISODateString(DateString)
 	}
 }
 
+function getISONow()
+{
+		var d = new Date();
+		return d.toISOString().substring(0,10);
+}
 
 function isNumber(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);

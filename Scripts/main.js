@@ -510,7 +510,6 @@ function callbackPopulateSearchResults(data)
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
 					temp += '<h6 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h6>';
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified +'</em></h6>';
 
 
 					temp += '<style>.tblDashboard {margin-top: 0px; margin-bottom: 0px;font-size:xx-small;} .tblDashboard td{text-align:center;border: 1px solid lightgrey;width:50px;font-size:xx-small !important;}</style>';
@@ -520,6 +519,7 @@ function callbackPopulateSearchResults(data)
 					temp += '<tr><td>Conf.Level</td><td>SR</td><td>EM</td><td>IN</td><td>PO</td></tr>';
 					temp += '<tr style="height:25px;"><td>'+catalog.Confidence+'</td><td><img src="Images/'+ConstructionProgressIcon+'" border=0></td><td><img src="Images/'+EMRFIcon+'" border=0></td><td><img src="Images/'+InstallationProgressIcon+'" border=0></td><td><img src="Images/'+PowerOnIcon+'" border=0></td></tr></table>';
 
+					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified +'</em></h6>';
 
 
 					temp += '</div></div></div>';
@@ -595,240 +595,6 @@ function callbackPopulateSearchResults(data)
 
 
 
-
-/******************* History ***********************/
-$( document ).on( "pagebeforeshow", "#pgHistory", function(event) {	
-	checkUserLogin();
-	
-	$( "#divHistoryResults" ).text("").append(getLoadingImg());	
-	
-	var _url = serviceRootUrl + "svc.aspx?op=GetHistoryStatuses&SPUrl=" + spwebRootUrl + "sites/busops&authInfo=" + userInfoData.AuthenticationHeader;
-	Jsonp_Call(_url, false, "callbackPopulateHistories");
-});
-
-function callbackPopulateHistories(data)
-{
-	try {
-		//console.log(data);
-		if (data.d.results.length > 0)
-		{
-			$( "#divHistoryResults" ).text("");
-			
-			for(var i=0; i < data.d.results.length; i++)
-			{
-				var status = data.d.results[i];
-				var temp = "";
-					temp += '<table class="table-catalog-info">';
-						temp += '<tr>';
-							temp += '<td class="catalog-info">';
-								temp += '<div class="col-xs-12 div-history-status-info history-collapsed itemid_' + status.ID + '">';
-									temp += '<table width="100%" cellpadding="0" cellspacing="0"><tr><td onclick="toggleHistoryStatusDetails(this)"  valign="top">';
-										temp += '<table width="100%" cellpadding="0" cellspacing="0"><tr>';
-										temp += '<td rowspan="2" class="collapsed-expanded-icon" valign="middle"><div>&nbsp;</div></td>';
-										temp += '<td valign="top"><span class="head-cat"><b>' + status.Modality + ' (' + status.SystemType + ')</b></span></td>';										
-										temp += '<td align="right">' + status.Modified + '</td></tr>';
-										temp += '<tr><td valign="top">Serial #: ' + status.SerialNumber + '</td>';
-										temp += '<td align="right">Submission: <i>' + (status.IsFinal == "Yes" ? "<b>Final</b>" : "Draft") + '</i></td></tr>';
-										temp += '</table>';
-										
-									if (status.IsFinal == "No")
-										temp += "</td><td width='40' align='right' valign='middle'> <a href=''javascript:void(0);' onclick='NavigatePage(\"#pgAddStatus?sid=" + status.ID + "\")' class='ui-btn ui-icon-edit ui-mini ui-btn-icon-notext'></a>";
-									else
-										temp += "</td><td width='40' align='right' valign='middle'> <a href='javascript:void(0);' class='ui-btn ui-icon-edit ui-mini ui-btn-icon-notext ui-disabled'></a>";
-									temp += "</td></tr></table>";
-								temp += '</div>  ';
-								temp += '<div id="divHistoryStatusDetails">  ';
-									temp += '<table width="100%">';
-										temp += '<tr>';
-											temp += '<td class="history-item-title" width="30%">System serial number:</td>';
-											temp += '<td class="history-item-value" width="70%">' + status.SerialNumber + '</td>';
-										temp += '</tr>';
-										temp += '<tr>';
-											temp += '<td class="history-item-title">Software version:</td>';
-											temp += '<td class="history-item-value">' + status.SoftwareVersion + '</td>';
-										temp += '</tr>';
-										temp += '<tr>';
-											temp += '<td class="history-item-title">Revision Level:</td>';
-											temp += '<td class="history-item-value">' + status.RevisionLevel + '</td>';
-										temp += '</tr>';
-										temp += '<tr>';
-											temp += '<td class="history-item-title">Date:</td>';
-											temp += '<td class="history-item-value">' + status.SystemDate + '</td>';
-										temp += '</tr>';
-										temp += '<tr>';
-											temp += '<td class="history-item-title">CSS:</td>';
-											temp += '<td class="history-item-value">' + status.MCSS + '</td>';
-										temp += '</tr>';
-										temp += '<tr>';
-											temp += '<td class="history-item-title">Modality:</td>';
-											temp += '<td class="history-item-value">' + status.Modality + '</td>';
-										temp += '</tr>';
-										temp += '<tr>';
-											temp += '<td class="history-item-title">Comments:</td>';
-											temp += '<td class="history-item-value" colspan="3">' + status.Comments + '</td>';
-										temp += '</tr>';
-									temp += '</table>';
-									temp += '<br />';
-									temp += '<table width="100%">';
-										temp += '<tr>';
-											temp += '<td class="history-item-section-header" colspan="4"><b>System condition on arrival</b></td>';
-										temp += '</tr>';
-										temp += '<tr>';
-											temp += '<td class="history-item-title" width="50%">Control panel layout:</td>';
-											temp += '<td class="history-item-value" width="50%">' + status.ControlPanelLayout + '</td>';
-										temp += '</tr>';
-										if (status.ControlPanelLayout=='Control panel changed') {
-											temp += '<tr ng-show="" style="font-style:italic;">';
-												temp += '<td class="history-item-title" style="padding-left: 40px;">Explained:</td>';
-												temp += '<td class="history-item-value">' + status.LayoutChangeExplain + '</td>';
-											temp += '</tr>';
-										}
-										temp += '<tr>';
-											temp += '<td class="history-item-title">Modality work list empty:</td>';
-											temp += '<td class="history-item-value">' + status.ModalityWorkListEmpty + '</td>';
-										temp += '</tr>';
-										temp += '<tr>';
-											temp += '<td class="history-item-title">All software loaded and functioning:</td>';
-											temp += '<td class="history-item-value">' + status.AllSoftwareLoadedAndFunctioning + '</td>';
-										temp += '</tr>';
-										
-										if (status.AllSoftwareLoadedAndFunctioning=='No') {
-											temp += '<tr ng-show="" style="font-style:italic;">';
-												temp += '<td class="history-item-title" style="padding-left: 40px;">Explained:</td>';
-												temp += '<td class="history-item-value">' + status.IfNoExplain + '</td>';
-											temp += '</tr>';
-										}
-										temp += '<tr>';
-											temp += '<td class="history-item-title">NPD presets on system:</td>';
-											temp += '<td class="history-item-value">' + status.NPDPresetsOnSystem + '</td>';
-										temp += '</tr>';
-										temp += '<tr>';
-											temp += '<td class="history-item-title">HDD free of patients studies:</td>';
-											temp += '<td class="history-item-value">' + status.HDDFreeOfPatientStudies + '</td>';
-										temp += '</tr>';
-										temp += '<tr>';
-											temp += '<td class="history-item-title">Demo images loaded on hard drive:</td>';
-											temp += '<td class="history-item-value">' + status.DemoImagesLoadedOnHardDrive + '</td>';
-										temp += '</tr>';
-										temp += '<tr>';
-											temp += '<td class="history-item-section-header" colspan="4"><b>Before leaving customer site</b></td>';
-										temp += '</tr>';
-										temp += '<tr>';
-											temp += '<td class="history-item-title">System performed as expected:</td>';
-											temp += '<td class="history-item-value">' + status.SystemPerformedAsExpected + '</td>';
-										temp += '</tr>';
-										
-										if (status.SystemPerformedAsExpected=='No') {
-											temp += '<tr style="font-style:italic;">';
-												temp += '<td class="history-item-title" style="padding-left: 40px;">Explained:</td>';
-											   temp += ' <td class="history-item-value">' + status.SystemPerformedNotAsExpectedExplain + '</td>';
-											temp += '</tr>';
-										}
-										temp += '<tr>';
-											temp += '<td class="history-item-title">Were any issues discovered with system during demo:</td>';
-											temp += '<td class="history-item-value">' + status.AnyIssuesDuringDemo + '</td>';
-										temp += '</tr>';
-										temp += '<tr>';
-											temp += '<td class="history-item-title">Was service contacted:</td>';
-											temp += '<td class="history-item-value">' + status.wasServiceContacted + '</td>';
-										temp += '</tr>';
-										temp += '<tr>';
-											temp += '<td class="history-item-title">Confirm modality work list removed from system:</td>';
-											temp += '<td class="history-item-value">' + status.ConfirmModalityWorkListRemoved + '</td>';
-										temp += '</tr>';
-										temp += '<tr>';
-											temp += '<td class="history-item-title">Confirm system HDD emptied of all patient studies:</td>';
-											temp += '<td class="history-item-value">' + status.ConfirmSystemHDDEmptied + '</td>';
-										temp += '</tr>';
-										temp += '<tr>';
-											temp += '<td class="history-item-section-header" colspan="4"><b>Additional Comments</b></td>';
-										temp += '</tr>';
-										
-										if (status.AdditionalComments !='') {
-											temp += '<tr>';
-												temp += '<td class="history-item-value" colspan="2" style="font-weight:normal;">';
-													temp += '<div>' + status.AdditionalComments + '</div>';
-												temp += '</td>';
-											temp += '</tr>';
-										}
-										if (status.AdditionalComments=='') {
-											temp += '<tr>';
-												temp += '<td class="history-item-value" colspan="2" style="font-weight:normal;">No comment found.</td>';
-											temp += '</tr>';
-										}
-										temp += '<tr>';
-											temp += '<td class="history-item-value" colspan="2" style="font-weight:normal;text-align:center;padding-top: 10px;padding-bottom: 10px;">';
-												temp += '<textarea id="taAdditionalComment' + status.ID + '" rows="2" style="width: 100%"></textarea>';
-												temp += '<div id="divAddCommentError' + status.ID + '" style="color:red;display:none;">* Comment cannot be empty</div>';
-												temp += '<a id="btnAddComment_' + status.ID + '" data-mini="true" data-inline="true" data-role="button" href="javascript: saveAdditionalComment(' + status.ID + ');" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" class="ui-btn ui-shadow ui-btn-corner-all ui-mini ui-btn-inline ui-btn-up-c"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Add Comment</span></span></a>';
-											temp += '</td>';
-									   temp += '</tr>';
-									temp += '</table> '; 
-								temp += '</div> ';        
-							temp += '</td>';
-						temp += '</tr>';
-					temp += '</table>';
-					temp += '<div class="divRowSeparator"></div>';
-					
-					
-				$("#divHistoryResults").append(temp);
-			}
-			
-			var _id = $.urlParam("id");
-			if (_id != "" && parseInt(_id) > 0)
-			{
-				$("div.itemid_" + _id).removeClass("history-collapsed").addClass("history-expanded");
-				$("div.itemid_" + _id).next().show();
-			}
-		}
-		else 
-		{
-			$( "#divHistoryResults" ).text("").append("<br /><center>No history found.</center>");
-		}
-	}
-	catch(err) {
-		$( "#divHistoryResults" ).text("").append("Internal application error.");
-	}
-}
-
-function toggleHistoryStatusDetails(obj) {
-    if ($(obj).closest("div").hasClass("history-collapsed")) {
-        $(obj).closest("div").removeClass("history-collapsed").addClass("history-expanded");
-        $(obj).closest("div").next().show();
-    }
-    else {
-        $(obj).closest("div").removeClass("history-expanded").addClass("history-collapsed");
-        $(obj).closest("div").next().hide();
-    }
-}
-
-function saveAdditionalComment(id) {
-	var comment = $("#taAdditionalComment" + id).val();
-
-	$("#divAddCommentError" + id).hide();
-
-	if (jQuery.trim(comment) != "") {
-		$("#divAddCommentError" + id).text("").append(getLoadingMini()).show();
-		
-		var _url = serviceRootUrl + "svc.aspx?op=AddAdditionalComments&SPUrl=" + spwebRootUrl + "sites/busops&itemid=" + id + "&comment=" + comment + "&authInfo=" + userInfoData.AuthenticationHeader + "&WorkPhone=" + userInfoData.Phone;
-		Jsonp_Call(_url, false, "callbackAddComment");
-	}
-	else {
-		$("#divAddCommentError" + id).text("").append("* Comment cannot be empty").show();
-	}
-};
-
-function callbackAddComment(data)
-{
-	try {
-		//console.log(data);
-		if (data.d.results.length > 0)
-		{
-			NavigatePage("#pgRedirect?url=" + encodeURIComponent("#pgHistory?id=" + data.d.results[0]));
-		}
-	}
-	catch(err) { }
-}
 
 
 /******************* Project Options ***********************/
@@ -1454,9 +1220,7 @@ function callbackLoadContacts(data)
 
 
 	try {
-		var delme= new Date();
-		
-		alert(delme);
+
 //		if (data.d.results.length > 0)
 //		{
 			for(var i=0; i < data.d.results.length; i++)
@@ -1768,13 +1532,13 @@ $( document ).on( "pagebeforeshow", "#pgIPMActivity", function(event) {
 		if ($(this).attr("type") == "text" )
 			$(this).val("");
 		if ($(this).attr("type") == "date")
-			$(this).val(getISODateString(Date()));
+			$(this).val(getISONow());
 			
 	});	
 	$("#ddlActivityType").val('7').selectmenu('refresh', true);
 	$("#txtComments").val("");
 	
-		
+		alert($("#txtActivityDate").val());
 	$("#IPMActivityGrid").text("");
 	var id = $.urlParam("id");
 	if (id > 0)
