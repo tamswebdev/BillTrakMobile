@@ -1454,7 +1454,9 @@ function callbackLoadContacts(data)
 
 
 	try {
-
+		var delme= new Date();
+		
+		alert(delme);
 //		if (data.d.results.length > 0)
 //		{
 			for(var i=0; i < data.d.results.length; i++)
