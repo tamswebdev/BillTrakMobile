@@ -838,6 +838,15 @@ function GoToProjectDetails() {
 	NavigatePage('#pgProjectDetails?id=' + ProjectID);
 }
 
+/******************* TapHold Login ***********************/
+$(document).on('pageinit',"#pgLogin",function(event){
+	$("#AppName").on("taphold",function(){
+		$("#pnlSideShow").html(GetpnlSideShow());
+		$("#pnlSideShow").panel( "open");
+		
+	});
+
+});
 
 /******************* Swipe Construction ***********************/
 $(document).on('pageinit',"#pgConstruction",function(event){
@@ -1233,6 +1242,7 @@ function callbackEmailEquipmentList(data)
 	}
 	catch(err) { }
 }
+
 
 /******************* Load EMRF ***********************/
 $( document ).on( "pagebeforeshow", "#pgEMRF", function(event) {
@@ -1827,7 +1837,7 @@ function ShowPhotoDialog(data)
 					width: 300,
 					zindex: 2000,
 					blankContent : 
-					  "<div style='padding: 15px;'><img width='75%' alt='' title='' border=0 src=data:image/jpg;base64," + catalog.Base64ImageBytes +"></div>"
+					  "<div style='padding: 15px;'><center><img width='95%' alt='' title='' border=0 src=data:image/jpg;base64," + catalog.Base64ImageBytes +"></center></div>"
 				});
 						
 	$('#tblIPMActivity').show();
@@ -2784,6 +2794,13 @@ function checkConnection() {
 	
 }
 
+function GetpnlSideShow()
+{
+				var RetVal='<div class="ui-grid-b ui-responsive" id="EquipmentListGridSidePanel" name="EquipmentListGridSidePanel" style="padding-right:10px;">';
+				RetVal += '<div style="margin: 5px 5px 5px 5px;padding: 2px 2px 2px 2px;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">Architecture, Design, Coding by UMER PASHA</span><br><span style="font-size:x-small;">www.umerpasha.com</span></div>';	
+				return RetVal;
+}
+
 function SnapPhoto() {  
        navigator.camera.getPicture(  
          uploadPhoto,  
@@ -2822,6 +2839,8 @@ function SelectPhoto() {
 		var SPURL=spwebRootUrl + "sites/busops";
 		if (!txtComments || txtComments=="" )
 			txtComments = "(Photo Uploaded)";
+   
+		
    
        options.fileKey="file";  
        options.fileName="c:\\logs\\MobileImages\\" + imageURI.substr(imageURI.lastIndexOf('/')+1);  

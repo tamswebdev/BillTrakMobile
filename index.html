@@ -65,7 +65,7 @@
 	    <div role="main" class="ui-content">        
             <div class="form-div">
 				<center>
-				<div class="logo-div">BILLTRAK MOBILE</div>
+				<div class="logo-div" name="AppName" id="AppName">BILLTRAK MOBILE</div>
                 <table class="login-table">
                     <tr><td class="login-label">Login</td></tr>
                     <tr><td class="login-input"><input class="form-control" type="text" id="login" /></td></tr>
@@ -78,7 +78,8 @@
                     <tr><td id="td-error"></td></tr>
                     <tr><td class="login-button"><input class="common-button" type="button" id="btnLoginSubmit" value="LOGIN" onclick="LoginUser()" /></td></tr>
                 </table>
-				<div class="copyright">TOSHIBA CORPORATION 2015. ALL RIGHTS RESERVED<br />V0.50<br />FOR INTERNAL USE ONLY</div>
+				<div class="copyright" id="copyrightinfo" name="copyrightinfo">TOSHIBA CORPORATION 2015. ALL RIGHTS RESERVED<br />V0.75<br />FOR INTERNAL USE ONLY</div>
+				<div data-role="panel"  style="height:200px;" name="pnlSideShow" id="pnlSideShow" data-theme="b" data-position="left" data-display="overlay"></div>
 				</center>
             </div>
 	    </div>
