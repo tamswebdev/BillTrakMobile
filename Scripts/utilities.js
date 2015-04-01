@@ -184,12 +184,53 @@ function getISODateString(DateString)
 	}
 }
 
-function getISONow()
+function getISODateString(DateString)
 {
-		var d = new Date();
-		return d.toISOString().substring(0,10);
+	if (DateString)
+	{
+		var d = new Date(DateString);
+		return ConvertToISO(d).substring(0,10);
+	}
+	else
+	{
+		return "";
+	}
+
 }
 
+function ConvertToISO(d){		
+ function pad(n){return n<10 ? '0'+n : n}
+ return (d.getFullYear()+'-'
+      + pad(d.getMonth()+1)+'-'
+      + pad(d.getDate())+'T'
+      + pad(d.getHours())+':'
+      + pad(d.getMinutes())+':'
+      + pad(d.getSeconds())+'Z').substring(0,10)}
+	  
+
+
+function NowDate(){		
+ function pad(n){return n<10 ? '0'+n : n}
+ var d = new Date();
+ return (d.getFullYear()+'-'
+      + pad(d.getMonth()+1)+'-'
+      + pad(d.getDate())+'T'
+      + pad(d.getHours())+':'
+      + pad(d.getMinutes())+':'
+      + pad(d.getSeconds())+'Z').substring(0,10)}
+	  
+function Now(){		
+ function pad(n){return n<10 ? '0'+n : n}
+ var d = new Date();
+ return d.getFullYear()+'-'
+      + pad(d.getMonth()+1)+'-'
+      + pad(d.getDate())+'T'
+      + pad(d.getHours())+':'
+      + pad(d.getMinutes())+':'
+      + pad(d.getSeconds())+'Z'}
+	  
+	  
+	  
 function isNumber(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }

@@ -1532,13 +1532,12 @@ $( document ).on( "pagebeforeshow", "#pgIPMActivity", function(event) {
 		if ($(this).attr("type") == "text" )
 			$(this).val("");
 		if ($(this).attr("type") == "date")
-			$(this).val(getISONow());
+			$(this).val(NowDate());
 			
 	});	
 	$("#ddlActivityType").val('7').selectmenu('refresh', true);
 	$("#txtComments").val("");
-	
-		alert($("#txtActivityDate").val());
+
 	$("#IPMActivityGrid").text("");
 	var id = $.urlParam("id");
 	if (id > 0)
