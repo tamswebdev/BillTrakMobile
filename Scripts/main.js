@@ -60,6 +60,8 @@ function onDeviceReady() {
 	
 };
 
+
+/////////////////////////Event Handlers//////////////////////////////
   //reset type=date inputs to text
   $( document ).bind( "mobileinit", function(){
     $.mobile.page.prototype.options.degradeInputs.date = true;
@@ -100,11 +102,18 @@ $( document ).on( "pagebeforeshow", "#pgLogin", function(event) {
 });
 
 $( document ).on( "pagebeforeshow", "#pgSearch", function(event) {
-	$('.appSearchBtnLink').on('click', '.ui-input-clear', function(e){
+
 	
-		performSearch();
-	});
-	
+	searchAction();
+});
+
+$('.appSearchBtnLink').on('click', '.ui-input-clear', function(e){
+
+	performSearch();
+});
+
+$( document ).on( "pageinit", "#pgSearch", function(event) {
+
 	$( "#searchCatalogs" ).keypress(function(e) {
 		if (e.keyCode == 13) {
 		
@@ -116,10 +125,10 @@ $( document ).on( "pagebeforeshow", "#pgSearch", function(event) {
 	
 		performSearch();
 	});
-
-	
-	searchAction();
 });
+
+///////////////////////////////////////////////////////
+
 
 
 function LoginUser()
@@ -486,7 +495,7 @@ function callbackPopulateSearchResults(data)
 
 					temp += '</div></div></div>';
 					temp += '</td></tr></table>';
-					
+
 
 				$( "#divSearchResults" ).append(temp);
 			}
