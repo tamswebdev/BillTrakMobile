@@ -51,56 +51,6 @@ function NavigatePageNoSlide(pageid)
 
 	$.mobile.navigate(pageid );
 }
-function scanBarcode() 
-{
-	try {
-		if (typeof cordova !== 'undefined' && $.isFunction(cordova.plugins.barcodeScanner.scan)) {
-			cordova.plugins.barcodeScanner.scan(
-				function (result) {
-					var barcodeText = result.text;
-					if (barcodeText.lastIndexOf(";") > 0)
-						barcodeText = barcodeText.substring(barcodeText.lastIndexOf(";") + 1);
-					
-					if (barcodeText != "")
-					{
-						$("#searchCatalogs").val(barcodeText);
-						navigator.notification.vibrate(20);
-						performSearch();
-					}
-				}, 
-				function (error) {
-					alert("Scanning failed: " + error);
-				}
-			);
-		}
-	}
-	catch(err) { }
-}
-
-function scanSerialNumBarcode() 
-{
-	try {
-		if (typeof cordova !== 'undefined' && $.isFunction(cordova.plugins.barcodeScanner.scan)) {
-			cordova.plugins.barcodeScanner.scan(
-				function (result) {
-					var barcodeText = result.text;
-					if (barcodeText.lastIndexOf(";") > 0)
-						barcodeText = barcodeText.substring(barcodeText.lastIndexOf(";") + 1);
-					
-					if (barcodeText != "")
-					{
-						$("#inputSystemSerialNumber").val(barcodeText);
-						navigator.notification.vibrate(20);
-					}
-				}, 
-				function (error) {
-					alert("Scanning failed: " + error);
-				}
-			);
-		}
-	}
-	catch(err) { }
-}
 
 function ShowHelp()
 {
