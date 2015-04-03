@@ -66,6 +66,13 @@ function onDeviceReady() {
   });	
 
 
+$( document ).on( "pageshow", "#pgProjectOptions", function(event) {
+	//alert("pageshow");
+	//$.mobile.changePage("#pgProjectOptions") ;
+	
+	
+});
+
 
 $( document ).on( "pagebeforeshow", "#pgHome", function(event) {
 	checkUserLogin();
@@ -93,17 +100,20 @@ $( document ).on( "pagebeforeshow", "#pgLogin", function(event) {
 });
 
 $( document ).on( "pagebeforeshow", "#pgSearch", function(event) {
-	$('.ui-content').on('click', '.ui-input-clear', function(e){
+	$('.appSearchBtnLink').on('click', '.ui-input-clear', function(e){
+	
 		performSearch();
 	});
 	
 	$( "#searchCatalogs" ).keypress(function(e) {
 		if (e.keyCode == 13) {
+		
             performSearch();
         }
 	});
 	
 	$("#userSearchSortBy").bind( "change", function(event, ui) {
+	
 		performSearch();
 	});
 
@@ -167,61 +177,11 @@ function callbackLogin( data ){
 }
 
 
-function initSystemTypes()
-{
-	//Load System Types from localstorage
-	var localSystemTypes = localstorage.get("localSystemTypes");
-	if (localSystemTypes != null && localSystemTypes != "")
-	{
-		$('#filterDocumentType option[value!="All"]').remove();			
-		var _localSystemTypes = localSystemTypes.split(";");
-		for (var i = 0; i < _localSystemTypes.length; i++)
-		{
-			if (_localSystemTypes[i] != "")
-				$("#filterDocumentType").append("<option value='" + _localSystemTypes[i] + "' "+ ((userSearchSystemType == $.trim(_localSystemTypes[i])) ? "selected" : "") +">" + _localSystemTypes[i] + "</option>");
-		}
-		
-		try {
-			$('#filterDocumentType').selectmenu("refresh");
-		} catch (err) {}
-	}
-}
-
-function LoadSystemTypes()
-{
-	var _url = serviceRootUrl + "svc.aspx?op=GetSystemTypes&SPUrl=" + spwebRootUrl + "sites/busops";
-	//Jsonp_Call(_url, true, "callbackPopulateSystemTypes");	
-}
-
-function callbackPopulateSystemTypes(data)
-{
-	try {
-		if (data.d.results.length > 0)
-		{
-			$('#filterDocumentType option[value!="All"]').remove();
-			
-			var localSystemTypes = "";
-			for (var i = 0; i < data.d.results.length; i++)
-			{
-				$("#filterDocumentType").append("<option value='" + data.d.results[i] + "' " + (userSearchSystemType== data.d.results[i] ? " selected " : "") + ">" + data.d.results[i] + "</option>");
-				localSystemTypes += data.d.results[i] + ";";
-			}		
-			
-			try {
-				$('#filterDocumentType').selectmenu("refresh");
-			} catch (err) {}
-			
-			localstorage.set("localSystemTypes", localSystemTypes);
-		}
-	}
-	catch(err) {}
-}
-
 function performSearch()
 {
-	
-	NavigatePage("#pgRedirect?url=#pgSearch");
-
+	//alert("in");
+	NavigatePageNoSlide("#pgRedirect?url=#pgSearch");
+	//location.reload();
 }
 
 function searchAction()
@@ -239,7 +199,9 @@ function searchAction()
 
 function callbackPopulateSearchResults(data)
 {
+
 	try {
+		
 		$( "#divSearchResults" ).text("");
 		
 		if (data.d.results.length > 0)
@@ -498,7 +460,7 @@ function callbackPopulateSearchResults(data)
 
 					temp += '<table class="search-item" ><tr><td style="width:3px;background-color:'+ ModalityColorCode +'">&nbsp;</td>';
 					temp += '<td><div id="ProjectCard" class="panel-body" style="padding-bottom: 0">';
-					temp += '<a href="javascript: EditProjectDetailsAction('+catalog.ProjectID+');" style="text-decoration:none;color: inherit; display: block;">'
+					temp += '<a href="#" onclick="EditProjectDetailsAction('+catalog.ProjectID+');" style="text-decoration:none;color: inherit; display: block;">'
 					temp += '<h2 style="color: blue; margin-top: 2px; margin-bottom: 2px;">';
 					temp += catalog.AccountName + '</h2>';
 					temp += '<div class="row"><div class="col-lg-6 col-md-6"><h3 style="margin-top: 2px; margin-bottom: 2px;">';
@@ -526,53 +488,10 @@ function callbackPopulateSearchResults(data)
 					temp += '</td></tr></table>';
 					
 
-/*
-					temp += '<table class="search-item" ><tr><td style="width:3px;background-color:'+ ModalityColorCode +'">&nbsp;</td><td>';
-					temp += '<div id="ProjectCard" class="panel-body" style="padding-bottom: 0">';
-					temp += '<a href="javascript: EditProjectDetailsAction('+catalog.ProjectID+');" style="text-decoration:none;color: inherit; display: block;">'
-					temp += '<h2 style="color: blue; margin-top: 2px; margin-bottom: 2px;">';
-					temp += catalog.AccountName + '</h2>';
-					temp += '<div class="row"><div class="col-lg-6 col-md-6"><h3 style="margin-top: 2px; margin-bottom: 2px;">';
-					temp += catalog.SystemVal + '</h3>';
-					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
-					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
-					if (catalog.ConfirmedDeliveryDate!='')
-						temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Delivery Date '+ catalog.ConfirmedDeliveryDate+'</h4>';
-					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
-					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
-					temp += '<h6 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h6>';
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified +'</em></h6>';
-					temp += '</div></div></div>';
-					temp += '</td></tr></table>';
-
-
-
-				
-					temp += '<table class="search-item" ><tr><td style="width:3px;background-color:'+ ModalityColorCode +'">&nbsp;</td><td>';
-					temp += '<div id="ProjectCard" class="panel-body" style="padding-bottom: 0">';
-					temp += '<a href="javascript: EditProjectDetailsAction('+catalog.ProjectID+');" style="text-decoration:none;color: inherit; display: block;">'
-					temp += '<h2 style="color: blue; margin-top: 2px; margin-bottom: 2px;">';
-					temp += catalog.AccountName + '</h2>';
-					temp += '<div class="row"><div class="col-lg-6 col-md-6"><h3 style="margin-top: 2px; margin-bottom: 2px;">';
-					temp += catalog.SystemVal + '</h3>';
-					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
-					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
-					if (catalog.ConfirmedDeliveryDate!='')
-						temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Delivery Date '+ catalog.ConfirmedDeliveryDate+'</h4>';
-					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
-					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
-					temp += '<div style="margin-top: 2px;float:left;font-size:xx-small;">'+ catalog.ZoneName + ' Zone</div><div style="font-size:xx-small;float:right;margin-top: 2px;">';
-					temp += '<em>Last Update: ' + catalog.Modified +'</em></div>';
-					temp += '</div></div></div>';
-					temp += '</td></tr></table>';
-*/
-
-
 				$( "#divSearchResults" ).append(temp);
 			}
 			
-			//$(".btnAddStatus").button('refresh');
-			$('.btnAddStatus').attr("data-theme", "a").removeClass("ui-btn-up-e").addClass("ui-btn-up-a");
+
 		}
 		else
 		{
@@ -583,8 +502,7 @@ function callbackPopulateSearchResults(data)
 			if (userSearchText != "")
 				temp += "<div><center><i>Keyword:</i> <b>"+ userSearchText +"</b></center></div>";
 
-			temp += "<div><center><i>System Type:</i> <b>"+ userSearchSystemType +"</b></center></div>";
-			
+
 			$( "#divSearchResults" ).text("").append(temp);
 		}
 	}
@@ -2420,7 +2338,7 @@ function callbackSaveStatus(data)
 $( document ).on( "pagebeforeshow", "#pgRedirect", function(event) {
 	if ($.urlParamRedirect("url"))
 	{
-		NavigatePage(decodeURIComponent($.urlParamRedirect("url")));
+		NavigatePageNoSlide(decodeURIComponent($.urlParamRedirect("url")));
 	}
 });
 

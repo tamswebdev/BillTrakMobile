@@ -3,7 +3,10 @@
 
 function goHome()
 {
-	NavigatePage("#pgHome");
+	
+	//NavigatePage("#pgHome");
+	location.href='index.html#pgHome';
+	location.reload(true);
 }
 
 function addStatusAction(id)
@@ -23,7 +26,9 @@ function GoToSectionWithID(section)
 
 function EditProjectDetailsAction(Projectid)
 {
+
 	NavigatePage('#pgProjectOptions?id=' + Projectid);
+
 }
 
 function showAboutMeMenu() 
@@ -38,9 +43,14 @@ function showTimedElem(id)
 
 function NavigatePage(pageid)
 {
-	$.mobile.navigate(pageid, { transition : "slide"});
-}
 
+	$.mobile.navigate(pageid, { transition : "flip"});
+}
+function NavigatePageNoSlide(pageid)
+{
+
+	$.mobile.navigate(pageid );
+}
 function scanBarcode() 
 {
 	try {

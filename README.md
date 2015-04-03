@@ -1,55 +1,43 @@
 # BillTrak Mobile
 
 _Description: BillTrak Mobile
+Author: Umer Pasha
+Contact: www.umerpasha.com
 
 ## Project Setup
 
 Got assigned to create a Mobile version of the web application
 
-1. _What dependencies does it have (where are they expressed) and how do I install them?_
-2. _How can I see the project working before I change anything?_
+1. All that is needed is the xap for windows phone, apk for android and ipa for iPhone
+2. Need to have Android 4.0+ and iPhone 8.0+
 
 ## Testing
 
-_How do I run the project's automated tests?_
+Tested on iPhone 5c running iOS 8.2 & Google Nexus 5 running Android 5.1
 
 ### Unit Tests
 
-1. `rake spec`
+Unit tests completed successfully
 
 ### Integration Tests
 
-1. _Run other local services / provide credentials for external services._
-2. `rake spec:integration`
+App was developed in integrated testing mode.
 
 ## Deploying
 
-### _How to setup the deployment environment_
-
-- _Required heroku addons, packages, or chef recipes._
-- _Required environment variables or credentials not included in git._
-- _Monitoring services and logging._
+Follow the instrcutions in the manual.
 
 ### _How to deploy_
 
+Follow the instrcutions in the manual.
+
 ## Troubleshooting & Useful Tools
 
-_Examples of common tasks_
-
-> e.g.
-> 
-> - How to make curl requests while authenticated via oauth.
-> - How to monitor background jobs.
-> - How to run the app through a proxy.
+N/A
 
 ## Contributing changes
 
-- _Internal git workflow_
-- _Pull request guidelines_
-- _Tracker project_
-- _Google group_
-- _irc channel_
-- _"Please open github issues"_
+N/A
 
 ## License
 
