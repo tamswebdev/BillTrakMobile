@@ -1562,7 +1562,7 @@ function callbackLoadIPMActivity(data)
 
 				if (parseInt(catalog.HasPhoto) > 0)
 					HasPhoto = '<br><span style="font-size:x-small;"><a title="" style="text-decoration:none;" href="#" onclick="ShowPhoto('+ catalog.HasPhoto  +')"><u>View Photo</u></a></span>'
-				var TableRow = $('<div style="margin: 5px 5px 5px 5px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ActivityDate +' - '+ catalog.CreatedBy +' - '+ catalog.ActivityType +'</span><br><span style="font-size:x-small;">'+ catalog.Comments  +'</span>'+HasPhoto+'</div>');
+				var TableRow = $('<div style="margin: 0px 0px 0px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ActivityDate +' - '+ catalog.CreatedBy +' - '+ catalog.ActivityType +'</span><br><span style="font-size:x-small;">'+ catalog.Comments  +'</span>'+HasPhoto+'</div>');
 				TableRow.appendTo($("#IPMActivityGrid"));
 				
 				temp += '<div style="margin: 5px 5px 5px 5px;padding: 2px 2px 2px 2px;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ActivityDate +' - '+ catalog.CreatedBy +' - '+ catalog.ActivityType +'</span><br><span style="font-size:x-small;">'+ catalog.Comments  +'</span></div>';
