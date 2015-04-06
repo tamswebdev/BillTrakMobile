@@ -78,7 +78,7 @@
                     <tr><td id="td-error"></td></tr>
                     <tr><td class="login-button"><input class="common-button" type="button" id="btnLoginSubmit" value="LOGIN" onclick="LoginUser()" /></td></tr>
                 </table>
-				<div class="copyright" id="copyrightinfo" name="copyrightinfo">TOSHIBA CORPORATION 2015. ALL RIGHTS RESERVED<br />V0.90<br />FOR INTERNAL USE ONLY</div>
+				<div class="copyright" id="copyrightinfo" name="copyrightinfo">TOSHIBA CORPORATION 2015. ALL RIGHTS RESERVED<br />V0.91<br />FOR INTERNAL USE ONLY</div>
 				<div data-role="panel"  style="height:200px;" name="pnlSideShow" id="pnlSideShow" data-theme="b" data-position="left" data-display="overlay"></div>
 				</center>
             </div>
@@ -213,6 +213,10 @@
 
 	
 	<div data-role="page" id="pgProjectOptions">
+		
+	    <div data-role="panel" id="pnlProjectDetails-ProjectOptions" name="pnlProjectDetails-ProjectOptions" style='height:200px;' data-theme="b" data-position="right" data-display="overlay"></div>
+	    <div data-role="panel" id="pnlProjectActivity-ProjectOptions" name="pnlProjectActivity-ProjectOptions"  data-theme="b" data-position="left" data-display="overlay"></div>
+	
         <div data-role="header" data-position="fixed">
             <table width="100%" cellspacing="0" cellpadding="0" class="header-table">
 				<tr>
@@ -255,7 +259,7 @@
 						</tr>
 						<tr>
 							<td id="btnGoToIPMActivity" style="border-top: 0px;padding:1px !important;">
-								<a href="javascript:void(0);"  data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" onclick="" xonclick="GoToSectionWithID('IPMActivity')">IPM Activity</a>
+								<a href="javascript:void(0);"  data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" onclick="GoToSectionWithID('IPMActivity')">IPM Activity</a>
 							</td>
 						</tr>
 						<tr>
@@ -276,7 +280,7 @@
 						</tr>
 						<tr>
 							 <td id="btnGoToEmailEquipment" style="border-top: 0px;padding:1px !important;">
-									<a href="javascript:void(0);" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" data-icon="mail" data-iconpos="left"  onclick="" xonclick="GoToSectionWithID('EquipmentList')" >Email Equipment</a>
+									<a href="javascript:void(0);" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" data-icon="mail" data-iconpos="left"  onclick="GoToSectionWithID('EquipmentList')" >Email Equipment</a>
 
 							</td>
 							
@@ -1155,19 +1159,19 @@
 					<div class="ui-grid-b ui-responsive" id="EquipmentListGrid" name="EquipmentListGrid" >
 				
 						<div  data-role="collapsible"  id="divCollapsibleregular" name="divCollapsibleregular" >
-							<h1>Regular Equipment List</h1>
+							<h1><span id="RegularCount" name="RegularCount">Regular Equipment List</span></h1>
 							<table id="EquipmentListGrid-regular" name="EquipmentListGrid-regular"  data-role="table" data-mode="columntoggle" class="ui-responsive ui-shadow" ><thead><tr><th>Item</th><th>Description</th><th>Shipped</th><th>Qty</th></tr></thead><tbody></tbody></table>
 						</div>
 						<div  data-role="collapsible" id="divCollapsiblebelow" name="divCollapsiblebelow" >
-							<h1>Below the Line Items</h1>
+							<h1 ><span id="BelowCount" name="BelowCount">Below the Line Items</h1>
 							<table id="EquipmentListGrid-below" name="EquipmentListGrid-below" data-role="table" data-mode="columntoggle" class="ui-responsive ui-shadow" ><thead><tr><th>Item</th><th >Description</th><th >Qty</th></tr></thead><tbody></tbody></table>
 						</div>
 						<div  data-role="collapsible" id="divCollapsiblevital" name="divCollapsiblevital" >
-							<h1>Vital Items</h1>
+							<h1 ><span id="VitalCount" name="VitalCount">Vital Items</span></h1>
 							<table id="EquipmentListGrid-vital" name="EquipmentListGrid-vital"  data-role="table" data-mode="columntoggle" class="ui-responsive ui-shadow" ><thead><tr><th>Item</th><th >Description</th><th >Qty</th></tr></thead><tbody></tbody></table>
 						</div>
 						<div  data-role="collapsible" id="divCollapsiblepower" name="divCollapsiblepower" >
-							<h1>Powerware Items</h1>
+							<h1 ><span id="PowerCount" name="PowerCount">Powerware Items</span></h1>
 							<table id="EquipmentListGrid-power" name="EquipmentListGrid-power" data-role="table" data-mode="columntoggle" class="ui-responsive ui-shadow" ><thead><tr><th>Item</th><th d>Description</th><th >Qty</th></tr></thead><tbody></tbody></table>
 						</div>
 					

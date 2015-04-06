@@ -68,10 +68,18 @@ function onDeviceReady() {
   });	
 
 
-$( document ).on( "pageshow", "#pgProjectOptions", function(event) {
-	//alert("pageshow");
-	//$.mobile.changePage("#pgProjectOptions") ;
+$( document ).on( "pagebeforeshow", "#pgProjectOptions", function(event) {
+	$("#pnlProjectActivity-ProjectOptions" ).html("");
+	$("#pnlProjectDetails-ProjectOptions" ).html("");
 	
+			var id = $.urlParam("id");
+
+				var _url1 = serviceRootUrl + "svc.aspx?op=GetIPMActivity&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+				Jsonp_Call(_url1, true, "callbackLoadProjectOptionsSidePanelIPMActivity");
+
+				var _url2 = serviceRootUrl + "svc.aspx?op=GetProjectHeaderById&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+				Jsonp_Call(_url2, true, "callbackLoadProjectOptionsSidePanel");
+
 	
 });
 
@@ -472,8 +480,10 @@ function callbackPopulateSearchResults(data)
 					temp += '<a href="#" onclick="EditProjectDetailsAction('+catalog.ProjectID+');" style="text-decoration:none;color: inherit; display: block;">'
 					temp += '<h2 style="color: blue; margin-top: 2px; margin-bottom: 2px;">';
 					temp += catalog.AccountName + '</h2>';
-					temp += '<div class="row"><div class="col-lg-6 col-md-6"><h3 style="margin-top: 2px; margin-bottom: 2px;">';
-					temp += catalog.SystemVal + '</h3>';
+					temp += '<div class="row"><div class="col-lg-6 col-md-6">';
+					if (catalog.RoomNumber!='')
+						temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.RoomNumber+'</h3>';
+					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+catalog.SystemVal + '</h3>';
 					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
 					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
 					if (catalog.ConfirmedDeliveryDate!='')
@@ -530,6 +540,95 @@ function GoToProjectDetails() {
 	var ProjectID= ($.urlParam("ProjectID"));
 	NavigatePage('#pgProjectDetails?id=' + ProjectID);
 }
+/******************* Swipe Project Options ***********************/
+$(document).on('pageinit',"#pgProjectOptions",function(event){
+
+	$("#pgProjectOptions").on("swipeleft",function(){
+		$("#pnlProjectDetails-ProjectOptions").panel( "open");
+	});
+	$("#pgProjectOptions").on("swiperight",function(){
+		$("#pnlProjectActivity-ProjectOptions").panel( "open");
+	});
+});
+
+
+
+function callbackLoadProjectOptionsSidePanelIPMActivity(data)
+{
+
+
+	try {
+
+		
+		if (data.d.results.length > 0)
+		{
+			var temp = '<div class="ui-grid-b ui-responsive" id="ProjectOptionsGridSidePanel" name="ProjectOptionsGridSidePanel" style="padding-right:10px;">';
+			for(var i=0; i < data.d.results.length; i++)
+			{
+				var catalog = data.d.results[i];
+				temp += '<div style="margin: 5px 5px 5px 5px;padding: 2px 2px 2px 2px;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ActivityDate +' - '+ catalog.CreatedBy +' - '+ catalog.ActivityType +'</span><br><span style="font-size:x-small;">'+ catalog.Comments  +'</span></div>';
+
+			}
+			
+			temp += '</div>';
+
+			$("#pnlProjectActivity-ProjectOptions" ).html(temp);
+
+					
+		}
+		else
+		{
+			//
+		}
+	}
+	catch(err) {}
+}
+
+
+function callbackLoadProjectOptionsSidePanel(data)
+{
+
+
+
+	try {
+
+	
+			if (data.d.results.length > 0)
+			{
+
+				var temp = "";
+				
+				var catalog = data.d.results[0];
+				
+					temp += '<table class="search-item" ><tr><td style="width:3px;">&nbsp;</td><td>';
+					temp += '<div id="ProjectCard" class="panel-body" style="padding-bottom: 0px;padding-top: 30px;">';
+					temp += ''
+					temp += '<h2 style="color: silver; margin-top: 2px; margin-bottom: 2px;">';
+					temp += catalog.AccountName + '</h2>';
+					temp += '<div class="row"><div class="col-lg-6 col-md-6">';
+					if (catalog.RoomNumber!='')
+						temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.RoomNumber+'</h3>';
+					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+catalog.SystemVal + '</h3>';
+					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
+					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
+					if (catalog.ConfirmedDeliveryDate!='')
+						temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Delivery Date '+ catalog.ConfirmedDeliveryDate+'</h4>';
+					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
+					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
+					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
+					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified +'</em></h6>';
+					temp += '</div></div></div>';
+					temp += '</td></tr></table>';
+					
+				$("#pnlProjectDetails-ProjectOptions" ).html(temp);
+
+				
+			}
+		}
+	catch(err) {}
+}
+
+
 
 /******************* TapHold Login ***********************/
 $(document).on('pageinit',"#pgLogin",function(event){
@@ -636,6 +735,8 @@ $( document ).on( "pagebeforeshow", "#pgEquipmentList", function(event) {
 	var id = $.urlParam("id");
 	if (id > 0)
 	{
+		var _url= serviceRootUrl + "svc.aspx?op=GetEquipmentListCounts&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id ;
+		Jsonp_Call(_url, false, "callbackLoadEquipmentListCounts");
 	
 		var _url2 = serviceRootUrl + "svc.aspx?op=GetEquipmentList&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id + "&equipmenttype=regular" ;
 		Jsonp_Call(_url2, false, "callbackLoadEquipmentList_regular");
@@ -663,6 +764,25 @@ $( document ).on( "pagebeforeshow", "#pgEquipmentList", function(event) {
 });
 
 
+function callbackLoadEquipmentListCounts(data)
+{
+
+
+	try {
+
+
+				var catalog = data.d.results[0];
+
+				$('#RegularCount').html('Regular Equipment List   <span style="text-align:right;float:right;font-size:xx-small;color:blue;">' + (parseInt(catalog.RegularCount)>0 ? catalog.RegularCount + ' item(s)' : '') +'</span>');
+				$('#BelowCount').html('Below Equipment List   <span style="text-align:right;float:right;font-size:xx-small;color:blue;">' + (parseInt(catalog.BelowCount)>0 ? catalog.BelowCount + ' item(s)' : '') + '</span>');
+				$('#VitalCount').html('Vital Equipment List   <span style="text-align:right;float:right;font-size:xx-small;color:blue;">' + (parseInt(catalog.VitalCount)>0 ? catalog.VitalCount + ' item(s)' : '') + '</span>');
+				$('#PowerCount').html('Power Equipment List   <span style="text-align:right;float:right;font-size:xx-small;color:blue;">' + (parseInt(catalog.PowerCount)>0 ? catalog.PowerCount + ' item(s)' : '') + '</span>');
+
+
+
+	}
+	catch(err) {}
+}
 function callbackLoadEquipmentList_below(data)
 {
 
@@ -819,8 +939,10 @@ function callbackLoadEquipmentListSidePanel(data)
 					temp += ''
 					temp += '<h2 style="color: silver; margin-top: 2px; margin-bottom: 2px;">';
 					temp += catalog.AccountName + '</h2>';
-					temp += '<div class="row"><div class="col-lg-6 col-md-6"><h3 style="margin-top: 2px; margin-bottom: 2px;">';
-					temp += catalog.SystemVal + '</h3>';
+					temp += '<div class="row"><div class="col-lg-6 col-md-6">';
+					if (catalog.RoomNumber!='')
+						temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.RoomNumber+'</h3>';
+					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+catalog.SystemVal + '</h3>';
 					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
 					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
 					if (catalog.ConfirmedDeliveryDate!='')
@@ -979,7 +1101,7 @@ function callbackLoadEMRF(data)
 			for(var i=0; i < data.d.results.length; i++)
 			{
 				var catalog = data.d.results[i];
-				var TableRow = $('<div style="margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ShipToSite +'</span><br><span style="font-size:x-small;">'+ catalog.Status +' - '+ catalog.SentToTCSubCategory +'</span><br><span style="font-size:x-small;">Delivery Date:'+ catalog.DelvDate  +'</span><br><span style="font-size:x-small;">'+catalog.ItemDetail +'</span></div>');
+				var TableRow = $('<div style="margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ShipToSite +'</span><br><span style="font-size:x-small;">'+ catalog.Status +' - '+ catalog.SentToTCSubCategory+'</span><br><span style="font-size:x-small;">To:'+ catalog.ShipToAddress + catalog.ShipToCity+ catalog.ShipToState+ ' ' +catalog.ShipToZip+'</span><br><span style="font-size:x-small;">Delivery Date:'+ catalog.DelvDate  +'</span><br><span style="font-size:x-small;">'+catalog.ItemDetail +'</span></div>');
 				TableRow.appendTo($("#EMRFGrid"));
 				
 
@@ -1058,8 +1180,10 @@ function callbackLoadEMRFSidePanel(data)
 					temp += ''
 					temp += '<h2 style="color: silver; margin-top: 2px; margin-bottom: 2px;">';
 					temp += catalog.AccountName + '</h2>';
-					temp += '<div class="row"><div class="col-lg-6 col-md-6"><h3 style="margin-top: 2px; margin-bottom: 2px;">';
-					temp += catalog.SystemVal + '</h3>';
+					temp += '<div class="row"><div class="col-lg-6 col-md-6">';
+					if (catalog.RoomNumber!='')
+						temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.RoomNumber+'</h3>';
+					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+catalog.SystemVal + '</h3>';
 					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
 					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
 					if (catalog.ConfirmedDeliveryDate!='')
@@ -1233,8 +1357,10 @@ function callbackLoadContactsSidePanel(data)
 					temp += ''
 					temp += '<h2 style="color: silver; margin-top: 2px; margin-bottom: 2px;">';
 					temp += catalog.AccountName + '</h2>';
-					temp += '<div class="row"><div class="col-lg-6 col-md-6"><h3 style="margin-top: 2px; margin-bottom: 2px;">';
-					temp += catalog.SystemVal + '</h3>';
+					temp += '<div class="row"><div class="col-lg-6 col-md-6">';
+					if (catalog.RoomNumber!='')
+						temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.RoomNumber+'</h3>';					
+					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+catalog.SystemVal + '</h3>';
 					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
 					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
 					if (catalog.ConfirmedDeliveryDate!='')
@@ -1400,8 +1526,10 @@ function callbackLoadSitePlanRequestsSidePanel(data)
 					temp += ''
 					temp += '<h2 style="color: silver; margin-top: 2px; margin-bottom: 2px;">';
 					temp += catalog.AccountName + '</h2>';
-					temp += '<div class="row"><div class="col-lg-6 col-md-6"><h3 style="margin-top: 2px; margin-bottom: 2px;">';
-					temp += catalog.SystemVal + '</h3>';
+					temp += '<div class="row"><div class="col-lg-6 col-md-6">';
+					if (catalog.RoomNumber!='')
+						temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.RoomNumber+'</h3>';		
+					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+catalog.SystemVal + '</h3>';
 					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
 					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
 					if (catalog.ConfirmedDeliveryDate!='')
@@ -1607,8 +1735,10 @@ function callbackLoadIPMActivitySidePanel(data)
 					temp += ''
 					temp += '<h2 style="color: silver; margin-top: 2px; margin-bottom: 2px;">';
 					temp += catalog.AccountName + '</h2>';
-					temp += '<div class="row"><div class="col-lg-6 col-md-6"><h3 style="margin-top: 2px; margin-bottom: 2px;">';
-					temp += catalog.SystemVal + '</h3>';
+					temp += '<div class="row"><div class="col-lg-6 col-md-6">';
+					if (catalog.RoomNumber!='')
+						temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.RoomNumber+'</h3>';		
+					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+catalog.SystemVal + '</h3>';
 					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
 					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
 					if (catalog.ConfirmedDeliveryDate!='')
@@ -2041,8 +2171,10 @@ function callbackLoadProjectDetail(data)
 					temp += ''
 					temp += '<h2 style="color: silver; margin-top: 2px; margin-bottom: 2px;">';
 					temp += catalog.AccountName + '</h2>';
-					temp += '<div class="row"><div class="col-lg-6 col-md-6"><h3 style="margin-top: 2px; margin-bottom: 2px;">';
-					temp += catalog.SystemVal + '</h3>';
+					temp += '<div class="row"><div class="col-lg-6 col-md-6">';
+					if (catalog.RoomNumber!='')
+						temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.RoomNumber+'</h3>';
+					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">' + catalog.SystemVal + '</h3>';
 					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
 					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
 					if (catalog.ConfirmedDeliveryDate!='')
@@ -2263,7 +2395,7 @@ var result = 0;
 		var then = new Date($scope.ExpectedBillDate), now = new Date;
 		var NumberOfDays=Math.round((then - now) / (1000 * 60 * 60 * 24));
 	
-		if (txtSR_Forecasted_Site_Ready_Date!="" && NumberOfDays < 90){
+		if ($scope.txtSR_Forecasted_Site_Ready_Date!="" && NumberOfDays < 90){
 			/*$('#error-div').html('The Bill Date is within 90 days, please enter Site Ready Date');
 			showTimedElem('error-div');
 			$('#error-div2').html('The Bill Date is within 90 days, please enter Site Ready Date');
