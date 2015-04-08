@@ -64,6 +64,7 @@ function onDeviceReady() {
          tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id unique, data)');
          tx.executeSql('INSERT INTO DEMO (id, data) VALUES (1, "First row")');
          tx.executeSql('INSERT INTO DEMO (id, data) VALUES (2, "Second row")');
+         tx.executeSql('INSERT INTO DEMO (id, data) VALUES (3, "Third row")');
     }
 
     // Transaction error callback
@@ -92,6 +93,8 @@ function onDeviceReady() {
 		//alert(catalog.data);
 		//catalog = results.rows.item(1);  //Second row
 		//alert(catalog.data);
+		catalog = results.rows.item(2);  //3rd row
+		alert(catalog.data);
 
 		
 		// this will be true since it was a select statement and so rowsAffected was 0
