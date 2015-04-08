@@ -93,8 +93,8 @@ function onDeviceReady() {
 		//alert(catalog.data);
 		//catalog = results.rows.item(1);  //Second row
 		//alert(catalog.data);
-		//catalog = results.rows.item(2);  //3rd row
-		//alert(catalog.data);
+		catalog = results.rows.item(2);  //3rd row
+		alert(catalog.data);
 
 		
 		// this will be true since it was a select statement and so rowsAffected was 0
@@ -137,9 +137,10 @@ $( document ).on( "pagebeforeshow", "#pgHome", function(event) {
 	//Database functions
 	//var db = window.openDatabase("test", "1.0", "Test DB", 20480000);
 	//var db = window.sqlitePlugin.openDatabase("test", "1.0", "Test DB", 20480000);
+	var db = window.sqlitePlugin.openDatabase({name: "test"});
 
-	//db.transaction(populateDB, errorCB, successCB);
-	//db.transaction(queryDB, errorCB);
+	db.transaction(populateDB, errorCB, successCB);
+	db.transaction(queryDB, errorCB);
 	
 	var _url = serviceRootUrl + "svc.aspx?op=LogHomePage&SPUrl=" + spwebRootUrl + "sites/busops&authInfo=" + userInfoData.Email;
 	Jsonp_Call(_url, false, "");	
