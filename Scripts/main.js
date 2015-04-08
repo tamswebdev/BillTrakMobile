@@ -53,12 +53,55 @@ function onDeviceReady() {
 	localstorage.set("DeviceInfo", deviceInfo);
 	
 	checkUserLogin();	
-	initSystemTypes();
-	LoadSystemTypes();
 	
 	isPageLoadReady = true;
 	
 };
+
+/////////////////////////Database Functions//////////////////////////////
+ function populateDB(tx) {
+         tx.executeSql('DROP TABLE IF EXISTS DEMO');
+         tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id unique, data)');
+         tx.executeSql('INSERT INTO DEMO (id, data) VALUES (1, "First row")');
+         tx.executeSql('INSERT INTO DEMO (id, data) VALUES (2, "Second row")');
+    }
+
+    // Transaction error callback
+    //
+    function errorCB(tx, err) {
+        alert("Error processing SQL: "+err);
+    }
+
+    // Transaction success callback
+    //
+    function successCB() {
+        //alert("success!");
+    }
+
+	function queryDB(tx) {
+		tx.executeSql('SELECT * FROM DEMO', [], querySuccess, errorCB);
+	}
+
+	function querySuccess(tx, results) {
+		console.log("Returned rows = " + results.rows.length);
+		
+		//To get first row
+		var catalog = results.rows.item(0);
+		
+		//To Show Data
+		//alert(catalog.data);
+		//catalog = results.rows.item(1);  //Second row
+		//alert(catalog.data);
+
+		
+		// this will be true since it was a select statement and so rowsAffected was 0
+		if (!results.rowsAffected) {
+			console.log('No rows affected!');
+			return false;
+		}
+		// for an insert statement, this property will return the ID of the last inserted row
+		console.log("Last inserted row ID = " + results.insertId);
+	}
 
 
 /////////////////////////Event Handlers//////////////////////////////
@@ -87,6 +130,12 @@ $( document ).on( "pagebeforeshow", "#pgProjectOptions", function(event) {
 $( document ).on( "pagebeforeshow", "#pgHome", function(event) {
 	checkUserLogin();
 
+	
+	//Database functions
+	//var db = window.openDatabase("test", "1.0", "Test DB", 20480000);
+	//db.transaction(populateDB, errorCB, successCB);
+	//db.transaction(queryDB, errorCB);
+	
 	var _url = serviceRootUrl + "svc.aspx?op=LogHomePage&SPUrl=" + spwebRootUrl + "sites/busops&authInfo=" + userInfoData.Email;
 	Jsonp_Call(_url, false, "");	
 });
@@ -1265,7 +1314,6 @@ $( document ).on( "pagebeforeshow", "#pgContacts", function(event) {
 });
 
 
-
 function callbackLoadContacts(data)
 {
 
@@ -1277,7 +1325,7 @@ function callbackLoadContacts(data)
 			for(var i=0; i < data.d.results.length; i++)
 			{
 				var catalog = data.d.results[i];
-				var TableRow = $('<div style="margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.Name +'</span><br><span style="font-size:x-small;">Phone: '+ catalog.Phone +'</span></div>');
+				var TableRow = $('<div style="margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.Name +'</span><br><span style="font-size:x-small;">Phone: <a href="tel:' + catalog.Phone + '">'+ catalog.Phone +'</a></span></div>');
 				TableRow.appendTo($("#ContactsGrid"));
 				
 
