@@ -133,6 +133,8 @@ $( document ).on( "pagebeforeshow", "#pgHome", function(event) {
 	
 	//Database functions
 	//var db = window.openDatabase("test", "1.0", "Test DB", 20480000);
+	var db = window.sqlitePlugin.openDatabase("test", "1.0", "Test DB", 20480000);
+
 	//db.transaction(populateDB, errorCB, successCB);
 	//db.transaction(queryDB, errorCB);
 	

@@ -24,8 +24,7 @@
 		
     <name>BillTrak Mobile</name>
     <description>
-        BillTrak Mobile. Author: Umer Pasha
-		
+        BillTrak Mobile. Author: Umer Pasha. 
 		BillTrak is used by TAMS Headquarters to manage/view all aspects of an expected booking from time it is an opportunity to the final installation and “power on”. BillTrak Mobile helps IPMs to coordinate the pre-installation.
 
     </description>
@@ -86,7 +85,7 @@
     <gap:plugin name="org.apache.cordova.network-information" />
     <gap:plugin name="org.apache.cordova.splashscreen" />
     <gap:plugin name="org.apache.cordova.vibration" />
-    <gap:plugin name="org.apache.cordova.storage" />
+    <gap:plugin name="com.millerjames01.sqlite-plugin" />
 	
 	<!-- Third party plugins -->
     <!-- A list of available plugins are available at https://build.phonegap.com/plugins -->
