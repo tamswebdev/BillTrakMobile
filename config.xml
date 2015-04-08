@@ -87,12 +87,13 @@
     <gap:plugin name="org.apache.cordova.vibration" />
     <!--
     <gap:plugin name="org.apache.cordova.storage" />
-	<gap:plugin name="com.millerjames01.sqlite-plugin" />
 	-->
 	
 	<!-- Third party plugins -->
     <!-- A list of available plugins are available at https://build.phonegap.com/plugins -->
 	<gap:plugin name="com.phonegap.plugins.barcodescanner" />
+	<gap:plugin name="com.millerjames01.sqlite-plugin" />
+	<gap:plugin name="com.brodysoft.sqliteplugin" />
 	
 	
 <!-- Define app icon for each platform. -->
