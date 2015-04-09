@@ -60,11 +60,11 @@ function onDeviceReady() {
 
 /////////////////////////Database Functions//////////////////////////////
  function populateDB(tx) {
-         tx.executeSql('DROP TABLE IF EXISTS DEMO');
-         tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id unique, data)');
-         tx.executeSql('INSERT INTO DEMO (id, data) VALUES (1, "First row")');
-         tx.executeSql('INSERT INTO DEMO (id, data) VALUES (2, "Second row")');
-         tx.executeSql('INSERT INTO DEMO (id, data) VALUES (3, "Third row")');
+         tx.executeSql('DROP TABLE IF EXISTS PROJECTS');
+         tx.executeSql('CREATE TABLE IF NOT EXISTS PROJECTS (id unique, data)');
+         tx.executeSql('INSERT INTO PROJECTS (id, data) VALUES (1, "First row")');
+         tx.executeSql('INSERT INTO PROJECTS (id, data) VALUES (2, "Second row")');
+         tx.executeSql('INSERT INTO PROJECTS (id, data) VALUES (3, "Third row")');
     }
 
     // Transaction error callback
@@ -80,7 +80,7 @@ function onDeviceReady() {
     }
 
 	function queryDB(tx) {
-		tx.executeSql('SELECT * FROM DEMO', [], querySuccess, errorCB);
+		tx.executeSql('SELECT * FROM PROJECTS', [], querySuccess, errorCB);
 	}
 
 	function querySuccess(tx, results) {
@@ -135,12 +135,12 @@ $( document ).on( "pagebeforeshow", "#pgHome", function(event) {
 
 	
 	//Database functions
-	//var db = window.openDatabase("test", "1.0", "Test DB", 20480000);
+	//var db = window.openDatabase("billtrakdb", "1.0", "BillTrak DB", 20480000);
 	//var db = window.sqlitePlugin.openDatabase("test", "1.0", "Test DB", 20480000);
-	var db = window.sqlitePlugin.openDatabase({name: "test"});
+	//var db = window.sqlitePlugin.openDatabase({name: "test"});
 
-	db.transaction(populateDB, errorCB, successCB);
-	db.transaction(queryDB, errorCB);
+	//db.transaction(populateDB, errorCB, successCB);
+	//db.transaction(queryDB, errorCB);
 	
 	var _url = serviceRootUrl + "svc.aspx?op=LogHomePage&SPUrl=" + spwebRootUrl + "sites/busops&authInfo=" + userInfoData.Email;
 	Jsonp_Call(_url, false, "");	
