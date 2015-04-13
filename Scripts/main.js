@@ -146,7 +146,7 @@ $( document ).on( "pagebeforeshow", "#pgHome", function(event) {
 	
 	var _url = serviceRootUrl + "svc.aspx?op=LogHomePage&SPUrl=" + spwebRootUrl + "sites/busops&authInfo=" + userInfoData.Email;
 	Jsonp_Call(_url, false, "");	
-	alert("XXXXXLogHomePage");
+	//alert("XXXXXLogHomePage");
 	});
 
 
