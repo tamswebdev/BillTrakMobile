@@ -225,7 +225,7 @@ function LoginUser()
 
 function callbackLogin( data ){
 	try {
-			alert("XXXXXAuthenticate");
+			//alert("XXXXXAuthenticate");
 		if (data.d.results.issuccess) 
 		{
 			userInfoData.DisplayName = data.d.results.name;
