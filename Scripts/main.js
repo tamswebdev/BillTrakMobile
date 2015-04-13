@@ -1,4 +1,5 @@
 var serviceRootUrl = Configs.ServiceRootUrl;
+//var serviceRootUrl = Configs.ServiceRootUrl;
 var spwebRootUrl = Configs.SharePointRootUrl;
 
 var isPageLoadReady = false;
