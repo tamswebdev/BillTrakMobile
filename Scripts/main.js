@@ -31,7 +31,7 @@ if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/) 
 
 function onDeviceReady() {
 	$.mobile.pageLoadErrorMessage = "";
-	
+
 	if (typeof device != 'undefined')
 		deviceInfo = device.model + '|' + device.platform + '|' + device.version;
 	else
@@ -52,7 +52,7 @@ function onDeviceReady() {
 	
 	
 	localstorage.set("DeviceInfo", deviceInfo);
-	
+
 	checkUserLogin();	
 	
 	isPageLoadReady = true;
@@ -146,9 +146,14 @@ $( document ).on( "pagebeforeshow", "#pgHome", function(event) {
 	
 	var _url = serviceRootUrl + "svc.aspx?op=LogHomePage&SPUrl=" + spwebRootUrl + "sites/busops&authInfo=" + userInfoData.Email;
 	Jsonp_Call(_url, false, "");	
-	//alert("XXXXXLogHomePage");
+	
 	});
 
+
+$( document ).on( "pagebeforeshow", "#startpage", function(event) {
+	checkUserLogin();
+
+});
 
 $( document ).on( "pagebeforeshow", "#pgHelp", function(event) {
 	checkUserLogin();
@@ -225,13 +230,13 @@ function LoginUser()
 
 function callbackLogin( data ){
 	try {
-			//alert("XXXXXAuthenticate");
+	
 		if (data.d.results.issuccess) 
 		{
 			userInfoData.DisplayName = data.d.results.name;
 			userInfoData.Email = data.d.results.email;
 			userInfoData.Phone = data.d.results.phone;
-			userInfoData.UserID = data.d.results.userid;
+			userInfoData.UserID = data.d.results.userid;	
 			$(".spanLoginUser").text("" +userInfoData.DisplayName);
 			
 			if ($('#rememberMe').is(':checked'))
@@ -2619,7 +2624,7 @@ function SignOut()
 function checkUserLogin()
 {
 	$(".network-unreachable").remove();
-	
+
 	checkConnection();
 	if (userInfoData == null)
 	{
@@ -2636,7 +2641,8 @@ function checkUserLogin()
 	isUserLogin = (userInfoData.AuthenticationHeader != null && userInfoData.AuthenticationHeader != "" && 
 					userInfoData.DisplayName != null && userInfoData.DisplayName != "" &&
 					userInfoData.Email != null && userInfoData.Email != "" && userInfoData.Expiration > getTimestamp());
-	
+
+
     if (!isUserLogin && location.href.indexOf("#pgLogin") < 0)
 	{
 		NavigatePage("#pgLogin");
