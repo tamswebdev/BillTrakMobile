@@ -60,6 +60,7 @@ function onDeviceReady() {
 };
 
 /////////////////////////Database Functions//////////////////////////////
+/*
  function populateDB(tx) {
          tx.executeSql('DROP TABLE IF EXISTS PROJECTS');
          tx.executeSql('CREATE TABLE IF NOT EXISTS PROJECTS (id unique, data)');
@@ -107,7 +108,7 @@ function onDeviceReady() {
 		console.log("Last inserted row ID = " + results.insertId);
 	}
 
-
+*/
 /////////////////////////Event Handlers//////////////////////////////
   //reset type=date inputs to text
   $( document ).bind( "mobileinit", function(){
@@ -145,7 +146,8 @@ $( document ).on( "pagebeforeshow", "#pgHome", function(event) {
 	
 	var _url = serviceRootUrl + "svc.aspx?op=LogHomePage&SPUrl=" + spwebRootUrl + "sites/busops&authInfo=" + userInfoData.Email;
 	Jsonp_Call(_url, false, "");	
-});
+	alert("XXXXXLogHomePage");
+	});
 
 
 $( document ).on( "pagebeforeshow", "#pgHelp", function(event) {
@@ -218,10 +220,12 @@ function LoginUser()
 	var _url = serviceRootUrl + "svc.aspx?op=Authenticate&SPUrl=" + spwebRootUrl + "sites/busops&authInfo=" + userInfoData.AuthenticationHeader + "&currentURL=" + serviceRootUrl + "main.html"
 
 	Jsonp_Call(_url, true, "callbackLogin");
+	
 }
 
 function callbackLogin( data ){
 	try {
+			alert("XXXXXAuthenticate");
 		if (data.d.results.issuccess) 
 		{
 			userInfoData.DisplayName = data.d.results.name;
