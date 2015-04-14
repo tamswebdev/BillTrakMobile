@@ -2690,7 +2690,7 @@ function GetpnlSideShow()
 }
 
 function SnapPhoto() {  
-		alert("insnap");
+
        navigator.camera.getPicture(  
          uploadPhoto,  
          function(message) { alert('Camera failed'); },  
@@ -2719,7 +2719,7 @@ function SelectPhoto() {
        );  
      }  
      function uploadPhoto(imageURI) {  
-	 		alert("inupload");
+
 	   var options = new FileUploadOptions();  
 	   
 	   
