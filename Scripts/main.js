@@ -839,9 +839,9 @@ function callbackLoadEquipmentListCounts(data)
 				var catalog = data.d.results[0];
 
 				$('#RegularCount').html('Regular Equipment List   <span style="text-align:right;float:right;font-size:xx-small;color:blue;">' + (parseInt(catalog.RegularCount)>0 ? catalog.RegularCount + ' item(s)' : '') +'</span>');
-				$('#BelowCount').html('Below Equipment List   <span style="text-align:right;float:right;font-size:xx-small;color:blue;">' + (parseInt(catalog.BelowCount)>0 ? catalog.BelowCount + ' item(s)' : '') + '</span>');
-				$('#VitalCount').html('Vital Equipment List   <span style="text-align:right;float:right;font-size:xx-small;color:blue;">' + (parseInt(catalog.VitalCount)>0 ? catalog.VitalCount + ' item(s)' : '') + '</span>');
-				$('#PowerCount').html('Power Equipment List   <span style="text-align:right;float:right;font-size:xx-small;color:blue;">' + (parseInt(catalog.PowerCount)>0 ? catalog.PowerCount + ' item(s)' : '') + '</span>');
+				$('#BelowCount').html('Below the Line Items   <span style="text-align:right;float:right;font-size:xx-small;color:blue;">' + (parseInt(catalog.BelowCount)>0 ? catalog.BelowCount + ' item(s)' : '') + '</span>');
+				$('#VitalCount').html('Vital Items   <span style="text-align:right;float:right;font-size:xx-small;color:blue;">' + (parseInt(catalog.VitalCount)>0 ? catalog.VitalCount + ' item(s)' : '') + '</span>');
+				$('#PowerCount').html('Powerware Items   <span style="text-align:right;float:right;font-size:xx-small;color:blue;">' + (parseInt(catalog.PowerCount)>0 ? catalog.PowerCount + ' item(s)' : '') + '</span>');
 
 
 
@@ -2707,7 +2707,7 @@ function SnapPhoto() {
 function SelectPhoto() {  
        navigator.camera.getPicture(  
          uploadPhoto,  
-         function(message) { alert('Get picture failed'); },  
+         function(message) { alert('No photo selected'); },  
          {  
            quality     : 50,  
            destinationType : navigator.camera.DestinationType.FILE_URI,  
