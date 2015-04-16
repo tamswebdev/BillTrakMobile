@@ -295,7 +295,7 @@ function callbackPopulateSearchResults(data)
 				var temp = "";
 				
 				var ModalityColorCode="Transparent";
-				switch (catalog.OpportunityModality)
+				/*switch (catalog.OpportunityModality)
 				{
 					case 'CT':
 					ModalityColorCode='green';
@@ -315,7 +315,7 @@ function callbackPopulateSearchResults(data)
 					default:
 					ModalityColorCode='Transparent';
 					break;
-				}
+				}*/
 				
 				//<a data-mini="true" data-inline="true" data-role="button" href="javascript: addStatusAction('+catalog.ID+');" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" class="ui-btn ui-shadow ui-btn-corner-all ui-mini ui-btn-inline ui-btn-up-c">
 					
@@ -540,8 +540,9 @@ function callbackPopulateSearchResults(data)
 
 
 
-					temp += '<table class="search-item" ><tr><td style="width:3px;background-color:'+ ModalityColorCode +'">&nbsp;</td>';
-					temp += '<td><div id="ProjectCard" class="panel-body" style="padding-bottom: 0">';
+//					temp += '<table class="search-item" ><tr><td style="width:3px;background-color:'+ ModalityColorCode +'">&nbsp;</td>';
+					temp += '<table class="search-item" ><tr>';
+					temp += '<td><div id="ProjectCard" class="panel-body" style="padding-bottom: 0;padding-left 2px;">';
 					temp += '<a href="#" onclick="EditProjectDetailsAction('+catalog.ProjectID+');" style="text-decoration:none;color: inherit; display: block;">'
 					temp += '<h2 style="color: blue; margin-top: 2px; margin-bottom: 2px;">';
 					temp += catalog.AccountName + '</h2>';
@@ -565,7 +566,7 @@ function callbackPopulateSearchResults(data)
 					temp += '<tr><td>Conf.Level</td><td>SR</td><td>EM</td><td>IN</td><td>PO</td></tr>';
 					temp += '<tr style="height:25px;"><td>'+catalog.Confidence+'</td><td><img src="Images/'+ConstructionProgressIcon+'" border=0></td><td><img src="Images/'+EMRFIcon+'" border=0></td><td><img src="Images/'+InstallationProgressIcon+'" border=0></td><td><img src="Images/'+PowerOnIcon+'" border=0></td></tr></table>';
 
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified +'</em></h6>';
+					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
 
 
 					temp += '</div></div></div>';
@@ -681,7 +682,7 @@ function callbackLoadProjectOptionsSidePanel(data)
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified +'</em></h6>';
+					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
 					temp += '</div></div></div>';
 					temp += '</td></tr></table>';
 					
@@ -837,12 +838,16 @@ function callbackLoadEquipmentListCounts(data)
 
 
 				var catalog = data.d.results[0];
-
+/*
 				$('#RegularCount').html('Regular Equipment List   <span style="text-align:right;float:right;font-size:xx-small;color:blue;">' + (parseInt(catalog.RegularCount)>0 ? catalog.RegularCount + ' item(s)' : '') +'</span>');
 				$('#BelowCount').html('Below the Line Items   <span style="text-align:right;float:right;font-size:xx-small;color:blue;">' + (parseInt(catalog.BelowCount)>0 ? catalog.BelowCount + ' item(s)' : '') + '</span>');
 				$('#VitalCount').html('Vital Items   <span style="text-align:right;float:right;font-size:xx-small;color:blue;">' + (parseInt(catalog.VitalCount)>0 ? catalog.VitalCount + ' item(s)' : '') + '</span>');
 				$('#PowerCount').html('Powerware Items   <span style="text-align:right;float:right;font-size:xx-small;color:blue;">' + (parseInt(catalog.PowerCount)>0 ? catalog.PowerCount + ' item(s)' : '') + '</span>');
-
+*/
+				$('#RegularCount').html('Regular Equipment List ' + (parseInt(catalog.RegularCount)>0 ? '(' + catalog.RegularCount + ')' : '') );
+				$('#BelowCount').html('Below the Line Items ' + (parseInt(catalog.BelowCount)>0 ? '(' + catalog.BelowCount + ')' : '') );
+				$('#VitalCount').html('Vital Items ' + (parseInt(catalog.VitalCount)>0 ? '(' + catalog.VitalCount + ')' : '') );
+				$('#PowerCount').html('Powerware Items ' + (parseInt(catalog.PowerCount)>0 ? '(' + catalog.PowerCount + ')' : ''));
 
 
 	}
@@ -1015,7 +1020,7 @@ function callbackLoadEquipmentListSidePanel(data)
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified +'</em></h6>';
+					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
 					temp += '</div></div></div>';
 					temp += '</td></tr></table>';
 					
@@ -1133,10 +1138,12 @@ $( document ).on( "pagebeforeshow", "#pgEMRF", function(event) {
 	$('#tblEMRF').hide();
 	$('#tblEMRFButtons').hide();
 
-	$('#error-div-EMRF').text("").append(getLoadingMini());
-	$("#ddlSortBy-EMRF").val('ShipToSite').selectmenu('refresh', true);
 
-		
+	$('#error-div-EMRF').text("").append(getLoadingMini());
+
+	$("#ddlEquipmentType").val('-1').selectmenu('refresh', true);
+	$('#divEquipmentType').hide();
+	
 	$("#EMRFGrid").text("");
 	var id = $.urlParam("id");
 	if (id > 0)
@@ -1166,7 +1173,7 @@ function callbackLoadEMRF(data)
 			for(var i=0; i < data.d.results.length; i++)
 			{
 				var catalog = data.d.results[i];
-				var TableRow = $('<div style="margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ShipToSite +'</span><br><span style="font-size:x-small;">'+ catalog.Status +' - '+ catalog.SentToTCSubCategory+'</span><br><span style="font-size:x-small;">To:'+ catalog.ShipToAddress + catalog.ShipToCity+ catalog.ShipToState+ ' ' +catalog.ShipToZip+'</span><br><span style="font-size:x-small;">Delivery Date:'+ catalog.DelvDate  +'</span><br><span style="font-size:x-small;">'+catalog.ItemDetail +'</span></div>');
+				var TableRow = $('<div style="margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ShipToSite +'</span><br><span style="font-size:x-small;">'+ catalog.Status +' - '+ catalog.SentToTCSubCategory+'</span><br><span style="font-size:x-small;">To:'+ catalog.ShipToAddress + catalog.ShipToCity+ catalog.ShipToState+ ' ' +catalog.ShipToZip+'</span><br><span style="font-size:x-small;">Requested Delivery Date:'+ catalog.DelvDate  +'</span><br><span style="font-size:x-small;">'+catalog.ItemDetail +'</span></div>');
 				TableRow.appendTo($("#EMRFGrid"));
 				
 
@@ -1256,16 +1263,33 @@ function callbackLoadEMRFSidePanel(data)
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified +'</em></h6>';
+					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
 					temp += '</div></div></div>';
 					temp += '</td></tr></table>';
 					
 				$("#pnlProjectDetails-EMRF" ).html(temp);
 
+				LoadEquipmentTypes(catalog.OpportunityModality);
+				
+				$("#btnAddEMRF").on("click", function(e) { 
+					var EquipmentType=$("#ddlEquipmentType").val();
+					var requestUrl = spwebRootUrl + 'virtualapps/busopswebs/emr/MoveRequest.aspx?projectId=' + catalog.ProjectID + '&sid=' + catalog.SID + '&modality=' + catalog.OpportunityModality + '&equipment=' + EquipmentType + '&source=BillTrak';	
+					
+					if (EquipmentType=='-1')
+						alert("Please select Equipment Type");		
+					else
+						window.open(requestUrl, '_system');//alert(requestUrl );		
+					
+				});
+				//var requestUrl = url + '?projectId=' + pid + '&sid=' + sid + '&modality=' + mdl + '&equipment=' + eqp + '&source=BillTrak';
+                //var requestUrl = 'http://localhost:8268/MoveRequest.aspx?projectId=' + pid + '&sid=' + sid + '&modality=' + mdl + '&equipment=' + eqp + '&source=BillTrak';
+
+				
 
 				$('#error-div2-EMRF').text("");
 				$('#error-div-EMRF').text("");
-					
+				
+				$('#divEquipmentType').show();
 				$('#tblEMRF').show();
 				$('#tblEMRFButtons').show();
 				
@@ -1274,7 +1298,30 @@ function callbackLoadEMRFSidePanel(data)
 	catch(err) {}
 }
 
+function LoadEquipmentTypes(Modality)
+{
+	var _url = serviceRootUrl + "svc.aspx?op=GetEquipmentTypes&SPUrl=" + spwebRootUrl + "sites/busops" + "&modality=" + Modality + "&username=" + userInfoData.Email;
+	Jsonp_Call(_url, true, "callbackPopulateEquipmentTypes");	
+}
 
+function callbackPopulateEquipmentTypes(data)
+{
+	try {
+		if (data.d.results.length > 0)
+		{
+			$('#ddlEquipmentType option[value!="-1"]').remove();
+			
+			for (var i = 0; i < data.d.results.length; i++)
+			{
+				var catalog = data.d.results[i];
+				$("#ddlEquipmentType").append("<option value='" + catalog.LookUpID + "'>" + catalog.DisplayName + "</option>");
+			}		
+			$("#ddlEquipmentType").val('-1').selectmenu('refresh', true);
+
+		}
+	}
+	catch(err) {}
+}
 
 function cancelStatusEMRF() {
 
@@ -1308,7 +1355,7 @@ $( document ).on( "pagebeforeshow", "#pgContacts", function(event) {
 	$('#tblContactsButtons').hide();
 
 	$('#error-div-Contacts').text("").append(getLoadingMini());
-	$("#ddlSortBy-Contacts").val('ShipToSite').selectmenu('refresh', true);
+	//$("#ddlSortBy-Contacts").val('ShipToSite').selectmenu('refresh', true);
 
 		
 	$("#ContactsGrid").text("");
@@ -1432,7 +1479,7 @@ function callbackLoadContactsSidePanel(data)
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified +'</em></h6>';
+					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
 					temp += '</div></div></div>';
 					temp += '</td></tr></table>';
 				$("#pnlProjectDetails-Contacts" ).html(temp);
@@ -1476,7 +1523,7 @@ $( document ).on( "pagebeforeshow", "#pgSitePlanRequests", function(event) {
 	$('#tblSitePlanRequestsButtons').hide();
 
 	$('#error-div-SitePlanRequests').text("").append(getLoadingMini());
-	$("#ddlSortBy-SitePlanRequests").val('ProjectNumber').selectmenu('refresh', true);
+	//$("#ddlSortBy-SitePlanRequests").val('ProjectNumber').selectmenu('refresh', true);
 		
 	$("#SitePlanRequestsGrid").text("");
 	var id = $.urlParam("id");
@@ -1601,7 +1648,7 @@ function callbackLoadSitePlanRequestsSidePanel(data)
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified +'</em></h6>';
+					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
 					temp += '</div></div></div>';
 					temp += '</td></tr></table>';
 					
@@ -1810,7 +1857,7 @@ function callbackLoadIPMActivitySidePanel(data)
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified +'</em></h6>';
+					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
 					temp += '</div></div></div>';
 					temp += '</td></tr></table>';
 
@@ -2246,7 +2293,7 @@ function callbackLoadProjectDetail(data)
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified +'</em></h6>';
+					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
 					temp += '</div></div></div>';
 					temp += '</td></tr></table>';
 
