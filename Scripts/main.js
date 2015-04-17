@@ -567,6 +567,7 @@ function callbackPopulateSearchResults(data)
 					temp += '<tr style="height:25px;"><td>'+catalog.Confidence+'</td><td><img src="Images/'+ConstructionProgressIcon+'" border=0></td><td><img src="Images/'+EMRFIcon+'" border=0></td><td><img src="Images/'+InstallationProgressIcon+'" border=0></td><td><img src="Images/'+PowerOnIcon+'" border=0></td></tr></table>';
 
 					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
+					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>IPM Update: ' + catalog.LastIPMUpdate + catalog.LastIPMUpdateBy +'</em></h6>';
 
 
 					temp += '</div></div></div>';
@@ -683,6 +684,7 @@ function callbackLoadProjectOptionsSidePanel(data)
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
 					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
+					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>IPM Update: ' + catalog.LastIPMUpdate + catalog.LastIPMUpdateBy +'</em></h6>';
 					temp += '</div></div></div>';
 					temp += '</td></tr></table>';
 					
@@ -1021,6 +1023,7 @@ function callbackLoadEquipmentListSidePanel(data)
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
 					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
+					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>IPM Update: ' + catalog.LastIPMUpdate + catalog.LastIPMUpdateBy +'</em></h6>';
 					temp += '</div></div></div>';
 					temp += '</td></tr></table>';
 					
@@ -1264,6 +1267,7 @@ function callbackLoadEMRFSidePanel(data)
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
 					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
+					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>IPM Update: ' + catalog.LastIPMUpdate + catalog.LastIPMUpdateBy +'</em></h6>';
 					temp += '</div></div></div>';
 					temp += '</td></tr></table>';
 					
@@ -1365,6 +1369,10 @@ $( document ).on( "pagebeforeshow", "#pgContacts", function(event) {
 	
 		var _url2 = serviceRootUrl + "svc.aspx?op=GetContacts&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id ;
 		Jsonp_Call(_url2, false, "callbackLoadContacts");
+		
+		var _urlTeam = serviceRootUrl + "svc.aspx?op=GetContactsTeam&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id ;
+		Jsonp_Call(_url2, false, "callbackLoadContactsTeam");
+
 	}
 	else 
 	{
@@ -1376,6 +1384,31 @@ $( document ).on( "pagebeforeshow", "#pgContacts", function(event) {
 	
 });
 
+function callbackLoadContactsTeam(data)
+{
+	try {
+
+			for(var i=0; i < data.d.results.length; i++)
+			{
+				var catalog = data.d.results[0];
+				var TableRow = $(
+				'<div style="margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.AE +'</span><br><span style="font-size:x-small;">Phone: <a href="tel:' + catalog.AEPhone + '">'+ catalog.AEPhone +'</a></span></div>'
+				+
+				'<div style="margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><table><tr><td><img height=50px width=50px src="https://mysite.tams.com/User%20Photos/Profile%20Pictures/upasha_MThumb.jpg"></td><td style="font-size:x-small;">iuwqehdw wiuefwifeu wef iwefyuiwe fwuife yiwueyfiuewfi fewywu wi wiwuiyf wiu f</td></tr></table><span style="font-size:small;font-weight:bold;">' + catalog.IPM +'</span><br><span style="font-size:x-small;">Phone: <a href="tel:' + catalog.IPMPhone + '">'+ catalog.IPMPhone +'</a></span></div>');
+
+
+
+
+				TableRow.appendTo($("#ContactsTeamGrid"));
+				
+
+			}
+
+					
+		}
+
+	catch(err) {}
+}
 
 function callbackLoadContacts(data)
 {
@@ -1480,6 +1513,7 @@ function callbackLoadContactsSidePanel(data)
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
 					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
+					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>IPM Update: ' + catalog.LastIPMUpdate + catalog.LastIPMUpdateBy +'</em></h6>';
 					temp += '</div></div></div>';
 					temp += '</td></tr></table>';
 				$("#pnlProjectDetails-Contacts" ).html(temp);
@@ -1649,6 +1683,7 @@ function callbackLoadSitePlanRequestsSidePanel(data)
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
 					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
+					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>IPM Update: ' + catalog.LastIPMUpdate + catalog.LastIPMUpdateBy +'</em></h6>';
 					temp += '</div></div></div>';
 					temp += '</td></tr></table>';
 					
@@ -1858,6 +1893,7 @@ function callbackLoadIPMActivitySidePanel(data)
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
 					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
+					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>IPM Update: ' + catalog.LastIPMUpdate + catalog.LastIPMUpdateBy +'</em></h6>';
 					temp += '</div></div></div>';
 					temp += '</td></tr></table>';
 
@@ -2087,6 +2123,27 @@ $( document ).on( "pagebeforeshow", "#pgConstruction", function(event) {
 	
 });
 
+function goHomeAfterConfirm(FromPage)
+{
+	if (FromPage=='Construction')
+	{
+	
+		$('<div>').simpledialog2({
+		mode: 'blank',
+		headerText: 'Go Home',
+		headerClose: false,
+		transition: 'flip',
+		themeDialog: 'a',
+		zindex: 2000,
+		blankContent : 
+		  "<div style='padding: 15px;'><p>Discard changes and go back to home screen?</p>"+
+		  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"goHome();\">OK</a></td>" + 
+		  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
+    }); 
+	
+	}
+
+}
 
 function callbackLoadSidePanel(data)
 {
@@ -2294,6 +2351,7 @@ function callbackLoadProjectDetail(data)
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
 					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
+					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>IPM Update: ' + catalog.LastIPMUpdate + catalog.LastIPMUpdateBy +'</em></h6>';
 					temp += '</div></div></div>';
 					temp += '</td></tr></table>';
 
