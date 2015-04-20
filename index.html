@@ -996,40 +996,12 @@
 
 																			</div>
 
-    <canvas id="myCanvas" width="578" height="200"></canvas>
-    <script>
-      function loadCanvas(dataURL) {
-        var canvas = document.getElementById('myCanvas');
-        var context = canvas.getContext('2d');
 
-        // load image from data url
-        var imageObj = new Image();
-        imageObj.onload = function() {
-          context.drawImage(this, 0, 0);
-        };
-
-        imageObj.src = dataURL;
-      }
-      
-      // make ajax call to get image data url
-      var request = new XMLHttpRequest();
-      request.open('GET', 'https://mysite.tams.com/User%20Photos/Profile%20Pictures/upasha_MThumb.jpg', true);
-      request.onreadystatechange = function() {
-        // Makes sure the document is ready to parse.
-        if(request.readyState == 4) {
-          // Makes sure it's found the file.
-          if(request.status == 200) {
-            loadCanvas(request.responseText);
-          }
-        }
-      };
-      request.send(null);
-
-    </script>															
 																					<div class="ui-grid-b ui-responsive" id="ContactsGrid" name="ContactsGrid" ></div>
 
 																					<div class="ui-grid-b ui-responsive" id="ContactsTeamGrid" name="ContactsTeamGrid" ></div>
-					
+
+	
 					<div data-role="controlgroup" id="tblContactsButtons" data-type="horizontal" >
 						<a href="javascript:void(0);"  data-role="button" data-icon="check" data-iconpos="left" style="padding-right:.5em !important;" class="ui-disabled" >Save</a>
 						<a href="javascript:void(0);"  data-role="button" data-icon="delete" data-iconpos="left" onclick="cancelStatusContacts()" style="padding-right:.5em !important;">Cancel</a>
@@ -1270,7 +1242,7 @@
 										<li><span class="spanLoginUser"></span></li>
 										<!--<li class="menu-back-btn"><a href="javascript:void(0);" onclick="goBack();">Back</a></li>-->
 										<li><a href="javascript:void(0);" onclick="goHome();">Home</a></li>
-										<li><a href="javascript:void(0);" onclick="NavigatePage('#pgSearch');">Add Status</a></li>
+										<li><a href="javascript:void(0);" onclick="NavigatePage('#pgSearch');">My projects</a></li>
 										<li><a href="javascript:void(0);" onclick="ShowHelp();">Help</a></li>
 										<li><a href="javascript:void(0);" onclick="SignOut();">Sign Out</a></li>
 									</ul>

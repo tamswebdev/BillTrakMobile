@@ -1363,6 +1363,7 @@ $( document ).on( "pagebeforeshow", "#pgContacts", function(event) {
 
 		
 	$("#ContactsGrid").text("");
+	$("#ContactsTeamGrid").text("");
 	var id = $.urlParam("id");
 	if (id > 0)
 	{
@@ -1371,7 +1372,7 @@ $( document ).on( "pagebeforeshow", "#pgContacts", function(event) {
 		Jsonp_Call(_url2, false, "callbackLoadContacts");
 		
 		var _urlTeam = serviceRootUrl + "svc.aspx?op=GetContactsTeam&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id ;
-		Jsonp_Call(_url2, false, "callbackLoadContactsTeam");
+		Jsonp_Call(_urlTeam, false, "callbackLoadContactsTeam");
 
 	}
 	else 
@@ -1387,17 +1388,106 @@ $( document ).on( "pagebeforeshow", "#pgContacts", function(event) {
 function callbackLoadContactsTeam(data)
 {
 	try {
+			
 
 			for(var i=0; i < data.d.results.length; i++)
 			{
 				var catalog = data.d.results[0];
-				var TableRow = $(
-				'<div style="margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.AE +'</span><br><span style="font-size:x-small;">Phone: <a href="tel:' + catalog.AEPhone + '">'+ catalog.AEPhone +'</a></span></div>'
-				+
-				'<div style="margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><table><tr><td><img height=50px width=50px src="https://mysite.tams.com/User%20Photos/Profile%20Pictures/upasha_MThumb.jpg"></td><td style="font-size:x-small;">iuwqehdw wiuefwifeu wef iwefyuiwe fwuife yiwueyfiuewfi fewywu wi wiwuiyf wiu f</td></tr></table><span style="font-size:small;font-weight:bold;">' + catalog.IPM +'</span><br><span style="font-size:x-small;">Phone: <a href="tel:' + catalog.IPMPhone + '">'+ catalog.IPMPhone +'</a></span></div>');
+				var ContactsTeam="";
+				if (catalog.AE && catalog.AE!='')
+				{
 
+					ContactsTeam=ContactsTeam+'<div class="bubble ui-block-a my-breakpoint ui-responsive" id="contactsteam"><div>';
+					ContactsTeam=ContactsTeam+'<div style="float:left;">';
+					if (catalog.AEPicture.substring(0,7)=='<nopic>')
+						{ContactsTeam=ContactsTeam+'<img style="padding:2px;" alt="" title="" border=0 width=60px height=60px src="Images/person.gif">';}
+					else
+						{ContactsTeam=ContactsTeam+'<img style="padding:2px;" alt="" title="" border=0 width=60px height=60px src=data:image/jpg;base64,"'+catalog.AEPicture+'" >';}
+					ContactsTeam=ContactsTeam+'</div><div><span style="font-size:small;font-weight:bold;">'+catalog.AE+'</span><br><span style="font-size:small;font-weight:bold;">AE</span><br><span style="font-size:x-small;">Phone: <a href="tel:'+catalog.AEPhone+'">'+catalog.AEPhone+'</a></span></div>';
+					ContactsTeam=ContactsTeam+'</div></div>';
 
+				}
 
+				if (catalog.ZBM && catalog.ZBM!='')
+				{
+
+					ContactsTeam=ContactsTeam+'<div class="bubble ui-block-a my-breakpoint ui-responsive" id="contactsteam"><div>';
+					ContactsTeam=ContactsTeam+'<div style="float:left;">';
+					if (catalog.ZBMPicture.substring(0,7)=='<nopic>')
+						{ContactsTeam=ContactsTeam+'<img style="padding:2px;" alt="" title="" border=0 width=60px height=60px src="Images/person.gif">';}
+					else
+						{ContactsTeam=ContactsTeam+'<img style="padding:2px;" alt="" title="" border=0 width=60px height=60px src=data:image/jpg;base64,"'+catalog.ZBMPicture+'" >';}
+					ContactsTeam=ContactsTeam+'</div><div><span style="font-size:small;font-weight:bold;">'+catalog.ZBM+'</span><br><span style="font-size:small;font-weight:bold;">ZBM</span><br><span style="font-size:x-small;">Phone: <a href="tel:'+catalog.ZBMPhone+'">'+catalog.ZBMPhone+'</a></span></div>';
+					ContactsTeam=ContactsTeam+'</div></div>';
+
+				}
+				if (catalog.ASM && catalog.ASM!='')
+				{
+
+					ContactsTeam=ContactsTeam+'<div class="bubble ui-block-a my-breakpoint ui-responsive" id="contactsteam"><div>';
+					ContactsTeam=ContactsTeam+'<div style="float:left;">';
+					if (catalog.ASMPicture.substring(0,7)=='<nopic>')
+						{ContactsTeam=ContactsTeam+'<img style="padding:2px;" alt="" title="" border=0 width=60px height=60px src="Images/person.gif">';}
+					else
+						{ContactsTeam=ContactsTeam+'<img style="padding:2px;" alt="" title="" border=0 width=60px height=60px src=data:image/jpg;base64,"'+catalog.ASMPicture+'" >';}
+					ContactsTeam=ContactsTeam+'</div><div><span style="font-size:small;font-weight:bold;">'+catalog.ASM+'</span><br><span style="font-size:small;font-weight:bold;">ASM</span><br><span style="font-size:x-small;">Phone: <a href="tel:'+catalog.ASMPhone+'">'+catalog.ASMPhone+'</a></span></div>';
+					ContactsTeam=ContactsTeam+'</div></div>';
+
+				}				
+				if (catalog.ZVPSales && catalog.ZVPSales!='')
+				{
+
+					ContactsTeam=ContactsTeam+'<div class="bubble ui-block-a my-breakpoint ui-responsive" id="contactsteam"><div>';
+					ContactsTeam=ContactsTeam+'<div style="float:left;">';
+					if (catalog.ZVPSalesPicture.substring(0,7)=='<nopic>')
+						{ContactsTeam=ContactsTeam+'<img style="padding:2px;" alt="" title="" border=0 width=60px height=60px src="Images/person.gif">';}
+					else
+						{ContactsTeam=ContactsTeam+'<img style="padding:2px;" alt="" title="" border=0 width=60px height=60px src=data:image/jpg;base64,"'+catalog.ZVPSalesPicture+'" >';}
+					ContactsTeam=ContactsTeam+'</div><div><span style="font-size:small;font-weight:bold;">'+catalog.ZVPSales+'</span><br><span style="font-size:small;font-weight:bold;">ZVPSales</span><br><span style="font-size:x-small;">Phone: <a href="tel:'+catalog.ZVPSalesPhone+'">'+catalog.ZVPSalesPhone+'</a></span></div>';
+					ContactsTeam=ContactsTeam+'</div></div>';
+
+				}
+				if (catalog.ZVPService && catalog.ZVPService!='')
+				{
+
+					ContactsTeam=ContactsTeam+'<div class="bubble ui-block-a my-breakpoint ui-responsive" id="contactsteam"><div>';
+					ContactsTeam=ContactsTeam+'<div style="float:left;">';
+					if (catalog.ZVPServicePicture.substring(0,7)=='<nopic>')
+						{ContactsTeam=ContactsTeam+'<img style="padding:2px;" alt="" title="" border=0 width=60px height=60px src="Images/person.gif">';}
+					else
+						{ContactsTeam=ContactsTeam+'<img style="padding:2px;" alt="" title="" border=0 width=60px height=60px src=data:image/jpg;base64,"'+catalog.ZVPServicePicture+'" >';}
+					ContactsTeam=ContactsTeam+'</div><div><span style="font-size:small;font-weight:bold;">'+catalog.ZVPService+'</span><br><span style="font-size:small;font-weight:bold;">ZVPService</span><br><span style="font-size:x-small;">Phone: <a href="tel:'+catalog.ZVPServicePhone+'">'+catalog.ZVPServicePhone+'</a></span></div>';
+					ContactsTeam=ContactsTeam+'</div></div>';
+
+				}
+				if (catalog.CE && catalog.CE!='')
+				{
+
+					ContactsTeam=ContactsTeam+'<div class="bubble ui-block-a my-breakpoint ui-responsive" id="contactsteam"><div>';
+					ContactsTeam=ContactsTeam+'<div style="float:left;">';
+					if (catalog.CEPicture.substring(0,7)=='<nopic>')
+						{ContactsTeam=ContactsTeam+'<img style="padding:2px;" alt="" title="" border=0 width=60px height=60px src="Images/person.gif">';}
+					else
+						{ContactsTeam=ContactsTeam+'<img style="padding:2px;" alt="" title="" border=0 width=60px height=60px src=data:image/jpg;base64,"'+catalog.CEPicture+'" >';}
+					ContactsTeam=ContactsTeam+'</div><div><span style="font-size:small;font-weight:bold;">'+catalog.CE+'</span><br><span style="font-size:small;font-weight:bold;">CE</span><br><span style="font-size:x-small;">Phone: <a href="tel:'+catalog.CEPhone+'">'+catalog.CEPhone+'</a></span></div>';
+					ContactsTeam=ContactsTeam+'</div></div>';
+
+				}
+				if (catalog.IPM && catalog.IPM!='')
+				{
+
+					ContactsTeam=ContactsTeam+'<div class="bubble ui-block-a my-breakpoint ui-responsive" id="contactsteam"><div>';
+					ContactsTeam=ContactsTeam+'<div style="float:left;">';
+					if (catalog.IPMPicture.substring(0,7)=='<nopic>')
+						{ContactsTeam=ContactsTeam+'<img style="padding:2px;" alt="" title="" border=0 width=60px height=60px src="Images/person.gif">';}
+					else
+						{ContactsTeam=ContactsTeam+'<img style="padding:2px;" alt="" title="" border=0 width=60px height=60px src=data:image/jpg;base64,'+catalog.IPMPicture+' />';}
+					ContactsTeam=ContactsTeam+'</div><div><span style="font-size:small;font-weight:bold;">'+catalog.IPM+'</span><br><span style="font-size:small;font-weight:bold;">IPM</span><br><span style="font-size:x-small;">Phone: <a href="tel:'+catalog.IPMPhone+'">'+catalog.IPMPhone+'</a></span></div>';
+					ContactsTeam=ContactsTeam+'</div></div>';
+
+				}
+
+				var TableRow = $(ContactsTeam + ' ');
 
 				TableRow.appendTo($("#ContactsTeamGrid"));
 				
@@ -1744,7 +1834,7 @@ $( document ).on( "pagebeforeshow", "#pgIPMActivity", function(event) {
 	if (id > 0)
 	{
 	
-		var _url2 = serviceRootUrl + "svc.aspx?op=GetIPMActivity&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+		var _url2 = serviceRootUrl + "svc.aspx?op=GetIPMActivityWithAvatar&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
 		Jsonp_Call(_url2, false, "callbackLoadIPMActivity");
 	}
 	else 
@@ -1825,18 +1915,57 @@ function callbackLoadIPMActivity(data)
 
 	try {
 
-		
 //		if (data.d.results.length > 0)
 //		{
 			var temp = '<div class="ui-grid-b ui-responsive" id="IPMActivityGridSidePanel" name="IPMActivityGridSidePanel" style="padding-right:10px;">';
+
 			for(var i=0; i < data.d.results.length; i++)
 			{
+				var IPMActivityChat="";
 				var catalog = data.d.results[i];
 				var HasPhoto = "";
 
 				if (parseInt(catalog.HasPhoto) > 0)
-					HasPhoto = '<br><span style="font-size:x-small;"><a title="" style="text-decoration:none;" href="#" onclick="ShowPhoto('+ catalog.HasPhoto  +')"><u>View Photo</u></a></span>'
-				var TableRow = $('<div style="margin: 0px 0px 0px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ActivityDate +' - '+ catalog.CreatedBy +' - '+ catalog.ActivityType +'</span><br><span style="font-size:x-small;">'+ catalog.Comments  +'</span>'+HasPhoto+'</div>');
+					HasPhoto = '<br><span style="font-size:x-small;"><a title="" style="text-decoration:none;" href="#" onclick="ShowPhoto('+ catalog.HasPhoto  +')"><u>View Photo</u></a></span>';
+				//var TableRow = $('<div style="margin: 0px 0px 0px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ActivityDate +' - '+ catalog.CreatedBy +' - '+ catalog.ActivityType +'</span><br><span style="font-size:x-small;">'+ catalog.Comments  +'</span>'+HasPhoto+'</div>');
+
+				
+				if (isOdd(i))
+				{
+					IPMActivityChat=IPMActivityChat+'<table><tr><td style="padding-top:6px;vertical-align:top;">';
+					if (catalog.Avatar.substring(0,7)=='<nopic>')
+						{IPMActivityChat=IPMActivityChat+'<img style="padding:2px;" alt="" title="" border=0 width=50px height=50px src="Images/person.gif">';}
+					else
+						{IPMActivityChat=IPMActivityChat+'<img style="padding:2px;" alt="" title="" border=0 width=50px height=50px src=data:image/jpg;base64,'+catalog.Avatar+' />';}
+					IPMActivityChat=IPMActivityChat+'<p style="font-size:x-small;color:silver;width: 50px;word-wrap: break-word;"><em>'+catalog.CreatedBy+' '+catalog.ActivityDate+'</em></p></td><td>';
+					IPMActivityChat=IPMActivityChat+'<div name="SpeechBubble" id="SpeechBubble"><div class="bubblel" id="viewport-content"><div><div style="font-size:small;">';
+					IPMActivityChat=IPMActivityChat+ '<B>'+catalog.ActivityType +'</B><BR>'+ catalog.Comments + HasPhoto;
+					IPMActivityChat=IPMActivityChat+'</div></div></div></div></td></tr></table>';
+				}
+				else
+				{
+				
+					IPMActivityChat=IPMActivityChat+'<table><tr><td>';
+					IPMActivityChat=IPMActivityChat+'<div name="SpeechBubble" id="SpeechBubble"><div class="bubbler" id="viewport-content"><div><div style="font-size:small;">';
+					IPMActivityChat=IPMActivityChat+ '<B>'+catalog.ActivityType +'</B><BR>'+ catalog.Comments + HasPhoto;
+					IPMActivityChat=IPMActivityChat+'</div></div></div></div></td><td style="padding-top:6px;vertical-align:top;">';
+
+
+					if (catalog.Avatar.substring(0,7)=='<nopic>')
+						{IPMActivityChat=IPMActivityChat+'<img style="padding:2px;" alt="" title="" border=0 width=50px height=50px src="Images/person.gif">';}
+					else
+						{IPMActivityChat=IPMActivityChat+'<img style="padding:2px;" alt="" title="" border=0 width=50px height=50px src=data:image/jpg;base64,'+catalog.Avatar+' />';}
+					IPMActivityChat=IPMActivityChat+'<p style="font-size:x-small;color:silver;width: 50px;word-wrap: break-word;"><em>'+catalog.CreatedBy+' '+catalog.ActivityDate+'</em></p></td>';
+					IPMActivityChat=IPMActivityChat+'</tr></table>';
+
+
+
+
+
+				}
+				var TableRow = $(IPMActivityChat + ' ');
+
+				
 				TableRow.appendTo($("#IPMActivityGrid"));
 				
 				temp += '<div style="margin: 5px 5px 5px 5px;padding: 2px 2px 2px 2px;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ActivityDate +' - '+ catalog.CreatedBy +' - '+ catalog.ActivityType +'</span><br><span style="font-size:x-small;">'+ catalog.Comments  +'</span></div>';
@@ -1898,8 +2027,6 @@ function callbackLoadIPMActivitySidePanel(data)
 					temp += '</td></tr></table>';
 
 
-
-					
 				$("#pnlProjectDetails-IPMActivity" ).html(temp);
 
 

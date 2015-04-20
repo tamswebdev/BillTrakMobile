@@ -14,6 +14,8 @@ function addStatusAction(id)
 	NavigatePage('#pgAddStatus?id=' + id);
 }
 
+function isOdd(num) { return num % 2;}
+
 function GoToSectionWithID(section)
 {
 	var id=($.urlParam("id"));
