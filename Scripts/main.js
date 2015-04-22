@@ -1755,7 +1755,8 @@ function DownloadSPRDocument(DocID)
 
 	try {
 			var _url =  serviceRootUrl + "svc.aspx?op=DownloadSitePlanningRequestDocuments&SPUrl=" + spwebRootUrl + "&id=" + DocID + "&username=" +  userInfoData.Email;
-			Jsonp_Call(_url, true, "");
+			window.open(_url, '_system');//alert(requestUrl );	
+			//Jsonp_Call(_url, true, "");
 			
 		}
 
