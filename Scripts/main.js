@@ -1651,6 +1651,7 @@ $( document ).on( "pagebeforeshow", "#pgSitePlanRequests", function(event) {
 		
 	$("#SitePlanRequestsGrid").text("");
 	var id = $.urlParam("id");
+
 	if (id > 0)
 	{
 	
@@ -1678,12 +1679,51 @@ function callbackLoadSitePlanRequests(data)
 		
 //		if (data.d.results.length > 0)
 //		{
+			var PrevSPRID="";
+			var SPRRow="";
+			
 			for(var i=0; i < data.d.results.length; i++)
 			{
+			
 				var catalog = data.d.results[i];
-				var TableRow = $('<div style="margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ProjectNumber +' - '+ catalog.DrawingType +' - '+ catalog.Status +'</span><br><span style="font-size:x-small;">IPM:'+ catalog.IPM_Assigned  +'</span><br><span style="font-size:x-small;">Planner:'+catalog.Planner_Assigned +'</span></div>');
-				TableRow.appendTo($("#SitePlanRequestsGrid"));
+				var CurrentSPRID=catalog.SPRID;
 				
+				if (CurrentSPRID!=PrevSPRID && i > 0)
+				{
+					SPRRow = SPRRow +'</div >';
+				}
+
+				if (CurrentSPRID!=PrevSPRID  && i > 0)
+				{
+					var TableRow = $(SPRRow+'');
+					TableRow.appendTo($("#SitePlanRequestsGrid"));
+				}			
+
+				if (CurrentSPRID!=PrevSPRID || i==0)
+				{
+				SPRRow = '<div style="margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ProjectNumber +' - '+ catalog.DrawingType +' - '+ catalog.Status +'</span><br><span style="font-size:x-small;">IPM:'+ catalog.IPM_Assigned  +'</span>';
+				if (catalog.Planner_Assigned && catalog.Planner_Assigned!="")
+					{
+						SPRRow = SPRRow + '<br><span style="font-size:x-small;">Planner:'+catalog.Planner_Assigned +'</span>';
+					}
+				}
+				
+				
+				if (catalog.FileName && catalog.FileName!="")
+					SPRRow = SPRRow + '<BR><span style="font-size:x-small;"><a href="#" onclick=DownloadSPRDocument('+catalog.DocumentID+');>Download ' + catalog.FileName + catalog.Extension +'</a></span>';
+
+				if (i == data.d.results.length-1)
+				{
+					SPRRow = SPRRow +'</div >';
+					var TableRow = $(SPRRow+'');
+					TableRow.appendTo($("#SitePlanRequestsGrid"));
+				}
+				
+
+				PrevSPRID=CurrentSPRID;
+
+				
+
 
 			}
 
@@ -1706,6 +1746,19 @@ function callbackLoadSitePlanRequests(data)
 //		}
 
 	}
+	catch(err) {}
+}
+
+function DownloadSPRDocument(DocID)
+{
+
+
+	try {
+			var _url =  serviceRootUrl + "svc.aspx?op=DownloadSitePlanningRequestDocuments&SPUrl=" + spwebRootUrl + "&id=" + DocID + "&username=" +  userInfoData.Email;
+			Jsonp_Call(_url, true, "");
+			
+		}
+
 	catch(err) {}
 }
 
