@@ -1282,7 +1282,7 @@ function callbackLoadEMRFSidePanel(data)
 					if (EquipmentType=='-1')
 						alert("Please select Equipment Type");		
 					else
-						window.open(requestUrl, '_system');//alert(requestUrl );		
+						window.open(requestUrl, '_blank');//alert(requestUrl );		
 					
 				});
 				//var requestUrl = url + '?projectId=' + pid + '&sid=' + sid + '&modality=' + mdl + '&equipment=' + eqp + '&source=BillTrak';
