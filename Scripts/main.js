@@ -1,6 +1,7 @@
 var serviceRootUrl = Configs.ServiceRootUrl;
 //var serviceRootUrl = Configs.ServiceRootUrl;
 var spwebRootUrl = Configs.SharePointRootUrl;
+var ConfidenceLevel = Configs.ConfidenceLevel;
 
 var isPageLoadReady = false;
 var isSkipPageLoad = "";
@@ -539,9 +540,12 @@ function callbackPopulateSearchResults(data)
 					}
 
 
-
+					if (catalog.Confidence < ConfidenceLevel)
+						temp += '<table class="search-item" ><tr><td style="width:3px;background: -webkit-linear-gradient(bottom, rgba(222,0,0,1) 0%, rgba(222,222,222,1) '+ catalog.Confidence +'%, rgba(255,255,255,1) '+ catalog.Confidence +'%);">&nbsp;</td>';
+					else
+						temp += '<table class="search-item" ><tr><td style="width:3px;background: -webkit-linear-gradient(bottom, rgba(0,222,0,1) 0%, rgba(222,222,222,1) '+ catalog.Confidence +'%, rgba(255,255,255,1) '+ catalog.Confidence +'%);">&nbsp;</td>';
 //					temp += '<table class="search-item" ><tr><td style="width:3px;background-color:'+ ModalityColorCode +'">&nbsp;</td>';
-					temp += '<table class="search-item" ><tr>';
+//					temp += '<table class="search-item" ><tr>';
 					temp += '<td><div id="ProjectCard" class="panel-body" style="padding-bottom: 0;padding-left 2px;">';
 					temp += '<a href="#" onclick="EditProjectDetailsAction('+catalog.ProjectID+');" style="text-decoration:none;color: inherit; display: block;">'
 					temp += '<h2 style="color: blue; margin-top: 2px; margin-bottom: 2px;">';
@@ -1701,10 +1705,10 @@ function callbackLoadSitePlanRequests(data)
 
 				if (CurrentSPRID!=PrevSPRID || i==0)
 				{
-				SPRRow = '<div style="margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ProjectNumber +' - '+ catalog.DrawingType +' - '+ catalog.Status +'</span><br><span style="font-size:x-small;">IPM:'+ catalog.IPM_Assigned  +'</span>';
+				SPRRow = '<div style="margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ProjectNumber +' - '+ catalog.DrawingType +' - '+ catalog.Status +'</span><br><span style="font-size:x-small;">IPM: '+ catalog.IPM_Assigned  +'</span>';
 				if (catalog.Planner_Assigned && catalog.Planner_Assigned!="")
 					{
-						SPRRow = SPRRow + '<br><span style="font-size:x-small;">Planner:'+catalog.Planner_Assigned +'</span>';
+						SPRRow = SPRRow + '<br><span style="font-size:x-small;">Planner: '+catalog.Planner_Assigned +'</span>';
 					}
 				}
 				
@@ -2459,7 +2463,7 @@ function callbackLoadProjectDetail(data)
 				
 			$("#txtSR_Forecasted_Site_Ready_Date").val(getISODateString(catalog.ForecastedSiteReadyDate));
 
-			if (parseInt(catalog.OverrideConfidenceLevel) == 1 || parseInt(catalog.Confidence) >= 60)
+			if (parseInt(catalog.OverrideConfidenceLevel) == 1 || parseInt(catalog.Confidence) >= ConfidenceLevel)
 			{
 				$("#txtSR_Forecasted_Site_Ready_Date").removeAttr('disabled');
 				$("#txtSR_Forecasted_Site_Ready_Date").css({'background-color' : 'white'});
