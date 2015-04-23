@@ -1714,7 +1714,7 @@ function callbackLoadSitePlanRequests(data)
 				
 				
 				if (catalog.FileName && catalog.FileName!="")
-					SPRRow = SPRRow + '<BR><span style="font-size:x-small;"><a href="#" onclick=DownloadSPRDocument('+catalog.DocumentID+');>Download ' + catalog.FileName + catalog.Extension +'</a></span>';
+					SPRRow = SPRRow + '<BR><span style="font-size:x-small;"><a href="#" onclick=DownloadSPRDocument('+catalog.DocumentID+');>Download ' + catalog.FileName + '.' + catalog.Extension +'</a></span>';
 
 				if (i == data.d.results.length-1)
 				{
