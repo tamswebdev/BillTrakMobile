@@ -22,10 +22,10 @@
         id        = "io.tams.BillTrak"
         version   = "1.0.0">
 		
-    <name>BillTrak Mobile</name>
+    <name>IPM Mobile</name>
     <description>
-        BillTrak Mobile. Author: Umer Pasha. 
-		BillTrak is used by TAMS Headquarters to manage/view all aspects of an expected booking from time it is an opportunity to the final installation and “power on”. BillTrak Mobile helps IPMs to coordinate the pre-installation.
+        IPM Mobile. Author: Umer Pasha. 
+		IPM is used by TAMS Headquarters to manage/view all aspects of an expected booking from time it is an opportunity to the final installation and “power on”. IPM Mobile helps IPMs to coordinate the pre-installation.
 
     </description>
 

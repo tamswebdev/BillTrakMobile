@@ -1447,7 +1447,7 @@ function callbackLoadContactsTeam(data)
 						{ContactsTeam=ContactsTeam+'<img style="padding:2px;" alt="" title="" border=0 width=60px height=60px src="Images/person.gif">';}
 					else
 						{ContactsTeam=ContactsTeam+'<img style="padding:2px;" alt="" title="" border=0 width=60px height=60px src=data:image/jpg;base64,"'+catalog.ZVPSalesPicture+'" >';}
-					ContactsTeam=ContactsTeam+'</div><div><span style="font-size:small;font-weight:bold;">'+catalog.ZVPSales+'</span><br><span style="font-size:small;font-weight:bold;">ZVPSales</span><br><span style="font-size:x-small;">Phone: <a href="tel:'+catalog.ZVPSalesPhone+'">'+catalog.ZVPSalesPhone+'</a></span></div>';
+					ContactsTeam=ContactsTeam+'</div><div><span style="font-size:small;font-weight:bold;">'+catalog.ZVPSales+'</span><br><span style="font-size:small;font-weight:bold;">ZVP Sales</span><br><span style="font-size:x-small;">Phone: <a href="tel:'+catalog.ZVPSalesPhone+'">'+catalog.ZVPSalesPhone+'</a></span></div>';
 					ContactsTeam=ContactsTeam+'</div></div>';
 
 				}
@@ -1460,7 +1460,7 @@ function callbackLoadContactsTeam(data)
 						{ContactsTeam=ContactsTeam+'<img style="padding:2px;" alt="" title="" border=0 width=60px height=60px src="Images/person.gif">';}
 					else
 						{ContactsTeam=ContactsTeam+'<img style="padding:2px;" alt="" title="" border=0 width=60px height=60px src=data:image/jpg;base64,"'+catalog.ZVPServicePicture+'" >';}
-					ContactsTeam=ContactsTeam+'</div><div><span style="font-size:small;font-weight:bold;">'+catalog.ZVPService+'</span><br><span style="font-size:small;font-weight:bold;">ZVPService</span><br><span style="font-size:x-small;">Phone: <a href="tel:'+catalog.ZVPServicePhone+'">'+catalog.ZVPServicePhone+'</a></span></div>';
+					ContactsTeam=ContactsTeam+'</div><div><span style="font-size:small;font-weight:bold;">'+catalog.ZVPService+'</span><br><span style="font-size:small;font-weight:bold;">ZVP Service</span><br><span style="font-size:x-small;">Phone: <a href="tel:'+catalog.ZVPServicePhone+'">'+catalog.ZVPServicePhone+'</a></span></div>';
 					ContactsTeam=ContactsTeam+'</div></div>';
 
 				}
