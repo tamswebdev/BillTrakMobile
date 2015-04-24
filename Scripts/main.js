@@ -1180,7 +1180,7 @@ function callbackLoadEMRF(data)
 			for(var i=0; i < data.d.results.length; i++)
 			{
 				var catalog = data.d.results[i];
-				var TableRow = $('<div style="margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ShipToSite +'</span><br><span style="font-size:x-small;">'+ catalog.Status +' - '+ catalog.SentToTCSubCategory+'</span><br><span style="font-size:x-small;">To:'+ catalog.ShipToAddress + catalog.ShipToCity+ catalog.ShipToState+ ' ' +catalog.ShipToZip+'</span><br><span style="font-size:x-small;">Requested Delivery Date:'+ catalog.DelvDate  +'</span><br><span style="font-size:x-small;">'+catalog.ItemDetail +'</span></div>');
+				var TableRow = $('<div style="width:100%;margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ShipToSite +'</span><br><span style="font-size:x-small;">'+ catalog.Status +' - '+ catalog.SentToTCSubCategory+'</span><br><span style="font-size:x-small;">To:'+ catalog.ShipToAddress + catalog.ShipToCity+ catalog.ShipToState+ ' ' +catalog.ShipToZip+'</span><br><span style="font-size:x-small;">Requested Delivery Date:'+ catalog.DelvDate  +'</span><br><span style="font-size:x-small;">'+catalog.ItemDetail +'</span></div>');
 				TableRow.appendTo($("#EMRFGrid"));
 				
 
@@ -1401,7 +1401,7 @@ function callbackLoadContactsTeam(data)
 				if (catalog.AE && catalog.AE!='')
 				{
 
-					ContactsTeam=ContactsTeam+'<div class="bubble ui-block-a my-breakpoint ui-responsive" id="contactsteam"><div>';
+					ContactsTeam=ContactsTeam+'<div style="width:100%;" class="bubble ui-block-a my-breakpoint ui-responsive" id="contactsteam"><div>';
 					ContactsTeam=ContactsTeam+'<div style="float:left;">';
 					if (catalog.AEPicture.substring(0,7)=='<nopic>')
 						{ContactsTeam=ContactsTeam+'<img style="padding:2px;" alt="" title="" border=0 width=60px height=60px src="Images/person.gif">';}
@@ -1415,7 +1415,7 @@ function callbackLoadContactsTeam(data)
 				if (catalog.ZBM && catalog.ZBM!='')
 				{
 
-					ContactsTeam=ContactsTeam+'<div class="bubble ui-block-a my-breakpoint ui-responsive" id="contactsteam"><div>';
+					ContactsTeam=ContactsTeam+'<div style="width:100%;" class="bubble ui-block-a my-breakpoint ui-responsive" id="contactsteam"><div>';
 					ContactsTeam=ContactsTeam+'<div style="float:left;">';
 					if (catalog.ZBMPicture.substring(0,7)=='<nopic>')
 						{ContactsTeam=ContactsTeam+'<img style="padding:2px;" alt="" title="" border=0 width=60px height=60px src="Images/person.gif">';}
@@ -1428,7 +1428,7 @@ function callbackLoadContactsTeam(data)
 				if (catalog.ASM && catalog.ASM!='')
 				{
 
-					ContactsTeam=ContactsTeam+'<div class="bubble ui-block-a my-breakpoint ui-responsive" id="contactsteam"><div>';
+					ContactsTeam=ContactsTeam+'<div style="width:100%;" class="bubble ui-block-a my-breakpoint ui-responsive" id="contactsteam"><div>';
 					ContactsTeam=ContactsTeam+'<div style="float:left;">';
 					if (catalog.ASMPicture.substring(0,7)=='<nopic>')
 						{ContactsTeam=ContactsTeam+'<img style="padding:2px;" alt="" title="" border=0 width=60px height=60px src="Images/person.gif">';}
@@ -1441,7 +1441,7 @@ function callbackLoadContactsTeam(data)
 				if (catalog.ZVPSales && catalog.ZVPSales!='')
 				{
 
-					ContactsTeam=ContactsTeam+'<div class="bubble ui-block-a my-breakpoint ui-responsive" id="contactsteam"><div>';
+					ContactsTeam=ContactsTeam+'<div style="width:100%;" class="bubble ui-block-a my-breakpoint ui-responsive" id="contactsteam"><div>';
 					ContactsTeam=ContactsTeam+'<div style="float:left;">';
 					if (catalog.ZVPSalesPicture.substring(0,7)=='<nopic>')
 						{ContactsTeam=ContactsTeam+'<img style="padding:2px;" alt="" title="" border=0 width=60px height=60px src="Images/person.gif">';}
@@ -1454,7 +1454,7 @@ function callbackLoadContactsTeam(data)
 				if (catalog.ZVPService && catalog.ZVPService!='')
 				{
 
-					ContactsTeam=ContactsTeam+'<div class="bubble ui-block-a my-breakpoint ui-responsive" id="contactsteam"><div>';
+					ContactsTeam=ContactsTeam+'<div style="width:100%;" class="bubble ui-block-a my-breakpoint ui-responsive" id="contactsteam"><div>';
 					ContactsTeam=ContactsTeam+'<div style="float:left;">';
 					if (catalog.ZVPServicePicture.substring(0,7)=='<nopic>')
 						{ContactsTeam=ContactsTeam+'<img style="padding:2px;" alt="" title="" border=0 width=60px height=60px src="Images/person.gif">';}
@@ -1467,7 +1467,7 @@ function callbackLoadContactsTeam(data)
 				if (catalog.CE && catalog.CE!='')
 				{
 
-					ContactsTeam=ContactsTeam+'<div class="bubble ui-block-a my-breakpoint ui-responsive" id="contactsteam"><div>';
+					ContactsTeam=ContactsTeam+'<div style="width:100%;" class="bubble ui-block-a my-breakpoint ui-responsive" id="contactsteam"><div>';
 					ContactsTeam=ContactsTeam+'<div style="float:left;">';
 					if (catalog.CEPicture.substring(0,7)=='<nopic>')
 						{ContactsTeam=ContactsTeam+'<img style="padding:2px;" alt="" title="" border=0 width=60px height=60px src="Images/person.gif">';}
@@ -1480,7 +1480,7 @@ function callbackLoadContactsTeam(data)
 				if (catalog.IPM && catalog.IPM!='')
 				{
 
-					ContactsTeam=ContactsTeam+'<div class="bubble ui-block-a my-breakpoint ui-responsive" id="contactsteam"><div>';
+					ContactsTeam=ContactsTeam+'<div style="width:100%;" class="bubble ui-block-a my-breakpoint ui-responsive" id="contactsteam"><div>';
 					ContactsTeam=ContactsTeam+'<div style="float:left;">';
 					if (catalog.IPMPicture.substring(0,7)=='<nopic>')
 						{ContactsTeam=ContactsTeam+'<img style="padding:2px;" alt="" title="" border=0 width=60px height=60px src="Images/person.gif">';}
@@ -1515,7 +1515,7 @@ function callbackLoadContacts(data)
 			for(var i=0; i < data.d.results.length; i++)
 			{
 				var catalog = data.d.results[i];
-				var TableRow = $('<div style="margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.Name +'</span><br><span style="font-size:x-small;">Phone: <a href="tel:' + catalog.Phone + '">'+ catalog.Phone +'</a></span></div>');
+				var TableRow = $('<div style="width:100%;margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.Name +'</span><br><span style="font-size:x-small;">Phone: <a href="tel:' + catalog.Phone + '">'+ catalog.Phone +'</a></span></div>');
 				TableRow.appendTo($("#ContactsGrid"));
 				
 
@@ -1705,7 +1705,7 @@ function callbackLoadSitePlanRequests(data)
 
 				if (CurrentSPRID!=PrevSPRID || i==0)
 				{
-				SPRRow = '<div style="margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ProjectNumber +' - '+ catalog.DrawingType +' - '+ catalog.Status +'</span><br><span style="font-size:x-small;">IPM: '+ catalog.IPM_Assigned  +'</span>';
+				SPRRow = '<div style="width:100%;margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ProjectNumber +' - '+ catalog.DrawingType +' - '+ catalog.Status +'</span><br><span style="font-size:x-small;">IPM: '+ catalog.IPM_Assigned  +'</span>';
 				if (catalog.Planner_Assigned && catalog.Planner_Assigned!="")
 					{
 						SPRRow = SPRRow + '<br><span style="font-size:x-small;">Planner: '+catalog.Planner_Assigned +'</span>';
@@ -1990,20 +1990,20 @@ function callbackLoadIPMActivity(data)
 				
 				if (isOdd(i))
 				{
-					IPMActivityChat=IPMActivityChat+'<table><tr><td style="padding-top:6px;vertical-align:top;">';
+					IPMActivityChat=IPMActivityChat+'<table style="width:100%;" class="ui-responsive ui-block-a"><tr><td style="padding-top:6px;vertical-align:top;">';
 					if (catalog.Avatar.substring(0,7)=='<nopic>')
 						{IPMActivityChat=IPMActivityChat+'<img style="padding:2px;" alt="" title="" border=0 width=50px height=50px src="Images/person.gif">';}
 					else
 						{IPMActivityChat=IPMActivityChat+'<img style="padding:2px;" alt="" title="" border=0 width=50px height=50px src=data:image/jpg;base64,'+catalog.Avatar+' />';}
 					IPMActivityChat=IPMActivityChat+'<p style="font-size:x-small;color:silver;width: 50px;word-wrap: break-word;"><em>'+catalog.CreatedBy+' '+catalog.ActivityDate+'</em></p></td><td>';
-					IPMActivityChat=IPMActivityChat+'<div name="SpeechBubble" id="SpeechBubble"><div class="bubblel" id="viewport-content"><div><div style="font-size:small;">';
+					IPMActivityChat=IPMActivityChat+'<div  name="SpeechBubble" id="SpeechBubble"><div class="bubblel" id="viewport-content"><div><div style="font-size:small;">';
 					IPMActivityChat=IPMActivityChat+ '<B>'+catalog.ActivityType +'</B><BR>'+ catalog.Comments + HasPhoto;
 					IPMActivityChat=IPMActivityChat+'</div></div></div></div></td></tr></table>';
 				}
 				else
 				{
 				
-					IPMActivityChat=IPMActivityChat+'<table><tr><td>';
+					IPMActivityChat=IPMActivityChat+'<table style="width:100%;" class="ui-responsive ui-block-a"><tr><td>';
 					IPMActivityChat=IPMActivityChat+'<div name="SpeechBubble" id="SpeechBubble"><div class="bubbler" id="viewport-content"><div><div style="font-size:small;">';
 					IPMActivityChat=IPMActivityChat+ '<B>'+catalog.ActivityType +'</B><BR>'+ catalog.Comments + HasPhoto;
 					IPMActivityChat=IPMActivityChat+'</div></div></div></div></td><td style="padding-top:6px;vertical-align:top;">';
