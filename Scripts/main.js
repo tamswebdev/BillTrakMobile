@@ -1147,7 +1147,8 @@ $( document ).on( "pagebeforeshow", "#pgEMRF", function(event) {
 
 
 	$('#error-div-EMRF').text("").append(getLoadingMini());
-
+	
+	//$('#ddlEquipmentType option[value!="-1"]').remove();
 	$("#ddlEquipmentType").val('-1').selectmenu('refresh', true);
 	$('#divEquipmentType').hide();
 	
@@ -1759,7 +1760,7 @@ function DownloadSPRDocument(DocID)
 
 	try {
 			var _url =  serviceRootUrl + "svc.aspx?op=DownloadSitePlanningRequestDocuments&SPUrl=" + spwebRootUrl + "&id=" + DocID + "&username=" +  userInfoData.Email;
-			window.open(_url, '_blank');
+			window.open(_url, '_system', 'EnableViewPortScale=yes');
 			//Jsonp_Call(_url, true, "");
 			
 		}
@@ -1987,15 +1988,16 @@ function callbackLoadIPMActivity(data)
 					HasPhoto = '<br><span style="font-size:x-small;"><a title="" style="text-decoration:none;" href="#" onclick="ShowPhoto('+ catalog.HasPhoto  +')"><u>View Photo</u></a></span>';
 				//var TableRow = $('<div style="margin: 0px 0px 0px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ActivityDate +' - '+ catalog.CreatedBy +' - '+ catalog.ActivityType +'</span><br><span style="font-size:x-small;">'+ catalog.Comments  +'</span>'+HasPhoto+'</div>');
 
-				
-				if (isOdd(i))
+				var Username=catalog.CreatedBy;
+//				if (isOdd(i))
+				if(userInfoData.DisplayName.toUpperCase()!=Username.toUpperCase())
 				{
 					IPMActivityChat=IPMActivityChat+'<table style="width:100%;" class="ui-responsive ui-block-a"><tr><td style="padding-top:6px;vertical-align:top;">';
 					if (catalog.Avatar.substring(0,7)=='<nopic>')
 						{IPMActivityChat=IPMActivityChat+'<img style="padding:2px;" alt="" title="" border=0 width=50px height=50px src="Images/person.gif">';}
 					else
 						{IPMActivityChat=IPMActivityChat+'<img style="padding:2px;" alt="" title="" border=0 width=50px height=50px src=data:image/jpg;base64,'+catalog.Avatar+' />';}
-					IPMActivityChat=IPMActivityChat+'<p style="font-size:x-small;color:silver;width: 50px;word-wrap: break-word;"><em>'+catalog.CreatedBy+' '+catalog.ActivityDate+'</em></p></td><td>';
+					IPMActivityChat=IPMActivityChat+'<p style="font-size:x-small;color:silver;width: 50px;word-wrap: break-word;"><em>'+Username+' '+catalog.ActivityDate+'</em></p></td><td>';
 					IPMActivityChat=IPMActivityChat+'<div  name="SpeechBubble" id="SpeechBubble"><div class="bubblel" id="viewport-content"><div><div style="font-size:small;">';
 					IPMActivityChat=IPMActivityChat+ '<B>'+catalog.ActivityType +'</B><BR>'+ catalog.Comments + HasPhoto;
 					IPMActivityChat=IPMActivityChat+'</div></div></div></div></td></tr></table>';
@@ -2013,7 +2015,7 @@ function callbackLoadIPMActivity(data)
 						{IPMActivityChat=IPMActivityChat+'<img style="padding:2px;" alt="" title="" border=0 width=50px height=50px src="Images/person.gif">';}
 					else
 						{IPMActivityChat=IPMActivityChat+'<img style="padding:2px;" alt="" title="" border=0 width=50px height=50px src=data:image/jpg;base64,'+catalog.Avatar+' />';}
-					IPMActivityChat=IPMActivityChat+'<p style="font-size:x-small;color:silver;width: 50px;word-wrap: break-word;"><em>'+catalog.CreatedBy+' '+catalog.ActivityDate+'</em></p></td>';
+					IPMActivityChat=IPMActivityChat+'<p style="font-size:x-small;color:silver;width: 50px;word-wrap: break-word;"><em>'+Username+' '+catalog.ActivityDate+'</em></p></td>';
 					IPMActivityChat=IPMActivityChat+'</tr></table>';
 
 
