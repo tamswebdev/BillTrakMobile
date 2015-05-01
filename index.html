@@ -122,6 +122,7 @@
             <br />
 			<br />
 			<button class="btn btn-default btn-danger-custom  btn-lg btn-block" onclick="$.mobile.navigate('#pgSearch');"><span class="glyphicon glyphicon-plus"></span> My Projects</button>
+			<button class="btn btn-default btn-danger-custom  btn-lg btn-block" onclick="NavigatePage('#pgRoom');"><span class="glyphicon glyphicon-plus"></span> Get Room Dimensions</button>
 			<br />
 
 			<br />
@@ -133,7 +134,7 @@
 						<ol>
 							<li>Click on "My Projects"</li>
 							<li>Select your project or search by project or system name</li>
-							<li>You can also search by SID or Opp ID if the system is not found</li>
+							<li>You can also search by SID or project ID if the system is not found</li>
 							<li>Edit the form and save</li>
 						</ol>
 					</div>
@@ -211,6 +212,103 @@
         </div>
     </div>
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div data-role="page" id="pgRoom">
+		
+
+        <div data-role="header" data-position="fixed">
+            <table width="100%" cellspacing="0" cellpadding="0" class="header-table">
+				<tr>
+					<td class="header-left">
+						<div class="header-menu-button">
+							<a href="#popupMenuRoom" data-rel="popup" data-transition="slideup"><img src="Images/menu-button2.png" id="img-left-bars"></a>
+							<div data-role="popup" id="popupMenuRoom" data-theme="a">
+									<ul data-role="listview" data-inset="true" style="min-width:210px;">
+										<li data-role="list-divider">Choose an action</li>
+										<li><span class="spanLoginUser"></span></li>
+										<li><a href="javascript:void(0);" onclick="goHome();">Home</a></li>
+										<li><a href="javascript:void(0);" onclick="NavigatePage('#pgSearch');">My Projects</a></li>
+										<li><a href="javascript:void(0);" onclick="ShowHelp();">Help</a></li>
+										<li><a href="javascript:void(0);" onclick="SignOut();">Sign Out</a></li>
+									</ul>
+							</div>
+						</div>
+                    </td>
+					<td class="header-middle">
+						<a href="javascript: void(0);" onclick="goHome();" style="" class="appLogoLink"><img src="Images/toshiba-logo.png" id="img-toshiba-logo"></a>
+                    </td>
+                    <td class="header-right">
+						&nbsp;
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+				
+
+        <div role="main" class="ui-content">
+
+			<center>
+				<div id="divRoom">
+					<table class="table add-status-buttons">
+
+
+						<tr>						
+							<td id="btnFrontWall" style="border-top: 0px;padding:1px !important;">
+								<a href="javascript:void(0);" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c"  data-role="button" data-icon="arrow-u" onclick="GetCoordinates('Front')">Front Wall</a>
+							</td>
+						</tr>
+						<tr>						
+							<td id="btnRightWall" style="border-top: 0px;padding:1px !important;">
+								<a href="javascript:void(0);" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c"  data-role="button" data-icon="arrow-r" onclick="GetCoordinates('Right')">Right Wall</a>
+							</td>
+						</tr>
+						<tr>						
+							<td id="btnBackWall" style="border-top: 0px;padding:1px !important;">
+								<a href="javascript:void(0);" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c"  data-role="button" data-icon="arrow-d" onclick="GetCoordinates('Back')">Back Wall</a>
+							</td>
+						</tr>
+						<tr>						
+							<td id="btnBackWall" style="border-top: 0px;padding:1px !important;">
+								<a href="javascript:void(0);" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c"  data-role="button" data-icon="arrow-l" onclick="GetCoordinates('Left')">Left Wall</a>
+							</td>
+						</tr>
+						<tr>						
+							<td id="btnHomeWall" style="border-top: 0px;padding:1px !important;">
+								<a href="javascript:void(0);" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c"  data-role="button" data-icon="back" onclick="GetCoordinates('4')">Back to Home</a>
+							</td>
+						</tr>
+
+
+						</table>
+
+				</div>
+			</center>
+        </div>
+    </div>
+			
+		
+		
+		
+		
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	
 	<div data-role="page" id="pgProjectOptions">
@@ -246,6 +344,15 @@
             </table>
         </div>
 
+		
+		
+		
+		
+		
+		
+		
+		
+		
         <div role="main" class="ui-content">
 
 			<center>

@@ -150,6 +150,24 @@ $( document ).on( "pagebeforeshow", "#pgHome", function(event) {
 	
 	});
 
+	
+$( document ).on( "pagebeforeshow", "#pgRoom", function(event) {
+
+	window.localStorage.setItem("RDFrontLat", '0');
+	window.localStorage.setItem("RDFrontLon", '0');
+
+	window.localStorage.setItem("RDBackLat", '0');
+	window.localStorage.setItem("RDBackLon", '0');
+
+	window.localStorage.setItem("RDLeftLat", '0');
+	window.localStorage.setItem("RDLeftLon", '0');
+
+	window.localStorage.setItem("RDRightLat", '0');
+	window.localStorage.setItem("RDRightLon", '0');
+
+});	
+	
+
 
 $( document ).on( "pagebeforeshow", "#startpage", function(event) {
 	checkUserLogin();
@@ -221,7 +239,7 @@ function LoginUser()
 	
 	var loginname = ($('#login').val().indexOf("@") > 0) ? $('#login').val().substring(0, $('#login').val().indexOf("@")) : $('#login').val();
 	loginname = (loginname.indexOf("\\") > 0) ? loginname : "tamsdomain\\" + loginname;
-	
+	loginname=loginname.trim();
 	userInfoData.AuthenticationHeader = Base64.encode(loginname + ":" + $('#password').val());
 	var _url = serviceRootUrl + "svc.aspx?op=Authenticate&SPUrl=" + spwebRootUrl + "sites/busops&authInfo=" + userInfoData.AuthenticationHeader + "&currentURL=" + serviceRootUrl + "main.html"
 
@@ -3010,50 +3028,68 @@ function SelectPhoto() {
          }  
        );  
      }  
-     function uploadPhoto(imageURI) {  
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+ function uploadPhoto(imageURI) {  
 
-	   var options = new FileUploadOptions();  
-	   
-	   
-		var ddlActivityType = $("#ddlActivityType").val();
-		var txtComments = $("#txtComments").val();
-		var txtActivityDate = $("#txtActivityDate").val();
-		var SPURL=spwebRootUrl + "sites/busops";
-		if (!txtComments || txtComments=="" )
-			txtComments = "(Photo Uploaded)";
+   var options = new FileUploadOptions();  
    
-		
    
-       options.fileKey="file";  
-       options.fileName="c:\\logs\\MobileImages\\" + imageURI.substr(imageURI.lastIndexOf('/')+1);  
-       options.mimeType="image/jpeg";  
-       var params = {};  
-       params.ProjectID = $.urlParam("id");  
-       params.ProjectActivityID = "0";  
-       params.CreatedBy = userInfoData.UserID ;  
-       params.ActivityType = ddlActivityType;  
-       params.Comments = txtComments;  
-       params.ActivityDate = txtActivityDate ;  
-       params.SPURL = SPURL ;  
-       params.UserName = userInfoData.Email ;  
-       params.authInfo = userInfoData.AuthenticationHeader ;  
-       options.params = params;  
-       var ft = new FileTransfer();  
-	   var _url =  serviceRootUrl + "svc.aspx?op=UploadFile";
+	var ddlActivityType = $("#ddlActivityType").val();
+	var txtComments = $("#txtComments").val();
+	var txtActivityDate = $("#txtActivityDate").val();
+	var SPURL=spwebRootUrl + "sites/busops";
+	if (!txtComments || txtComments=="" )
+		txtComments = "(Photo Uploaded)";
+
+	
+
+   options.fileKey="file";  
+   options.fileName="c:\\logs\\MobileImages\\" + imageURI.substr(imageURI.lastIndexOf('/')+1);  
+   options.mimeType="image/jpeg";  
+   var params = {};  
+   params.ProjectID = $.urlParam("id");  
+   params.ProjectActivityID = "0";  
+   params.CreatedBy = userInfoData.UserID ;  
+   params.ActivityType = ddlActivityType;  
+   params.Comments = txtComments;  
+   params.ActivityDate = txtActivityDate ;  
+   params.SPURL = SPURL ;  
+   params.UserName = userInfoData.Email ;  
+   params.authInfo = userInfoData.AuthenticationHeader ;  
+   options.params = params;  
+   var ft = new FileTransfer();  
+   var _url =  serviceRootUrl + "svc.aspx?op=UploadFile";
 
 //		$('#error-div-IPMActivity').text("").append(getLoadingMini());
 //		showTimedElem('error-div-IPMActivity');
 //		$('#tblIPMActivity').hide();
-	//	$('#tblIPMActivitysButtons').hide();	
-	   
-       ft.upload(imageURI, encodeURI(_url), snapwin, snapfail, options); 
-			console.log(_url);
-			
+//	$('#tblIPMActivitysButtons').hide();	
+   
+   ft.upload(imageURI, encodeURI(_url), snapwin, snapfail, options); 
+		console.log(_url);
+		
 //			Jsonp_Call(_url, true, "callbackSaveStatus");
-	   
-	   
-	   
-     }  
+   
+   
+   
+ }  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
      function snapwin(r) {  
  			$('#error-div2-IPMActivity').text("");
 			$('#error-div-IPMActivity').text("");
@@ -3068,3 +3104,100 @@ function SelectPhoto() {
 		GoToSectionWithID('ProjectOptions');
 
      }  
+	 
+     function GetCoordinates(Direction) {  
+	 
+		navigator.geolocation.getCurrentPosition(function (position) {
+		
+
+		
+				if (Direction=='Front'){
+					window.localStorage.setItem("RDFrontLat", position.coords.latitude);
+					window.localStorage.setItem("RDFrontLon", position.coords.longitude);
+				}
+				else if (Direction=='Back'){
+					window.localStorage.setItem("RDBackLat", position.coords.latitude);
+					window.localStorage.setItem("RDBackLon", position.coords.longitude);
+				}
+				else if (Direction=='Left'){
+					window.localStorage.setItem("RDLeftLat", position.coords.latitude);
+					window.localStorage.setItem("RDLeftLon", position.coords.longitude);
+				}
+				else if (Direction=='Right'){
+					window.localStorage.setItem("RDRightLat", position.coords.latitude);
+					window.localStorage.setItem("RDRightLon", position.coords.longitude);
+				}
+				
+				var Dimensions=CalcRoom();
+				//CalcRoom();
+		
+		
+		
+		} , onErrorGetCoordinates);
+
+     }  
+	 
+
+	 function onErrorGetCoordinates(error) {
+        alert('code: '    + error.code    + '\n' +
+              'message: ' + error.message + '\n');
+    }
+	 
+	 function CalcRoom(){
+	 				
+
+	 		if (
+				window.localStorage.getItem("RDFrontLat") === '0' || window.localStorage.getItem("RDFrontLon") === '0' ||
+				window.localStorage.getItem("RDBackLat") === '0' || window.localStorage.getItem("RDBackLon") === '0' ||
+				window.localStorage.getItem("RDLeftLat") === '0' || window.localStorage.getItem("RDLeftLon") === '0' ||
+				window.localStorage.getItem("RDRightLat") === '0' || window.localStorage.getItem("RDRightLon") === '0' 
+				)
+					{return 0;}
+			else{
+					var RDFrontLat=window.localStorage.getItem("RDFrontLat");
+					var RDFrontLon=window.localStorage.getItem("RDFrontLon");
+					var RDBackLat=window.localStorage.getItem("RDBackLat");
+					var RDBackLon=window.localStorage.getItem("RDBackLon");
+					var RDLeftLat=window.localStorage.getItem("RDLeftLat");
+					var RDLeftLon=window.localStorage.getItem("RDLeftLon");
+					var RDRightLat=window.localStorage.getItem("RDRightLat");
+					var RDRightLon=window.localStorage.getItem("RDRightLon");
+			
+			
+					var BackWall = DegreesToMeters(RDBackLat,RDLeftLon,RDBackLat,RDRightLon);
+					var FrontWall = DegreesToMeters(RDFrontLat,RDLeftLon,RDFrontLat,RDRightLon);
+					var LeftWall = DegreesToMeters(RDBackLat,RDLeftLon,RDFrontLat,RDLeftLon);
+					var RightWall = DegreesToMeters(RDBackLat,RDRightLon,RDFrontLat,RDRightLon);
+			
+			
+									alert(
+									'BackWall:'+BackWall + '\n' +
+									'FrontWall:'+FrontWall + '\n' +
+									'LeftWall:'+LeftWall + '\n' +
+									'RightWall:'+RightWall 
+									);
+				}
+				return 0;
+	 }
+	 
+	function DegreesToMeters(lat1,lon1,lat2,lon2){
+
+		var R = 6371; // km
+		var dLat = toRad(lat2-lat1);
+		var dLon = toRad(lon2-lon1); 
+	
+		var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *  Math.sin(dLon/2) * Math.sin(dLon/2); 
+		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+
+		var d = R * c;
+		d=d*1000; //KMs to Meters
+
+		return d;
+	}
+	function toRad(Value) {
+		/** Converts numeric degrees to radians */
+			return (Value * Math.PI / 180);
+
+	}
+	 
+	 
