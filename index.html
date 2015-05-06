@@ -79,7 +79,7 @@
                     <tr><td id="td-error"></td></tr>
                     <tr><td class="login-button"><input class="common-button" type="button" id="btnLoginSubmit" value="LOGIN" onclick="LoginUser()" /></td></tr>
                 </table>
-				<div class="copyright" id="copyrightinfo" name="copyrightinfo">TOSHIBA CORPORATION 2015. ALL RIGHTS RESERVED<br />V0.98<br />FOR INTERNAL USE ONLY</div>
+				<div class="copyright" id="copyrightinfo" name="copyrightinfo">TOSHIBA CORPORATION 2015. ALL RIGHTS RESERVED<br />V0.99<br />FOR INTERNAL USE ONLY</div>
 				<div data-role="panel"  style="height:200px;" name="pnlSideShow" id="pnlSideShow" data-theme="b" data-position="left" data-display="overlay"></div>
 				</center>
             </div>
@@ -1015,14 +1015,14 @@
 
 
 
-						<div id="divEquipmentType" name="divEquipmentType"><select class="form-control" id="ddlEquipmentType" name="ddlEquipmentType" data-overlay-theme="b" data-theme="a" data-native-menu="true" tabindex="-1">
+						<div id="divEquipmentType" name="divEquipmentType"><select class="ui-disabled" class="form-control" id="ddlEquipmentType" name="ddlEquipmentType" data-overlay-theme="b" data-theme="a" data-native-menu="true" tabindex="-1">
 							<option value="-1" selected="true">(Select Equipment Type)</option>
 
 						</select></div>
 
 
 					<div data-role="controlgroup" id="tblEMRFButtons" data-type="horizontal" >
-						<a href="javascript:void(0);"  data-role="button" data-icon="plus" data-iconpos="left" style="padding-right:.5em !important;" id="btnAddEMRF" name="btnAddEMRF" >Add</a>
+						<a href="javascript:void(0);"  data-role="button" data-icon="plus" data-iconpos="left" style="padding-right:.5em !important;" id="btnAddEMRF" name="btnAddEMRF" class="ui-disabled">Add</a>
 						<a href="javascript:void(0);"  data-role="button" data-icon="delete" data-iconpos="left" onclick="cancelStatusEMRF()" style="padding-right:.5em !important;">Cancel</a>
 						<a href="javascript:void(0);" data-role="button" data-icon="back" data-iconpos="left" onclick="backStatusEMRF()" style="padding-right:.5em !important;">Back</a>
 					</div>
@@ -1373,6 +1373,484 @@
 				<br>
 				<h3 >Install latest version</h3>
 				<h5 >Link: <a href="#" title="" alt="" onclick="window.open('https://build.phonegap.com/apps/1333043/install', '_system');">https://build.phonegap.com/apps/1333043/install</a></h5>
+				<h5 >Link: <a href="#" title="" alt="" onclick="window.open('http://medical.toshiba.com/go/tams-app-catalog', '_system');">http://medical.toshiba.com/go/tams-app-catalog</a></h5>
+
+
+<p class=MsoTitle>IPM Mobile – Test Cases<br>
+<br>
+<br>
+</p>
+
+<p class=MsoTocHeading>Contents</p>
+
+<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc418606490" onclick="ShowHelpSection('#_Toc418606490');"><i>Test Case
+000 – Install Mobile App</i><span style='color:windowtext;display:none;
+text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>2</span></a></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc418606491" onclick="ShowHelpSection('#_Toc418606491');"><i>Test Case
+001 –Login to the site</i><span style='color:windowtext;display:none;
+text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>3</span></a></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc418606492" onclick="ShowHelpSection('#_Toc418606492');"><i>Test Case
+002 – Remember Me feature</i><span style='color:windowtext;display:none;
+text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>4</span></a></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc418606493" onclick="ShowHelpSection('#_Toc418606493');"><i>Test Case
+003 – User Menu</i><span style='color:windowtext;display:none;text-decoration:
+none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>6</span></a></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc418606494" onclick="ShowHelpSection('#_Toc418606494');"><i>Test Case
+004 –Search Project</i><span style='color:windowtext;display:none;text-decoration:
+none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>7</span></a></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc418606495" onclick="ShowHelpSection('#_Toc418606495');"><i>Test Case
+005 – See Project Details</i><span style='color:windowtext;display:none;
+text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>8</span></a></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc418606496" onclick="ShowHelpSection('#_Toc418606496');"><i>Test Case
+006 –Project Detail Options</i><span style='color:windowtext;display:none;
+text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>9</span></a></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc418606497" onclick="ShowHelpSection('#_Toc418606497');"><i>Test Case
+007 – Construction</i><span style='color:windowtext;display:none;text-decoration:
+none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>10</span></a></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc418606498" onclick="ShowHelpSection('#_Toc418606498');"><i>Test Case
+008 –IPM Activity</i><span style='color:windowtext;display:none;text-decoration:
+none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>12</span></a></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc418606499" onclick="ShowHelpSection('#_Toc418606499');"><i>Test Case
+009 –Site Plan Requests</i><span style='color:windowtext;display:none;
+text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>14</span></a></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc418606500" onclick="ShowHelpSection('#_Toc418606500');"><i>Test Case
+010 –EMRF</i><span style='color:windowtext;display:none;text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>15</span></a></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc418606501" onclick="ShowHelpSection('#_Toc418606501');"><i>Test Case
+011 –Contacts</i><span style='color:windowtext;display:none;text-decoration:
+none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>16</span></a></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc418606502" onclick="ShowHelpSection('#_Toc418606502');"><i>Test Case
+012 –Email Equipment</i><span style='color:windowtext;display:none;text-decoration:
+none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>17</span></a></span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoTitle>&nbsp;</p>
+
+<b><span style='font-size:16.0pt;line-height:107%;font-family:"Calibri Light","sans-serif"'><br
+clear=all style='page-break-before:always'>
+</span></b>
+
+<p class=MsoTitle><span class=MsoSubtleEmphasis><span style='color:#5A5A5A;
+font-style:normal'>&nbsp;</span></span></p>
+
+<h1><a id="_Toc418606490"><span class=MsoSubtleEmphasis>Test Case 000 – Install
+Mobile App</span></a></h1>
+
+<h2><em><span style='font-family:"Calibri Light","sans-serif";font-style:normal'>Steps:</span></em></h2>
+
+<ol style='margin-top:0in' start=1 type=1>
+ <li class=MsoNormal>On your iPhone, either scan the QR code below to install
+     the mobile application or go to <span style='color:#1F497D'><a
+     href="https://build.phonegap.com/apps/1333043/install">this link</a></span>:</li>
+</ol>
+
+<p class=MsoNormal style='margin-left:.5in'><img border=0 width=116 height=116
+src="apphelp_files/image001.png"></p>
+
+<p class=MsoNormal style='margin-left:.5in'>For other mobile platforms
+(Android/Windows), use the QR code above or the links below:</p>
+
+<p class=MsoNormal style='margin-left:.5in'>Android: <a
+href="https://build.phonegap.com/apps/1333043/download/android">https://build.phonegap.com/apps/1333043/download/android</a>
+</p>
+
+<p class=MsoNormal style='text-indent:.5in'>Windows Phone: <a
+href="https://build.phonegap.com/apps/1333043/download/winphone/?qr_key=fBJ6uTo7eUneytSDAuHR">https://build.phonegap.com/apps/1333043/download/winphone</a></p>
+
+<ol style='margin-top:0in' start=2 type=1>
+ <li class=MsoNormal>Whenever there is an update to the app available, the
+     following screen is shown. Just touch “Update &amp; restart now”:</li>
+</ol>
+
+<p class=MsoNormal style='margin-left:.5in'><img border=0 width=250 height=444
+src="apphelp_files/image002.jpg"></p>
+
+<p class=MsoNormal style='margin-left:.5in'>     </p>
+
+<p class=MsoNormal style='margin-left:.5in'>&nbsp;</p>
+
+<p class=MsoListParagraphCxSpFirst>&nbsp;</p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:0in'>&nbsp;</p>
+
+<h1><a id="_Toc418606491"><span class=MsoSubtleEmphasis>Test Case 001 –Login
+to the site</span></a></h1>
+
+<h2><em><span style='font-family:"Calibri Light","sans-serif";font-style:normal'>Steps:</span></em></h2>
+
+<ol style='margin-top:0in' start=1 type=1>
+ <li class=MsoNormal>Enter your TAMS login account and password. You do not need
+     to enter “@tams.com”.<br>
+      <img border=0 width=187 height=333 id="Picture 1"
+     src="apphelp_files/image003.jpg"></li>
+ <li class=MsoNormal>Click “LOGIN” button. It should take you to the main home
+     screen:<br>
+     <img border=0 width=192 height=333 src="apphelp_files/image004.jpg"></li>
+</ol>
+
+<b><span style='font-size:16.0pt;line-height:107%;font-family:"Calibri Light","sans-serif"'><br
+clear=all style='page-break-before:always'>
+</span></b>
+
+<h1><a id="_Toc418606492"><span class=MsoSubtleEmphasis>Test Case 002 –
+Remember Me feature</span></a></h1>
+
+<h2><em><span style='font-family:"Calibri Light","sans-serif";font-style:normal'>Steps:</span></em></h2>
+
+<ol style='margin-top:0in' start=1 type=1>
+ <li class=MsoNormal>Close the application and run again.</li>
+ <li class=MsoNormal>Enter your TAMS login and password.<br>
+      <img border=0 width=187 height=333 src="apphelp_files/image005.jpg"></li>
+ <li class=MsoNormal>Select “Remember Me” checkbox.</li>
+ <li class=MsoNormal>Click “LOGIN” button. It should take you to the main home
+     screen:<br>
+     <br>
+ </li>
+</ol>
+
+<p class=MsoNormal style='margin-left:.5in'><img border=0 width=192 height=333
+src="apphelp_files/image004.jpg"></p>
+
+<ol style='margin-top:0in' start=5 type=1>
+ <li class=MsoNormal>Close the application and run again.</li>
+ <li class=MsoNormal>It should take you to the main home screen without asking
+     for credentials:<br>
+     <img border=0 width=192 height=333 src="apphelp_files/image004.jpg"></li>
+</ol>
+
+<span style='font-size:11.0pt;line-height:107%;font-family:"Calibri","sans-serif"'><br
+clear=all style='page-break-before:always'>
+</span>
+
+<p class=MsoNormal style='margin-left:.5in'>&nbsp;</p>
+
+<h1><a id="_Toc418606493"><span class=MsoSubtleEmphasis>Test Case 003 – User
+Menu</span></a></h1>
+
+<h2><em><span style='font-family:"Calibri Light","sans-serif";font-style:normal'>Steps:</span></em></h2>
+
+<ol style='margin-top:0in' start=1 type=1>
+ <li class=MsoNormal>Once on the home page, click on the menu button in top
+     left to dropdown the menu.<br>
+     <br>
+     <img border=0 width=192 height=340 src="apphelp_files/image006.jpg"></li>
+ <li class=MsoNormal>Test all the menu items:<br>
+     1<sup>st</sup> Menu Item should show in the logged in person’s name.<br>
+     <span class=MsoSubtleEmphasis><span style='color:windowtext;font-style:
+     normal'>“Home” should take the user to the home screen.<br>
+     “My Projects” should take user to the screen to select projects for which
+     user is an IPM.<br>
+     “Help” should take user to the help screen.<br>
+     “Sign Out” should sign user out and when user logs back in, should ask for
+     credentials.</span></span></li>
+</ol>
+
+<span class=MsoSubtleEmphasis><span style='font-size:11.0pt;line-height:107%;
+font-family:"Calibri","sans-serif";color:windowtext;font-style:normal'><br
+clear=all style='page-break-before:always'>
+</span></span>
+
+<p class=MsoNormal><span class=MsoSubtleEmphasis><span style='color:windowtext;
+font-style:normal'>&nbsp;</span></span></p>
+
+<h1><a id="_Toc418606494"><span class=MsoSubtleEmphasis>Test Case 004 –Search
+Project</span></a></h1>
+
+<h2><em><span style='font-family:"Calibri Light","sans-serif";font-style:normal'>Steps:</span></em></h2>
+
+<p class=MsoNormal style='margin-left:.5in'><br>
+<br>
+</p>
+
+<ol style='margin-top:0in' start=1 type=1>
+ <li class=MsoNormal style='color:#404040'><span style='color:windowtext'>The
+     following screen should be shown after clicking on “My Projects”:</span><span
+     class=MsoSubtleEmphasis><br>
+     </span><span style='color:windowtext'><img border=0 width=191 height=341
+     src="apphelp_files/image007.jpg"></span></li>
+ <li class=MsoNormal style='color:#404040'><span class=MsoSubtleEmphasis><span
+     style='font-style:normal'>Enter partial or full Account Name, System Name,
+     Modality, Project ID or SID in the search box. System should filter the projects
+     shown.</span></span></li>
+ <li class=MsoNormal style='color:#404040'><span class=MsoSubtleEmphasis><span
+     style='font-style:normal'>Select a sort type from the dropdown to sort
+     projects by Account Name, Zone or Modality. </span></span></li>
+</ol>
+
+<span class=MsoSubtleEmphasis><b><span style='font-size:16.0pt;line-height:
+107%;font-family:"Calibri Light","sans-serif";font-style:normal'><br clear=all
+style='page-break-before:always'>
+</span></b></span>
+
+<h1><a id="_Toc418606495"><span class=MsoSubtleEmphasis>Test Case 005 – See
+Project Details</span></a><span class=MsoSubtleEmphasis> </span></h1>
+
+<h2><em><span style='font-family:"Calibri Light","sans-serif";font-style:normal'>Steps:</span></em></h2>
+
+<ol style='margin-top:0in' start=1 type=1>
+ <li class=MsoNormal style='color:#404040'><span style='color:windowtext'>On
+     the search project screen, once the desired project is searched for, click
+     the project card for the project details</span><span
+     class=MsoSubtleEmphasis><br>
+     </span><span style='color:windowtext'><img border=0 width=191 height=341
+     src="apphelp_files/image007.jpg"></span></li>
+ <li class=MsoNormal style='color:#404040'><span style='color:windowtext'>IPM
+     is shown the buttons for each section for project details. Click one of
+     the buttons to view or edit details. “Back to Search” button takes the user
+     back to the project search screen<br>
+     <img border=0 width=191 height=341 src="apphelp_files/image008.jpg"></span></li>
+</ol>
+
+<span class=MsoSubtleEmphasis><b><span style='font-size:16.0pt;line-height:
+107%;font-family:"Calibri Light","sans-serif";font-style:normal'><br clear=all
+style='page-break-before:always'>
+</span></b></span>
+
+<h1><a id="_Toc418606496"><span class=MsoSubtleEmphasis>Test Case 006 –Project
+Detail Options</span></a><span class=MsoSubtleEmphasis> </span></h1>
+
+<h2><em><span style='font-family:"Calibri Light","sans-serif";font-style:normal'>Steps:</span></em></h2>
+
+<ol style='margin-top:0in' start=1 type=1>
+ <li class=MsoNormal style='color:#404040'><span style='color:windowtext'>On
+     the project detail options screen, click one of the buttons to view or
+     edit details. “Back to Search” button takes user back to the project search
+     screen</span><span class=MsoSubtleEmphasis><br>
+     </span><span style='color:windowtext'><img border=0 width=191 height=341
+     src="apphelp_files/image008.jpg"></span></li>
+ <li class=MsoNormal>For example, to view/edit construction information,
+     clicking the construction screen brings up details for the construction:<br>
+     <img border=0 width=192 height=346 src="apphelp_files/image009.jpg"><br>
+     <br>
+ </li>
+</ol>
+
+<span style='font-size:11.0pt;line-height:107%;font-family:"Calibri","sans-serif"'><br
+clear=all style='page-break-before:always'>
+</span>
+
+<p class=MsoNormal><span style='color:#404040'>&nbsp;</span></p>
+
+<h1><a id="_Toc418606497"><span class=MsoSubtleEmphasis>Test Case 007 – Construction</span></a></h1>
+
+<h2><em><span style='font-family:"Calibri Light","sans-serif";font-style:normal'>Steps:</span></em></h2>
+
+<ol style='margin-top:0in' start=1 type=1>
+ <li class=MsoNormal style='color:#404040'><span style='color:windowtext'>Construction
+     screen is prefilled with the data available. Make appropriate changes to
+     the data. Confidence level needs to be greater or equal to 60 to make a
+     change to the site ready date. Some dates may appear disabled till their
+     preceding question is set to “Yes”. For example, “Contractor Selected”
+     needs to be “Yes” to enable the date for it.<br>
+     <img border=0 width=192 height=346 src="apphelp_files/image009.jpg"></span></li>
+ <li class=MsoNormal style='color:#404040'><span style='color:windowtext'>On
+     most detail screens, scrolling all the way to the bottom shows buttons for
+     saving, cancelling or navigating back to the project detail options screen<br>
+     <img border=0 width=191 height=341 src="apphelp_files/image010.jpg"></span></li>
+ <li class=MsoNormal style='color:#404040'><span style='color:windowtext'>Click
+     the “Save” Button. A confirmation box should appear. Click “Ok”. System
+     should save the changes and go to the project options screen. User may
+     also see a warning message about Bill date being within 90 days.<br>
+     <img border=0 width=190 height=340 src="apphelp_files/image011.jpg"></span></li>
+ <li class=MsoNormal style='color:#404040'><span style='color:windowtext'>Click
+     the “Cancel” Button. A confirmation box should appear. Click “Ok”. System
+     should go to the home screen.<br>
+     <br>
+     </span></li>
+ <li class=MsoNormal style='color:#404040'><span style='color:windowtext'>Click
+     the “Back” Button. A confirmation box should appear. Click “Ok”. System
+     should go to the home screen.<br>
+     <img border=0 width=190 height=332 src="apphelp_files/image012.jpg"></span></li>
+</ol>
+
+<p class=MsoNormal style='margin-left:.25in'><span class=MsoSubtleEmphasis><span
+style='font-style:normal'>&nbsp;</span></span></p>
+
+<span class=MsoSubtleEmphasis><span style='font-size:11.0pt;line-height:107%;
+font-family:"Calibri","sans-serif";font-style:normal'><br clear=all
+style='page-break-before:always'>
+</span></span>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=MsoSubtleEmphasis><span
+style='font-style:normal'>&nbsp;</span></span></p>
+
+<h1><a id="_Toc418606498"><span class=MsoSubtleEmphasis>Test Case 008 –IPM
+Activity</span></a></h1>
+
+<h2><em><span style='font-family:"Calibri Light","sans-serif";font-style:normal'>Steps:</span></em></h2>
+
+<ol style='margin-top:0in' start=1 type=1>
+ <li class=MsoNormal style='color:#404040'><span style='color:windowtext'>On
+     the home screen, click the “IPM Activity” button.<br>
+     <img border=0 width=191 height=341 src="apphelp_files/image013.jpg"></span><span
+     class=MsoSubtleEmphasis><br>
+     <br>
+     </span></li>
+ <li class=MsoNormal style='color:#404040'><span style='color:windowtext'>IPM’s
+     may now add Activities in 1 of 3 ways. Type in your comments, click on the
+     camera button, or upload a picture from your gallery. Once done, click on
+     the save button.</span></li>
+</ol>
+
+<p class=MsoNormal style='margin-left:.75in'><br>
+<img border=0 width=192 height=340 src="apphelp_files/image014.jpg"><br>
+<br>
+</p>
+
+<ol style='margin-top:0in' start=3 type=1>
+ <li class=MsoNormal style='color:#404040'><span style='color:windowtext'>The
+     IPM Activity history can be found just below the Save button.</span></li>
+</ol>
+
+<p class=MsoNormal style='margin-left:.5in'><br>
+<img border=0 width=191 height=340 src="apphelp_files/image015.jpg"></p>
+
+<p class=MsoNormal style='margin-left:.5in'><i><span style='color:#404040'><br>
+<br>
+</span></i></p>
+
+<p class=MsoNormal style='margin-left:.5in'>&nbsp;</p>
+
+<span class=MsoSubtleEmphasis><b><span style='font-size:16.0pt;line-height:
+107%;font-family:"Calibri Light","sans-serif"'><br clear=all style='page-break-before:
+always'>
+</span></b></span>
+
+<h1><a id="_Toc418606499"><span class=MsoSubtleEmphasis>Test Case 009 –Site
+Plan Requests</span></a></h1>
+
+<h2><em><span style='font-family:"Calibri Light","sans-serif";font-style:normal'>Steps:</span></em></h2>
+
+<ol style='margin-top:0in' start=1 type=1>
+ <li class=MsoNormal style='color:#404040'><span style='color:windowtext'>You
+     may view Site Plan requests associated with your projects, by clicking on
+     the Site Planning menu on the project details page.</span></li>
+</ol>
+
+<p class=MsoNormal style='margin-left:.5in'><img border=0 width=173 height=308
+src="apphelp_files/image016.jpg"></p>
+
+<p class=MsoNormal style='margin-left:.5in'><i><span style='color:#404040'>&nbsp;</span></i></p>
+
+<p class=MsoNormal><i><span style='color:#404040'>&nbsp;</span></i></p>
+
+<span style='font-size:11.0pt;line-height:107%;font-family:"Calibri","sans-serif"'><br
+clear=all style='page-break-before:always'>
+</span>
+
+<p class=MsoNormal style='margin-left:.5in'><i><span style='color:#404040'>&nbsp;</span></i></p>
+
+<h1><a id="_Toc418606500"><span class=MsoSubtleEmphasis>Test Case 010 –EMRF</span></a></h1>
+
+<h2><em><span style='font-family:"Calibri Light","sans-serif";font-style:normal'>Steps:</span></em></h2>
+
+<ol style='margin-top:0in' start=1 type=1>
+ <li class=MsoNormal style='color:#404040'><span style='color:windowtext'>You
+     may view EMRF’s associated with your projects, by clicking on the EMRF
+     menu on the project details page.</span></li>
+</ol>
+
+<p class=MsoNormal style='margin-left:.5in'><img border=0 width=171 height=307
+src="apphelp_files/image017.jpg"><span class=MsoSubtleEmphasis><br>
+<br>
+</span></p>
+
+<p class=MsoNormal><br>
+<br>
+<br>
+</p>
+
+<b><span style='font-size:16.0pt;line-height:107%;font-family:"Calibri Light","sans-serif"'><br
+clear=all style='page-break-before:always'>
+</span></b>
+
+<h1><a id="_Toc418606501"><span class=MsoSubtleEmphasis>Test Case 011 –Contacts</span></a></h1>
+
+<h2><em><span style='font-family:"Calibri Light","sans-serif";font-style:normal'>Steps:</span></em></h2>
+
+<ol style='margin-top:0in' start=1 type=1>
+ <li class=MsoNormal style='color:#404040'><span style='color:windowtext'>You
+     may view contacts associated with your projects, by clicking on Contacts
+     menu on the project details page. These include any contacts entered on
+     the project site readiness section, as well as the AE, ASM, ZVP Service,
+     and CE.</span></li>
+ <li class=MsoNormal style='color:#404040'><span class=MsoSubtleEmphasis><span
+     style='font-style:normal'>You may initiate a call on your mobile device by
+     touching any of the contacts’ phone numbers.</span><br>
+     </span><span style='color:windowtext'><img border=0 width=185 height=307
+     src="apphelp_files/image018.jpg"></span></li>
+</ol>
+
+<p class=MsoNormal style='margin-left:.5in'><br>
+<br>
+</p>
+
+<p class=MsoNormal><br>
+<br>
+</p>
+
+<p class=MsoNormal><br>
+<br>
+<br>
+</p>
+
+<b><span style='font-size:16.0pt;line-height:107%;font-family:"Calibri Light","sans-serif"'><br
+clear=all style='page-break-before:always'>
+</span></b>
+
+<h1><a id="_Toc418606502"><span class=MsoSubtleEmphasis>Test Case 012 –Email
+Equipment</span></a></h1>
+
+<h2><em><span style='font-family:"Calibri Light","sans-serif";font-style:normal'>Steps:</span></em></h2>
+
+<ol style='margin-top:0in' start=1 type=1>
+ <li class=MsoNormal style='color:#404040'><span style='color:windowtext'>You
+     may view or email the equipment list associated with your projects, by
+     clicking on “Email Equipment List” on the project details page.  Click on
+     the + sign to expand for viewing or to include in email.</span></li>
+ <li class=MsoNormal style='color:#404040'><span style='color:windowtext'>Type
+     in the recipients email address under “Email To:” then click on Email to
+     send.</span></li>
+</ol>
+
+<p class=MsoNormal style='margin-left:.5in'><img border=0 width=179 height=308
+src="apphelp_files/image019.jpg"></p>
+
+<p class=MsoListParagraph>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraph>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraph>&nbsp;</p>
+
 				
 				
 			</div>
