@@ -146,7 +146,7 @@ function getISODateString(DateString)
 	}
 }
 
-function getISODateString(DateString)
+function getISOTodayDateString(DateString)
 {
 	if (DateString)
 	{

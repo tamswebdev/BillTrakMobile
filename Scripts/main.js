@@ -2725,11 +2725,12 @@ var result = 0;
 			
 
 
+
 	$scope = {
 		recordId : $.urlParam("id"),
 		ddlSR_Government_Agencies : $("#ddlSR_Government_Agencies").val(),
 		SR_Construction_Progress : $('input[name=SR_Construction_Progress]:checked').val(),
-		txtSR_Construction_Weeks : $("#txtSR_Construction_Weeks").text(),		
+		txtSR_Construction_Weeks : $("#txtSR_Construction_Weeks").val(),		
 		txtSR_Contractor_Selected_Date : $("#txtSR_Contractor_Selected_Date").val(),
 		
 		rbIP_Installation_Status : $('input[name=rbIP_Installation_Status]:checked').val(),
@@ -2758,7 +2759,6 @@ var result = 0;
 
 	};
 
-	
 	
 
 
@@ -2808,6 +2808,7 @@ var result = 0;
 	
 function SaveStatusProcess(isFinal)
 {
+	
 	if ($scope) {
 		
 		//show saving animation
@@ -2816,7 +2817,7 @@ function SaveStatusProcess(isFinal)
 		
 		$('#tblConstruction').hide();
 		$('#tblConstructionsButtons').hide();
-	
+
 		if ($scope.recordId != "" && parseInt($scope.recordId) > 0)
 		{
 			//showLoading(true);
