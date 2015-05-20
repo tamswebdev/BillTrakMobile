@@ -2746,7 +2746,7 @@ var result = 0;
 		SR_Electronic_Checked : $('input[name=SR_Electronic_Checked]:checked').val(),
 		SR_Timeline_Published : $('input[name=SR_Timeline_Published]:checked').val(),
 		txtSR_Timeline_Published_Date : $("#txtSR_Timeline_Published_Date").val(),
-		txtSR_Electronic_Date : $("#txtSR_PreConstruction_Meeting_Scheduled_Date").val(),
+		txtSR_Electronic_Date : $("#txtSR_Electronic_Date").val(),
 		txtSR_Pre_Installation_Date : $("#txtSR_Pre_Installation_Date").val(),
 		txtSR_Forecasted_Site_Ready_Date : $("#txtSR_Forecasted_Site_Ready_Date").val(),
 		txtSR_Riggers_Date : $("#txtSR_Riggers_Date").val(),
