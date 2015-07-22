@@ -2483,7 +2483,8 @@ function callbackLoadProjectDetail(data)
 				
 			$("#txtSR_Forecasted_Site_Ready_Date").val(getISODateString(catalog.ForecastedSiteReadyDate));
 
-			if (parseInt(catalog.OverrideConfidenceLevel) == 1 || parseInt(catalog.Confidence) >= ConfidenceLevel)
+			
+			if (parseInt(catalog.OverrideConfidenceLevel) == 1 || catalog.OverrideConfidenceLevel || parseInt(catalog.Confidence) >= ConfidenceLevel)
 			{
 				$("#txtSR_Forecasted_Site_Ready_Date").removeAttr('disabled');
 				$("#txtSR_Forecasted_Site_Ready_Date").css({'background-color' : 'white'});
