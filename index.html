@@ -6,20 +6,31 @@
 	<meta name = "format-detection" content = "telephone=no">
     <title>IPM Mobile</title>
 
+	
+	
+	<script src="Scripts/environment-configs.js"></script>
+    <script src="Scripts/jquery-2.1.0.min.js"></script>
+	
+	<script>
+    $(document).bind('mobileinit',function(){
+        $.mobile.pushStateEnabled = false;
+
+    });
+	</script>
+
     <link rel="stylesheet" href="Scripts/jquery.mobile/jquery.mobile-1.4.3.min.css" />
 	<link rel="stylesheet" href="Scripts/simpledialog/jquery.mobile.simpledialog.min.css" />
     <link rel="stylesheet" href="Content/main.css" />
     <!--<link rel="stylesheet" href="Content/bootstrap.css" />-->
 	
-	<script src="Scripts/environment-configs.js"></script>
-    <script src="Scripts/jquery-2.1.0.min.js"></script>
+
 	<script src="Scripts/jquery-ui/jQuery-ui.js"></script>
     <script src="Scripts/jquery.mobile/jquery.mobile-1.4.3.min.js"></script>
 	<script src="Scripts/simpledialog/jquery.mobile.simpledialog2.min.js"></script>
     <script src="Scripts/Base64Converter.js"></script>
 	<script src="Scripts/utilities.js"></script>
     <script src="Scripts/main.js"></script>
-	<script src="cordova.js"></script>
+	<!--<script src="cordova.js"></script>-->
 	<!--<script src="Scripts/SQLitePlugin.js"></script> -->
 
 	
@@ -79,7 +90,8 @@
                     <tr><td id="td-error"></td></tr>
                     <tr><td class="login-button"><input class="common-button" type="button" id="btnLoginSubmit" value="LOGIN" onclick="LoginUser()" /></td></tr>
                 </table>
-				<div class="copyright" id="copyrightinfo" name="copyrightinfo">TOSHIBA CORPORATION 2015. ALL RIGHTS RESERVED<br />V1.02<br />FOR INTERNAL USE ONLY</div>
+				<div class="copyright" id="copyrightinfo" name="copyrightinfo">TOSHIBA CORPORATION <script>document.write(new Date().getFullYear());</script>. ALL RIGHTS RESERVED<br />V1.3.0<br />FOR INTERNAL USE ONLY</div>
+				
 				<div data-role="panel"  style="height:200px;" name="pnlSideShow" id="pnlSideShow" data-theme="b" data-position="left" data-display="overlay"></div>
 				</center>
             </div>
@@ -830,8 +842,9 @@
                                                                     <tr>
 																				<td colspan="3" class="explain-field">
 																				<div data-role="controlgroup"  data-type="horizontal" align="center"  >
-																					<a href="javascript:void(0);"  data-role="button" data-icon="camera" data-iconpos="left"  onclick="SnapPhoto()">Camera</a>
-																					<a href="javascript:void(0);" data-role="button" data-icon="grid" data-iconpos="left"  onclick="SelectPhoto()">Gallery</a>
+																					<a href="javascript:void(0);" data-mini="true" data-role="button" data-icon="camera" data-iconpos="left" style="padding-right:.5em !important;" onclick="SnapPhoto()">Camera</a>
+																					<a href="javascript:void(0);" data-mini="true" data-role="button" data-icon="grid" data-iconpos="left" style="padding-right:.5em !important;" onclick="SelectMultiPhoto()">Gallery</a>
+																					<a href="javascript:void(0);" data-mini="true" data-role="button" data-icon="video" data-iconpos="left" style="padding-right:.5em !important;"  onclick="SelectPhoto()">Video</a>
 																				</div>
 																				</td>																		
 

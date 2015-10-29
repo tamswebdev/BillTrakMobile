@@ -18,6 +18,11 @@ var userSearchText = "";
 var userSearchSystemType = "All";
 	
 
+	
+	
+	
+	
+	
 if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/) && location.href.toLowerCase().indexOf( 'http://' ) < 0 && location.href.toLowerCase().indexOf( 'https://' ) < 0) 
 {
 	document.addEventListener("deviceready", onDeviceReady, false);
@@ -55,7 +60,7 @@ function onDeviceReady() {
 	localstorage.set("DeviceInfo", deviceInfo);
 
 	checkUserLogin();	
-	
+
 	isPageLoadReady = true;
 	
 };
@@ -3032,8 +3037,33 @@ function SelectPhoto() {
      }  
 	 
 	 
+	 function SelectMultiPhoto() {  
+
 	 
 	 
+			window.imagePicker.getPictures(
+			
+			function(message) {
+				for (var i = 0; i < message.length; i++) {
+					alert('Image URI: ' + message[i]);
+					uploadPhoto(message[i]);
+				}
+			}, function (error) {
+				alert('No photo selected');
+			}, {
+				quality     : 50, 
+				maximumImagesCount: 5,
+				width: 640,
+				height:480
+
+			}
+		);	 
+	 
+	 
+	 
+     }  
+	 
+
 	 
 	 
 	 
