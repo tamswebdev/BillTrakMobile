@@ -3006,11 +3006,17 @@ function GetpnlSideShow()
 				return RetVal;
 }
 
+function ShootVideo() {  
+
+       navigator.device.capture.captureVideo(uploadVideo, function(message) { alert('No Video'); }, {limit: 1,duration: 60});
+
+     }  
+	 
 function SnapPhoto() {  
 
        navigator.camera.getPicture(  
          uploadPhoto,  
-         function(message) { alert('Camera failed'); },  
+         function(message) { alert('No picture taken'); },  
          {  
            quality     : 50,  
            destinationType : navigator.camera.DestinationType.FILE_URI,  
@@ -3045,7 +3051,7 @@ function SelectPhoto() {
 			
 			function(message) {
 				for (var i = 0; i < message.length; i++) {
-					alert('Image URI: ' + message[i]);
+					//alert('Image URI: ' + message[i]);
 					uploadPhoto(message[i]);
 				}
 			}, function (error) {
@@ -3065,6 +3071,44 @@ function SelectPhoto() {
 	 
 
 	 
+ function uploadVideo(imageURI) {  
+
+   var options = new FileUploadOptions();  
+   
+   alert(imageURI);
+   
+	var ddlActivityType = $("#ddlActivityType").val();
+	var txtComments = $("#txtComments").val();
+	var txtActivityDate = $("#txtActivityDate").val();
+	var SPURL=spwebRootUrl + "sites/busops";
+	if (!txtComments || txtComments=="" )
+		txtComments = "(Photo Uploaded)";
+
+	
+
+   options.fileKey="file";  
+   options.fileName="c:\\logs\\MobileImages\\" + imageURI.substr(imageURI.lastIndexOf('/')+1);  
+   options.mimeType="video/mp4";  
+   var params = {};  
+   params.ProjectID = $.urlParam("id");  
+   params.ProjectActivityID = "0";  
+   params.CreatedBy = userInfoData.UserID ;  
+   params.ActivityType = ddlActivityType;  
+   params.Comments = txtComments;  
+   params.ActivityDate = txtActivityDate ;  
+   params.SPURL = SPURL ;  
+   params.UserName = userInfoData.Email ;  
+   params.authInfo = userInfoData.AuthenticationHeader ;  
+   options.params = params;  
+   var ft = new FileTransfer();  
+   var _url =  serviceRootUrl + "svc.aspx?op=UploadFile";
+
+   
+   ft.upload(imageURI, encodeURI(_url), snapwin, snapfail, options); 
+		console.log(_url);
+
+   
+ }  
 	 
 	 
  function uploadPhoto(imageURI) {  
