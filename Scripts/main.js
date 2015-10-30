@@ -3075,7 +3075,7 @@ function SelectPhoto() {
 
    var options = new FileUploadOptions();  
    
-   alert(imageURI);
+   alert('1');
    
 	var ddlActivityType = $("#ddlActivityType").val();
 	var txtComments = $("#txtComments").val();
@@ -3084,11 +3084,15 @@ function SelectPhoto() {
 	if (!txtComments || txtComments=="" )
 		txtComments = "(Photo Uploaded)";
 
-	
+
 
    options.fileKey="file";  
    options.fileName="c:\\logs\\MobileImages\\" + imageURI.substr(imageURI.lastIndexOf('/')+1);  
+   
+   	   alert('2');
+   
    options.mimeType="video/mp4";  
+   	   alert('3');
    var params = {};  
    params.ProjectID = $.urlParam("id");  
    params.ProjectActivityID = "0";  
@@ -3103,7 +3107,7 @@ function SelectPhoto() {
    var ft = new FileTransfer();  
    var _url =  serviceRootUrl + "svc.aspx?op=UploadFile";
 
-   
+   	   alert('4');
    ft.upload(imageURI, encodeURI(_url), snapwin, snapfail, options); 
 		console.log(_url);
 
