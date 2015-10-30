@@ -1993,7 +1993,7 @@ function ShowPhotoDialog(data)
 						width: 300,
 						zindex: 2000,
 						blankContent : 
-						  "<div style='padding: 15px;'><center><video width='160' height='120' controls><source src='"+ serviceRootUrl + "/DownloadedFiles/" + catalog.Base64ImageBytes.slice(7) +"' type='video/mp4'></video></center></div>"
+						  "<div style='padding: 15px;'><center><a href='#' onclick=window.open('"+ serviceRootUrl + "/DownloadedFiles/" + catalog.Base64ImageBytes.slice(7) +"', '_system');>Open in Browser</a><video width='160' height='120' controls><source src='"+ serviceRootUrl + "/DownloadedFiles/" + catalog.Base64ImageBytes.slice(7) +"' type='video/mp4'></video></center></div>"
 					});					
 				}
 						
@@ -3094,7 +3094,7 @@ function SelectPhoto() {
 				alert('No photo selected');
 			}, {
 				quality     : 50, 
-				maximumImagesCount: 5,
+				maximumImagesCount: 10,
 				width: 640,
 				height:480
 
