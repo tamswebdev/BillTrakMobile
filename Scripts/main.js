@@ -1960,22 +1960,42 @@ function ShowPhotoDialog(data)
 
 	try {
 
-
+				
+				
+				
+				
 				var catalog = data.d.results[0];
 
-								
-				$('<div>').simpledialog2({
-					mode: 'blank',
-					headerText: 'View Photo',
-					headerClose: true,
-					transition: 'flip',
-					themeDialog: 'a',
-					useModal: true,
-					width: 300,
-					zindex: 2000,
-					blankContent : 
-					  "<div style='padding: 15px;'><center><img width='95%' alt='' title='' border=0 src=data:image/jpg;base64," + catalog.Base64ImageBytes +"></center></div>"
-				});
+				var IsVideo = catalog.Base64ImageBytes.substring(0, 6);
+				if (IsVideo!="~Video~")
+				{					
+					$('<div>').simpledialog2({
+						mode: 'blank',
+						headerText: 'View Photo',
+						headerClose: true,
+						transition: 'flip',
+						themeDialog: 'a',
+						useModal: true,
+						width: 300,
+						zindex: 2000,
+						blankContent : 
+						  "<div style='padding: 15px;'><center><img width='95%' alt='' title='' border=0 src=data:image/jpg;base64," + catalog.Base64ImageBytes +"></center></div>"
+					});
+				}
+				else{
+					$('<div>').simpledialog2({
+						mode: 'blank',
+						headerText: 'View Video',
+						headerClose: true,
+						transition: 'flip',
+						themeDialog: 'a',
+						useModal: true,
+						width: 300,
+						zindex: 2000,
+						blankContent : 
+						  "<div style='padding: 15px;'><center><video width="160" height="120" controls><source src='"+ serviceRootUrl + "/DownloadedFiles/" + catalog.Base64ImageBytes.slice(6) +"' type='video/mp4'></video></center></div>"
+					});					
+				}
 						
 	$('#tblIPMActivity').show();
 	$('#tblIPMActivityButtons').show();
