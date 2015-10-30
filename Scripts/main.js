@@ -3100,16 +3100,14 @@ function SelectPhoto() {
 	if (!txtComments || txtComments=="" )
 		txtComments = "(Photo Uploaded)";
 
-	alert(imageURI);
 
    options.fileKey="file";  
-    alert('2');
+
    options.fileName="c:\\logs\\MobileImages\\" + imageURI.substr(imageURI.lastIndexOf('/')+1);  
-		
-   	   alert(options.fileName);
+
    
    options.mimeType="video/mp4";  
-   	   alert('3');
+
    var params = {};  
    params.ProjectID = $.urlParam("id");  
    params.ProjectActivityID = "0";  
@@ -3124,7 +3122,6 @@ function SelectPhoto() {
    var ft = new FileTransfer();  
    var _url =  serviceRootUrl + "svc.aspx?op=UploadFile";
 
-   	   alert('4');
    ft.upload(imageURI, encodeURI(_url), snapwin, snapfail, options); 
 		console.log(_url);
 
