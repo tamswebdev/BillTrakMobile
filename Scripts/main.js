@@ -1983,7 +1983,7 @@ function ShowPhotoDialog(data)
 					});
 				}
 				else{
-					$('<div>').simpledialog2({
+					$('<div>').simpledialogVideo({
 						mode: 'blank',
 						headerText: 'View Video',
 						headerClose: true,
