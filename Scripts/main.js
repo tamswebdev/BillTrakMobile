@@ -1966,7 +1966,7 @@ function ShowPhotoDialog(data)
 				
 				var catalog = data.d.results[0];
 
-				var IsVideo = catalog.Base64ImageBytes.substring(0, 6);
+				var IsVideo = catalog.Base64ImageBytes.substring(0, 7);
 				if (IsVideo!="~Video~")
 				{					
 					$('<div>').simpledialog2({
@@ -1993,7 +1993,7 @@ function ShowPhotoDialog(data)
 						width: 300,
 						zindex: 2000,
 						blankContent : 
-						  "<div style='padding: 15px;'><center><video width='160' height='120' controls><source src='"+ serviceRootUrl + "/DownloadedFiles/" + catalog.Base64ImageBytes.slice(6) +"' type='video/mp4'></video></center></div>"
+						  "<div style='padding: 15px;'><center><video width='160' height='120' controls><source src='"+ serviceRootUrl + "/DownloadedFiles/" + catalog.Base64ImageBytes.slice(7) +"' type='video/mp4'></video></center></div>"
 					});					
 				}
 						
