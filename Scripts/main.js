@@ -3091,7 +3091,7 @@ function SelectPhoto() {
 
    var options = new FileUploadOptions();  
    
-   alert('1');
+
    
 	var ddlActivityType = $("#ddlActivityType").val();
 	var txtComments = $("#txtComments").val();
@@ -3103,7 +3103,7 @@ function SelectPhoto() {
 
    options.fileKey="file";  
 
-   options.fileName="c:\\logs\\MobileImages\\" + imageURI.substr(imageURI.lastIndexOf('/')+1);  
+   options.fileName= imageURI.substr(imageURI.lastIndexOf('/')+1);  
 
    
    options.mimeType="video/mp4";  
