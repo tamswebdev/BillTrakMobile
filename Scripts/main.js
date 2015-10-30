@@ -3087,6 +3087,7 @@ function SelectPhoto() {
 
 
    options.fileKey="file";  
+    alert('1.5');
    options.fileName="c:\\logs\\MobileImages\\" + imageURI.substr(imageURI.lastIndexOf('/')+1);  
    
    	   alert('2');
