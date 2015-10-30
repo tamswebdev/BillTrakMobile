@@ -1983,6 +1983,10 @@ function ShowPhotoDialog(data)
 					});
 				}
 				else{
+					
+					var DialogContent="<div style='padding: 15px;'><center><a href='#' onclick=window.open('"+ serviceRootUrl + "DownloadedFiles/" + catalog.Base64ImageBytes.slice(7) 
+						  + "', '_blank');>Open in Browser</a><br><br><video width='160' height='120' controls><source src='"+ serviceRootUrl + "/DownloadedFiles/" + catalog.Base64ImageBytes.slice(7) +"' type='video/mp4'></video></center></div>"
+						  alert(DialogContent);
 					$('<div>').simpledialog2({
 						mode: 'blank',
 						headerText: 'View Video',
@@ -1992,8 +1996,7 @@ function ShowPhotoDialog(data)
 						useModal: true,
 						width: 300,
 						zindex: 2000,
-						blankContent : 
-						  "<div style='padding: 15px;'><center><a href='#' onclick=window.open('"+ serviceRootUrl + "/DownloadedFiles/" + catalog.Base64ImageBytes.slice(7) +"', '_blank');>Open in Browser</a><br><br><video width='160' height='120' controls><source src='"+ serviceRootUrl + "/DownloadedFiles/" + catalog.Base64ImageBytes.slice(7) +"' type='video/mp4'></video></center></div>"
+						blankContent : DialogContent
 					});					
 				}
 						
