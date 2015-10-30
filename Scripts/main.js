@@ -3006,11 +3006,27 @@ function GetpnlSideShow()
 				return RetVal;
 }
 
+
+
+var VideoCaptureSuccess = function(mediaFiles) {
+    var i, path, len;
+    for (i = 0, len = mediaFiles.length; i < len; i += 1) {
+        path = mediaFiles[i].fullPath;
+		uploadVideo(path);
+    }
+};
+
+
 function ShootVideo() {  
 
-       navigator.device.capture.captureVideo(uploadVideo, function(message) { alert('No Video'); }, {limit: 1,duration: 60});
+       navigator.device.capture.captureVideo(VideoCaptureSuccess, function(message) { alert('No Video'); }, {limit: 1,duration: 60});
 
      }  
+	 
+
+
+
+	 
 	 
 function SnapPhoto() {  
 
@@ -3084,13 +3100,13 @@ function SelectPhoto() {
 	if (!txtComments || txtComments=="" )
 		txtComments = "(Photo Uploaded)";
 
-
+	alert(imageURI);
 
    options.fileKey="file";  
-    alert('1.5');
+    alert('2');
    options.fileName="c:\\logs\\MobileImages\\" + imageURI.substr(imageURI.lastIndexOf('/')+1);  
-   
-   	   alert('2');
+		
+   	   alert(options.fileName);
    
    options.mimeType="video/mp4";  
    	   alert('3');
