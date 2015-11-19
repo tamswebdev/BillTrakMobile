@@ -130,7 +130,7 @@ var localstorage = {
 
 function getMMDDYYYYDate(DateString)
 {
-	
+	DateString=DateString.substring(0,10);
 	var date = new Date(DateString);
 	var year = date.getFullYear();
 	var month = (1 + date.getMonth()).toString();
