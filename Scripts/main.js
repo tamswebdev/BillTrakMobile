@@ -2163,7 +2163,7 @@ function callbackLoadIPMActivity(data)
 				var HasPhoto = "";
 
 				if (parseInt(catalog.HasPhoto) > 0)
-					HasPhoto = '<br><span style="font-size:x-small;"><a title="" style="text-decoration:none;" href="#" onclick="ShowPhoto('+ catalog.HasPhoto  +')"><u>View Photo</u></a></span>';
+					HasPhoto = '<br><span style="font-size:x-small;"><a title="" style="text-decoration:none;" href="#" onclick="ShowPhoto('+ catalog.HasPhoto  +')"><u>View Photo/Video</u></a></span>';
 				//var TableRow = $('<div style="margin: 0px 0px 0px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ActivityDate +' - '+ catalog.CreatedBy +' - '+ catalog.ActivityType +'</span><br><span style="font-size:x-small;">'+ catalog.Comments  +'</span>'+HasPhoto+'</div>');
 
 				var Username=catalog.CreatedBy;
@@ -3216,7 +3216,7 @@ function SelectPhoto() {
 	var txtActivityDate = $("#txtActivityDate").val();
 	var SPURL=spwebRootUrl + "sites/busops";
 	if (!txtComments || txtComments=="" )
-		txtComments = "(Photo Uploaded)";
+		txtComments = "(Video Uploaded)";
 
 
    options.fileKey="file";  
