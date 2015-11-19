@@ -563,6 +563,10 @@ function callbackPopulateSearchResults(data)
 					}
 
 
+					
+					
+					
+					
 					if (catalog.Confidence < ConfidenceLevel)
 						temp += '<table class="search-item" ><tr><td style="width:3px;background: -webkit-linear-gradient(bottom, rgba(222,0,0,1) 0%, rgba(222,222,222,1) '+ catalog.Confidence +'%, rgba(255,255,255,1) '+ catalog.Confidence +'%);">&nbsp;</td>';
 					else
@@ -577,15 +581,111 @@ function callbackPopulateSearchResults(data)
 					if (catalog.RoomNumber!='')
 						temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.RoomNumber+'</h3>';
 					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+catalog.SystemVal + '</h3>';
-					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
+					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ getMMDDYYYYDate(catalog.ExpectedBillDate) +'</h3>';
 					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
-					if (catalog.ConfirmedDeliveryDate!='')
-						temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Delivery Date '+ catalog.ConfirmedDeliveryDate+'</h4>';
+					
+					
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
 					temp += '<h6 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h6>';
 
 
+					temp += '<style>.tblDates {margin-top: 0px; margin-bottom: 0px;font-size:xx-small;} .tblDates td{text-align:center;border: 1px solid lightgrey;width:83px;font-size:xx-small !important;}</style>';
+					temp += '<table  class="tblDates" cellpadding=0 border=0 cellspacing=0>';
+					
+					
+					var IsAppsDateConfirmed='NO';
+					if (catalog.ConfirmedApplicationOnSiteDate!='')
+					{
+						IsAppsDateConfirmed='YES';
+						
+					}
+					else 
+					{
+						if (catalog.ForecastApplicationOnSiteDate!='')
+						{
+							IsAppsDateConfirmed='EST';
+						}
+						else
+						{
+								IsAppsDateConfirmed='NO';
+									
+							
+						}
+						
+						
+					}							
+					
+					var AppsDateLabel='';
+					if (IsAppsDateConfirmed=='EST')
+						AppsDateLabel='Est ';
+					
+					temp += '<tr><td style="border: 0px;" colspan=3>&nbsp;</td></tr><tr><td>Site Ready</td><td>Delivery</td><td>'+AppsDateLabel+'Apps</td></tr><tr>';
+					
+					if (catalog.ForecastedSiteReadyDate!='')
+						temp += '<td>'+ getMMDDYYYYDate(catalog.ForecastedSiteReadyDate)+'</td>';
+					else 
+						temp += '<td>'+ '&nbsp;'+'</td>';					
+						//temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Site Ready Date '+ getMMDDYYYYDate(catalog.ForecastedSiteReadyDate)+'</h4>';
+
+
+					if (catalog.ConfirmedDeliveryDate!='')
+						temp += '<td>'+ getMMDDYYYYDate(catalog.ConfirmedDeliveryDate)+'</td>';
+					else 
+						temp += '<td>'+ '&nbsp;'+'</td>';
+						//temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Delivery Date '+ catalog.ConfirmedDeliveryDate+'</h4>';
+
+						
+						
+					if (IsAppsDateConfirmed=='YES')
+					{
+						
+						temp += '<td>'+ getMMDDYYYYDate(catalog.ConfirmedApplicationOnSiteDate)+'</td>';
+					}
+					else 
+					{
+						if (IsAppsDateConfirmed=='EST')
+						{
+							temp += '<td style="fontcolor:silver;">'+ getMMDDYYYYDate(catalog.ForecastApplicationOnSiteDate)+'</td>';
+						}
+						else
+						{
+
+								temp += '<td >'+ '&nbsp;'+'</td>';	
+							
+						}
+						
+						
+					}								
+						
+					/*if (catalog.ConfirmedApplicationOnsiteDate!='')
+					{
+						temp += '<td>'+ getMMDDYYYYDate(catalog.ConfirmedApplicationOnsiteDate)+'</td>';
+					}
+					else 
+					{
+						if (catalog.ExpectedBillDate!='')
+						{
+							temp += '<td style="fontcolor:silver;">'+ getMMDDYYYYDate(catalog.ExpectedBillDate)+'</td>';
+						}
+						else
+						{
+							if (catalog.Upside!='')
+							{
+								temp += '<td style="fontcolor:silver;">'+ getMMDDYYYYDate(catalog.Upside)+'</td>';
+							}
+							else
+							{
+								temp += '<td >'+ '&nbsp;'+'</td>';	
+							}
+						}
+						
+						
+					}		*/
+					
+					temp += '</tr><tr><td style="border: 0px;" colspan=3>&nbsp;</td></tr></table>';
+										
+					
 					temp += '<style>.tblDashboard {margin-top: 0px; margin-bottom: 0px;font-size:xx-small;} .tblDashboard td{text-align:center;border: 1px solid lightgrey;width:50px;font-size:xx-small !important;}</style>';
 					temp += '<table  class="tblDashboard" cellpadding=0 border=0 cellspacing=0><tr>';
 					temp += '<td style="border: 0px;"></td><td>BK</td><td>FN</td><td>CV</td><td>CD</td></tr>'
@@ -638,6 +738,7 @@ function GoToProjectDetails() {
 $(document).on('pageinit',"#pgProjectOptions",function(event){
 
 	$("#pgProjectOptions").on("swipeleft",function(){
+
 		$("#pnlProjectDetails-ProjectOptions").panel( "open");
 	});
 	$("#pgProjectOptions").on("swiperight",function(){
@@ -679,6 +780,122 @@ function callbackLoadProjectOptionsSidePanelIPMActivity(data)
 }
 
 
+function SidePanelOrderDetails(catalog)
+{
+	
+					var temp = "";
+					temp += '<table class="search-item" ><tr><td style="width:3px;">&nbsp;</td><td>';
+					temp += '<div id="ProjectCard" class="panel-body" style="padding-bottom: 0px;padding-top: 30px;">';
+					temp += ''
+					temp += '<h2 style="color: silver; margin-top: 2px; margin-bottom: 2px;">';
+					temp += catalog.AccountName + '</h2>';
+					temp += '<div class="row"><div class="col-lg-6 col-md-6">';
+					if (catalog.RoomNumber!='')
+						temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.RoomNumber+'</h3>';
+					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+catalog.SystemVal + '</h3>';
+					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
+					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
+
+					
+					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
+					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
+					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
+					
+					
+
+					temp += '<style>.tblDates {margin-top: 0px; margin-bottom: 0px;font-size:xx-small;} .tblDates td{text-align:center;border: 1px solid lightgrey;width:83px;font-size:xx-small !important;}</style>';
+					temp += '<table  class="tblDates" cellpadding=0 border=0 cellspacing=0>';
+					
+					
+					
+
+
+
+
+					var IsAppsDateConfirmed='NO';
+					if (catalog.ConfirmedApplicationOnSiteDate!='')
+					{
+						IsAppsDateConfirmed='YES'
+						
+					}
+					else 
+					{
+						if (catalog.ForecastApplicationOnSiteDate!='')
+						{
+							IsAppsDateConfirmed='EST';
+						}
+						else
+						{
+								IsAppsDateConfirmed='NO';
+									
+							
+						}
+						
+						
+					}					
+					
+					
+					var AppsDateLabel='';
+					if (IsAppsDateConfirmed=='EST')
+						AppsDateLabel='Est ';
+					
+					temp += '<tr><td style="border: 0px;" colspan=3>&nbsp;</td></tr><tr><td>Site Ready</td><td>Delivery</td><td>'+AppsDateLabel+'Apps</td></tr><tr>';
+					
+
+					if (catalog.ForecastedSiteReadyDate!='')
+						temp += '<td>'+ getMMDDYYYYDate(catalog.ForecastedSiteReadyDate)+'</td>';
+					else 
+						temp += '<td>'+ '&nbsp;'+'</td>';					
+						//temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Site Ready Date '+ getMMDDYYYYDate(catalog.ForecastedSiteReadyDate)+'</h4>';					
+					
+					if (catalog.ConfirmedDeliveryDate!='')
+						temp += '<td>'+ getMMDDYYYYDate(catalog.ConfirmedDeliveryDate)+'</td>';
+					else 
+						temp += '<td>'+ '&nbsp;'+'</td>';
+						//temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Delivery Date '+ catalog.ConfirmedDeliveryDate+'</h4>';
+
+						
+
+
+
+						
+					if (IsAppsDateConfirmed=='YES')
+					{
+						
+						temp += '<td>'+ getMMDDYYYYDate(catalog.ConfirmedApplicationOnSiteDate)+'</td>';
+					}
+					else 
+					{
+						if (IsAppsDateConfirmed=='EST')
+						{
+							temp += '<td style="fontcolor:silver;">'+ getMMDDYYYYDate(catalog.ForecastApplicationOnSiteDate)+'</td>';
+						}
+						else
+						{
+
+								temp += '<td >'+ '&nbsp;'+'</td>';	
+							
+						}
+						
+						
+					}		
+
+
+
+
+					
+					temp += '</tr><tr><td style="border: 0px;" colspan=3>&nbsp;</td></tr></table>';					
+					
+
+					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
+					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>IPM Update: ' + catalog.LastIPMUpdate + catalog.LastIPMUpdateBy +'</em></h6>';
+					temp += '</div></div></div>';
+					temp += '</td></tr></table>';
+					
+					return temp;
+}
+
+
 function callbackLoadProjectOptionsSidePanel(data)
 {
 
@@ -693,27 +910,8 @@ function callbackLoadProjectOptionsSidePanel(data)
 				var temp = "";
 				
 				var catalog = data.d.results[0];
-				
-					temp += '<table class="search-item" ><tr><td style="width:3px;">&nbsp;</td><td>';
-					temp += '<div id="ProjectCard" class="panel-body" style="padding-bottom: 0px;padding-top: 30px;">';
-					temp += ''
-					temp += '<h2 style="color: silver; margin-top: 2px; margin-bottom: 2px;">';
-					temp += catalog.AccountName + '</h2>';
-					temp += '<div class="row"><div class="col-lg-6 col-md-6">';
-					if (catalog.RoomNumber!='')
-						temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.RoomNumber+'</h3>';
-					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+catalog.SystemVal + '</h3>';
-					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
-					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
-					if (catalog.ConfirmedDeliveryDate!='')
-						temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Delivery Date '+ catalog.ConfirmedDeliveryDate+'</h4>';
-					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
-					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
-					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>IPM Update: ' + catalog.LastIPMUpdate + catalog.LastIPMUpdateBy +'</em></h6>';
-					temp += '</div></div></div>';
-					temp += '</td></tr></table>';
+				temp=SidePanelOrderDetails(catalog);
+
 					
 				$("#pnlProjectDetails-ProjectOptions" ).html(temp);
 
@@ -1033,26 +1231,7 @@ function callbackLoadEquipmentListSidePanel(data)
 				
 				var catalog = data.d.results[0];
 				
-					temp += '<table class="search-item" ><tr><td style="width:3px;">&nbsp;</td><td>';
-					temp += '<div id="ProjectCard" class="panel-body" style="padding-bottom: 0px;padding-top: 30px;">';
-					temp += ''
-					temp += '<h2 style="color: silver; margin-top: 2px; margin-bottom: 2px;">';
-					temp += catalog.AccountName + '</h2>';
-					temp += '<div class="row"><div class="col-lg-6 col-md-6">';
-					if (catalog.RoomNumber!='')
-						temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.RoomNumber+'</h3>';
-					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+catalog.SystemVal + '</h3>';
-					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
-					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
-					if (catalog.ConfirmedDeliveryDate!='')
-						temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Delivery Date '+ catalog.ConfirmedDeliveryDate+'</h4>';
-					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
-					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
-					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>IPM Update: ' + catalog.LastIPMUpdate + catalog.LastIPMUpdateBy +'</em></h6>';
-					temp += '</div></div></div>';
-					temp += '</td></tr></table>';
+				temp=SidePanelOrderDetails(catalog);
 					
 				$("#pnlProjectDetails-EquipmentList" ).html(temp);
 
@@ -1278,26 +1457,7 @@ function callbackLoadEMRFSidePanel(data)
 				
 				var catalog = data.d.results[0];
 				
-					temp += '<table class="search-item" ><tr><td style="width:3px;">&nbsp;</td><td>';
-					temp += '<div id="ProjectCard" class="panel-body" style="padding-bottom: 0px;padding-top: 30px;">';
-					temp += ''
-					temp += '<h2 style="color: silver; margin-top: 2px; margin-bottom: 2px;">';
-					temp += catalog.AccountName + '</h2>';
-					temp += '<div class="row"><div class="col-lg-6 col-md-6">';
-					if (catalog.RoomNumber!='')
-						temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.RoomNumber+'</h3>';
-					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+catalog.SystemVal + '</h3>';
-					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
-					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
-					if (catalog.ConfirmedDeliveryDate!='')
-						temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Delivery Date '+ catalog.ConfirmedDeliveryDate+'</h4>';
-					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
-					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
-					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>IPM Update: ' + catalog.LastIPMUpdate + catalog.LastIPMUpdateBy +'</em></h6>';
-					temp += '</div></div></div>';
-					temp += '</td></tr></table>';
+				temp=SidePanelOrderDetails(catalog);
 					
 				$("#pnlProjectDetails-EMRF" ).html(temp);
 
@@ -1614,26 +1774,8 @@ function callbackLoadContactsSidePanel(data)
 				
 				var catalog = data.d.results[0];
 				
-					temp += '<table class="search-item" ><tr><td style="width:3px;">&nbsp;</td><td>';
-					temp += '<div id="ProjectCard" class="panel-body" style="padding-bottom: 0px;padding-top: 30px;">';
-					temp += ''
-					temp += '<h2 style="color: silver; margin-top: 2px; margin-bottom: 2px;">';
-					temp += catalog.AccountName + '</h2>';
-					temp += '<div class="row"><div class="col-lg-6 col-md-6">';
-					if (catalog.RoomNumber!='')
-						temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.RoomNumber+'</h3>';					
-					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+catalog.SystemVal + '</h3>';
-					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
-					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
-					if (catalog.ConfirmedDeliveryDate!='')
-						temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Delivery Date '+ catalog.ConfirmedDeliveryDate+'</h4>';
-					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
-					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
-					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>IPM Update: ' + catalog.LastIPMUpdate + catalog.LastIPMUpdateBy +'</em></h6>';
-					temp += '</div></div></div>';
-					temp += '</td></tr></table>';
+				temp=SidePanelOrderDetails(catalog);
+
 				$("#pnlProjectDetails-Contacts" ).html(temp);
 
 
@@ -1736,9 +1878,18 @@ function callbackLoadSitePlanRequests(data)
 					}
 				}
 				
+
+					
 				
 				if (catalog.FileName && catalog.FileName!="")
-					SPRRow = SPRRow + '<BR><span style="font-size:x-small;"><a href="#" onclick=DownloadSPRDocument('+catalog.DocumentID+');>Download ' + catalog.FileName + '.' + catalog.Extension +'</a></span>';
+				{
+
+					var FullFileName=catalog.FileName +  catalog.Extension;
+					if (catalog.Extension.substring(0,1)!=".")
+						FullFileName=catalog.FileName + '.' + catalog.Extension;
+					SPRRow = SPRRow + '<BR><span style="font-size:x-small;"><a href="#" onclick=DownloadSPRDocument('+catalog.DocumentID+');>Download ' + FullFileName +'</a></span>';
+					
+				}
 
 				if (i == data.d.results.length-1)
 				{
@@ -1837,27 +1988,7 @@ function callbackLoadSitePlanRequestsSidePanel(data)
 				var temp = "";
 				
 				var catalog = data.d.results[0];
-				
-					temp += '<table class="search-item" ><tr><td style="width:3px;">&nbsp;</td><td>';
-					temp += '<div id="ProjectCard" class="panel-body" style="padding-bottom: 0px;padding-top: 30px;">';
-					temp += ''
-					temp += '<h2 style="color: silver; margin-top: 2px; margin-bottom: 2px;">';
-					temp += catalog.AccountName + '</h2>';
-					temp += '<div class="row"><div class="col-lg-6 col-md-6">';
-					if (catalog.RoomNumber!='')
-						temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.RoomNumber+'</h3>';		
-					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+catalog.SystemVal + '</h3>';
-					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
-					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
-					if (catalog.ConfirmedDeliveryDate!='')
-						temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Delivery Date '+ catalog.ConfirmedDeliveryDate+'</h4>';
-					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
-					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
-					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>IPM Update: ' + catalog.LastIPMUpdate + catalog.LastIPMUpdateBy +'</em></h6>';
-					temp += '</div></div></div>';
-					temp += '</td></tr></table>';
+				temp=SidePanelOrderDetails(catalog);
 					
 				$("#pnlProjectDetails-SitePlanRequests" ).html(temp);
 
@@ -2111,26 +2242,7 @@ function callbackLoadIPMActivitySidePanel(data)
 				
 				var catalog = data.d.results[0];
 				
-					temp += '<table class="search-item" ><tr><td style="width:3px;">&nbsp;</td><td>';
-					temp += '<div id="ProjectCard" class="panel-body" style="padding-bottom: 0px;padding-top: 30px;">';
-					temp += ''
-					temp += '<h2 style="color: silver; margin-top: 2px; margin-bottom: 2px;">';
-					temp += catalog.AccountName + '</h2>';
-					temp += '<div class="row"><div class="col-lg-6 col-md-6">';
-					if (catalog.RoomNumber!='')
-						temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.RoomNumber+'</h3>';		
-					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+catalog.SystemVal + '</h3>';
-					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
-					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
-					if (catalog.ConfirmedDeliveryDate!='')
-						temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Delivery Date '+ catalog.ConfirmedDeliveryDate+'</h4>';
-					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
-					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
-					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>IPM Update: ' + catalog.LastIPMUpdate + catalog.LastIPMUpdateBy +'</em></h6>';
-					temp += '</div></div></div>';
-					temp += '</td></tr></table>';
+				temp=SidePanelOrderDetails(catalog);
 
 
 				$("#pnlProjectDetails-IPMActivity" ).html(temp);
@@ -2567,27 +2679,9 @@ function callbackLoadProjectDetail(data)
 				var temp = "";
 				
 
-				
-					temp += '<table class="search-item" ><tr><td style="width:3px;">&nbsp;</td><td>';
-					temp += '<div id="ProjectCard" class="panel-body" style="padding-bottom: 0px;padding-top: 30px;">';
-					temp += ''
-					temp += '<h2 style="color: silver; margin-top: 2px; margin-bottom: 2px;">';
-					temp += catalog.AccountName + '</h2>';
-					temp += '<div class="row"><div class="col-lg-6 col-md-6">';
-					if (catalog.RoomNumber!='')
-						temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.RoomNumber+'</h3>';
-					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">' + catalog.SystemVal + '</h3>';
-					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
-					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
-					if (catalog.ConfirmedDeliveryDate!='')
-						temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Delivery Date '+ catalog.ConfirmedDeliveryDate+'</h4>';
-					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
-					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.City + catalog.State + ' ' + catalog.ZipCode + '</h5>';
-					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h5>';
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>IPM Update: ' + catalog.LastIPMUpdate + catalog.LastIPMUpdateBy +'</em></h6>';
-					temp += '</div></div></div>';
-					temp += '</td></tr></table>';
+
+					temp=SidePanelOrderDetails(catalog);
+
 
 				$("#pnlProjectDetails" ).html(temp);
 
