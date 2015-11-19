@@ -595,14 +595,14 @@ function callbackPopulateSearchResults(data)
 					
 					
 					var IsAppsDateConfirmed='NO';
-					if (catalog.ConfirmedApplicationOnSiteDate!='')
+					if (catalog.ConfirmedApplicationOnSiteDate && catalog.ConfirmedApplicationOnSiteDate!='')
 					{
 						IsAppsDateConfirmed='YES';
 						
 					}
 					else 
 					{
-						if (catalog.ForecastApplicationOnSiteDate!='')
+						if (catalog.ForecastApplicationOnSiteDate && catalog.ForecastApplicationOnSiteDate!='')
 						{
 							IsAppsDateConfirmed='EST';
 						}
@@ -622,14 +622,15 @@ function callbackPopulateSearchResults(data)
 					
 					temp += '<tr><td style="border: 0px;" colspan=3>&nbsp;</td></tr><tr><td>Site Ready</td><td>Delivery</td><td>'+AppsDateLabel+'Apps</td></tr><tr>';
 					
-					if (catalog.ForecastedSiteReadyDate!='')
+			
+					if (catalog.ForecastedSiteReadyDate && catalog.ForecastedSiteReadyDate!='')
 						temp += '<td>'+ getMMDDYYYYDate(catalog.ForecastedSiteReadyDate)+'</td>';
 					else 
 						temp += '<td>'+ '&nbsp;'+'</td>';					
 						//temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Site Ready Date '+ getMMDDYYYYDate(catalog.ForecastedSiteReadyDate)+'</h4>';
 
 
-					if (catalog.ConfirmedDeliveryDate!='')
+					if (catalog.ConfirmedDeliveryDate && catalog.ConfirmedDeliveryDate!='')
 						temp += '<td>'+ getMMDDYYYYDate(catalog.ConfirmedDeliveryDate)+'</td>';
 					else 
 						temp += '<td>'+ '&nbsp;'+'</td>';
@@ -813,14 +814,14 @@ function SidePanelOrderDetails(catalog)
 
 
 					var IsAppsDateConfirmed='NO';
-					if (catalog.ConfirmedApplicationOnSiteDate!='')
+					if (catalog.ConfirmedApplicationOnSiteDate && catalog.ConfirmedApplicationOnSiteDate!='')
 					{
 						IsAppsDateConfirmed='YES'
 						
 					}
 					else 
 					{
-						if (catalog.ForecastApplicationOnSiteDate!='')
+						if (catalog.ForecastApplicationOnSiteDate && catalog.ForecastApplicationOnSiteDate!='')
 						{
 							IsAppsDateConfirmed='EST';
 						}
@@ -842,13 +843,13 @@ function SidePanelOrderDetails(catalog)
 					temp += '<tr><td style="border: 0px;" colspan=3>&nbsp;</td></tr><tr><td>Site Ready</td><td>Delivery</td><td>'+AppsDateLabel+'Apps</td></tr><tr>';
 					
 
-					if (catalog.ForecastedSiteReadyDate!='')
+					if (catalog.ForecastedSiteReadyDate && catalog.ForecastedSiteReadyDate!='')
 						temp += '<td>'+ getMMDDYYYYDate(catalog.ForecastedSiteReadyDate)+'</td>';
 					else 
 						temp += '<td>'+ '&nbsp;'+'</td>';					
 						//temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Site Ready Date '+ getMMDDYYYYDate(catalog.ForecastedSiteReadyDate)+'</h4>';					
 					
-					if (catalog.ConfirmedDeliveryDate!='')
+					if (catalog.ConfirmedDeliveryDate && catalog.ConfirmedDeliveryDate!='')
 						temp += '<td>'+ getMMDDYYYYDate(catalog.ConfirmedDeliveryDate)+'</td>';
 					else 
 						temp += '<td>'+ '&nbsp;'+'</td>';
