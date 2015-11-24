@@ -3305,7 +3305,8 @@ function SelectPhoto() {
      function snapwin(r) {  
  			$('#error-div2-IPMActivity').text("");
 			$('#error-div-IPMActivity').text("");
-			GoToSectionWithID('ProjectOptions');
+			GoToSectionWithID('IPMActivity');
+			//GoToSectionWithID('ProjectOptions');
 	 
 		//saveIPMActivity('CAM');
      }  
@@ -3313,7 +3314,8 @@ function SelectPhoto() {
        alert("An error has occurred sending photo: Code = " + error.code);  
 		$('#error-div2-IPMActivity').text("");
 		$('#error-div-IPMActivity').text("");
-		GoToSectionWithID('ProjectOptions');
+		GoToSectionWithID('IPMActivity');
+		//GoToSectionWithID('ProjectOptions');
 
      }  
 	 
