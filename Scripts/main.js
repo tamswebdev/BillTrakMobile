@@ -3185,13 +3185,7 @@ function SelectPhoto() {
 			
 			function(message) {
 				
-				//show saving animation
-				$('#error-div-IPMActivity').text("").append(getLoadingMini());
-				showTimedElem('error-div-IPMActivity');
-				
-				$('#tblIPMActivity').hide();
-				$('#tblIPMActivitysButtons').hide();
-				
+
 				
 				
 				for (var i = 0; i < message.length; i++) {
@@ -3200,10 +3194,7 @@ function SelectPhoto() {
 				}
 			}, function (error) {
 				alert('No photo selected');
-				$('#tblIPMActivity').show();
-				$('#tblIPMActivityButtons').show();
-				$('#error-div-IPMActivity').text("");
-							
+
 			}, {
 				quality     : 50, 
 				maximumImagesCount: 10,
