@@ -3184,6 +3184,16 @@ function SelectPhoto() {
 			window.imagePicker.getPictures(
 			
 			function(message) {
+				
+				//show saving animation
+				$('#error-div-IPMActivity').text("").append(getLoadingMini());
+				showTimedElem('error-div-IPMActivity');
+				
+				$('#tblIPMActivity').hide();
+				$('#tblIPMActivitysButtons').hide();
+				
+				
+				
 				for (var i = 0; i < message.length; i++) {
 					//alert('Image URI: ' + message[i]);
 					uploadPhoto(message[i]);
@@ -3305,8 +3315,8 @@ function SelectPhoto() {
      function snapwin(r) {  
  			$('#error-div2-IPMActivity').text("");
 			$('#error-div-IPMActivity').text("");
-			GoToSectionWithID('IPMActivity');
-			//GoToSectionWithID('ProjectOptions');
+			//GoToSectionWithID('IPMActivity');
+			GoToSectionWithID('ProjectOptions');
 	 
 		//saveIPMActivity('CAM');
      }  
@@ -3314,8 +3324,8 @@ function SelectPhoto() {
        alert("An error has occurred sending photo: Code = " + error.code);  
 		$('#error-div2-IPMActivity').text("");
 		$('#error-div-IPMActivity').text("");
-		GoToSectionWithID('IPMActivity');
-		//GoToSectionWithID('ProjectOptions');
+		//GoToSectionWithID('IPMActivity');
+		GoToSectionWithID('ProjectOptions');
 
      }  
 	 
