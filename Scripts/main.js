@@ -17,7 +17,8 @@ var userLatitude = 0;
 var userSearchText = "";
 var userSearchSystemType = "All";
 	
-
+var PhotosArray = [];
+var PhotoNamesArray=[];
 	
 	
 	
@@ -3185,6 +3186,7 @@ function SelectPhoto() {
 			
 			function(message) {
 				
+				/*
 				$('#error-div-IPMActivity').text("").append(getLoadingMini());
 				showTimedElem('error-div-IPMActivity');
 				
@@ -3192,13 +3194,28 @@ function SelectPhoto() {
 				$('#tblIPMActivitysButtons').hide();
 			 
 				
+				*/
+				
+				PhotoArray=[];
+				PhotoNamesArray=[];
+				var PhotoNameNum=0;
 				
 				for (var i = 0; i < message.length; i++) {
 
+				/*
+					PhotoArray[i]="c:\\logs\\MobileImages\\" + imageURI.substr(imageURI.lastIndexOf('/')+1);  
+					PhotoNameNum=1+i;
+
+					PhotoNamesArray[i]="Photo" + PhotoNameNum;
+					
+					
+					*/
+					
 					uploadMultiPhoto(message[i]);
 					
 				}
 
+				/*
 				$('#error-div-IPMActivity').text("");
 
 				
@@ -3206,7 +3223,7 @@ function SelectPhoto() {
 				$('#tblIPMActivitysButtons').show();
 	 				
 				GoToSectionWithID('ProjectOptions');
-				
+				*/
 				
 				
 			}, function (error) {
@@ -3347,7 +3364,7 @@ function SelectPhoto() {
    var _url =  serviceRootUrl + "svc.aspx?op=UploadFile";
 
 
-   ft.upload(imageURI, encodeURI(_url), MultiPhotoUploadSuccess, snapfail, options); 
+   ft.upload(imageURI, encodeURI(_url), snapwin, snapfail, options); 
 		console.log(_url);
 		
    
