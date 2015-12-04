@@ -3199,7 +3199,7 @@ function SelectPhoto() {
 					
 				}
 
-				$('#error-div-IPMActivity').text(""));
+				$('#error-div-IPMActivity').text("");
 
 				
 				$('#tblIPMActivity').show();
