@@ -3185,13 +3185,30 @@ function SelectPhoto() {
 			
 			function(message) {
 				
-
+				$('#error-div-IPMActivity').text("").append(getLoadingMini());
+				showTimedElem('error-div-IPMActivity');
+				
+				$('#tblIPMActivity').hide();
+				$('#tblIPMActivitysButtons').hide();
+			 
 				
 				
 				for (var i = 0; i < message.length; i++) {
-					//alert('Image URI: ' + message[i]);
-					uploadPhoto(message[i]);
+
+					uploadMultiPhoto(message[i]);
+					
 				}
+
+				$('#error-div-IPMActivity').text(""));
+
+				
+				$('#tblIPMActivity').show();
+				$('#tblIPMActivitysButtons').show();
+	 				
+				GoToSectionWithID('ProjectOptions');
+				
+				
+				
 			}, function (error) {
 				alert('No photo selected');
 
@@ -3209,7 +3226,6 @@ function SelectPhoto() {
      }  
 	 
 
-	 
  function uploadVideo(imageURI) {  
 
    var options = new FileUploadOptions();  
@@ -3298,12 +3314,57 @@ function SelectPhoto() {
  }  
  
  
+ 	 
+ function uploadMultiPhoto(imageURI,params) {  
+
+   var options = new FileUploadOptions();  
+   
+   
+	var ddlActivityType = $("#ddlActivityType").val();
+	var txtComments = $("#txtComments").val();
+	var txtActivityDate = $("#txtActivityDate").val();
+	var SPURL=spwebRootUrl + "sites/busops";
+	if (!txtComments || txtComments=="" )
+		txtComments = "(Photo Uploaded)";
+
+	
+
+   options.fileKey="file";  
+   options.fileName="c:\\logs\\MobileImages\\" + imageURI.substr(imageURI.lastIndexOf('/')+1);  
+   options.mimeType="image/jpeg";  
+   var params = {};  
+   params.ProjectID = $.urlParam("id");  
+   params.ProjectActivityID = "0";  
+   params.CreatedBy = userInfoData.UserID ;  
+   params.ActivityType = ddlActivityType;  
+   params.Comments = txtComments;  
+   params.ActivityDate = txtActivityDate ;  
+   params.SPURL = SPURL ;  
+   params.UserName = userInfoData.Email ;  
+   params.authInfo = userInfoData.AuthenticationHeader ;  
+   options.params = params;  
+   var ft = new FileTransfer();  
+   var _url =  serviceRootUrl + "svc.aspx?op=UploadFile";
+
+
+   ft.upload(imageURI, encodeURI(_url), MultiPhotoUploadSuccess, snapfail, options); 
+		console.log(_url);
+		
+   
+   
+   
+ }  
  
  
- 
- 
- 
- 
+  
+     function MultiPhotoUploadSuccess(r) {  
+ 			$('#error-div2-IPMActivity').text("");
+			$('#error-div-IPMActivity').text("");
+			//GoToSectionWithID('IPMActivity');
+			//GoToSectionWithID('ProjectOptions');
+	 
+		//saveIPMActivity('CAM');
+     }  
  
  
  
