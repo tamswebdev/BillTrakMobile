@@ -968,6 +968,16 @@ $(document).on('pageinit',"#pgSitePlanRequests",function(event){
 	});
 });
 
+/******************* Swipe AppsSchedule ***********************/
+$(document).on('pageinit',"#pgAppsSchedule",function(event){
+
+	$("#pgAppsSchedule").on("swipeleft",function(){
+		$("#pnlProjectDetails-AppsSchedule").panel( "open");
+	});
+	$("#pgAppsSchedule").on("swiperight",function(){
+		$("#pnlProjectActivity-AppsSchedule").panel( "open");
+	});
+});
 
 /******************* Swipe EMRF ***********************/
 $(document).on('pageinit',"#pgEMRF",function(event){
@@ -1339,6 +1349,171 @@ function callbackEmailEquipmentList(data)
 	catch(err) { }
 }
 
+
+
+/******************* Load AppsSchedule ***********************/
+$( document ).on( "pagebeforeshow", "#pgAppsSchedule", function(event) {
+	checkUserLogin();
+	
+	
+	
+	$('#tblAppsSchedule').hide();
+	$('#tblAppsScheduleButtons').hide();
+
+
+	$('#error-div-AppsSchedule').text("").append(getLoadingMini());
+
+	
+	$("#AppsScheduleGrid").text("");
+	var id = $.urlParam("id");
+	if (id > 0)
+	{
+	
+		var _url2 = serviceRootUrl + "svc.aspx?op=GetAppsSchedule&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id ;
+		Jsonp_Call(_url2, false, "callbackLoadAppsSchedule");
+	}
+	else 
+	{
+		///
+			alert("App Error");
+	}
+
+});
+
+
+function callbackLoadAppsSchedule(data)
+{
+
+
+	try {
+
+
+//		if (data.d.results.length > 0)
+//		{
+			for(var i=0; i < data.d.results.length; i++)
+			{
+				var catalog = data.d.results[i];
+				//var TableRow = $('<div style="width:100%;margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ShipToSite +'</span><br><span style="font-size:x-small;">'+ catalog.Status +' - '+ catalog.SentToTCSubCategory+'</span><br><span style="font-size:x-small;">To:'+ catalog.ShipToAddress + catalog.ShipToCity+ catalog.ShipToState+ ' ' +catalog.ShipToZip+'</span><br><span style="font-size:x-small;">Requested Delivery Date:'+ catalog.DelvDate  +'</span><br><span style="font-size:x-small;">'+catalog.ItemDetail +'</span></div>');
+
+
+				var TableRow = $('<div style="width:100%;margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.Specialist +'</span><br><span style="font-size:x-small;">Week of: '+  getMMDDYYYYDate(catalog.Weekof)+ '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +catalog.ScheduleStatus +' - '+ catalog.Purpose+'</span><br><span style="font-size:x-small;">'+catalog.Equipment +'</span><table class="WeekCal"><tr><td class="WeekCalTDHead">S</td><td class="WeekCalTDHead">M</td><td class="WeekCalTDHead">T</td><td class="WeekCalTDHead">W</td><td class="WeekCalTDHead">T</td><td class="WeekCalTDHead">F</td></tr><tr><td  class="WeekCalTD">'+catalog.Sunday+'</td><td class="WeekCalTD">'+catalog.Monday+'</td><td class="WeekCalTD">'+catalog.Tuesday+'</td><td class="WeekCalTD">'+catalog.Wednesday+'</td><td class="WeekCalTD">'+catalog.Thursday+'</td><td class="WeekCalTD">'+catalog.Friday+'</td></tr></table></div>');
+
+
+				TableRow.appendTo($("#AppsScheduleGrid"));
+				
+
+			}
+			var id = $.urlParam("id");
+			if (id > 0)
+			{
+				var _url1 = serviceRootUrl + "svc.aspx?op=GetIPMActivity&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+				Jsonp_Call(_url1, true, "callbackLoadAppsScheduleSidePanelIPMActivity");
+
+				var _url2 = serviceRootUrl + "svc.aspx?op=GetProjectHeaderById&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+				Jsonp_Call(_url2, true, "callbackLoadAppsScheduleSidePanel");
+
+			}
+			else 
+			{
+				///
+					alert("App Error");
+			}
+					
+//		}
+
+	}
+	catch(err) {}
+}
+
+function callbackLoadAppsScheduleSidePanelIPMActivity(data)
+{
+
+
+	try {
+
+		
+		if (data.d.results.length > 0)
+		{
+			var temp = '<div class="ui-grid-b ui-responsive" id="AppsScheduleGridSidePanel" name="AppsScheduleGridSidePanel" style="padding-right:10px;">';
+			for(var i=0; i < data.d.results.length; i++)
+			{
+				var catalog = data.d.results[i];
+				temp += '<div style="margin: 5px 5px 5px 5px;padding: 2px 2px 2px 2px;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ActivityDate +' - '+ catalog.CreatedBy +' - '+ catalog.ActivityType +'</span><br><span style="font-size:x-small;">'+ catalog.Comments  +'</span></div>';
+
+			}
+			
+			temp += '</div>';
+
+			$("#pnlProjectActivity-AppsSchedule" ).html(temp);
+
+					
+		}
+		else
+		{
+			//
+		}
+	}
+	catch(err) {}
+}
+
+
+function callbackLoadAppsScheduleSidePanel(data)
+{
+
+
+
+	try {
+
+	
+			if (data.d.results.length > 0)
+			{
+
+				var temp = "";
+				
+				var catalog = data.d.results[0];
+				
+				temp=SidePanelOrderDetails(catalog);
+					
+				$("#pnlProjectDetails-AppsSchedule" ).html(temp);
+
+		
+				$("#btnAddAppsSchedule").on("click", function(e) { 
+					var EquipmentType=$("#ddlEquipmentType").val();
+					var requestUrl = spwebRootUrl + 'virtualapps/busopswebs/emr/MoveRequest.aspx?projectId=' + catalog.ProjectID + '&sid=' + catalog.SID + '&modality=' + catalog.OpportunityModality + '&equipment=' + EquipmentType + '&source=BillTrak';	
+					
+					if (EquipmentType=='-1')
+						alert("Please select Equipment Type");		
+					else
+						window.open(requestUrl, '_system');//alert(requestUrl );		
+					
+				});
+
+
+				$('#error-div2-AppsSchedule').text("");
+				$('#error-div-AppsSchedule').text("");
+	
+	
+				$('#tblAppsSchedule').show();
+				$('#tblAppsScheduleButtons').show();
+				
+			}
+		}
+	catch(err) {}
+}
+
+
+
+function cancelStatusAppsSchedule() {
+
+		NavigatePage('#pgHome');
+
+
+}
+function backStatusAppsSchedule() {
+
+		GoToSectionWithID('ProjectOptions');
+
+}
 
 /******************* Load EMRF ***********************/
 $( document ).on( "pagebeforeshow", "#pgEMRF", function(event) {

@@ -374,30 +374,39 @@
 
 						<tr>						
 							<td id="btnGoToConstruction" style="border-top: 0px;padding:1px !important;">
-								<a href="javascript:void(0);" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c"  data-role="button" onclick="GoToSectionWithID('Construction')">Construction</a>
+								<a href="javascript:void(0);" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c"  data-role="button" data-icon="bullets"  onclick="GoToSectionWithID('Construction')">Construction</a>
 							</td>
 						</tr>
 						<tr>
 							<td id="btnGoToIPMActivity" style="border-top: 0px;padding:1px !important;">
-								<a href="javascript:void(0);"  data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" onclick="GoToSectionWithID('IPMActivity')">IPM Activity</a>
+								<a href="javascript:void(0);"  data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" data-icon="comment"  onclick="GoToSectionWithID('IPMActivity')">IPM Activity</a>
 							</td>
 						</tr>
 						<tr>
 							<td id="btnSitePlanRequests" style="border-top: 0px;padding:1px !important;">
-								<a href="javascript:void(0);"  data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  onclick="GoToSectionWithID('SitePlanRequests')">Site Plan Requests</a>
+								<a href="javascript:void(0);"  data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" data-icon="location"   onclick="GoToSectionWithID('SitePlanRequests')">Site Plan Requests</a>
 							</td>
 						</tr>
 						<tr>						
 							 <td id="btnGoToEMRF" style="border-top: 0px;padding:1px !important;">
-								<a href="javascript:void(0);"  data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  onclick="GoToSectionWithID('EMRF')">EMRF</a>
+								<a href="javascript:void(0);"  data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  data-icon="navigation"  onclick="GoToSectionWithID('EMRF')">EMRF</a>
 							</td>
 						</tr>
+
+						<tr>
+							 <td id="btnGoToAppsSchedule" style="border-top: 0px;padding:1px !important;">
+									<a href="javascript:void(0);" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" data-icon="calendar" data-iconpos="left"  onclick="GoToSectionWithID('AppsSchedule')" >Apps Schedule</a>
+
+							</td>
+							
+						</tr>	
 						<tr>
 							 <td id="btnGoToContacts" style="border-top: 0px;padding:1px !important;">
-								<a href="javascript:void(0);"  data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  onclick="GoToSectionWithID('Contacts')">Contacts</a>
+								<a href="javascript:void(0);"  data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  data-icon="user"  onclick="GoToSectionWithID('Contacts')">Contacts</a>
 							</td>
 							
 						</tr>
+
 						<tr>
 							 <td id="btnGoToEmailEquipment" style="border-top: 0px;padding:1px !important;">
 									<a href="javascript:void(0);" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" data-icon="mail" data-iconpos="left"  onclick="GoToSectionWithID('EquipmentList')" >Email Equipment</a>
@@ -1067,6 +1076,87 @@
 
 
 
+	<div data-role="page" id="pgAppsSchedule"  style="min-height: 560px !important;">
+	
+	    <div data-role="panel" id="pnlProjectDetails-AppsSchedule" name="pnlProjectDetails-AppsSchedule" style='height:200px;' data-theme="b" data-position="right" data-display="overlay"></div>
+	    <div data-role="panel" id="pnlProjectActivity-AppsSchedule" name="pnlProjectActivity-AppsSchedule"  data-theme="b" data-position="left" data-display="overlay"></div>
+	
+	
+        <div data-role="header" data-position="fixed">
+			<div style="display:none;"></div>
+			<table width="100%" cellspacing="0" cellpadding="0" class="header-table">
+				<tr>
+					<td class="header-left">
+						<div class="header-menu-button">
+							<a href="#popupMenuAppsSchedule" data-rel="popup" data-transition="slideup"><img src="Images/menu-button2.png" id="img-left-bars"></a>
+							<div data-role="popup" id="popupMenuAppsSchedule" data-theme="a">
+									<ul data-role="listview" data-inset="true" style="min-width:210px;">
+										<li data-role="list-divider">Choose an action</li>
+										<li><span class="spanLoginUser"></span></li>
+										<!--<li class="menu-back-btn"><a href="javascript:void(0);" onclick="goBack();">Back</a></li>-->
+										<li><a href="javascript:void(0);" onclick="goHome();">Home</a></li>
+										<li><a href="javascript:void(0);" onclick="NavigatePage('#pgSearch');">My Projects</a></li>
+										<li><a href="javascript:void(0);" onclick="ShowHelp();">Help</a></li>
+										<li><a href="javascript:void(0);" onclick="SignOut();">Sign Out</a></li>
+									</ul>
+							</div>
+						</div>
+                    </td>
+					<td class="header-middle">
+						<a href="javascript: void(0);" onclick="goHome();" style="" class="appLogoLink"><img src="Images/toshiba-logo.png" id="img-toshiba-logo"></a>
+                    </td>
+                    <td class="header-right">
+						&nbsp;
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div role="main" class="ui-content" id="Content-AppsSchedule">
+			<center>
+				<div id="divAddAppsSchedule">
+					<div class="div-catalogs-list error-message" id="error-div-AppsSchedule"></div>
+					<div class="div-catalogs-list success-message" id="success-div-AppsSchedule"></div>
+
+
+						
+
+															<div class="add-new-status"  id="tblAppsSchedule"></div>
+															<div class="ui-grid-b ui-responsive" id="AppsScheduleGrid" name="AppsScheduleGrid" ></div>
+
+
+
+					<div data-role="controlgroup" id="tblAppsScheduleButtons" data-type="horizontal" >
+						<a href="javascript:void(0);"  data-role="button" data-icon="plus" data-iconpos="left" style="padding-right:.5em !important;" id="btnAddAppsSchedule" name="btnAddAppsSchedule" class="ui-disabled">Add</a>
+						<a href="javascript:void(0);"  data-role="button" data-icon="delete" data-iconpos="left" onclick="cancelStatusAppsSchedule()" style="padding-right:.5em !important;">Cancel</a>
+						<a href="javascript:void(0);" data-role="button" data-icon="back" data-iconpos="left" onclick="backStatusAppsSchedule()" style="padding-right:.5em !important;">Back</a>
+					</div>
+					
+															
+					<table class="table add-status-buttons"  >
+						<tr ><td colspan="2" class="td-error-message" id="error-div2-AppsSchedule" style="border-top: 0px;"></td></tr>
+
+						
+					</table>	
+
+
+
+
+
+
+					
+					</div>
+
+
+
+
+				</div>
+			</center>
+        </div>
+    </div>
+	
+
+
 	<div data-role="page" id="pgContacts" style="min-height: 560px !important;">
 	
 	    <div data-role="panel" id="pnlProjectDetails-Contacts" name="pnlProjectDetails-Contacts" style='height:200px;' data-theme="b" data-position="right" data-display="overlay"></div>
@@ -1518,7 +1608,7 @@ to the site</span></a></h1>
 
 <ol style='margin-top:0in' start=1 type=1>
  <li class=MsoNormal>Enter your TAMS login account and password. You do not need
-     to enter “@tams.com”.<br>
+     to enter “@toshiba.com” or “@tams.com”.<br>
       <img border=0 width=187 height=333 id="Picture 1"
      src="apphelp_files/image003.jpg"></li>
  <li class=MsoNormal>Click “LOGIN” button. It should take you to the main home
