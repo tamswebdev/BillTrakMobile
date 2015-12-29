@@ -493,16 +493,17 @@ function callbackPopulateSearchResults(data)
 					var siteReadyDate = new Date();
 					
 					if (catalog.ConfirmedDeliveryDate)
-						confirmedDeliveryDate = new Date(catalog.ConfirmedDeliveryDate);
+						confirmedDeliveryDate = new Date(getMMDDYYYYDate(catalog.ConfirmedDeliveryDate));
 					if (catalog.ForecastedSiteReadyDate)
-						siteReadyDate = new Date(catalog.ForecastedSiteReadyDate);
+						siteReadyDate = new Date(getMMDDYYYYDate(catalog.ForecastedSiteReadyDate));
 
 
 			
 					if (catalog.ConfirmedDeliveryDate && catalog.ForecastedSiteReadyDate)
 					{
-
-						if ((siteReadyDate - confirmedDeliveryDate)/(1000*60*60*24) >= 0)
+					
+						
+						if (((siteReadyDate - confirmedDeliveryDate)/(1000*60*60*24)) >= 0)
 						{
 								DeliveryIcon="glyhicon-ok.png";
 						}
@@ -591,10 +592,10 @@ function callbackPopulateSearchResults(data)
 					temp += '<h6 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.ZoneName + ' Zone</h6>';
 
 
-					temp += '<style>.tblDates {margin-top: 0px; margin-bottom: 0px;font-size:xx-small;} .tblDates td{text-align:center;border: 1px solid lightgrey;width:83px;font-size:xx-small !important;}</style>';
+					temp += '<style>.tblDates {margin-top: 0px; margin-bottom: 0px;font-size:xx-small;} .tblDates td{text-align:center;border: 1px solid lightgrey;width:125px;font-size:xx-small !important;}</style>';
 					temp += '<table  class="tblDates" cellpadding=0 border=0 cellspacing=0>';
 					
-					
+					/*
 					var IsAppsDateConfirmed='NO';
 					if (catalog.ConfirmedApplicationOnSiteDate && catalog.ConfirmedApplicationOnSiteDate!='')
 					{
@@ -621,9 +622,11 @@ function callbackPopulateSearchResults(data)
 					if (IsAppsDateConfirmed=='EST')
 						AppsDateLabel='Est ';
 					
-					temp += '<tr><td style="border: 0px;" colspan=3>&nbsp;</td></tr><tr><td>Site Ready</td><td>Delivery</td><td>'+AppsDateLabel+'Apps</td></tr><tr>';
 					
-			
+					
+					temp += '<tr><td style="border: 0px;" colspan=3>&nbsp;</td></tr><tr><td>Site Ready</td><td>Delivery</td><td>'+AppsDateLabel+'Apps</td></tr><tr>';
+					*/
+					temp += '<tr><td style="border: 0px;" colspan=2>&nbsp;</td></tr><tr><td>Site Ready Date</td><td>Confirmed Delivery Date</td></tr><tr>';
 					if (catalog.ForecastedSiteReadyDate && catalog.ForecastedSiteReadyDate!='')
 						temp += '<td>'+ getMMDDYYYYDate(catalog.ForecastedSiteReadyDate)+'</td>';
 					else 
@@ -637,7 +640,7 @@ function callbackPopulateSearchResults(data)
 						temp += '<td>'+ '&nbsp;'+'</td>';
 						//temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Delivery Date '+ catalog.ConfirmedDeliveryDate+'</h4>';
 
-						
+					/*
 						
 					if (IsAppsDateConfirmed=='YES')
 					{
@@ -659,33 +662,10 @@ function callbackPopulateSearchResults(data)
 						
 						
 					}								
+						*/
 						
-					/*if (catalog.ConfirmedApplicationOnsiteDate!='')
-					{
-						temp += '<td>'+ getMMDDYYYYDate(catalog.ConfirmedApplicationOnsiteDate)+'</td>';
-					}
-					else 
-					{
-						if (catalog.ExpectedBillDate!='')
-						{
-							temp += '<td style="fontcolor:silver;">'+ getMMDDYYYYDate(catalog.ExpectedBillDate)+'</td>';
-						}
-						else
-						{
-							if (catalog.Upside!='')
-							{
-								temp += '<td style="fontcolor:silver;">'+ getMMDDYYYYDate(catalog.Upside)+'</td>';
-							}
-							else
-							{
-								temp += '<td >'+ '&nbsp;'+'</td>';	
-							}
-						}
-						
-						
-					}		*/
 					
-					temp += '</tr><tr><td style="border: 0px;" colspan=3>&nbsp;</td></tr></table>';
+					temp += '</tr><tr><td style="border: 0px;" colspan=2>&nbsp;</td></tr></table>';
 										
 					
 					temp += '<style>.tblDashboard {margin-top: 0px; margin-bottom: 0px;font-size:xx-small;} .tblDashboard td{text-align:center;border: 1px solid lightgrey;width:50px;font-size:xx-small !important;}</style>';
@@ -805,13 +785,13 @@ function SidePanelOrderDetails(catalog)
 					
 					
 
-					temp += '<style>.tblDates {margin-top: 0px; margin-bottom: 0px;font-size:xx-small;} .tblDates td{text-align:center;border: 1px solid lightgrey;width:83px;font-size:xx-small !important;}</style>';
+					temp += '<style>.tblDates {margin-top: 0px; margin-bottom: 0px;font-size:xx-small;} .tblDates td{text-align:center;border: 1px solid lightgrey;width:125px;font-size:xx-small !important;}</style>';
 					temp += '<table  class="tblDates" cellpadding=0 border=0 cellspacing=0>';
 					
 					
 					
 
-
+				/*
 
 
 					var IsAppsDateConfirmed='NO';
@@ -842,8 +822,8 @@ function SidePanelOrderDetails(catalog)
 						AppsDateLabel='Est ';
 					
 					temp += '<tr><td style="border: 0px;" colspan=3>&nbsp;</td></tr><tr><td>Site Ready</td><td>Delivery</td><td>'+AppsDateLabel+'Apps</td></tr><tr>';
-					
-
+					*/
+					temp += '<tr><td style="border: 0px;" colspan=2>&nbsp;</td></tr><tr><td>Site Ready Date</td><td>Confirmed Delivery Date</td></tr><tr>';
 					if (catalog.ForecastedSiteReadyDate && catalog.ForecastedSiteReadyDate!='')
 						temp += '<td>'+ getMMDDYYYYDate(catalog.ForecastedSiteReadyDate)+'</td>';
 					else 
@@ -857,7 +837,7 @@ function SidePanelOrderDetails(catalog)
 						//temp += '<h4 style="margin-top: 0px; margin-bottom: 2px;">Delivery Date '+ catalog.ConfirmedDeliveryDate+'</h4>';
 
 						
-
+/*
 
 
 						
@@ -881,12 +861,12 @@ function SidePanelOrderDetails(catalog)
 						
 						
 					}		
-
+*/
 
 
 
 					
-					temp += '</tr><tr><td style="border: 0px;" colspan=3>&nbsp;</td></tr></table>';					
+					temp += '</tr><tr><td style="border: 0px;" colspan=2>&nbsp;</td></tr></table>';					
 					
 
 					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
