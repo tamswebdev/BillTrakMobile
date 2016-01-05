@@ -627,6 +627,8 @@ function callbackPopulateSearchResults(data)
 					temp += '<tr><td style="border: 0px;" colspan=3>&nbsp;</td></tr><tr><td>Site Ready</td><td>Delivery</td><td>'+AppsDateLabel+'Apps</td></tr><tr>';
 					*/
 					temp += '<tr><td style="border: 0px;" colspan=2>&nbsp;</td></tr><tr><td>Site Ready Date</td><td>Confirmed Delivery Date</td></tr><tr>';
+					
+	
 					if (catalog.ForecastedSiteReadyDate && catalog.ForecastedSiteReadyDate!='')
 						temp += '<td>'+ getMMDDYYYYDate(catalog.ForecastedSiteReadyDate)+'</td>';
 					else 
@@ -824,6 +826,14 @@ function SidePanelOrderDetails(catalog)
 					temp += '<tr><td style="border: 0px;" colspan=3>&nbsp;</td></tr><tr><td>Site Ready</td><td>Delivery</td><td>'+AppsDateLabel+'Apps</td></tr><tr>';
 					*/
 					temp += '<tr><td style="border: 0px;" colspan=2>&nbsp;</td></tr><tr><td>Site Ready Date</td><td>Confirmed Delivery Date</td></tr><tr>';
+
+					
+					
+					
+					
+					
+					
+					
 					if (catalog.ForecastedSiteReadyDate && catalog.ForecastedSiteReadyDate!='')
 						temp += '<td>'+ getMMDDYYYYDate(catalog.ForecastedSiteReadyDate)+'</td>';
 					else 
