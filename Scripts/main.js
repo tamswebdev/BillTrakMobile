@@ -626,7 +626,7 @@ function callbackPopulateSearchResults(data)
 					
 					temp += '<tr><td style="border: 0px;" colspan=3>&nbsp;</td></tr><tr><td>Site Ready</td><td>Delivery</td><td>'+AppsDateLabel+'Apps</td></tr><tr>';
 					*/
-					temp += '<tr><td style="border: 0px;" colspan=2>&nbsp;</td></tr><tr><td>Site Ready Date</td><td>Confirmed Delivery Date</td></tr><tr>';
+					temp += '<tr><td style="border: 0px;" colspan=2>&nbsp;</td></tr><tr><td>SRD</td><td>CDD</td></tr><tr>';
 					
 	
 					if (catalog.ForecastedSiteReadyDate && catalog.ForecastedSiteReadyDate!='')
@@ -677,8 +677,8 @@ function callbackPopulateSearchResults(data)
 					temp += '<tr><td>Conf.Level</td><td>SR</td><td>EM</td><td>IN</td><td>PO</td></tr>';
 					temp += '<tr style="height:25px;"><td>'+catalog.Confidence+'</td><td><img src="Images/'+ConstructionProgressIcon+'" border=0></td><td><img src="Images/'+EMRFIcon+'" border=0></td><td><img src="Images/'+InstallationProgressIcon+'" border=0></td><td><img src="Images/'+PowerOnIcon+'" border=0></td></tr></table>';
 
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>IPM Update: ' + catalog.LastIPMUpdate + catalog.LastIPMUpdateBy +'</em></h6>';
+					//temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
+					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last IPM Activity: ' + catalog.LastIPMUpdate + catalog.LastIPMUpdateBy +'</em></h6>';
 
 
 					temp += '</div></div></div>';
@@ -825,7 +825,7 @@ function SidePanelOrderDetails(catalog)
 					
 					temp += '<tr><td style="border: 0px;" colspan=3>&nbsp;</td></tr><tr><td>Site Ready</td><td>Delivery</td><td>'+AppsDateLabel+'Apps</td></tr><tr>';
 					*/
-					temp += '<tr><td style="border: 0px;" colspan=2>&nbsp;</td></tr><tr><td>Site Ready Date</td><td>Confirmed Delivery Date</td></tr><tr>';
+					temp += '<tr><td style="border: 0px;" colspan=2>&nbsp;</td></tr><tr><td>SRD</td><td>CDD</td></tr><tr>';
 
 					
 					
@@ -879,8 +879,8 @@ function SidePanelOrderDetails(catalog)
 					temp += '</tr><tr><td style="border: 0px;" colspan=2>&nbsp;</td></tr></table>';					
 					
 
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>IPM Update: ' + catalog.LastIPMUpdate + catalog.LastIPMUpdateBy +'</em></h6>';
+					//temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
+					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last IPM Activity: ' + catalog.LastIPMUpdate + catalog.LastIPMUpdateBy +'</em></h6>';
 					temp += '</div></div></div>';
 					temp += '</td></tr></table>';
 					
@@ -1385,8 +1385,12 @@ function callbackLoadAppsSchedule(data)
 				var catalog = data.d.results[i];
 				//var TableRow = $('<div style="width:100%;margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ShipToSite +'</span><br><span style="font-size:x-small;">'+ catalog.Status +' - '+ catalog.SentToTCSubCategory+'</span><br><span style="font-size:x-small;">To:'+ catalog.ShipToAddress + catalog.ShipToCity+ catalog.ShipToState+ ' ' +catalog.ShipToZip+'</span><br><span style="font-size:x-small;">Requested Delivery Date:'+ catalog.DelvDate  +'</span><br><span style="font-size:x-small;">'+catalog.ItemDetail +'</span></div>');
 
+				var Weekof="";
+				if ((catalog.Weekof) && (catalog.Weekof!=""))
+					Weekof=getMMDDYYYYDate(catalog.Weekof)
 
-				var TableRow = $('<div style="width:100%;margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.Specialist +'</span><br><span style="font-size:x-small;">Week of: '+  getMMDDYYYYDate(catalog.Weekof)+ '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +catalog.ScheduleStatus +' - '+ catalog.Purpose+'</span><br><span style="font-size:x-small;">'+catalog.Equipment +'</span><table class="WeekCal"><tr><td class="WeekCalTDHead">S</td><td class="WeekCalTDHead">M</td><td class="WeekCalTDHead">T</td><td class="WeekCalTDHead">W</td><td class="WeekCalTDHead">T</td><td class="WeekCalTDHead">F</td></tr><tr><td  class="WeekCalTD">'+catalog.Sunday+'</td><td class="WeekCalTD">'+catalog.Monday+'</td><td class="WeekCalTD">'+catalog.Tuesday+'</td><td class="WeekCalTD">'+catalog.Wednesday+'</td><td class="WeekCalTD">'+catalog.Thursday+'</td><td class="WeekCalTD">'+catalog.Friday+'</td></tr></table></div>');
+
+				var TableRow = $('<div style="width:100%;margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.Specialist +'</span><br><span style="font-size:x-small;">Week of: '+  Weekof + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +catalog.ScheduleStatus +' - '+ catalog.Purpose+'</span><br><span style="font-size:x-small;">'+catalog.Equipment +'</span><table class="WeekCal"><tr><td class="WeekCalTDHead">S</td><td class="WeekCalTDHead">M</td><td class="WeekCalTDHead">T</td><td class="WeekCalTDHead">W</td><td class="WeekCalTDHead">T</td><td class="WeekCalTDHead">F</td></tr><tr><td  class="WeekCalTD">'+catalog.Sunday+'</td><td class="WeekCalTD">'+catalog.Monday+'</td><td class="WeekCalTD">'+catalog.Tuesday+'</td><td class="WeekCalTD">'+catalog.Wednesday+'</td><td class="WeekCalTD">'+catalog.Thursday+'</td><td class="WeekCalTD">'+catalog.Friday+'</td></tr></table></div>');
 
 
 				TableRow.appendTo($("#AppsScheduleGrid"));
