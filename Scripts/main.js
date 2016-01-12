@@ -678,7 +678,7 @@ function callbackPopulateSearchResults(data)
 					temp += '<tr style="height:25px;"><td>'+catalog.Confidence+'</td><td><img src="Images/'+ConstructionProgressIcon+'" border=0></td><td><img src="Images/'+EMRFIcon+'" border=0></td><td><img src="Images/'+InstallationProgressIcon+'" border=0></td><td><img src="Images/'+PowerOnIcon+'" border=0></td></tr></table>';
 
 					//temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last Update: ' + catalog.Modified + catalog.ModifiedByFullName +'</em></h6>';
-					temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last IPM Activity: ' + catalog.LastIPMUpdate + catalog.LastIPMUpdateBy +'</em></h6>';
+					//temp += '<h6 style="margin-top: 6px; margin-bottom: 2px;"><em>Last IPM Activity: ' + catalog.LastIPMUpdate + catalog.LastIPMUpdateBy +'</em></h6>';
 
 
 					temp += '</div></div></div>';
