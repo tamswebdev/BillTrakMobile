@@ -1523,6 +1523,8 @@ $( document ).on( "pagebeforeshow", "#pgEMRF", function(event) {
 	
 	//$('#ddlEquipmentType option[value!="-1"]').remove();
 	$("#ddlEquipmentType").val('-1').selectmenu('refresh', true);
+	$("#ddlEquipmentType").prop("disabled", true);
+	
 	$('#divEquipmentType').hide();
 	
 	$("#EMRFGrid").text("");
@@ -1652,6 +1654,7 @@ function callbackLoadEMRFSidePanel(data)
 				$('#error-div2-EMRF').text("");
 				$('#error-div-EMRF').text("");
 				
+				
 				$('#divEquipmentType').show();
 				$('#tblEMRF').show();
 				$('#tblEMRFButtons').show();
@@ -1682,6 +1685,7 @@ function callbackPopulateEquipmentTypes(data)
 			$("#ddlEquipmentType").val('-1').selectmenu('refresh', true);
 
 		}
+		$("#ddlEquipmentType").prop("disabled", false);
 	}
 	catch(err) {}
 }

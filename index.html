@@ -31,6 +31,8 @@
 	<script src="Scripts/utilities.js"></script>
     <script src="Scripts/main.js"></script>
 	<script src="cordova.js"></script>
+	<script >var AppVersion = "Ver. 1.6.0";</script>
+	
 	<!--<script src="Scripts/SQLitePlugin.js"></script> -->
 
 	
@@ -90,7 +92,7 @@
                     <tr><td id="td-error"></td></tr>
                     <tr><td class="login-button"><input class="common-button" type="button" id="btnLoginSubmit" value="LOGIN" onclick="LoginUser()" /></td></tr>
                 </table>
-				<div class="copyright" id="copyrightinfo" name="copyrightinfo">TOSHIBA CORPORATION <script>document.write(new Date().getFullYear());</script>. ALL RIGHTS RESERVED<br />Ver. 1.5.6<br />FOR INTERNAL USE ONLY</div>
+				<div class="copyright" id="copyrightinfo" name="copyrightinfo">TOSHIBA CORPORATION <script>document.write(new Date().getFullYear());</script>. ALL RIGHTS RESERVED<br /><script>document.write(AppVersion);</script><br />FOR INTERNAL USE ONLY</div>
 				
 				<div data-role="panel"  style="height:200px;" name="pnlSideShow" id="pnlSideShow" data-theme="b" data-position="left" data-display="overlay"></div>
 				</center>
@@ -1036,15 +1038,15 @@
 															<div class="ui-grid-b ui-responsive" id="EMRFGrid" name="EMRFGrid" ></div>
 
 
-
-						<div id="divEquipmentType" name="divEquipmentType"><select class="ui-disabled" class="form-control" id="ddlEquipmentType" name="ddlEquipmentType" data-overlay-theme="b" data-theme="a" data-native-menu="true" tabindex="-1">
+						<!--class="ui-disabled"-->
+						<div id="divEquipmentType" name="divEquipmentType"><select  class="form-control" id="ddlEquipmentType" name="ddlEquipmentType" data-overlay-theme="b" data-theme="a" data-native-menu="true" tabindex="-1">
 							<option value="-1" selected="true">(Select Equipment Type)</option>
 
 						</select></div>
 
 
 					<div data-role="controlgroup" id="tblEMRFButtons" data-type="horizontal" >
-						<a href="javascript:void(0);"  data-role="button" data-icon="plus" data-iconpos="left" style="padding-right:.5em !important;" id="btnAddEMRF" name="btnAddEMRF" class="ui-disabled">Add</a>
+						<a href="javascript:void(0);"  data-role="button" data-icon="plus" data-iconpos="left" style="padding-right:.5em !important;" id="btnAddEMRF" name="btnAddEMRF" >Add</a>
 						<a href="javascript:void(0);"  data-role="button" data-icon="delete" data-iconpos="left" onclick="cancelStatusEMRF()" style="padding-right:.5em !important;">Cancel</a>
 						<a href="javascript:void(0);" data-role="button" data-icon="back" data-iconpos="left" onclick="backStatusEMRF()" style="padding-right:.5em !important;">Back</a>
 					</div>
@@ -1471,6 +1473,7 @@
 	    <div role="main" class="ui-content">  
 			<div id="divHelpContent">
 				<h1 class="header-title">Help</h1>
+				<h2 >IPM Mobile - <script>document.write(AppVersion);</script></h2>
 				<h3 >Please contact Technical Support if you need any help with the system.</h3>
 				<h5 >Phone: <a href="tel:714-669-5522">(714) 669 5522</a></h5>
 				<br>
