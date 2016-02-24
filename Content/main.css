@@ -615,3 +615,14 @@ top: 20px;
 .ui-icon-myapp-camera {
 	background: url("../Images/camera.png") 5% 50%  no-repeat;
 }
+
+.ui-filter-inset {
+}
+
+.autocomplete {
+    font-size:x-small
+}
+
+.ui-input-search{
+    font-size:x-small
+}

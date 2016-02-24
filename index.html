@@ -756,11 +756,336 @@
 
 
 
+<!---------------------- Start Add EMRF -------------------------------------->
 
 
 
+	<div data-role="page" id="pgAddEMRF" style="min-height: 560px !important;">
+	
+	    <div data-role="panel" id="pnlProjectDetails-AddEMRF" name="pnlProjectDetails-AddEMRF" style='height:200px;' data-theme="b" data-position="right" data-display="overlay"></div>
+	    <div data-role="panel" id="pnlProjectActivity-AddEMRF" name="pnlProjectActivity-AddEMRF"  data-theme="b" data-position="left" data-display="overlay"></div>
+	
+	
+        <div data-role="header" data-position="fixed">
+			<div style="display:none;"><div id="divStatusId"></div></div>
+			<table width="100%" cellspacing="0" cellpadding="0" class="header-table">
+				<tr>
+					<td class="header-left">
+						<!--<div class="header-back-button"><a onclick="goBack();" href="javascript:void(0);" class="appLogoBackLink"><img src="Images/logo-back.png"></a></div>-->
+						<div class="header-menu-button">
+							<a href="#popupMenu3" data-rel="popup" data-transition="slideup"><img src="Images/menu-button2.png" id="img-left-bars"></a>
+							<div data-role="popup" id="popupMenu3" data-theme="a">
+									<ul data-role="listview" data-inset="true" style="min-width:210px;">
+										<li data-role="list-divider">Choose an action</li>
+										<li><span class="spanLoginUser"></span></li>
+										<!--<li class="menu-back-btn"><a href="javascript:void(0);" onclick="goBack();">Back</a></li>-->
+										<li><a href="javascript:void(0);" onclick="goHome();">Home</a></li>
+										<li><a href="javascript:void(0);" onclick="NavigatePage('#pgSearch');">My Projects</a></li>
+										<li><a href="javascript:void(0);" onclick="ShowHelp();">Help</a></li>
+										<li><a href="javascript:void(0);" onclick="SignOut();">Sign Out</a></li>
+									</ul>
+							</div>
+						</div>
+                    </td>
+					<td class="header-middle">
+						<a href="javascript: void(0);" onclick="goHomeAfterConfirm('AddEMRF');" style="" class="appLogoLink"><img src="Images/toshiba-logo.png" id="img-toshiba-logo"></a>
+                    </td>
+                    <td class="header-right">
+						&nbsp;
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div role="main" class="ui-content">
+			<center>
+				<div id="divAddStatus">
+					<div class="div-catalogs-list error-message" id="error-div-AddEMRF"></div>
+					<div class="div-catalogs-list success-message" id="success-div--AddEMRF"></div>
 
 
+						
+                                                            <table class="table table-condensed table-bordered" id="tblAddEMRF">
+                                                                <tbody>
+                                                                    <tr class="tr-title">
+                                                                        <td colspan="3" >EMRF Progress</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        
+
+																				<td colspan="3" class="radio-button-td">
+																					<fieldset data-role="controlgroup" data-theme="c"  data-type="vertical" >
+																						<input type="radio" name="SR_AddEMRF_Progress" id="rbSR_AddEMRF_Progress1" value="COMPLETE"/><label for="rbSR_AddEMRF_Progress1">Complete - Site Ready for installation</label>
+																						
+																						<input type="radio" name="SR_AddEMRF_Progress" id="rbSR_AddEMRF_Progress2" value="ON TARGET" /><label for="rbSR_AddEMRF_Progress2">On Target - Site Ready progressing on target with customer</label>
+																						
+																						<input type="radio" name="SR_AddEMRF_Progress" id="rbSR_AddEMRF_Progress3" value="RISK" /><label for="rbSR_AddEMRF_Progress3">Risk - Site Ready Date at Risk</label>
+																					</fieldset>
+																				</td>																		
+                                                                        </td>
+                                                                    </tr>
+
+																	
+																	<tr>
+                                                                        <td class="col-sm-3 text-right active">Planner</td>
+																				<td colspan="2" class="explain-field">
+																					
+																						<ul id="autocomplete" class="autocomplete" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Find a person..." data-filter-theme="c"></ul>
+																					
+																		</td>
+																			
+																			
+																	</tr>
+
+																			
+																																		
+																	
+                                                                    <tr>
+                                                                        <td class="col-sm-3 text-right active">IPM Status (In Progress)</td>
+																				<td colspan="2" class="radio-button-td">
+																					<fieldset data-role="controlgroup" data-type="horizontal" >
+																						<input type="radio" name="rbIP_Installation_Status" id="rbIP_Installation_Status1" value="IN PROGRESS" /><label for="rbIP_Installation_Status1">Yes</label>
+																						<input type="radio" name="rbIP_Installation_Status" id="rbIP_Installation_Status2" value="CLOSED" /><label for="rbIP_Installation_Status2">No</label>
+																					</fieldset>
+																				</td>
+
+                                                                    </tr>
+                                                                    <tr class="tr-title">
+                                                                        <td colspan="3" >EMRF Details</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="col-sm-3 text-right active">Required?</td>
+																				<td colspan="2" class="radio-button-td">
+																					<fieldset data-role="controlgroup" data-type="horizontal" >
+																						<input type="radio" name="SR_Required" id="rbSR_Required1" value="YES" /><label for="rbSR_Required1">Yes</label>
+																						<input type="radio" name="SR_Required" id="rbSR_Required2" value="NO" /><label for="rbSR_Required2">No</label>
+																					</fieldset>
+																				</td>																		
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="col-sm-3 text-right active">Government Agencies</td>
+																		
+																		<td colspan="2" >
+																			<div id="catalog_Modality" class="add-status"></div>
+																			<div class="add-new-status">
+																				<select class="form-control" id="ddlSR_Government_Agencies" name="ddlSR_Government_Agencies" data-overlay-theme="b" data-theme="a" data-native-menu="false" tabindex="-1">
+																					<option value="None">None</option>
+																					<option value="OSHPD">OSHPD</option>
+																					<option value="DCA">DCA</option>
+																					<option value="CON">CON</option>
+																				</select>
+																			</div>
+																		</td>
+
+                                                                    </tr>
+																	
+																	
+                                                                    <tr>
+                                                                        <td class="col-sm-3 text-right active">Contractor Selected?</td>
+																				<td colspan="2" class="radio-button-td">
+																					<fieldset data-role="controlgroup"  >
+																						<input type="radio" name="SR_Contractor_Selected" id="rbSR_Contractor_Selected1" value="YES" onclick="javascript:document.getElementById('txtSR_Contractor_Selected_Date').removeAttribute('disabled');document.getElementById('txtSR_Contractor_Selected_Date').style.backgroundColor = 'white';"/><label for="rbSR_Contractor_Selected1">Yes</label>
+																						<input type="radio" name="SR_Contractor_Selected" id="rbSR_Contractor_Selected2" value="NO" onclick="javascript:document.getElementById('txtSR_Contractor_Selected_Date').setAttribute('disabled', 'disabled');document.getElementById('txtSR_Contractor_Selected_Date').style.backgroundColor = 'lightgray';"/><label for="rbSR_Contractor_Selected2">No</label>
+																						<input type="radio" name="SR_Contractor_Selected" id="rbSR_Contractor_Selected3" value="N/A" onclick="javascript:document.getElementById('txtSR_Contractor_Selected_Date').setAttribute('disabled', 'disabled');document.getElementById('txtSR_Contractor_Selected_Date').style.backgroundColor = 'lightgray';"/><label for="rbSR_Contractor_Selected3">N/A</label>
+																					</fieldset>
+																				</td>																		
+
+                                                                    </tr>																	
+
+                                                                    <tr>
+                                                                        <td class="col-sm-3 text-right active">Date</td>
+																				<td colspan="2" class="explain-field">
+																					<input type="date"  name="txtSR_Contractor_Selected_Date" id="txtSR_Contractor_Selected_Date"  value=""  />
+																				</td>																		
+
+                                                                    </tr>																	
+
+                                                                    <tr>
+                                                                        <td class="col-sm-3 text-right active">Pre AddEMRF meeting scheduled?</td>
+																				<td colspan="2" class="radio-button-td">
+																					<fieldset data-role="controlgroup" >
+																						<input type="radio" name="SR_PreAddEMRF_Meeting_Scheduled" id="rbSR_PreAddEMRF_Meeting_Scheduled1" value="YES" onclick="javascript:document.getElementById('txtSR_PreAddEMRF_Meeting_Scheduled_Date').removeAttribute('disabled');document.getElementById('txtSR_PreAddEMRF_Meeting_Scheduled_Date').style.backgroundColor = 'white';"/><label for="rbSR_PreAddEMRF_Meeting_Scheduled1">Yes</label>
+																						<input type="radio" name="SR_PreAddEMRF_Meeting_Scheduled" id="rbSR_PreAddEMRF_Meeting_Scheduled2" value="NO" onclick="javascript:document.getElementById('txtSR_PreAddEMRF_Meeting_Scheduled_Date').setAttribute('disabled', 'disabled');document.getElementById('txtSR_PreAddEMRF_Meeting_Scheduled_Date').style.backgroundColor = 'lightgray';"/><label for="rbSR_PreAddEMRF_Meeting_Scheduled2">No</label>
+																						<input type="radio" name="SR_PreAddEMRF_Meeting_Scheduled" id="rbSR_PreAddEMRF_Meeting_Scheduled3" value="N/A" onclick="javascript:document.getElementById('txtSR_PreAddEMRF_Meeting_Scheduled_Date').setAttribute('disabled', 'disabled');document.getElementById('txtSR_PreAddEMRF_Meeting_Scheduled_Date').style.backgroundColor = 'lightgray';"/><label for="rbSR_PreAddEMRF_Meeting_Scheduled3">N/A</label>
+																					</fieldset>
+																				</td>																		
+
+                                                                    </tr>																	
+
+                                                                    <tr>
+                                                                        <td class="col-sm-3 text-right active">Date</td>
+																				<td colspan="2" class="explain-field">
+																					<input type="date" name="txtSR_PreAddEMRF_Meeting_Scheduled_Date" id="txtSR_PreAddEMRF_Meeting_Scheduled_Date"  value=""  />
+																				</td>																		
+
+                                                                    </tr>																	
+
+																	<tr>
+                                                                        <td class="col-sm-3 text-right active">Number of weeks for AddEMRF?</td>
+																				<td colspan="2" class="explain-field">
+																					<input type="text" name="txtSR_AddEMRF_Weeks" id="txtSR_AddEMRF_Weeks"  value=""  />
+																				</td>																		
+
+                                                                    </tr>		
+                                                                    <tr>
+                                                                        <td class="col-sm-3 text-right active">Final Drawings Reviewed By Customer?</td>
+																				<td colspan="2" class="radio-button-td">
+																					<fieldset data-role="controlgroup" >
+																						<input type="radio" name="SR_Final_Drawing_Reviewed" id="rbSR_Final_Drawing_Reviewed1" value="YES" onclick="javascript:document.getElementById('txtSR_Final_Drawings_Reviewed_Date').removeAttribute('disabled');document.getElementById('txtSR_Final_Drawings_Reviewed_Date').style.backgroundColor = 'white';"/><label for="rbSR_Final_Drawing_Reviewed1">Yes</label>
+																						<input type="radio" name="SR_Final_Drawing_Reviewed" id="rbSR_Final_Drawing_Reviewed2" value="NO" onclick="javascript:document.getElementById('txtSR_Final_Drawings_Reviewed_Date').setAttribute('disabled', 'disabled');document.getElementById('txtSR_Final_Drawings_Reviewed_Date').style.backgroundColor = 'lightgray';"/><label for="rbSR_Final_Drawing_Reviewed2">No</label>
+																						<input type="radio" name="SR_Final_Drawing_Reviewed" id="rbSR_Final_Drawing_Reviewed3" value="N/A" onclick="javascript:document.getElementById('txtSR_Final_Drawings_Reviewed_Date').setAttribute('disabled', 'disabled');document.getElementById('txtSR_Final_Drawings_Reviewed_Date').style.backgroundColor = 'lightgray';"/><label for="rbSR_Final_Drawing_Reviewed3">N/A</label>
+																					</fieldset>
+																				</td>																		
+
+                                                                    </tr>																	
+
+                                                                    <tr>
+                                                                        <td class="col-sm-3 text-right active">Date</td>
+																				<td colspan="2" class="explain-field">
+																					<input type="date" name="txtSR_Final_Drawings_Reviewed_Date" id="txtSR_Final_Drawings_Reviewed_Date"  value=""  />
+																				</td>																		
+
+                                                                    </tr>				
+
+                                                                    <tr>
+                                                                        <td class="col-sm-3 text-right active">AddEMRF Drawings Approved By Local &amp; State Authorities?</td>
+																				<td colspan="2" class="radio-button-td">
+																					<fieldset data-role="controlgroup" >
+																						<input type="radio" name="rbSR_Drawing_Approved" id="rbSR_Drawing_Approved1" value="YES" /><label for="rbSR_Drawing_Approved1">Yes</label>
+																						<input type="radio" name="rbSR_Drawing_Approved" id="rbSR_Drawing_Approved2" value="NO" /><label for="rbSR_Drawing_Approved2">No</label>
+																						<input type="radio" name="rbSR_Drawing_Approved" id="rbSR_Drawing_Approved3" value="N/A" /><label for="rbSR_Drawing_Approved3">N/A</label>
+																					</fieldset>
+																				</td>																		
+
+                                                                    </tr>																			
+                                                                    <tr>
+                                                                        <td class="col-sm-3 text-right active">Building Permit Approved?</td>
+																				<td colspan="2" class="radio-button-td">
+																					<fieldset data-role="controlgroup"  >
+																						<input type="radio" name="SR_Building_Permit_Approved" id="rbSR_Building_Permit_Approved1" value="YES" /><label for="rbSR_Building_Permit_Approved1">Yes</label>
+																						<input type="radio" name="SR_Building_Permit_Approved" id="rbSR_Building_Permit_Approved2" value="NO" /><label for="rbSR_Building_Permit_Approved2">No</label>
+																						<input type="radio" name="SR_Building_Permit_Approved" id="rbSR_Building_Permit_Approved3" value="N/A" /><label for="rbSR_Building_Permit_Approved3">N/A</label>
+																					</fieldset>
+																				</td>																		
+
+                                                                    </tr>			
+                                                                    <tr>
+                                                                        <td class="col-sm-3 text-right active">Published AddEMRF Timeline - Approved By All Involved Parties (provided by TAMS / Customer / Contract)?</td>
+																				<td colspan="2" class="radio-button-td">
+																					<fieldset data-role="controlgroup"  >
+																						<input type="radio" name="SR_Timeline_Published" id="rbSR_Timeline_Published1" value="YES" onclick="javascript:document.getElementById('txtSR_Timeline_Published_Date').removeAttribute('disabled');document.getElementById('txtSR_Timeline_Published_Date').style.backgroundColor = 'white';"/><label for="rbSR_Timeline_Published1">Yes</label>
+																						<input type="radio" name="SR_Timeline_Published" id="rbSR_Timeline_Published2" value="NO" onclick="javascript:document.getElementById('txtSR_Timeline_Published_Date').setAttribute('disabled', 'disabled');document.getElementById('txtSR_Timeline_Published_Date').style.backgroundColor = 'lightgray';"/><label for="rbSR_Timeline_Published2">No</label>
+																						<input type="radio" name="SR_Timeline_Published" id="rbSR_Timeline_Published3" value="N/A" onclick="javascript:document.getElementById('txtSR_Timeline_Published_Date').setAttribute('disabled', 'disabled');document.getElementById('txtSR_Timeline_Published_Date').style.backgroundColor = 'lightgray';"/><label for="rbSR_Timeline_Published3">N/A</label>
+																					</fieldset>
+																				</td>																		
+
+                                                                    </tr>																	
+
+                                                                    <tr>
+                                                                        <td class="col-sm-3 text-right active">Date</td>
+																				<td colspan="2" class="explain-field">
+																					<input type="date" name="txtSR_Timeline_Published_Date" id="txtSR_Timeline_Published_Date"  value=""  />
+																				</td>																		
+
+                                                                    </tr>		
+																	
+                                                                    <tr>
+                                                                        <td class="col-sm-3 text-right active">Site Ready Date</td>
+																				<td colspan="2" class="explain-field">
+																					<input type="date" name="txtSR_Forecasted_Site_Ready_Date" id="txtSR_Forecasted_Site_Ready_Date" maxlength="10" value=""  />
+																				</td>																		
+
+                                                                    </tr>		
+                                                                    <tr>
+                                                                        <td class="col-sm-3 text-right active">Riggers Date</td>
+																				<td colspan="2" class="explain-field">
+																					<input type="date" name="txtSR_Riggers_Date" id="txtSR_Riggers_Date" maxlength="10" value=""  />
+																				</td>																		
+
+                                                                    </tr>					
+                                                                    <tr>
+                                                                        <td class="col-sm-3 text-right active">Pre-Shipment Of Installation Kit/Epoxy Kit?</td>
+																				<td colspan="2" class="radio-button-td">
+																					<fieldset data-role="controlgroup"  >
+																						<input type="radio" name="SR_Installation_Kit" id="rbSR_Installation_Kit1" value="YES" /><label for="rbSR_Installation_Kit1">Yes</label>
+																						<input type="radio" name="SR_Installation_Kit" id="rbSR_Installation_Kit2" value="NO" /><label for="rbSR_Installation_Kit2">No</label>
+																						<input type="radio" name="SR_Installation_Kit" id="rbSR_Installation_Kit3" value="N/A" /><label for="rbSR_Installation_Kit3">N/A</label>
+																					</fieldset>
+																				</td>																		
+
+                                                                    </tr>	
+
+
+                                                                    <tr class="tr-title" id="MRSpecific1" style="display:none;">
+                                                                        <td colspan="3" >MR Specific Fields</td>
+                                                                    </tr>
+                                                                    <tr id="MRSpecific2" style="display:none;">
+                                                                        <td class="col-sm-3 text-right active">Electronic</td>
+																				<td colspan="2" class="radio-button-td">
+																					<fieldset data-role="controlgroup"  >
+																						<input type="radio" name="SR_Electronic_Checked" id="rbSR_Electronic_Checked1" value="YES" onclick="javascript:document.getElementById('txtSR_Electronic_Date').removeAttribute('disabled');document.getElementById('txtSR_Electronic_Date').style.backgroundColor = 'white';"/><label for="rbSR_Electronic_Checked1">Yes</label>
+																						<input type="radio" name="SR_Electronic_Checked" id="rbSR_Electronic_Checked2" value="NO" onclick="javascript:document.getElementById('txtSR_Electronic_Date').setAttribute('disabled', 'disabled');document.getElementById('txtSR_Electronic_Date').style.backgroundColor = 'lightgray';"/><label for="rbSR_Electronic_Checked2">No</label>
+																						<input type="radio" name="SR_Electronic_Checked" id="rbSR_Electronic_Checked3" value="N/A" onclick="javascript:document.getElementById('txtSR_Electronic_Date').setAttribute('disabled', 'disabled');document.getElementById('txtSR_Electronic_Date').style.backgroundColor = 'lightgray';"/><label for="rbSR_Electronic_Checked3">N/A</label>
+																					</fieldset>
+																				</td>																		
+
+                                                                    </tr>																	
+
+                                                                    <tr id="MRSpecific3" style="display:none;">
+                                                                        <td class="col-sm-3 text-right active">Date</td>
+																				<td colspan="2" class="explain-field">
+																					<input type="date" name="txtSR_Electronic_Date" id="txtSR_Electronic_Date"  value=""  />
+																				</td>																		
+
+                                                                    </tr>		
+                                                                    <tr id="MRSpecific4" style="display:none;">
+                                                                        <td class="col-sm-3 text-right active">Pre Installation</td>
+																				<td colspan="2" class="radio-button-td">
+																					<fieldset data-role="controlgroup"  >
+																						<input type="radio" name="SR_Pre_Installation_Checked" id="rbSR_Pre_Installation_Checked1" value="YES" onclick="javascript:document.getElementById('txtSR_Pre_Installation_Date').removeAttribute('disabled');document.getElementById('txtSR_Pre_Installation_Date').style.backgroundColor = 'white';"/><label for="rbSR_Pre_Installation_Checked1">Yes</label>
+																						<input type="radio" name="SR_Pre_Installation_Checked" id="rbSR_Pre_Installation_Checked2" value="NO" onclick="javascript:document.getElementById('txtSR_Pre_Installation_Date').setAttribute('disabled', 'disabled');document.getElementById('txtSR_Pre_Installation_Date').style.backgroundColor = 'lightgray';"/><label for="rbSR_Pre_Installation_Checked2">No</label>
+																						<input type="radio" name="SR_Pre_Installation_Checked" id="rbSR_Pre_Installation_Checked3" value="N/A" onclick="javascript:document.getElementById('txtSR_Pre_Installation_Date').setAttribute('disabled', 'disabled');document.getElementById('txtSR_Pre_Installation_Date').style.backgroundColor = 'lightgray';"/><label for="rbSR_Pre_Installation_Checked3">N/A</label>
+																					</fieldset>
+																				</td>																		
+
+                                                                    </tr>																	
+
+                                                                    <tr id="MRSpecific5" style="display:none;">
+                                                                        <td class="col-sm-3 text-right active">Date</td>
+																				<td colspan="2" class="explain-field">
+																					<input type="date" name="txtSR_Pre_Installation_Date" id="txtSR_Pre_Installation_Date"  value=""  />
+																				</td>																		
+                                                                    </tr>																			
+
+                                                                </tbody>
+                                                            </table>
+															
+															
+														
+                           
+					</div>
+
+					<div data-role="controlgroup" id="tblAddEMRFButtons" data-type="horizontal" >
+						<a href="javascript:void(0);"  data-role="button" data-icon="check" data-iconpos="left" onclick="saveEMRF('Yes')" style="padding-right:.5em !important;">Save</a>
+						<a href="javascript:void(0);" data-role="button" data-icon="delete" data-iconpos="left" onclick="cancelEMRF()" style="padding-right:.5em !important;">Cancel</a>
+						<a href="javascript:void(0);"  data-role="button" data-icon="back" data-iconpos="left" onclick="backEMRF()" style="padding-right:.5em !important;">Back</a>
+					</div>
+					<table class="table add-status-buttons"  >
+						<tr ><td colspan="2" class="td-error-message" id="error-div2-AddEMRF" style="border-top: 0px;"></td></tr>
+
+						
+					</table>						
+				<input id="rmpSiteReadiness_ClientState" name="rmpSiteReadiness_ClientState" type="hidden" autocomplete="off">
+				<input type="hidden" name="hdnExpectedBillDate" id="hdnExpectedBillDate"  value=""  />
+				<input type="hidden" name="hdnBookStatus" id="hdnBookStatus"  value=""  />
+
+
+				</div>
+			</center>
+        </div>
+    </div>
+<!---------------------- End Add EMRF -------------------------------------->
 
 
 

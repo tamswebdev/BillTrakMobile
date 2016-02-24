@@ -980,6 +980,17 @@ $(document).on('pageinit',"#pgEMRF",function(event){
 	});
 });
 
+/******************* Swipe AddEMRF ***********************/
+$(document).on('pageinit',"#pgAddEMRF",function(event){
+
+	$("#pgAddEMRF").on("swipeleft",function(){
+		$("#pnlProjectDetails-AddEMRF").panel( "open");
+	});
+	$("#pgAddEMRF").on("swiperight",function(){
+		$("#pnlProjectActivity-AddEMRF").panel( "open");
+	});
+});
+
 /******************* Swipe EquipmentList ***********************/
 $(document).on('pageinit',"#pgEquipmentList",function(event){
 
@@ -1641,9 +1652,19 @@ function callbackLoadEMRFSidePanel(data)
 					var requestUrl = spwebRootUrl + 'virtualapps/busopswebs/emr/MoveRequest.aspx?projectId=' + catalog.ProjectID + '&sid=' + catalog.SID + '&modality=' + catalog.OpportunityModality + '&equipment=' + EquipmentType + '&source=BillTrak';	
 					
 					if (EquipmentType=='-1')
-						alert("Please select Equipment Type");		
+					{
+						alert("Please select Equipment Type");		}
+				
 					else
-						window.open(requestUrl, '_system');//alert(requestUrl );		
+					{
+						//GoToSectionWithID('AddEMRF');
+							var id=($.urlParam("id"));
+
+							var path='#pgAddEMRF?id='+ id + '&projectId=' + catalog.ProjectID + '&sid=' + catalog.SID + '&modality=' + catalog.OpportunityModality + '&equipment=' + EquipmentType + '&source=BillTrak';	
+							
+							NavigatePage(path);
+					}
+						//window.open(requestUrl, '_system');//alert(requestUrl );		
 					
 				});
 				//var requestUrl = url + '?projectId=' + pid + '&sid=' + sid + '&modality=' + mdl + '&equipment=' + eqp + '&source=BillTrak';
@@ -3670,4 +3691,616 @@ function SelectPhoto() {
 
 	}
 	 
-	 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+/******************* Methods for AddEMRF ***********************/
+$( document ).on( "pagebeforeshow", "#pgAddEMRF", function(event) {
+	checkUserLogin();
+	var PlannerID="";
+	
+	    $( "#autocomplete" ).on( "filterablebeforefilter", function ( e, data ) {
+        var $ul = $( this ),
+            $input = $( data.input ),
+            value = $input.val(),
+            html = "";
+        $ul.html( "" );
+		$('.autocomplete').show(); 
+        if ( value && value.length > 2 ) {
+			
+			var ServiceURL=serviceRootUrl + "svc.aspx?op=GetEmployees&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&PartialName=" + value;
+            $ul.html( "<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>" );
+            $ul.listview( "refresh" );
+            $.ajax({
+                url: ServiceURL,
+                dataType: "jsonp",
+                crossDomain: true,
+
+            })
+            .then( function ( response ) {
+
+                $.each( response, function ( i, val ) {
+					
+					if (val.results.length > 0)
+					{
+						val.results.forEach(function (Rec){
+
+						html += "<li>" +  Rec.FullName + "<font color=white>~" +Rec.EmpId + "</font></li>";
+						
+						
+						} );
+					}
+					
+                });
+                $ul.html( html );
+                $ul.listview( "refresh" );
+                $ul.trigger( "updatelayout");
+            });
+        }
+    });
+	
+	    // click to select value of auto-complete
+    $( document).on( "click", ".autocomplete li", function() {      
+	
+      var selectedItem = $(this).html();
+	  
+	  var PlannerName = selectedItem.split("~")[0].replace('<font color="white">','');
+	  var PlannerID = selectedItem.split("~")[1].replace("</font>","");
+	  
+	  //alert(PlannerName);
+	  //alert(PlannerID);
+	  
+	  
+      $(this).parent().parent().find('input').val(PlannerName);   
+
+	  
+      $('.autocomplete').hide();     
+    });
+    
+	
+	$('#tblAddEMRF').hide();
+	$('#tblAddEMRFsButtons').hide();
+
+	$('#error-div-AddEMRF').text("").append(getLoadingMini());
+	
+	$("#tblAddEMRF").find("input").each(function() {
+		if ($(this).attr("type") == "text" || $(this).attr("type") == "date")
+			$(this).val("");
+		if ($(this).attr("type") == "radio")
+			$(this).prop('checked', false);
+	});	
+	$("#tblAddEMRF").find("input[type=radio]").checkboxradio("refresh");
+	//$("#ddlSR_Government_Agencies").val('None').selectmenu('refresh', true);
+	
+
+	
+	var id = $.urlParam("id");
+	
+	if (id > 0)
+	{
+		
+		var _url2 = serviceRootUrl + "svc.aspx?op=GetProjectById&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+		Jsonp_Call(_url2, false, "callbackLoadEMRFDetail");
+	}
+	else 
+	{
+		///
+			alert("App Error");
+	}
+	
+
+	
+});
+
+function goHomeAfterConfirm(FromPage)
+{
+	if (FromPage=='AddEMRF')
+	{
+	
+		$('<div>').simpledialog2({
+		mode: 'blank',
+		headerText: 'Go Home',
+		headerClose: false,
+		transition: 'flip',
+		themeDialog: 'a',
+		zindex: 2000,
+		blankContent : 
+		  "<div style='padding: 15px;'><p>Discard changes and go back to home screen?</p>"+
+		  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"goHome();\">OK</a></td>" + 
+		  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
+    }); 
+	
+	}
+
+}
+
+function callbackLoadSidePanelAddEMRF(data)
+{
+
+
+
+	try {
+				
+			var id = $.urlParam("id");
+			if (id > 0)
+			{
+				var _url1 = serviceRootUrl + "svc.aspx?op=GetIPMActivity&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+				Jsonp_Call(_url1, true, "callbackLoadAddEMRFSidePanelIPMActivity");
+
+				var _url2 = serviceRootUrl + "svc.aspx?op=GetProjectHeaderById&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+				Jsonp_Call(_url2, true, "callbackLoadAddEMRFSidePanel");
+
+			}
+			else 
+			{
+				///
+					alert("App Error");
+			}
+					
+			$('#error-div2-AddEMRF').text("");
+			$('#error-div-AddEMRF').text("");
+					
+			$('#tblAddEMRF').show();
+			$('#tblAddEMRFButtons').show();
+				
+
+
+
+			}
+		//}
+	catch(err) {}
+}
+
+
+
+
+
+
+
+
+
+function callbackLoadAddEMRFSidePanelIPMActivity(data)
+{
+
+
+	try {
+
+		
+		if (data.d.results.length > 0)
+		{
+			var temp = '<div class="ui-grid-b ui-responsive" id="AddEMRFGridSidePanel" name="AddEMRFGridSidePanel" style="padding-right:10px;">';
+			for(var i=0; i < data.d.results.length; i++)
+			{
+				var catalog = data.d.results[i];
+				temp += '<div style="margin: 5px 5px 5px 5px;padding: 2px 2px 2px 2px;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ActivityDate +' - '+ catalog.CreatedBy +' - '+ catalog.ActivityType +'</span><br><span style="font-size:x-small;">'+ catalog.Comments  +'</span></div>';
+
+			}
+			
+			temp += '</div>';
+
+			$("#pnlProjectActivity-AddEMRF" ).html(temp);
+
+					
+		}
+		else
+		{
+			//
+		}
+	}
+	catch(err) {}
+}
+
+
+function callbackLoadAddEMRFSidePanel(data)
+{
+
+
+
+	try {
+
+	
+			if (data.d.results.length > 0)
+			{
+
+				var temp = "";
+				
+				var catalog = data.d.results[0];
+				
+				temp=SidePanelOrderDetails(catalog);
+					
+				$("#pnlProjectDetails-AddEMRF" ).html(temp);
+
+
+				$('#error-div2-AddEMRF').text("");
+				$('#error-div-AddEMRF').text("");
+					
+				$('#tblAddEMRF').show();
+				$('#tblAddEMRFButtons').show();
+				
+			}
+		}
+	catch(err) {}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function callbackLoadEMRFDetail(data)
+{
+
+
+
+	try {
+	$("#tblAddEMRF").find("input").each(function() {
+
+		if ($(this).attr("type") == "date")
+		{
+				$(this).css({'background-color' : 'white'});
+				$(this).removeAttr('disabled');
+
+				}
+	});	
+
+	$("#tblAddEMRF").find("input[type=radio]").checkboxradio("refresh");
+	//$("#ddlSR_Government_Agencies").val('None').selectmenu('refresh', true);
+	
+
+
+	
+		if (data.d.results.length > 0)
+		{
+			var catalog = data.d.results[0];
+						
+
+				var temp = "";
+				
+
+
+					temp=SidePanelOrderDetails(catalog);
+
+
+				$("#pnlProjectDetails-AddEMRF" ).html(temp);
+
+
+
+
+				var id = $.urlParam("id");
+				if (id > 0)
+				{
+					var _url2 = serviceRootUrl + "svc.aspx?op=GetIPMActivity&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+					Jsonp_Call(_url2, false, "callbackLoadSidePanelAddEMRF");				
+				}
+				else 
+				{
+					///
+						alert("App Error");
+				}				
+
+
+
+
+
+
+			}
+		else
+		{
+			alert('App Error');
+		}
+	}
+	catch(err) {}
+}
+
+
+function cancelEMRF() {
+	$('<div>').simpledialog2({
+		mode: 'blank',
+		headerText: 'Cancel',
+		headerClose: false,
+		transition: 'flip',
+		themeDialog: 'a',
+		zindex: 2000,
+		blankContent : 
+		  "<div style='padding: 15px;'><p>Cancel changes and go back to main screen?</p>"+
+		  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"NavigatePage('#pgHome');\">OK</a></td>" + 
+		  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
+    }); 
+}
+function backEMRF() {
+		
+	$('<div>').simpledialog2({
+		mode: 'blank',
+		headerText: 'Back',
+		headerClose: false,
+		transition: 'flip',
+		themeDialog: 'a',
+		zindex: 2000,
+		blankContent : 
+		  "<div style='padding: 15px;'><p>Discard changes and go back to project options?</p>"+
+		  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"GoToSectionWithID('ProjectOptions');\">OK</a></td>" + 
+		  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
+    }); 
+}
+
+
+
+
+function saveEMRF(isFinal) {
+
+
+var result = 0;
+
+
+            //If Complete	 	        30
+            //If on Track contingent 	10
+            //If Risk 			        0
+            //If non booked 		    0 
+			
+			if ($("#hdnExpectedBillDate").val())
+			{
+
+				
+				switch ($("#hdnExpectedBillDate").val().toUpperCase())
+				{
+					case "APPROVED":
+						result = result + 30;
+						break;
+					case "CONTINGENT":
+						break;
+					case "C":
+						result = result + 10;
+						break;
+					case "UNAPPROVED":
+						break;
+					case "FORECASTED":
+						break;
+					case "":
+						break;
+					default:
+						break;
+				}
+			}
+            //Final Drawings 		15
+            if ($('input[name=SR_Final_Drawing_Reviewed]:checked').val())
+            {
+				if ($('input[name=SR_Final_Drawing_Reviewed]:checked').val() == "YES")
+				{
+					result = result + 15;
+				}
+			}
+            //Local permits   		10
+			if ($('input[name=SR_Building_Permit_Approved]:checked').val())
+            {
+				if ($('input[name=SR_Building_Permit_Approved]:checked').val() == "YES")
+				{
+					result = result + 10;
+				}
+			}
+
+            //Construcion timeline            	15
+            if ($('input[name=SR_Timeline_Published]:checked').val())
+            {
+				if ($('input[name=SR_Timeline_Published]:checked').val() == "YES")
+				{
+					result = result + 15;
+				}
+			}
+            //AddEMRF Complete 	20
+            //on Track contingent 		10
+            //If Risk 			       -20
+            switch ($('input[name=SR_AddEMRF_Progress]:checked').val())
+            {
+                case "COMPLETE":
+                    result = result + 20;
+                    break;
+                case "ON TARGET":
+                    result = result + 10;
+                    break;
+                case "RISK":
+                    result = result + 20;
+                    break;
+                default:
+                    result = result + 0;
+                    break;
+
+            }
+
+            //Rigger or SRD 		 10 
+            //IPM will be able to enter SRD at any time. 
+            // If riggers date is entered that will take precedence.
+            if ($("#txtSR_Riggers_Date").val())
+            {
+                result = result + 10;
+            }
+            else if ($("#txtSR_Forecasted_Site_Ready_Date").val())
+            {
+                result = result + 10;
+            }
+
+            //it will never be 100, as one check is missing, as we don't know what compelling event is
+            //Compeling event = 10
+
+			
+
+
+
+	$scope = {
+		recordId : $.urlParam("id"),
+		ddlSR_Government_Agencies : $("#ddlSR_Government_Agencies").val(),
+		SR_AddEMRF_Progress : $('input[name=SR_AddEMRF_Progress]:checked').val(),
+		txtSR_AddEMRF_Weeks : $("#txtSR_AddEMRF_Weeks").val(),		
+		txtSR_Contractor_Selected_Date : $("#txtSR_Contractor_Selected_Date").val(),
+		
+		rbIP_Installation_Status : $('input[name=rbIP_Installation_Status]:checked').val(),
+		SR_Required : $('input[name=SR_Required]:checked').val(),
+		SR_Contractor_Selected : $('input[name=SR_Contractor_Selected]:checked').val(),
+		SR_PreAddEMRF_Meeting_Scheduled : $('input[name=SR_PreAddEMRF_Meeting_Scheduled]:checked').val(),
+		SR_Final_Drawing_Reviewed : $('input[name=SR_Final_Drawing_Reviewed]:checked').val(),
+		txtSR_PreAddEMRF_Meeting_Scheduled_Date : $("#txtSR_PreAddEMRF_Meeting_Scheduled_Date").val(),
+		txtSR_Final_Drawings_Reviewed_Date : $("#txtSR_Final_Drawings_Reviewed_Date").val(),
+		rbSR_Drawing_Approved : $('input[name=rbSR_Drawing_Approved]:checked').val(),
+		SR_Building_Permit_Approved : $('input[name=SR_Building_Permit_Approved]:checked').val(),
+		SR_Installation_Kit : $('input[name=SR_Installation_Kit]:checked').val(),
+		SR_Electronic_Checked : $('input[name=SR_Electronic_Checked]:checked').val(),
+		SR_Timeline_Published : $('input[name=SR_Timeline_Published]:checked').val(),
+		txtSR_Timeline_Published_Date : $("#txtSR_Timeline_Published_Date").val(),
+		txtSR_Electronic_Date : $("#txtSR_Electronic_Date").val(),
+		txtSR_Pre_Installation_Date : $("#txtSR_Pre_Installation_Date").val(),
+		txtSR_Forecasted_Site_Ready_Date : $("#txtSR_Forecasted_Site_Ready_Date").val(),
+		txtSR_Riggers_Date : $("#txtSR_Riggers_Date").val(),
+		ExpectedBillDate : $("#hdnExpectedBillDate").val(),
+		BookStatus : $("#hdnBookStatus").val(),
+		Confidence : result,
+		StatusId : $("#divStatusId").text()
+		
+		
+
+	};
+
+	
+
+
+	var	confirmMessage="";
+	
+	if ($scope.ExpectedBillDate) 
+	{
+		var then = new Date($scope.ExpectedBillDate), now = new Date;
+		var NumberOfDays=Math.round((then - now) / (1000 * 60 * 60 * 24));
+	
+		if ($scope.txtSR_Forecasted_Site_Ready_Date!="" && NumberOfDays < 90){
+			/*$('#error-div').html('The Bill Date is within 90 days, please enter Site Ready Date');
+			showTimedElem('error-div');
+			$('#error-div2').html('The Bill Date is within 90 days, please enter Site Ready Date');
+			showTimedElem('error-div2');
+			*/
+			confirmMessage="The Bill Date is within 90 days, it is advised to enter Site Ready Date<br><br>";
+			//showLoading(false);
+			//return;
+		}
+	}
+	
+	
+	
+	confirmMessage=confirmMessage + "Save changes and go back to project options?";
+	$('<div>').simpledialog2({
+		mode: 'blank',
+		headerText: 'Save Changes',
+		headerClose: false,
+		transition: 'flip',
+		themeDialog: 'a',
+		width: 300,
+		zindex: 2000,
+		blankContent : 
+		  "<div style='padding: 15px;'><p>" + confirmMessage + "</p>"+
+		  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"SaveEMRFProcess('" + isFinal + "');\">OK</a></td>" + 
+		  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
+    });
+	
+
+	
+	
+}
+
+
+
+	
+function SaveEMRFProcess(isFinal)
+{
+	
+	if ($scope) {
+		
+		//show saving animation
+		$('#error-div').text("").append(getLoadingMini());
+		showTimedElem('error-div');
+		
+		$('#tblAddEMRF').hide();
+		$('#tblAddEMRFsButtons').hide();
+
+		if ($scope.recordId != "" && parseInt($scope.recordId) > 0)
+		{
+			//showLoading(true);
+			var _url =  serviceRootUrl + "svc.aspx?op=SaveProject&SPUrl=" + spwebRootUrl + "sites/busops&recordId=" + $scope.recordId + "&GovernmentAgencies=" + $scope.ddlSR_Government_Agencies + "&AddEMRFProgress=" + $scope.SR_AddEMRF_Progress + "&AddEMRFWeeks=" + $scope.txtSR_AddEMRF_Weeks + "&ContractorSelectedDate=" + $scope.txtSR_Contractor_Selected_Date + "&IPMStatus=" + $scope.rbIP_Installation_Status + "&AddEMRFRequired=" + $scope.SR_Required + "&ContractorSelected=" + $scope.SR_Contractor_Selected + "&PreAddEMRFMeetingScheduled=" + $scope.SR_PreAddEMRF_Meeting_Scheduled + "&FinalDrawingsReviewedByCustomer=" + $scope.SR_Final_Drawing_Reviewed + "&PreAddEMRFMeetingScheduledDate=" + $scope.txtSR_PreAddEMRF_Meeting_Scheduled_Date + "&FinalDrawingsReviewedByCustomerDate=" + $scope.txtSR_Final_Drawings_Reviewed_Date + "&AddEMRFDrawingsApproved=" + $scope.rbSR_Drawing_Approved + "&BuildingPermitApproved=" + $scope.SR_Building_Permit_Approved + "&PreShipmentOfInstallationKitEpoxyKit=" + $scope.SR_Installation_Kit + "&Electronic=" + $scope.SR_Electronic_Checked + "&AddEMRFTimelinePublished=" + $scope.SR_Timeline_Published + "&ElectronicDate=" + $scope.txtSR_Electronic_Date + "&PreInstallationDate=" + $scope.txtSR_Pre_Installation_Date + "&ForecastedSiteReadyDate=" + $scope.txtSR_Forecasted_Site_Ready_Date + "&RiggersDate=" + $scope.txtSR_Riggers_Date+ "&Confidence=" + $scope.Confidence + "&AddEMRFTimelinePublishedDate=" + $scope.txtSR_Timeline_Published_Date
+			+ "&username=" + userInfoData.Email + "&userid=" + userInfoData.UserID + "&authInfo=" + userInfoData.AuthenticationHeader + "&statusId=" + $scope.StatusId;
+			
+			console.log(_url);
+			
+			Jsonp_Call(_url, true, "callbackAddEMRF");
+		}
+
+
+		
+	}
+}
+
+
+
+
+
+function callbackSaveEMRF(data)
+{
+	try {
+
+			$('#error-div2').text("");
+			$('#error-div').text("");
+			GoToSectionWithID('ProjectOptions');
+
+	}
+	catch(err) { }
+}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
