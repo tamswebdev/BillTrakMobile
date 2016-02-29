@@ -3707,15 +3707,15 @@ function SelectPhoto() {
 /******************* Methods for AddEMRF ***********************/
 $( document ).on( "pagebeforeshow", "#pgAddEMRF", function(event) {
 	checkUserLogin();
-	var PlannerID="";
+
 	
-	    $( "#autocomplete" ).on( "filterablebeforefilter", function ( e, data ) {
+	    $( "#ddl_AddEMRF_Planner" ).on( "filterablebeforefilter", function ( e, data ) {
         var $ul = $( this ),
             $input = $( data.input ),
             value = $input.val(),
             html = "";
         $ul.html( "" );
-		$('.autocomplete').show(); 
+		$('#ddl_AddEMRF_Planner').show(); 
         if ( value && value.length > 2 ) {
 			
 			var ServiceURL=serviceRootUrl + "svc.aspx?op=GetEmployees&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&PartialName=" + value;
@@ -3735,7 +3735,7 @@ $( document ).on( "pagebeforeshow", "#pgAddEMRF", function(event) {
 					{
 						val.results.forEach(function (Rec){
 
-						html += "<li>" +  Rec.FullName + "<font color=white>~" +Rec.EmpId + "</font></li>";
+						html += "<li style='max-width: 168px;'>" +  Rec.FullName + "<font color=white>~" +Rec.EmpId + "</font></li>";
 						
 						
 						} );
@@ -3750,7 +3750,7 @@ $( document ).on( "pagebeforeshow", "#pgAddEMRF", function(event) {
     });
 	
 	    // click to select value of auto-complete
-    $( document).on( "click", ".autocomplete li", function() {      
+    $( document).on( "click", "#ddl_AddEMRF_Planner li", function() {      
 	
       var selectedItem = $(this).html();
 	  
@@ -3767,6 +3767,186 @@ $( document ).on( "pagebeforeshow", "#pgAddEMRF", function(event) {
       $('.autocomplete').hide();     
     });
     
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	    $( "#ddl_AddEMRF_ShipTo" ).on( "filterablebeforefilter", function ( e, data ) {
+        var $ul = $( this ),
+            $input = $( data.input ),
+            value = $input.val(),
+            html = "";
+        $ul.html( "" );
+		$('#ddl_AddEMRF_ShipTo').show(); 
+        if ( value && value.length > 2 ) {
+			
+			var ServiceURL=serviceRootUrl + "svc.aspx?op=GetEMRFShipToSites&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&PartialName=" + value;
+            $ul.html( "<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>" );
+            $ul.listview( "refresh" );
+            $.ajax({
+                url: ServiceURL,
+                dataType: "jsonp",
+                crossDomain: true,
+
+            })
+            .then( function ( response ) {
+
+                $.each( response, function ( i, val ) {
+					
+					if (val.results.length > 0)
+					{
+						val.results.forEach(function (Rec){
+
+						html += "<li style='max-width: 270px;'><b>" +  Rec.SiteName + "</b><font color=white>~" +Rec.SiteID + "~</font><br /><font color=blue>"+Rec.Address+"</font></li>";
+						
+						
+						} );
+					}
+					
+                });
+                $ul.html( html );
+                $ul.listview( "refresh" );
+                $ul.trigger( "updatelayout");
+            });
+        }
+    });
+	
+	    // click to select value of auto-complete
+    $( document).on( "click", "#ddl_AddEMRF_ShipTo li", function() {      
+	
+      var selectedItem = $(this).html();
+	  
+	  var ShipToName = selectedItem.split("~")[0].replace('</b><font color="white">','').replace('<b>','');
+	  var ShipToID = selectedItem.split("~")[1];
+	  //var ShipToAddress = selectedItem.split("~")[2].replace("</font>","");
+	  
+
+	  //alert(ShipToName);
+	  //alert(ShipToID);
+	  
+	  
+      $(this).parent().parent().find('input').val(ShipToName);   
+
+	  
+      $('.autocomplete').hide();     
+	  
+	  $.mobile.loading( 'show', {
+			text: 'Getting Site Data...',
+			textVisible: true,
+			theme: 'c',
+			html: ""
+		});
+	  	var _url1 = serviceRootUrl + "svc.aspx?op=GetEMRFShipToSiteByID&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + ShipToID;
+		Jsonp_Call(_url1, true, "callbackGetEMRFShipToSiteByID");
+	  
+	  
+    });
+    	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	    $( "#ddl_AddEMRF_Riggers" ).on( "filterablebeforefilter", function ( e, data ) {
+        var $ul = $( this ),
+            $input = $( data.input ),
+            value = $input.val(),
+            html = "";
+        $ul.html( "" );
+		$('#ddl_AddEMRF_Riggers').show(); 
+        if ( value && value.length > 2 ) {
+			
+			var ServiceURL=serviceRootUrl + "svc.aspx?op=GetEMRFRiggers&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&PartialName=" + value;
+            $ul.html( "<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>" );
+            $ul.listview( "refresh" );
+            $.ajax({
+                url: ServiceURL,
+                dataType: "jsonp",
+                crossDomain: true,
+
+            })
+            .then( function ( response ) {
+
+                $.each( response, function ( i, val ) {
+					
+					if (val.results.length > 0)
+					{
+						val.results.forEach(function (Rec){
+
+						html += "<li style='max-width: 168px;'>" +  Rec.RiggerName + "<font color=white>~" +Rec.RiggerID + "~"+Rec.Phone+"~</font></li>";
+						
+						
+						} );
+					}
+					
+                });
+                $ul.html( html );
+                $ul.listview( "refresh" );
+                $ul.trigger( "updatelayout");
+            });
+        }
+    });
+	
+	    // click to select value of auto-complete
+    $( document).on( "click", "#ddl_AddEMRF_Riggers li", function() {      
+	
+      var selectedItem = $(this).html();
+	  
+	  var RiggersName = selectedItem.split("~")[0].replace('<font color="white">','');
+	  var RiggersID = selectedItem.split("~")[1];
+	  var RiggersPhone = selectedItem.split("~")[2];
+	  
+
+	  //alert(RiggersName);
+	  //alert(RiggersID);
+	  
+	  
+      $(this).parent().parent().find('input').val(RiggersName);   
+	  $('#txt_AddEMRF_RiggersPhone').val(RiggersPhone);   
+	  
+
+	  
+      $('.autocomplete').hide();     
+    });
+    	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	$('#tblAddEMRF').hide();
 	$('#tblAddEMRFsButtons').hide();
@@ -3823,6 +4003,50 @@ function goHomeAfterConfirm(FromPage)
 	}
 
 }
+
+
+
+
+
+
+function callbackGetEMRFShipToSiteByID(data)
+{
+
+
+	try {
+
+		
+		if (data.d.results.length > 0)
+		{
+			
+			for(var i=0; i < data.d.results.length; i++)
+			{
+				var catalog = data.d.results[i];
+				
+
+				$('#txt_AddEMRF_HospitalCo').val(catalog.SiteName);
+				$('#txt_AddEMRF_Address').val(catalog.Address);
+				$('#txt_AddEMRF_City').val(catalog.City);
+				$('#txt_AddEMRF_State').val(catalog.State);
+				$('#txt_AddEMRF_Zip').val(catalog.Zip);
+				$('#txt_AddEMRF_PrimContact').val(catalog.Contact + ' ' + catalog.Phone);
+				$('#txt_AddEMRF_SecContact').val(catalog.SecondaryContact);
+			}
+			
+					
+		}
+		else
+		{
+			//
+		}
+		$.mobile.loading( 'hide' );
+	}
+	catch(err) {}
+}
+
+
+
+
 
 function callbackLoadSidePanelAddEMRF(data)
 {
