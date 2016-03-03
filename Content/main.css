@@ -348,17 +348,28 @@ td.WeekCalTD
 	width: 100%;
 }
 
-#pgAddStatus .td-error-message {
+.td-error-message {
     color: red !important;
     border: none !important;
-    display:none;
     padding:0px !important;
 	text-align:center;
+	font-size:x-small;
 }
 
-#pgAddStatus .error-message {
-    text-align:center;
-    color:red;
+.error-message {
+    color: red !important;
+    border: none !important;
+    padding:0px !important;
+	text-align:center;
+	font-size:x-small;
+}
+
+.success-message {
+    color: blue !important;
+    border: none !important;
+    padding:0px !important;
+	text-align:center;
+	font-size:x-small;
 }
 
 #pgAddStatus .add-new-status,
@@ -620,7 +631,7 @@ top: 20px;
 }
 
 .autocomplete {
-    font-size:x-small
+    font-size:x-small;
 }
 
 .ui-input-search{

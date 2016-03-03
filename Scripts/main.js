@@ -2687,7 +2687,7 @@ $( document ).on( "pagebeforeshow", "#pgConstruction", function(event) {
 
 function goHomeAfterConfirm(FromPage)
 {
-	if (FromPage=='Construction')
+	if (FromPage=='Construction' || FromPage=='AddEMRF')
 	{
 	
 		$('<div>').simpledialog2({
@@ -2704,6 +2704,9 @@ function goHomeAfterConfirm(FromPage)
     }); 
 	
 	}
+	
+	
+
 
 }
 
@@ -4025,28 +4028,6 @@ $( document ).on( "pagebeforeshow", "#pgAddEMRF", function(event) {
 	
 });
 
-function goHomeAfterConfirm(FromPage)
-{
-	if (FromPage=='AddEMRF')
-	{
-	
-		$('<div>').simpledialog2({
-		mode: 'blank',
-		headerText: 'Go Home',
-		headerClose: false,
-		transition: 'flip',
-		themeDialog: 'a',
-		zindex: 2000,
-		blankContent : 
-		  "<div style='padding: 15px;'><p>Discard changes and go back to home screen?</p>"+
-		  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"goHome();\">OK</a></td>" + 
-		  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
-    }); 
-	
-	}
-
-}
-
 
 
 
@@ -4408,23 +4389,7 @@ function saveEMRF(isFinal) {
 
 	var	confirmMessage="";
 	
-	if ($scope.ExpectedBillDate) 
-	{
-		var then = new Date($scope.ExpectedBillDate), now = new Date;
-		var NumberOfDays=Math.round((then - now) / (1000 * 60 * 60 * 24));
-	
-		if ($scope.txtSR_Forecasted_Site_Ready_Date!="" && NumberOfDays < 90){
-			/*$('#error-div').html('The Bill Date is within 90 days, please enter Site Ready Date');
-			showTimedElem('error-div');
-			$('#error-div2').html('The Bill Date is within 90 days, please enter Site Ready Date');
-			showTimedElem('error-div2');
-			*/
-			confirmMessage="The Bill Date is within 90 days, it is advised to enter Site Ready Date<br><br>";
-			//showLoading(false);
-			//return;
-		}
-	}
-	
+
 	
 	
 	confirmMessage=confirmMessage + "Save EMRF as draft?";
@@ -4464,9 +4429,7 @@ function SaveEMRFProcess(isFinal)
 
 		if ($scope.recordId != "" && parseInt($scope.recordId) > 0)
 		{
-			//showLoading(true);
-			
-						alert(AddEMRID);
+
 
 			
 			$.mobile.loading( 'show', {
@@ -4525,6 +4488,251 @@ function callbackAddEMRF(data)
 
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+function submitEMRF(isFinal) {
+
+	
+
+
+	var	confirmMessage="";
+	
+
+	if (!$("#hdn_AddEMRF_PlannerID").val() || $("#hdn_AddEMRF_PlannerID").val()=='' || !$("#hdn_AddEMRF_PlannerName").val() || $("#hdn_AddEMRF_PlannerName").val()=='') 
+	{
+	
+			if (confirmMessage!="")
+				confirmMessage+=", ";
+			confirmMessage+="Planner";
+
+	}
+	if (!$("#txt_AddEMRF_HospitalCo").val() || $("#txt_AddEMRF_HospitalCo").val()=='') 
+	{
+	
+			if (confirmMessage!="")
+				confirmMessage+=", ";
+			confirmMessage+="Hospital/Co Name";
+
+	}
+			if (!$('input[name=rdo_AddEMRF_RDDOnBy]:checked').val()  || $('input[name=rdo_AddEMRF_RDDOnBy]:checked').val() =='') 
+	{
+	
+			if (confirmMessage!="")
+				confirmMessage+=",";
+			confirmMessage+="Req. Delivery Date On/By";
+
+	}
+	if (!$('input[name=rdo_AddEMRF_RDDAtBy]:checked').val()  || $('input[name=rdo_AddEMRF_RDDAtBy]:checked').val()  =='') 
+	{
+	
+			if (confirmMessage!="")
+				confirmMessage+=", ";
+			confirmMessage+="Req. Delivery Date At/By";
+
+	}
+	if (!$("#txt_AddEMRF_RDDDate").val() || $("#txt_AddEMRF_RDDDate").val()=='') 
+	{
+	
+			if (confirmMessage!="")
+				confirmMessage+=", ";
+			confirmMessage+="Req. Delivery Date";
+
+	}
+	if (!$("#txt_AddEMRF_RDDTime").val() || $("#txt_AddEMRF_RDDTime").val()=='') 
+	{
+	
+			if (confirmMessage!="")
+				confirmMessage+=", ";
+			confirmMessage+="Req. Delivery Time";
+
+	}
+		
+
+
+
+	if (confirmMessage=="")
+	{
+
+		$scope = {
+			recordId : $.urlParam("id")
+
+
+		  ,CostCenter : $("#txt_AddEMRF_CostCenter").val()
+		  //,CreateDate : $("#").val()
+		  //,Createdby : $("#").val()
+		  //,CreatedDate : $("#").val()
+		  //,CreationDate : $("#").val()
+		  ,DDS : $('input[name=rdo_AddEMRF_DocktoDockService]:checked').val() 
+		  ,DebrisRemoval : $('input[name=rdo_AddEMRF_DebrisRemoval]:checked').val() 
+		  ,DelDate : $("#txt_AddEMRF_RDDDate").val()
+		  ,DelTime : $("#txt_AddEMRF_RDDTime").val()
+		  ,Deskidding : $('input[name=rdo_AddEMRF_DeskiddingUncratting]:checked').val()  
+		  //,DocID : $("#").val()
+		  ,DockAvail : $('input[name=rdo_AddEMRF_DockAvailableatSite]:checked').val()     
+		  ,FreightElevator : $('input[name=rdo_AddEMRF_FreightElevatorsAvailable]:checked').val()   
+		  ,IDS : $('input[name=rdo_AddEMRF_InsideDeliveryService]:checked').val()   
+		  ,ItemDetail : $.urlParam("equipment")
+		  ,LG  : $('input[name=rdo_AddEMRF_LiftGates]:checked').val()     
+		  ,Modality : $.urlParam("modality")
+		  ,SID : $.urlParam("sid")
+		  //,OrderDate : $("#").val()
+		  ,OrderNumber : $("#txt_AddEMRF_Order").val()
+		  ,OtherRef : $("#txt_AddEMRF_OtherRef").val()
+		  ,Planner : $("#hdn_AddEMRF_PlannerID").val()
+		  ,ProductDescription : $("#txt_AddEMRF_ProductDescription").val()
+		  //,RequestedBy : $("#").val()
+		  ,Riggers : $("#hdn_AddEMRF_RiggersName").val()
+		  ,RiggersPhone : $("#txt_AddEMRF_RiggersPhone").val()
+		  ,RiggersTruckline :  $('input[name=rdo_AddEMRF_RiggersOnSite]:checked').val() 
+		  ,RMA : $("#txt_AddEMRF_RMA").val()
+		  ,ShipToAddress : $("#txt_AddEMRF_Address").val()
+		  ,ShipToCity : $("#txt_AddEMRF_City").val()
+		  ,ShipToContact : $("#txt_AddEMRF_PrimContact").val()
+		  //,ShipToIPM : $("#").val()
+		  ,ShipToOther : $("#txt_AddEMRF_EndDest").val()
+		  ,ShipToSecondary : $("#txt_AddEMRF_SecContact").val()
+		  ,ShipToSite : $("#txt_AddEMRF_HospitalCo").val()
+		  ,ShipToState : $("#txt_AddEMRF_State").val()
+		  ,ShipToZip : $("#txt_AddEMRF_Zip").val()
+		  ,SpecialInstructions : $("#txt_AddEMRF_SpecialInstructions").val()
+		  ,Status : "Submitted to Planner"
+		  //,SubmittedToPlannerDate : $("#").val()
+		  ,SubmittedToPlannerName : $("#hdn_AddEMRF_PlannerName").val()  
+		  ,DTBy : $('input[name=rdo_AddEMRF_RDDOnBy]:checked').val() 
+		  ,TimeBy : $('input[name=rdo_AddEMRF_RDDAtBy]:checked').val() 
+		  //,ModifiedBy : $("#").val()
+		  //,Modified : $("#").val()
+		  ,ProjectId : $.urlParam("id")
+		  //,RequestedById : $("#").val()
+		  ,DeliverDateNote : $("#txt_AddEMRF_DeliverDateNote").val()
+		  ,RequestedDeliveryDatePrefix : $('input[name=rdo_AddEMRF_RDDOnBy]:checked').val() 
+		  ,RequestedDeliveryTimePrefix : $('input[name=rdo_AddEMRF_RDDAtBy]:checked').val() 
+		  //,CustomerName : $("#").val()
+			
+
+			
+
+		};
+
+
+
+		
+		
+		confirmMessage=confirmMessage + "Submit EMRF to planner?";
+		$('<div>').simpledialog2({
+			mode: 'blank',
+			headerText: 'Submit to Planner',
+			headerClose: false,
+			transition: 'flip',
+			themeDialog: 'a',
+			width: 300,
+			zindex: 2000,
+			blankContent : 
+			  "<div style='padding: 15px;'><p>" + confirmMessage + "</p>"+
+			  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"SubmitEMRFProcess('" + isFinal + "');\">OK</a></td>" + 
+			  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
+		});
+		
+	}
+	else
+	{
+
+			confirmMessage="Following fields missing: " + confirmMessage;
+			$('#error-div-AddEMRF').html(confirmMessage);
+			$('#error-div2-AddEMRF').html(confirmMessage);
+			showTimedElem('error-div-AddEMRF');
+			showTimedElem('error-div2-AddEMRF');
+			
+			showLoading(false);
+
+	}
+	
+}
+
+
+
+	
+function SubmitEMRFProcess(isFinal)
+{
+	
+	if ($scope) {
+		
+		//show saving animation
+		$('#error-div').text("").append(getLoadingMini());
+		showTimedElem('error-div');
+		
+		$('#tblAddEMRF').hide();
+		$('#tblAddEMRFsButtons').hide();
+
+		if ($scope.recordId != "" && parseInt($scope.recordId) > 0)
+		{
+
+
+			
+			$.mobile.loading( 'show', {
+			text: 'Submitting EMRF to planner...',
+			textVisible: true,
+			theme: 'c',
+			html: ""
+				});
+		
+			var _url =  serviceRootUrl + "svc.aspx?op=SubmitEMRF&SPUrl=" + spwebRootUrl + "sites/busops&recordId=" + $scope.recordId + "&CostCenter=" + $scope.CostCenter + "&DDS=" + $scope.DDS + "&DebrisRemoval=" + $scope.DebrisRemoval + "&DelDate=" + $scope.DelDate + "&DelTime=" + $scope.DelTime + "&Deskidding=" + $scope.Deskidding + "&DockAvail=" + $scope.DockAvail + "&FreightElevator=" + $scope.FreightElevator + "&IDS=" + $scope.IDS + "&ItemDetail=" + $scope.ItemDetail + "&LG=" + $scope.LG + "&Modality=" + $scope.Modality + "&SID=" + $scope.SID + "&OrderNumber=" + $scope.OrderNumber + "&OtherRef=" + $scope.OtherRef + "&Planner=" + $scope.Planner + "&ProductDescription=" + $scope.ProductDescription + "&Riggers=" + $scope.Riggers + "&RiggersPhone=" + $scope.RiggersPhone + "&RiggersTruckline=" + $scope.RiggersTruckline+ "&RMA=" + $scope.RMA + "&ShipToAddress=" + $scope.ShipToAddress + "&ShipToCity=" + $scope.ShipToCity +
+			"&ShipToContact=" + $scope.ShipToContact + "&ShipToOther=" + $scope.ShipToOther + "&ShipToSecondary=" + $scope.ShipToSecondary + "&ShipToSite=" + $scope.ShipToSite + "&ShipToState=" + $scope.ShipToState + "&ShipToZip=" + $scope.ShipToZip + "&SpecialInstructions=" + $scope.SpecialInstructions + "&Status=" + $scope.Status + "&SubmittedToPlannerName=" + $scope.SubmittedToPlannerName+ "&DTBy=" + $scope.DTBy + "&TimeBy=" + $scope.TimeBy +"&DeliverDateNote=" + $scope.DeliverDateNote + "&RequestedDeliveryDatePrefix=" + $scope.RequestedDeliveryDatePrefix + "&RequestedDeliveryTimePrefix=" + $scope.RequestedDeliveryTimePrefix + "&ProjectId=" + $scope.ProjectId +					
+			"&username=" + userInfoData.Email + "&userid=" + userInfoData.UserID+ "&EMRID=" + AddEMRID + "&authInfo=" + userInfoData.AuthenticationHeader + "&statusId=" + $scope.StatusId;
+	
+			console.log(_url);
+			
+			Jsonp_Call(_url, true, "callbackSubmitEMRF");
+		}
+
+
+		
+	}
+}
+
+
+
+
+
+function callbackSubmitEMRF(data)
+{
+	try {
+
+			if (data.d.results.length > 0)
+			{
+			
+				AddEMRID = data.d.results;	
+							
+			}
+			
+
+			$('#error-div2').text("");
+			$('#error-div').text("");
+			
+			//$('#tblAddEMRF').show();
+			//$('#tblAddEMRFsButtons').show();
+			$.mobile.loading( 'hide' );
+			GoToSectionWithID('ProjectOptions');
+
+	}
+	catch(err) { }
+	
+	
+
+	
+	
+}
+
 	
 	
 	
