@@ -1576,7 +1576,7 @@ function callbackLoadEMRF(data)
 				}
 				else
 				{
-					var path='#pgAddEMRF?id='+ id + '&projectId=' + id +  '&source=BillTrak' + '&EMRID=' + catalog.EMRId;	
+					var path='#pgAddEMRF?id='+ id + '&projectId=' + id +  '&source=BillTrak&EditMode=1' + '&EMRID=' + catalog.EMRId;	
 					TableRow = $('<div style="width:100%;margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;"><a href="javascript:void(0);" onclick=NavigatePage("' + path + '");>'  + catalog.ShipToSite +'</a></span><br><span style="font-size:x-small;">'+ catalog.Status +' - '+ catalog.SentToTCSubCategory+'</span><br><span style="font-size:x-small;">To:'+ catalog.ShipToAddress + catalog.ShipToCity+ catalog.ShipToState+ ' ' +catalog.ShipToZip+'</span><br><span style="font-size:x-small;">Requested Delivery Date:'+ catalog.DelvDate  +'</span><br><span style="font-size:x-small;">'+catalog.ItemDetail +'</span></div>');
 					TableRow.appendTo($("#EMRFGrid"));
 
@@ -3797,15 +3797,6 @@ $( document ).on( "pagebeforeshow", "#pgAddEMRF", function(event) {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	
 	    $( "#ddl_AddEMRF_ShipTo" ).on( "filterablebeforefilter", function ( e, data ) {
@@ -3954,22 +3945,7 @@ $( document ).on( "pagebeforeshow", "#pgAddEMRF", function(event) {
     });
     	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	
@@ -3978,7 +3954,7 @@ $( document ).on( "pagebeforeshow", "#pgAddEMRF", function(event) {
 	$('#tblAddEMRF').hide();
 	$('#tblAddEMRFsButtons').hide();
 
-	$('#error-div-AddEMRF').text("").append(getLoadingMini());
+//	$('#error-div-AddEMRF').text("").append(getLoadingMini());
 	
 	$("#tblAddEMRF").find("input").each(function() {
 		if ($(this).attr("type") == "text" || $(this).attr("type") == "date" || $(this).attr("type") == "time")
@@ -3993,6 +3969,10 @@ $( document ).on( "pagebeforeshow", "#pgAddEMRF", function(event) {
 	$('#hdn_AddEMRF_PlannerID').val('');
 	$('#hdn_AddEMRF_RiggersName').val(''); 
 	$('#hdn_AddEMRF_PlannerName').val('');
+	$("#hdn_AddEMRF_Modality").val('');
+	$("#hdn_AddEMRF_SID").val('');
+	$("#hdn_AddEMRF_ItemDetail").val('');
+	$("#hdn_AddEMRF_ProjectId").val('');	
 	$("#txt_AddEMRF_SpecialInstructions").val('');
 	$("#txt_AddEMRF_ProductDescription").val('');
 	$("#txt_AddEMRF_EndDest").val('');
@@ -4011,9 +3991,22 @@ $( document ).on( "pagebeforeshow", "#pgAddEMRF", function(event) {
 	//else
 	//	AddEMRID="0";	
 
+
+
+	var EditMode=$.urlParam("EditMode");
+
+
+
 	
 	if (id > 0)
 	{
+		if (EditMode=1 && AddEMRID && AddEMRID != "0" )
+		{
+
+		var _url2 = serviceRootUrl + "svc.aspx?op=EditEMRF&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id + "&userid=" + userInfoData.UserID+ "&EMRID=" + AddEMRID + "&authInfo=" + userInfoData.AuthenticationHeader
+		Jsonp_Call(_url2, false, "callbackEditEMRF");			
+		
+		}
 		
 		var _url2 = serviceRootUrl + "svc.aspx?op=GetProjectById&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
 		Jsonp_Call(_url2, false, "callbackLoadEMRFDetail");
@@ -4028,6 +4021,86 @@ $( document ).on( "pagebeforeshow", "#pgAddEMRF", function(event) {
 	
 });
 
+
+
+
+function callbackEditEMRF(data)
+{
+
+
+	try {
+
+
+		if (data.d.results.length > 0)
+		{
+
+			for(var i=0; i < data.d.results.length; i++)
+			{
+				var catalog = data.d.results[i];
+				
+
+
+
+			
+	
+					$("#hdn_AddEMRF_Modality").val(catalog.Modality);
+					$("#hdn_AddEMRF_SID").val(catalog.SID);
+					$("#hdn_AddEMRF_ItemDetail").val(catalog.ItemDetail);
+					$("#hdn_AddEMRF_ProjectId").val(catalog.ProjectId);
+	  
+					$('#hdn_AddEMRF_PlannerID').val(catalog.Planner);
+					$('#hdn_AddEMRF_PlannerName').val(catalog.SubmittedToPlannerName);
+					$('#ddl_AddEMRF_Planner').parent().parent().find('input').val(catalog.SubmittedToPlannerName);
+					
+					$('#ddl_AddEMRF_ShipTo').parent().parent().find('input').val(catalog.ShipToSite);
+					
+					$('#ddl_AddEMRF_Riggers').parent().parent().find('input').val(catalog.Riggers);
+					$('#hdn_AddEMRF_RiggersName').val(catalog.Riggers);
+
+					
+	  
+	  
+                    $('#txt_AddEMRF_RDDDate').val(getISODateString(catalog.DelDate));
+                    $('#txt_AddEMRF_RDDTime').val(catalog.DelTime);
+                    $('#txt_AddEMRF_HospitalCo').val(catalog.ShipToSite);				
+                    $('#txt_AddEMRF_Address').val(catalog.ShipToAddress);
+                    $('#txt_AddEMRF_City').val(catalog.ShipToCity);
+                    $('#txt_AddEMRF_State').val(catalog.ShipToState);
+                    $('#txt_AddEMRF_Zip').val(catalog.ShipToZip);
+                    $('#txt_AddEMRF_CostCenter').val(catalog.CostCenter);
+                    SetRadioValue('rdo_AddEMRF_DocktoDockService', catalog.DDS);
+                    SetRadioValue('rdo_AddEMRF_DebrisRemoval',catalog.DebrisRemoval);
+                    SetRadioValue('rdo_AddEMRF_DeskiddingUncratting',catalog.Deskidding);
+                    SetRadioValue('rdo_AddEMRF_FreightElevatorsAvailable',catalog.FreightElevator);
+					SetRadioValue('rdo_AddEMRF_InsideDeliveryService', catalog.IDS);
+					SetRadioValue('rdo_AddEMRF_LiftGates', catalog.LG);
+					SetRadioValue('rdo_AddEMRF_DockAvailableatSite', catalog.DockAvail);
+                    $('#txt_AddEMRF_Order').val(catalog.OrderNumber);
+                    $('#txt_AddEMRF_OtherRef').val(catalog.OtherRef);
+                    $('#txt_AddEMRF_ProductDescription').val(catalog.ProductDescription);
+                    $('#txt_AddEMRF_RiggersPhone').val(catalog.RiggersPhone);
+                    SetRadioValue('rdo_AddEMRF_RiggersOnSite',catalog.RiggersTruckline);
+                    $('#txt_AddEMRF_RMA').val(catalog.RMA);
+                    $('#txt_AddEMRF_PrimContact').val(catalog.ShipToContact);
+                    $('#txt_AddEMRF_EndDest').val(catalog.ShipToOther);
+                    $('#txt_AddEMRF_SecContact').val(catalog.ShipToSecondary);
+                    $('#txt_AddEMRF_SpecialInstructions').val(catalog.SpecialInstructions);
+                    $('#txt_AddEMRF_DeliverDateNote').val(catalog.DeliverDateNote);
+                    SetRadioValue('rdo_AddEMRF_RDDAtBy',catalog.RequestedDeliveryTimePrefix);
+                    SetRadioValue('rdo_AddEMRF_RDDOnBy',catalog.RequestedDeliveryDatePrefix);
+			
+			}
+			
+					
+		}
+		else
+		{
+			//
+		}
+
+	}
+	catch(err) {}
+}
 
 
 
@@ -4063,7 +4136,7 @@ function callbackGetEMRFShipToSiteByID(data)
 		{
 			//
 		}
-		$.mobile.loading( 'hide' );
+
 	}
 	catch(err) {}
 }
@@ -4079,6 +4152,8 @@ function callbackLoadSidePanelAddEMRF(data)
 
 	try {
 				
+
+
 			var id = $.urlParam("id");
 			
 			if (id > 0)
@@ -4102,7 +4177,7 @@ function callbackLoadSidePanelAddEMRF(data)
 			$('#tblAddEMRF').show();
 			$('#tblAddEMRFButtons').show();
 				
-
+			showLoading(false);
 
 
 			}
@@ -4175,48 +4250,26 @@ function callbackLoadAddEMRFSidePanel(data)
 					
 				$('#tblAddEMRF').show();
 				$('#tblAddEMRFButtons').show();
+
 				
 			}
+			$.mobile.loading( 'hide' );
 		}
 	catch(err) {}
 }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function callbackLoadEMRFDetail(data)
 {
 
-
+			$.mobile.loading( 'show', {
+			text: 'Loading, please wait...',
+			textVisible: true,
+			theme: 'c',
+			html: ""
+				});			
+	
 
 	try {
 	$("#tblAddEMRF").find("input").each(function() {
@@ -4321,6 +4374,22 @@ function saveEMRF(isFinal) {
 
 
 
+				
+				
+	var EditMode=$.urlParam("EditMode");
+	
+	var Modality=$("#hdn_AddEMRF_Modality").val();
+	var SID=$("#hdn_AddEMRF_SID").val();
+	var ItemDetail=$("#hdn_AddEMRF_ItemDetail").val();
+	var ProjectId=$("#hdn_AddEMRF_ProjectId").val();
+	
+	if (EditMode!="1")
+	{
+		Modality=$.urlParam("modality");
+		SID=$.urlParam("sid");
+		ItemDetail=$.urlParam("equipment");
+		ProjectId=$.urlParam("id");		
+	}
 
 
 	$scope = {
@@ -4341,10 +4410,10 @@ function saveEMRF(isFinal) {
       ,DockAvail : $('input[name=rdo_AddEMRF_DockAvailableatSite]:checked').val()     
       ,FreightElevator : $('input[name=rdo_AddEMRF_FreightElevatorsAvailable]:checked').val()   
       ,IDS : $('input[name=rdo_AddEMRF_InsideDeliveryService]:checked').val()   
-      ,ItemDetail : $.urlParam("equipment")
+      ,ItemDetail : ItemDetail
       ,LG  : $('input[name=rdo_AddEMRF_LiftGates]:checked').val()     
-      ,Modality : $.urlParam("modality")
-      ,SID : $.urlParam("sid")
+      ,Modality :  Modality
+      ,SID : SID
       //,OrderDate : $("#").val()
       ,OrderNumber : $("#txt_AddEMRF_Order").val()
       ,OtherRef : $("#txt_AddEMRF_OtherRef").val()
@@ -4372,7 +4441,7 @@ function saveEMRF(isFinal) {
 	  ,TimeBy : $('input[name=rdo_AddEMRF_RDDAtBy]:checked').val() 
       //,ModifiedBy : $("#").val()
       //,Modified : $("#").val()
-      ,ProjectId : $.urlParam("id")
+      ,ProjectId : ProjectId
       //,RequestedById : $("#").val()
       ,DeliverDateNote : $("#txt_AddEMRF_DeliverDateNote").val()
       ,RequestedDeliveryDatePrefix : $('input[name=rdo_AddEMRF_RDDOnBy]:checked').val() 
