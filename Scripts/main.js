@@ -3873,12 +3873,7 @@ $( document ).on( "pagebeforeshow", "#pgAddEMRF", function(event) {
 	
 	
 	
-	
-	
-	
-	
-	
-	
+
 
 	
 	    $( "#ddl_AddEMRF_Riggers" ).on( "filterablebeforefilter", function ( e, data ) {
@@ -3953,8 +3948,13 @@ $( document ).on( "pagebeforeshow", "#pgAddEMRF", function(event) {
 	
 	$('#tblAddEMRF').hide();
 	$('#tblAddEMRFsButtons').hide();
-
+	$('#error-div-AddEMRF').text("");
+	$('#error-div2-AddEMRF').text("");
 //	$('#error-div-AddEMRF').text("").append(getLoadingMini());
+
+
+
+
 	
 	$("#tblAddEMRF").find("input").each(function() {
 		if ($(this).attr("type") == "text" || $(this).attr("type") == "date" || $(this).attr("type") == "time")
@@ -4136,6 +4136,7 @@ function callbackGetEMRFShipToSiteByID(data)
 		{
 			//
 		}
+		$.mobile.loading( 'hide' );
 
 	}
 	catch(err) {}
@@ -4263,6 +4264,7 @@ function callbackLoadAddEMRFSidePanel(data)
 function callbackLoadEMRFDetail(data)
 {
 
+/////////Load hourglass
 			$.mobile.loading( 'show', {
 			text: 'Loading, please wait...',
 			textVisible: true,
