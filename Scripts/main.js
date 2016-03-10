@@ -1668,9 +1668,10 @@ function callbackLoadEMRFSidePanel(data)
 
 				LoadEquipmentTypes(catalog.OpportunityModality);
 				
+				AddEMRID="0";
 				$("#btnAddEMRF").on("click", function(e) { 
 					var EquipmentType=$("#ddlEquipmentType").val();
-					var requestUrl = spwebRootUrl + 'virtualapps/busopswebs/emr/MoveRequest.aspx?projectId=' + catalog.ProjectID + '&sid=' + catalog.SID + '&modality=' + catalog.OpportunityModality + '&equipment=' + EquipmentType + '&source=BillTrak';	
+					var requestUrl = spwebRootUrl + 'virtualapps/busopswebs/emr/MoveRequest.aspx?projectId=' + catalog.ProjectID + '&sid=' + catalog.SID + '&modality=' + catalog.OpportunityModality + '&equipment=' + EquipmentType + '&source=BillTrak&EMRID=0';	
 					
 					if (EquipmentType=='-1')
 					{
@@ -3983,7 +3984,7 @@ $( document ).on( "pagebeforeshow", "#pgAddEMRF", function(event) {
 	
 	//$("#ddlSR_Government_Agencies").val('None').selectmenu('refresh', true);
 	
-
+	
 	
 	var id = $.urlParam("id");
 	if ($.urlParam("EMRID"))
@@ -3991,7 +3992,7 @@ $( document ).on( "pagebeforeshow", "#pgAddEMRF", function(event) {
 	//else
 	//	AddEMRID="0";	
 
-
+	//alert(AddEMRID);
 
 	var EditMode=$.urlParam("EditMode");
 
@@ -4297,11 +4298,41 @@ function callbackLoadEMRFDetail(data)
 
 				var temp = "";
 				
+				var EditMode=$.urlParam("EditMode");
+				
+				if (!EditMode || EditMode=="0")
+				{
+					if (catalog.CostCenter)
+						$('#txt_AddEMRF_CostCenter').val(catalog.CostCenter);
+					else
+						$('#txt_AddEMRF_CostCenter').val('');
+					
+					if (catalog.CostCenter)
+						$('#txt_AddEMRF_HospitalCo').val(catalog.AccountName);
+					else
+						$('#txt_AddEMRF_HospitalCo').val('');
+					
+					if (catalog.CostCenter)
+						$('#txt_AddEMRF_Address').val(catalog.Address1 + catalog.Address2 );
+					else
+						$('#txt_AddEMRF_Address').val('');
+					
+					if (catalog.CostCenter)
+						$('#txt_AddEMRF_City').val(catalog.City);
+					else
+						$('#txt_AddEMRF_City').val('');
+					
+					if (catalog.CostCenter)
+						$('#txt_AddEMRF_State').val(catalog.State);
+					else
+						$('#txt_AddEMRF_State').val('');
+					
+					if (catalog.CostCenter)
+						$('#txt_AddEMRF_Zip').val(catalog.ZipCode);
+					else
+						$('#txt_AddEMRF_Zip').val('');
+				}
 
-				if (catalog.CostCenter)
-					$('#txt_AddEMRF_CostCenter').val(catalog.CostCenter);
-				else
-					$('#txt_AddEMRF_CostCenter').val('');
 				
 				
 				temp=SidePanelOrderDetails(catalog);
@@ -4531,7 +4562,7 @@ function SaveEMRFProcess(isFinal)
 function callbackAddEMRF(data)
 {
 	try {
-
+			alert('ayaaaa1');
 			if (data.d.results.length > 0)
 			{
 			
