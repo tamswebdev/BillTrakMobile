@@ -4562,7 +4562,7 @@ function SaveEMRFProcess(isFinal)
 function callbackAddEMRF(data)
 {
 	try {
-			alert('ayaaaa1');
+			
 			if (data.d.results.length > 0)
 			{
 			
