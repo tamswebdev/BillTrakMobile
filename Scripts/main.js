@@ -4122,6 +4122,9 @@ function callbackGetEMRFShipToSiteByID(data)
 				var catalog = data.d.results[i];
 				
 
+				
+
+				
 				$('#txt_AddEMRF_HospitalCo').val(catalog.SiteName);
 				$('#txt_AddEMRF_Address').val(catalog.Address);
 				$('#txt_AddEMRF_City').val(catalog.City);
@@ -4542,7 +4545,7 @@ function SaveEMRFProcess(isFinal)
 				});
 		
 			var _url =  serviceRootUrl + "svc.aspx?op=AddEMRF&SPUrl=" + spwebRootUrl + "sites/busops&recordId=" + $scope.recordId + "&CostCenter=" + $scope.CostCenter + "&DDS=" + $scope.DDS + "&DebrisRemoval=" + $scope.DebrisRemoval + "&DelDate=" + $scope.DelDate + "&DelTime=" + $scope.DelTime + "&Deskidding=" + $scope.Deskidding + "&DockAvail=" + $scope.DockAvail + "&FreightElevator=" + $scope.FreightElevator + "&IDS=" + $scope.IDS + "&ItemDetail=" + $scope.ItemDetail + "&LG=" + $scope.LG + "&Modality=" + $scope.Modality + "&SID=" + $scope.SID + "&OrderNumber=" + $scope.OrderNumber + "&OtherRef=" + $scope.OtherRef + "&Planner=" + $scope.Planner + "&ProductDescription=" + $scope.ProductDescription + "&Riggers=" + $scope.Riggers + "&RiggersPhone=" + $scope.RiggersPhone + "&RiggersTruckline=" + $scope.RiggersTruckline+ "&RMA=" + $scope.RMA + "&ShipToAddress=" + $scope.ShipToAddress + "&ShipToCity=" + $scope.ShipToCity +
-			"&ShipToContact=" + $scope.ShipToContact + "&ShipToOther=" + $scope.ShipToOther + "&ShipToSecondary=" + $scope.ShipToSecondary + "&ShipToSite=" + $scope.ShipToSite + "&ShipToState=" + $scope.ShipToState + "&ShipToZip=" + $scope.ShipToZip + "&SpecialInstructions=" + $scope.SpecialInstructions + "&Status=" + $scope.Status + "&SubmittedToPlannerName=" + $scope.SubmittedToPlannerName+ "&DTBy=" + $scope.DTBy + "&TimeBy=" + $scope.TimeBy +"&DeliverDateNote=" + $scope.DeliverDateNote + "&RequestedDeliveryDatePrefix=" + $scope.RequestedDeliveryDatePrefix + "&RequestedDeliveryTimePrefix=" + $scope.RequestedDeliveryTimePrefix + "&ProjectId=" + $scope.ProjectId +					
+			"&ShipToContact=" + $scope.ShipToContact + "&ShipToOther=" + $scope.ShipToOther + "&ShipToSecondary=" + $scope.ShipToSecondary + "&ShipToSite=" + encodeURIComponent($scope.ShipToSite) + "&ShipToState=" + $scope.ShipToState + "&ShipToZip=" + $scope.ShipToZip + "&SpecialInstructions=" + $scope.SpecialInstructions + "&Status=" + $scope.Status + "&SubmittedToPlannerName=" + $scope.SubmittedToPlannerName+ "&DTBy=" + $scope.DTBy + "&TimeBy=" + $scope.TimeBy +"&DeliverDateNote=" + $scope.DeliverDateNote + "&RequestedDeliveryDatePrefix=" + $scope.RequestedDeliveryDatePrefix + "&RequestedDeliveryTimePrefix=" + $scope.RequestedDeliveryTimePrefix + "&ProjectId=" + $scope.ProjectId +					
 			"&username=" + userInfoData.Email + "&userid=" + userInfoData.UserID+ "&EMRID=" + AddEMRID + "&authInfo=" + userInfoData.AuthenticationHeader + "&statusId=" + $scope.StatusId;
 	
 			console.log(_url);
@@ -4789,7 +4792,7 @@ function SubmitEMRFProcess(isFinal)
 				});
 		
 			var _url =  serviceRootUrl + "svc.aspx?op=SubmitEMRF&SPUrl=" + spwebRootUrl + "sites/busops&recordId=" + $scope.recordId + "&CostCenter=" + $scope.CostCenter + "&DDS=" + $scope.DDS + "&DebrisRemoval=" + $scope.DebrisRemoval + "&DelDate=" + $scope.DelDate + "&DelTime=" + $scope.DelTime + "&Deskidding=" + $scope.Deskidding + "&DockAvail=" + $scope.DockAvail + "&FreightElevator=" + $scope.FreightElevator + "&IDS=" + $scope.IDS + "&ItemDetail=" + $scope.ItemDetail + "&LG=" + $scope.LG + "&Modality=" + $scope.Modality + "&SID=" + $scope.SID + "&OrderNumber=" + $scope.OrderNumber + "&OtherRef=" + $scope.OtherRef + "&Planner=" + $scope.Planner + "&ProductDescription=" + $scope.ProductDescription + "&Riggers=" + $scope.Riggers + "&RiggersPhone=" + $scope.RiggersPhone + "&RiggersTruckline=" + $scope.RiggersTruckline+ "&RMA=" + $scope.RMA + "&ShipToAddress=" + $scope.ShipToAddress + "&ShipToCity=" + $scope.ShipToCity +
-			"&ShipToContact=" + $scope.ShipToContact + "&ShipToOther=" + $scope.ShipToOther + "&ShipToSecondary=" + $scope.ShipToSecondary + "&ShipToSite=" + $scope.ShipToSite + "&ShipToState=" + $scope.ShipToState + "&ShipToZip=" + $scope.ShipToZip + "&SpecialInstructions=" + $scope.SpecialInstructions + "&Status=" + $scope.Status + "&SubmittedToPlannerName=" + $scope.SubmittedToPlannerName+ "&DTBy=" + $scope.DTBy + "&TimeBy=" + $scope.TimeBy +"&DeliverDateNote=" + $scope.DeliverDateNote + "&RequestedDeliveryDatePrefix=" + $scope.RequestedDeliveryDatePrefix + "&RequestedDeliveryTimePrefix=" + $scope.RequestedDeliveryTimePrefix + "&ProjectId=" + $scope.ProjectId +					
+			"&ShipToContact=" + $scope.ShipToContact + "&ShipToOther=" + $scope.ShipToOther + "&ShipToSecondary=" + $scope.ShipToSecondary + "&ShipToSite=" + encodeURIComponent($scope.ShipToSite) + "&ShipToState=" + $scope.ShipToState + "&ShipToZip=" + $scope.ShipToZip + "&SpecialInstructions=" + $scope.SpecialInstructions + "&Status=" + $scope.Status + "&SubmittedToPlannerName=" + $scope.SubmittedToPlannerName+ "&DTBy=" + $scope.DTBy + "&TimeBy=" + $scope.TimeBy +"&DeliverDateNote=" + $scope.DeliverDateNote + "&RequestedDeliveryDatePrefix=" + $scope.RequestedDeliveryDatePrefix + "&RequestedDeliveryTimePrefix=" + $scope.RequestedDeliveryTimePrefix + "&ProjectId=" + $scope.ProjectId +					
 			"&username=" + userInfoData.Email + "&userid=" + userInfoData.UserID+ "&EMRID=" + AddEMRID + "&authInfo=" + userInfoData.AuthenticationHeader + "&statusId=" + $scope.StatusId;
 	
 			console.log(_url);

@@ -33,6 +33,16 @@ function EditProjectDetailsAction(Projectid)
 
 }
 
+function DecodeString(encoded) 
+{
+	var elem = document.createElement('textarea');
+	elem.innerHTML = encoded;
+	return(elem.value);
+}
+
+
+				
+				
 function showAboutMeMenu() 
 {
 	$( "#popupAboutMe" ).popup( "open" )
