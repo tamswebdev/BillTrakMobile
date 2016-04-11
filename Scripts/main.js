@@ -1571,13 +1571,13 @@ function callbackLoadEMRF(data)
 				
 				if (catalog.Status!='Draft')
 				{
-					TableRow = $('<div style="width:100%;margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">'  + catalog.ShipToSite +'</span><br><span style="font-size:x-small;">'+ catalog.Status +' - '+ catalog.SentToTCSubCategory+'</span><br><span style="font-size:x-small;">To:'+ catalog.ShipToAddress + catalog.ShipToCity+ catalog.ShipToState+ ' ' +catalog.ShipToZip+'</span><br><span style="font-size:x-small;">Requested Delivery Date:'+ catalog.DelvDate  +'</span><br><span style="font-size:x-small;">'+catalog.ItemDetail +'</span></div>');
+					TableRow = $('<div style="width:100%;margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">'  + catalog.ShipToSite +'</span><br><span style="font-size:x-small;">'+ catalog.Status +' - '+ catalog.SentToTCSubCategory+'</span><br><span style="font-size:x-small;">Deliver to: '+ catalog.ShipToAddress + catalog.ShipToCity+ catalog.ShipToState+ ' ' +catalog.ShipToZip+'</span><br><span style="font-size:x-small;">Requested Delivery Date:'+ catalog.DelvDate  +'</span><br><span style="font-size:x-small;">'+catalog.ItemDetail +'</span></div>');
 					TableRow.appendTo($("#EMRFGrid"));
 				}
 				else
 				{
 					var path='#pgAddEMRF?id='+ id + '&projectId=' + id +  '&source=BillTrak&EditMode=1' + '&EMRID=' + catalog.EMRId;	
-					TableRow = $('<div style="width:100%;margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;"><a href="javascript:void(0);" onclick=NavigatePage("' + path + '");>'  + catalog.ShipToSite +'</a></span><br><span style="font-size:x-small;">'+ catalog.Status +' - '+ catalog.SentToTCSubCategory+'</span><br><span style="font-size:x-small;">To:'+ catalog.ShipToAddress + catalog.ShipToCity+ catalog.ShipToState+ ' ' +catalog.ShipToZip+'</span><br><span style="font-size:x-small;">Requested Delivery Date:'+ catalog.DelvDate  +'</span><br><span style="font-size:x-small;">'+catalog.ItemDetail +'</span></div>');
+					TableRow = $('<div style="width:100%;margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;"><a href="javascript:void(0);" onclick=NavigatePage("' + path + '");>'  + catalog.ShipToSite +'</a></span><br><span style="font-size:x-small;">'+ catalog.Status +' - '+ catalog.SentToTCSubCategory+'</span><br><span style="font-size:x-small;">Deliver to: '+ catalog.ShipToAddress + catalog.ShipToCity+ catalog.ShipToState+ ' ' +catalog.ShipToZip+'</span><br><span style="font-size:x-small;">Requested Delivery Date:'+ catalog.DelvDate  +'</span><br><span style="font-size:x-small;">'+catalog.ItemDetail +'</span></div>');
 					TableRow.appendTo($("#EMRFGrid"));
 
 				}
@@ -3958,7 +3958,7 @@ $( document ).on( "pagebeforeshow", "#pgAddEMRF", function(event) {
 
 	
 	$("#tblAddEMRF").find("input").each(function() {
-		if ($(this).attr("type") == "text" || $(this).attr("type") == "date" || $(this).attr("type") == "time")
+		if ($(this).attr("type") == "text" || $(this).attr("type") == "date" ) //|| $(this).attr("type") == "time")
 			$(this).val("");
 		if ($(this).attr("type") == "radio")
 			$(this).prop('checked', false);
@@ -3980,6 +3980,8 @@ $( document ).on( "pagebeforeshow", "#pgAddEMRF", function(event) {
 	$("#txt_AddEMRF_PrimContact").val('');
 	$("#txt_AddEMRF_SecContact").val('');
 	$("#txt_AddEMRF_DeliverDateNote").val('');
+	$("#txt_AddEMRF_RDDTime").val('08:00');
+	
 	
 	
 	//$("#ddlSR_Government_Agencies").val('None').selectmenu('refresh', true);
@@ -4827,7 +4829,8 @@ function callbackSubmitEMRF(data)
 			//$('#tblAddEMRF').show();
 			//$('#tblAddEMRFsButtons').show();
 			$.mobile.loading( 'hide' );
-			GoToSectionWithID('ProjectOptions');
+			//GoToSectionWithID('ProjectOptions');
+			GoToSectionWithID('EMRF');
 
 	}
 	catch(err) { }
