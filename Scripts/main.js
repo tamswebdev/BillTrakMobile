@@ -1568,28 +1568,43 @@ function callbackLoadEMRF(data)
 			{
 				var catalog = data.d.results[i];
 				var TableRow="";
+				var strRDD="";
 				
+				
+				if (catalog.DelDate  && catalog.DelDate !="undefined" && catalog.DelDate !="" )
+				{
+					if (catalog.RequestedDeliveryDatePrefix  && catalog.RequestedDeliveryDatePrefix !="undefined" && catalog.RequestedDeliveryDatePrefix !="" )
+						strRDD=catalog.RequestedDeliveryDatePrefix  + ' '  + catalog.DelDate;
+					else
+						strRDD=catalog.DelDate;
+				}
+
+				if (catalog.DelTime  && catalog.DelTime !="undefined" && catalog.DelTime !="" )
+				{
+					if (catalog.RequestedDeliveryTimePrefix  && catalog.RequestedDeliveryTimePrefix !="undefined" && catalog.RequestedDeliveryTimePrefix !="" )
+						strRDD=strRDD+ ' ' + catalog.RequestedDeliveryTimePrefix  + ' '  + catalog.DelTime;
+					else
+						strRDD=strRDD+  ' '  + catalog.DelTime;
+				}
+
+
+				
+			
 				if (catalog.Status!='Draft')
 				{
-					TableRow = $('<div style="width:100%;margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">'  + catalog.ShipToSite +'</span><br><span style="font-size:x-small;">'+ catalog.Status +' - '+ catalog.SentToTCSubCategory+'</span><br><span style="font-size:x-small;">Deliver to: '+ catalog.ShipToAddress + catalog.ShipToCity+ catalog.ShipToState+ ' ' +catalog.ShipToZip+'</span><br><span style="font-size:x-small;">Requested Delivery Date:'+ catalog.DelvDate  +'</span><br><span style="font-size:x-small;">'+catalog.ItemDetail +'</span></div>');
+					TableRow = $('<div style="width:100%;margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">'  + catalog.ShipToSite +'</span><br><span style="font-size:x-small;">'+ catalog.Status +' - '+ catalog.SentToTCSubCategory+'</span><br><span style="font-size:x-small;">Deliver to: '+ catalog.ShipToAddress + catalog.ShipToCity+ catalog.ShipToState+ ' ' +catalog.ShipToZip+'</span><br><span style="font-size:x-small;">Requested Delivery: '+ strRDD 
+					+'</span><br><span style="font-size:x-small;">'+catalog.ItemDetail +'</span></div>');
 					TableRow.appendTo($("#EMRFGrid"));
 				}
 				else
 				{
 					var path='#pgAddEMRF?id='+ id + '&projectId=' + id +  '&source=BillTrak&EditMode=1' + '&EMRID=' + catalog.EMRId;	
-					TableRow = $('<div style="width:100%;margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;"><a href="javascript:void(0);" onclick=NavigatePage("' + path + '");>'  + catalog.ShipToSite +'</a></span><br><span style="font-size:x-small;">'+ catalog.Status +' - '+ catalog.SentToTCSubCategory+'</span><br><span style="font-size:x-small;">Deliver to: '+ catalog.ShipToAddress + catalog.ShipToCity+ catalog.ShipToState+ ' ' +catalog.ShipToZip+'</span><br><span style="font-size:x-small;">Requested Delivery Date:'+ catalog.DelvDate  +'</span><br><span style="font-size:x-small;">'+catalog.ItemDetail +'</span></div>');
+					TableRow = $('<div style="width:100%;margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;"><a href="javascript:void(0);" onclick=NavigatePage("' + path + '");>'  + catalog.ShipToSite +'</a></span><br><span style="font-size:x-small;">'+ catalog.Status +' - '+ catalog.SentToTCSubCategory+'</span><br><span style="font-size:x-small;">Deliver to: '+ catalog.ShipToAddress + catalog.ShipToCity+ catalog.ShipToState+ ' ' +catalog.ShipToZip+'</span><br><span style="font-size:x-small;">Requested Delivery: '+ strRDD  +'</span><br><span style="font-size:x-small;">'+catalog.ItemDetail +'</span></div>');
 					TableRow.appendTo($("#EMRFGrid"));
 
 				}
 
-							
-							
-							
 
-
-				
-				
-				
 				
 				
 			}
@@ -4582,7 +4597,7 @@ function callbackAddEMRF(data)
 			$('#tblAddEMRF').show();
 			$('#tblAddEMRFsButtons').show();
 			$.mobile.loading( 'hide' );
-			//GoToSectionWithID('ProjectOptions');
+			GoToSectionWithID('EMRF');
 
 	}
 	catch(err) { }
