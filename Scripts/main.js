@@ -3332,15 +3332,15 @@ function checkUserLogin()
 		}
 	}
 	
-	if (TouchIDAuth!="1")
-	{
+	
+	
 		
 
 				isUserLogin = (userInfoData.AuthenticationHeader != null && userInfoData.AuthenticationHeader != "" && 
 					userInfoData.DisplayName != null && userInfoData.DisplayName != "" &&
 					userInfoData.Email != null && userInfoData.Email != "" && userInfoData.Expiration > getTimestamp());
-	}
-	else
+	
+	if( (TouchIDAuth=="1") && isUserLogin)
 	{
 
 			if (CheckTouchIDAvailable)
