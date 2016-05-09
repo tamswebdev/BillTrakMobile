@@ -1,21 +1,20 @@
-function TouchID() {
-}
 
-TouchID.prototype.isAvailable = function (successCallback, errorCallback) {
-  cordova.exec(successCallback, errorCallback, "TouchID", "isAvailable", []);
+var exec = require("cordova/exec");
+
+var TouchID = function () {
+    this.name = "TouchID";
 };
 
-TouchID.prototype.verifyFingerprint = function (message, successCallback, errorCallback) {
-  cordova.exec(successCallback, errorCallback, "TouchID", "verifyFingerprint", [message]);
+TouchID.prototype.authenticate = function (successCallback, errorCallback, text) {
+    if (!text) {
+        text = "Please authenticate via TouchID to proceed";
+    }
+    exec(successCallback, errorCallback, "TouchID", "authenticate", [text]);
 };
 
-TouchID.install = function () {
-  if (!window.plugins) {
-    window.plugins = {};
-  }
-
-  window.plugins.touchid = new TouchID();
-  return window.plugins.touchid;
+TouchID.prototype.checkSupport = function (successCallback, errorCallback) {
+    exec(successCallback, errorCallback, "TouchID", "checkSupport");
 };
 
-cordova.addConstructor(TouchID.install);
+alert("0000");
+module.exports = new TouchID();
