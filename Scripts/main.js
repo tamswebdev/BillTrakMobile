@@ -269,6 +269,17 @@ function callbackLogin( data ){
 			else
 				userInfoData.Expiration = getTimestamp() + 14400000; //4 hours
 			
+			if (CheckTouchIDAvailable)
+			{
+				
+				localstorage.set("TouchIDAuth", "1");
+			}
+			else{
+				
+				localstorage.set("TouchIDAuth", "0");
+			}
+			
+			
 			localstorage.set("userInfoData", userInfoData);
 			
 			NavigatePage("#pgHome");
@@ -3291,21 +3302,23 @@ function SignOut()
 	NavigatePage("#pgLogin");
 }
 
-function CheckTouchID()
-{
-	alert(localstorage.get("DeviceInfo"));
-}
+
+
+
 
 function checkUserLogin()
 {
 	$(".network-unreachable").remove();
 
-	
-	
 	checkConnection();
-	
-	CheckTouchID();
-	
+
+	var TouchIDAuth="0";
+	if (CheckTouchIDAvailable)
+	{
+		
+		TouchIDAuth=localstorage.get("TouchIDAuth");
+	}
+
 	if (userInfoData == null)
 	{
 		if (localstorage.get("userInfoData") != null)
@@ -3318,10 +3331,24 @@ function checkUserLogin()
 		}
 	}
 	
+	if (TouchIDAuth!="1")
+	{
+		
+
 	isUserLogin = (userInfoData.AuthenticationHeader != null && userInfoData.AuthenticationHeader != "" && 
 					userInfoData.DisplayName != null && userInfoData.DisplayName != "" &&
 					userInfoData.Email != null && userInfoData.Email != "" && userInfoData.Expiration > getTimestamp());
-
+	}
+	else
+	{
+		window.plugins.touchid.verifyFingerprintWithCustomPasswordFallbackAndEnterPasswordLabel(
+		  'Scan your fingerprint please', // this will be shown in the native scanner popup
+		  'Enter PIN', // this will become the 'Enter password' button label
+		   function(msg) {isUserLogin = true;}, // success handler: fingerprint accepted
+		   function(msg) {isUserLogin = false;} // error handler with errorcode and localised reason
+		);		
+		
+	}
 
     if (!isUserLogin && location.href.indexOf("#pgLogin") < 0)
 	{

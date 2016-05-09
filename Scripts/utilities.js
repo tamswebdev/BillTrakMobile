@@ -40,6 +40,21 @@ function DecodeString(encoded)
 	return(elem.value);
 }
 
+function CheckTouchIDAvailable()
+{
+	
+	var RetVal=false;
+	if (typeof device != 'undefined')
+	{
+		if (device.platform=='iOS' && parseInt(device.version.charAt(0))>=8)
+		{
+			RetVal=true;
+		}
+			
+	}
+	return (RetVal);
+}
+
 
 				
 				
