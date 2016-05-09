@@ -3291,11 +3291,21 @@ function SignOut()
 	NavigatePage("#pgLogin");
 }
 
+function CheckTouchID()
+{
+	alert(localstorage.get("DeviceInfo"));
+}
+
 function checkUserLogin()
 {
 	$(".network-unreachable").remove();
 
+	
+	
 	checkConnection();
+	
+	CheckTouchID();
+	
 	if (userInfoData == null)
 	{
 		if (localstorage.get("userInfoData") != null)
