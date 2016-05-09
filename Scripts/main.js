@@ -3356,6 +3356,7 @@ function checkUserLogin()
 	}
 
 	alert(isUserLogin);
+	alert(TouchIDAuth);
 	
     if (!isUserLogin && location.href.indexOf("#pgLogin") < 0)
 	{
