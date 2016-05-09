@@ -3313,6 +3313,7 @@ function checkUserLogin()
 	checkConnection();
 
 	var TouchIDAuth="0";
+
 	if (CheckTouchIDAvailable)
 	{
 		
@@ -3335,21 +3336,32 @@ function checkUserLogin()
 	{
 		
 
-	isUserLogin = (userInfoData.AuthenticationHeader != null && userInfoData.AuthenticationHeader != "" && 
+				isUserLogin = (userInfoData.AuthenticationHeader != null && userInfoData.AuthenticationHeader != "" && 
 					userInfoData.DisplayName != null && userInfoData.DisplayName != "" &&
 					userInfoData.Email != null && userInfoData.Email != "" && userInfoData.Expiration > getTimestamp());
 	}
 	else
 	{
-		window.plugins.touchid.verifyFingerprintWithCustomPasswordFallbackAndEnterPasswordLabel(
+
+
+			
+			alert(5);
+			//TouchID.checkSupport("touch it", "dont touch it");
+			alert(6);
+			touchid.authenticate(function(msg) {isUserLogin = true;}, function(msg) {isUserLogin = false;}, "Scan your fingerprint please");
+
+			alert(7);
+			/*
+				window.plugins.touchid.verifyFingerprint(
 		  'Scan your fingerprint please', // this will be shown in the native scanner popup
-		  'Enter PIN', // this will become the 'Enter password' button label
+		  
 		   function(msg) {isUserLogin = true;}, // success handler: fingerprint accepted
 		   function(msg) {isUserLogin = false;} // error handler with errorcode and localised reason
-		);		
-		
+		);		*/
 	}
 
+
+	
     if (!isUserLogin && location.href.indexOf("#pgLogin") < 0)
 	{
 		NavigatePage("#pgLogin");
