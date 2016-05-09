@@ -3343,14 +3343,9 @@ function checkUserLogin()
 	else
 	{
 
-
-			
-			alert(5);
-			//TouchID.checkSupport("touch it", "dont touch it");
-			alert(6);
-			touchid.authenticate(function(msg) {isUserLogin = true;}, function(msg) {isUserLogin = false;}, "Scan your fingerprint please");
-
-			alert(7);
+			if (CheckTouchIDAvailable)
+			{			touchid.authenticate(function(msg) {isUserLogin = true;}, function(msg) {isUserLogin = false;}, "Scan your fingerprint please");
+			}
 			/*
 				window.plugins.touchid.verifyFingerprint(
 		  'Scan your fingerprint please', // this will be shown in the native scanner popup
@@ -3360,7 +3355,7 @@ function checkUserLogin()
 		);		*/
 	}
 
-
+	alert(isUserLogin);
 	
     if (!isUserLogin && location.href.indexOf("#pgLogin") < 0)
 	{
