@@ -268,17 +268,7 @@ function callbackLogin( data ){
 				userInfoData.Expiration = getTimestamp() + 1210000000;	//2 weeks
 			else
 				userInfoData.Expiration = getTimestamp() + 14400000; //4 hours
-			
-			if (CheckTouchIDAvailable)
-			{
-				
-				localstorage.set("TouchIDAuth", "1");
-			}
-			else{
-				
-				localstorage.set("TouchIDAuth", "0");
-			}
-			
+
 			
 			localstorage.set("userInfoData", userInfoData);
 			
@@ -3340,7 +3330,7 @@ function checkUserLogin()
 					userInfoData.DisplayName != null && userInfoData.DisplayName != "" &&
 					userInfoData.Email != null && userInfoData.Email != "" && userInfoData.Expiration > getTimestamp());
 	
-			if( (TouchIDAuth=="1") )
+			if( (TouchIDAuth=="1") && isUserLogin)
 			{
 
 			if (CheckTouchIDAvailable)
@@ -3365,6 +3355,17 @@ function checkUserLogin()
 	else if (isUserLogin)
 	{	
 		$(".spanLoginUser").text("" +userInfoData.DisplayName);
+					
+			if (CheckTouchIDAvailable)
+			{
+				
+				localstorage.set("TouchIDAuth", "1");
+			}
+			else{
+				
+				localstorage.set("TouchIDAuth", "0");
+			}
+			
 		if (location.href.indexOf("#") < 0 || location.href.indexOf("#pgLogin") > 0)
 			NavigatePage("#pgHome");
 	}
