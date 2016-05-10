@@ -247,6 +247,18 @@ function LoginUser()
 	var loginname = ($('#login').val().indexOf("@") > 0) ? $('#login').val().substring(0, $('#login').val().indexOf("@")) : $('#login').val();
 	loginname = (loginname.indexOf("\\") > 0) ? loginname : "tamsdomain\\" + loginname;
 	loginname=loginname.trim();
+	
+			if (CheckTouchIDAvailable)
+			{
+				
+				localstorage.set("TouchIDAuth", loginname);
+			}
+			else{
+				
+				localstorage.set("TouchIDAuth", "0");
+			}			
+			
+	
 	userInfoData.AuthenticationHeader = Base64.encode(loginname + ":" + $('#password').val());
 	var _url = serviceRootUrl + "svc.aspx?op=Authenticate&SPUrl=" + spwebRootUrl + "sites/busops&authInfo=" + userInfoData.AuthenticationHeader + "&currentURL=" + serviceRootUrl + "main.html"
 
@@ -273,11 +285,22 @@ function callbackLogin( data ){
 			
 			localstorage.set("userInfoData", userInfoData);
 			
+				
+
+					
+			
 			NavigatePage("#pgHome");
 		}
 		else {
 			userInfoData = localstorage.getUserInfoDefault();
+			if (CheckTouchIDAvailable)
+			{
+				
+				localstorage.set("TouchIDAuth", "0");
+			}
+
 			$('#td-error').html("Invalid login and/or password.");
+			
 		}
 	}
 	catch(err) {
@@ -1401,6 +1424,7 @@ function callbackLoadAppsSchedule(data)
 				var Weekof="";
 				if ((catalog.Weekof) && (catalog.Weekof!=""))
 					Weekof=getMMDDYYYYDate(catalog.Weekof)
+
 
 
 				var TableRow = $('<div style="width:100%;margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.Specialist +'</span><br><span style="font-size:x-small;">Week of: '+  Weekof + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +catalog.ScheduleStatus +' - '+ catalog.Purpose+'</span><br><span style="font-size:x-small;">'+catalog.Equipment +'</span><table class="WeekCal"><tr><td class="WeekCalTDHead">S</td><td class="WeekCalTDHead">M</td><td class="WeekCalTDHead">T</td><td class="WeekCalTDHead">W</td><td class="WeekCalTDHead">T</td><td class="WeekCalTDHead">F</td></tr><tr><td  class="WeekCalTD">'+catalog.Sunday+'</td><td class="WeekCalTD">'+catalog.Monday+'</td><td class="WeekCalTD">'+catalog.Tuesday+'</td><td class="WeekCalTD">'+catalog.Wednesday+'</td><td class="WeekCalTD">'+catalog.Thursday+'</td><td class="WeekCalTD">'+catalog.Friday+'</td></tr></table></div>');
@@ -3299,9 +3323,7 @@ function SignOut()
 
 function checkUserLogin()
 {
-	alert("TouchIDAuthenticated=" + TouchIDAuthenticated);
-	if (TouchIDAuthenticated=="0")
-	{
+
 		$(".network-unreachable").remove();
 
 		checkConnection();
@@ -3310,8 +3332,8 @@ function checkUserLogin()
 
 		if (CheckTouchIDAvailable)
 		{
-			
-			TouchIDAuth=localstorage.get("TouchIDAuth");
+			if (TouchIDAuthenticated=="0")
+				TouchIDAuth=localstorage.get("TouchIDAuth");
 		}
 
 		if (userInfoData == null)
@@ -3334,12 +3356,26 @@ function checkUserLogin()
 						userInfoData.DisplayName != null && userInfoData.DisplayName != "" &&
 						userInfoData.Email != null && userInfoData.Email != "" && userInfoData.Expiration > getTimestamp());
 		
-				if( (TouchIDAuth=="1") && isUserLogin)
+				if( TouchIDAuth!="0")
 				{
-
-				if (CheckTouchIDAvailable)
-				{			touchid.authenticate(function(msg) {isUserLogin = true;TouchIDAuthenticated="1";},function(msg) {isUserLogin = false;TouchIDAuthenticated="0";}, "Scan your fingerprint please");
+						// Authenticate user the Touch ID way
+					if (typeof touchid !== 'undefined')
+					{
+						touchid.authenticate(
+							function(msg) {
+								
+								LoginUserByTouchID(TouchIDAuth);
+								},
+							function(msg) {
+								TouchIDAuthenticated="0";
+								isUserLogin=false;
+								}, 
+							"Scan your fingerprint please"
+							);
+					}
 				}
+
+
 				/*
 					window.plugins.touchid.verifyFingerprint(
 			  'Scan your fingerprint please', // this will be shown in the native scanner popup
@@ -3347,10 +3383,10 @@ function checkUserLogin()
 			   function(msg) {isUserLogin = true;}, // success handler: fingerprint accepted
 			   function(msg) {isUserLogin = false;} // error handler with errorcode and localised reason
 			);		*/
-		}
+		//}
 
-		alert(isUserLogin);
-		alert(TouchIDAuth);
+		//alert(isUserLogin);
+		//alert(TouchIDAuth);
 		
 		if (!isUserLogin && location.href.indexOf("#pgLogin") < 0)
 		{
@@ -3360,21 +3396,86 @@ function checkUserLogin()
 		{	
 			$(".spanLoginUser").text("" +userInfoData.DisplayName);
 						
-				if (CheckTouchIDAvailable)
-				{
-					
-					localstorage.set("TouchIDAuth", "1");
-				}
-				else{
-					
-					localstorage.set("TouchIDAuth", "0");
-				}
+
 				
 			if (location.href.indexOf("#") < 0 || location.href.indexOf("#pgLogin") > 0)
 				NavigatePage("#pgHome");
 		}
+
+}
+
+
+
+
+
+
+
+
+function LoginUserByTouchID(TouchIDAuth)
+{
+
+	
+	var loginname=TouchIDAuth;
+	
+
+	userInfoData.AuthenticationHeader = Base64.encode(loginname + ":" + "TouchID");
+	var _url = serviceRootUrl + "svc.aspx?op=AuthenticateByTouchID&SPUrl=" + spwebRootUrl + "sites/busops&authInfo=" + userInfoData.AuthenticationHeader + "&currentURL=" + serviceRootUrl + "main.html"
+
+	Jsonp_Call(_url, true, "callbackLoginByTouchID");
+	
+}
+
+function callbackLoginByTouchID( data ){
+	try {
+	
+		if (data.d.results.issuccess) 
+		{
+			userInfoData.DisplayName = data.d.results.name;
+			userInfoData.Email = data.d.results.email;
+			userInfoData.Phone = data.d.results.phone;
+			userInfoData.UserID = data.d.results.userid;	
+			$(".spanLoginUser").text("" +userInfoData.DisplayName);
+
+			userInfoData.Expiration = getTimestamp() + 1210000000;	//2 weeks
+
+			localstorage.set("userInfoData", userInfoData);
+			
+			TouchIDAuthenticated="1";				
+			
+			NavigatePage("#pgHome");
+		}
+		else {
+			TouchIDAuthenticated="0";
+			userInfoData = localstorage.getUserInfoDefault();
+			if (CheckTouchIDAvailable)
+			{
+				
+				localstorage.set("TouchIDAuth", "0");
+			}
+
+			NavigatePage("#pgLogin");
+			
+		}
+	}
+	catch(err) {
+		$('#td-error').html("Internal application error.");
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function checkConnection() {
 	try {

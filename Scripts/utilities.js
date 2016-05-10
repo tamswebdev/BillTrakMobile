@@ -44,11 +44,33 @@ function CheckTouchIDAvailable()
 {
 	
 	var RetVal=false;
+	Model="";
 	if (typeof device != 'undefined')
 	{
+
+		
+			
+			
+		
 		if (device.platform=='iOS' && parseInt(device.version.charAt(0))>=8)
 		{
-			RetVal=true;
+			Model=device.model.replace('iPhone','');
+			if (Model.charAt(0)=="6")
+			{
+				if (parseInt(Model.slice(-1))!=1)
+					RetVal=true;
+			}
+			else if (parseInt(Model.charAt(0))>6)
+			{
+				RetVal=true;
+			}
+			
+			else
+			{
+				RetVal=false;
+			}
+		
+
 		}
 			
 	}
@@ -155,13 +177,19 @@ var localstorage = {
 
 function getMMDDYYYYDate(DateString)
 {
-	DateString=DateString.substring(0,10);
+	var SpacePos=DateString.indexOf(' ')
+	if (SpacePos==-1) {SpacePos=10;}
+	DateString=DateString.substring(0,SpacePos);
+
 	var date = new Date(DateString);
 	var year = date.getFullYear();
 	var month = (1 + date.getMonth()).toString();
+	
+
 	month = month.length > 1 ? month : '0' + month;
 	var day = date.getDate().toString();
 	day = day.length > 1 ? day : '0' + day;
+	
 	return month + '/' + day + '/' + year;
 }
 
