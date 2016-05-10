@@ -22,6 +22,7 @@ var PhotoNamesArray=[];
 	
 var AddEMRID="0";
 	
+var TouchIDAuthenticated="0";
 	
 	
 if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/) && location.href.toLowerCase().indexOf( 'http://' ) < 0 && location.href.toLowerCase().indexOf( 'https://' ) < 0) 
@@ -3298,76 +3299,80 @@ function SignOut()
 
 function checkUserLogin()
 {
-	$(".network-unreachable").remove();
-
-	checkConnection();
-
-	var TouchIDAuth="0";
-
-	if (CheckTouchIDAvailable)
+	alert("TouchIDAuthenticated="+TouchIDAuthenticated);
+	if (TouchIDAuthenticated=="0")
 	{
-		
-		TouchIDAuth=localstorage.get("TouchIDAuth");
-	}
+		$(".network-unreachable").remove();
 
-	if (userInfoData == null)
-	{
-		if (localstorage.get("userInfoData") != null)
+		checkConnection();
+
+		var TouchIDAuth="0";
+
+		if (CheckTouchIDAvailable)
 		{
-			userInfoData = localstorage.get("userInfoData");
-		}
-		else if (localstorage.get("userInfoData") == null)
-		{
-			userInfoData = localstorage.getUserInfoDefault();
-		}
-	}
-	
-	
-	
-		
-
-				isUserLogin = (userInfoData.AuthenticationHeader != null && userInfoData.AuthenticationHeader != "" && 
-					userInfoData.DisplayName != null && userInfoData.DisplayName != "" &&
-					userInfoData.Email != null && userInfoData.Email != "" && userInfoData.Expiration > getTimestamp());
-	
-			if( (TouchIDAuth=="1") && isUserLogin)
-			{
-
-			if (CheckTouchIDAvailable)
-			{			touchid.authenticate(function(msg) {isUserLogin = true;}, function(msg) {isUserLogin = false;}, "Scan your fingerprint please");
-			}
-			/*
-				window.plugins.touchid.verifyFingerprint(
-		  'Scan your fingerprint please', // this will be shown in the native scanner popup
-		  
-		   function(msg) {isUserLogin = true;}, // success handler: fingerprint accepted
-		   function(msg) {isUserLogin = false;} // error handler with errorcode and localised reason
-		);		*/
-	}
-
-	alert(isUserLogin);
-	alert(TouchIDAuth);
-	
-    if (!isUserLogin && location.href.indexOf("#pgLogin") < 0)
-	{
-		NavigatePage("#pgLogin");
-	}
-	else if (isUserLogin)
-	{	
-		$(".spanLoginUser").text("" +userInfoData.DisplayName);
-					
-			if (CheckTouchIDAvailable)
-			{
-				
-				localstorage.set("TouchIDAuth", "1");
-			}
-			else{
-				
-				localstorage.set("TouchIDAuth", "0");
-			}
 			
-		if (location.href.indexOf("#") < 0 || location.href.indexOf("#pgLogin") > 0)
-			NavigatePage("#pgHome");
+			TouchIDAuth=localstorage.get("TouchIDAuth");
+		}
+
+		if (userInfoData == null)
+		{
+			if (localstorage.get("userInfoData") != null)
+			{
+				userInfoData = localstorage.get("userInfoData");
+			}
+			else if (localstorage.get("userInfoData") == null)
+			{
+				userInfoData = localstorage.getUserInfoDefault();
+			}
+		}
+		
+		
+		
+			
+
+					isUserLogin = (userInfoData.AuthenticationHeader != null && userInfoData.AuthenticationHeader != "" && 
+						userInfoData.DisplayName != null && userInfoData.DisplayName != "" &&
+						userInfoData.Email != null && userInfoData.Email != "" && userInfoData.Expiration > getTimestamp());
+		
+				if( (TouchIDAuth=="1") && isUserLogin)
+				{
+
+				if (CheckTouchIDAvailable)
+				{			touchid.authenticate(function(msg) {isUserLogin = true;TouchIDAuthenticated="1";, function(msg) {isUserLogin = false;TouchIDAuthenticated="0";}, "Scan your fingerprint please");
+				}
+				/*
+					window.plugins.touchid.verifyFingerprint(
+			  'Scan your fingerprint please', // this will be shown in the native scanner popup
+			  
+			   function(msg) {isUserLogin = true;}, // success handler: fingerprint accepted
+			   function(msg) {isUserLogin = false;} // error handler with errorcode and localised reason
+			);		*/
+		}
+
+		alert(isUserLogin);
+		alert(TouchIDAuth);
+		
+		if (!isUserLogin && location.href.indexOf("#pgLogin") < 0)
+		{
+			NavigatePage("#pgLogin");
+		}
+		else if (isUserLogin)
+		{	
+			$(".spanLoginUser").text("" +userInfoData.DisplayName);
+						
+				if (CheckTouchIDAvailable)
+				{
+					
+					localstorage.set("TouchIDAuth", "1");
+				}
+				else{
+					
+					localstorage.set("TouchIDAuth", "0");
+				}
+				
+			if (location.href.indexOf("#") < 0 || location.href.indexOf("#pgLogin") > 0)
+				NavigatePage("#pgHome");
+		}
 	}
 }
 
