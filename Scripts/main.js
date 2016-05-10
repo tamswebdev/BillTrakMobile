@@ -3340,8 +3340,8 @@ function checkUserLogin()
 					userInfoData.DisplayName != null && userInfoData.DisplayName != "" &&
 					userInfoData.Email != null && userInfoData.Email != "" && userInfoData.Expiration > getTimestamp());
 	
-	if( (TouchIDAuth=="1") && isUserLogin)
-	{
+			if( (TouchIDAuth=="1") )
+			{
 
 			if (CheckTouchIDAvailable)
 			{			touchid.authenticate(function(msg) {isUserLogin = true;}, function(msg) {isUserLogin = false;}, "Scan your fingerprint please");
