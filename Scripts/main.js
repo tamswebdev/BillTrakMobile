@@ -3299,7 +3299,7 @@ function SignOut()
 
 function checkUserLogin()
 {
-	alert("TouchIDAuthenticated="+TouchIDAuthenticated);
+	alert("TouchIDAuthenticated=" + TouchIDAuthenticated);
 	if (TouchIDAuthenticated=="0")
 	{
 		$(".network-unreachable").remove();
@@ -3338,7 +3338,7 @@ function checkUserLogin()
 				{
 
 				if (CheckTouchIDAvailable)
-				{			touchid.authenticate(function(msg) {isUserLogin = true;TouchIDAuthenticated="1";, function(msg) {isUserLogin = false;TouchIDAuthenticated="0";}, "Scan your fingerprint please");
+				{			touchid.authenticate(function(msg) {isUserLogin = true;TouchIDAuthenticated="1";},function(msg) {isUserLogin = false;TouchIDAuthenticated="0";}, "Scan your fingerprint please");
 				}
 				/*
 					window.plugins.touchid.verifyFingerprint(
