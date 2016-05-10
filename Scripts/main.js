@@ -3356,7 +3356,7 @@ function checkUserLogin()
 						userInfoData.DisplayName != null && userInfoData.DisplayName != "" &&
 						userInfoData.Email != null && userInfoData.Email != "" && userInfoData.Expiration > getTimestamp());
 		
-				if( TouchIDAuth!="0")
+				if( TouchIDAuth!="0" && TouchIDAuthenticated=="0")
 				{
 						// Authenticate user the Touch ID way
 					if (typeof touchid !== 'undefined')
@@ -3388,7 +3388,7 @@ function checkUserLogin()
 		//alert(isUserLogin);
 		//alert(TouchIDAuth);
 		
-		if (!isUserLogin && location.href.indexOf("#pgLogin") < 0)
+		if (!isUserLogin && location.href.indexOf("#pgLogin") < 0  TouchIDAuth=="0" && TouchIDAuthenticated!="0")
 		{
 			NavigatePage("#pgLogin");
 		}
