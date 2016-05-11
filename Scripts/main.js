@@ -3368,13 +3368,29 @@ function checkUserLogin()
 								},
 							function(msg) {
 								TouchIDAuthenticated="0";
-								isUserLogin=false;
+								NavigatePage("#pgLogin");
 								}, 
 							"Scan your fingerprint please"
 							);
 					}
 				}
+				else
+				{
+					if (!isUserLogin && location.href.indexOf("#pgLogin") < 0 )
+					{
+						NavigatePage("#pgLogin");
+					}
+					else if (isUserLogin)
+					{	
+						$(".spanLoginUser").text("" +userInfoData.DisplayName);
+									
 
+							
+						if (location.href.indexOf("#") < 0 || location.href.indexOf("#pgLogin") > 0)
+							NavigatePage("#pgHome");
+					}					
+								
+				}
 
 				/*
 					window.plugins.touchid.verifyFingerprint(
@@ -3388,19 +3404,7 @@ function checkUserLogin()
 		//alert(isUserLogin);
 		//alert(TouchIDAuth);
 		
-		if (!isUserLogin && location.href.indexOf("#pgLogin") < 0  TouchIDAuth=="0" && TouchIDAuthenticated!="0")
-		{
-			NavigatePage("#pgLogin");
-		}
-		else if (isUserLogin)
-		{	
-			$(".spanLoginUser").text("" +userInfoData.DisplayName);
-						
 
-				
-			if (location.href.indexOf("#") < 0 || location.href.indexOf("#pgLogin") > 0)
-				NavigatePage("#pgHome");
-		}
 
 }
 
