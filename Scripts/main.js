@@ -283,6 +283,7 @@ function callbackLogin( data ){
 			else
 				userInfoData.Expiration = getTimestamp() + 14400000; //4 hours
 
+			userInfoData.TouchIDAuthenticated = "1";
 			
 			localstorage.set("userInfoData", userInfoData);
 			
@@ -3360,7 +3361,7 @@ function checkUserLogin()
 		}
 
 
-		if( TouchIDAuth!="0" && TouchIDAuthenticated!="1")
+		if( TouchIDAuth!="0" && TouchIDAuthenticated!="1" && CheckTouchIDAvailable)
 		{
 				// Authenticate user the Touch ID way
 			if (typeof touchid !== 'undefined')
