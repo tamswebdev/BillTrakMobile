@@ -3351,9 +3351,9 @@ function checkUserLogin()
 		
 		
 		
+		///// ***** (S) Umer 5/11/2016 : Comment this section to disable touch id
+		/*
 		var TouchIDAuthenticated=userInfoData.TouchIDAuthenticated;
-		
-	
 		
 		if (CheckTouchIDAvailable)
 		{
@@ -3375,7 +3375,7 @@ function checkUserLogin()
 						TouchIDAuthenticated="0";
 						NavigatePage("#pgLogin");
 						}, 
-					"Scan your fingerprint please"
+					"Scan your fingerprint please to login"
 					);
 			}
 		}
@@ -3396,21 +3396,26 @@ function checkUserLogin()
 			}					
 						
 		}
+		*/
+		///// ***** (E) Umer 5/11/2016 : Comment this section to disable touch id
 
-				/*
-					window.plugins.touchid.verifyFingerprint(
-			  'Scan your fingerprint please', // this will be shown in the native scanner popup
-			  
-			   function(msg) {isUserLogin = true;}, // success handler: fingerprint accepted
-			   function(msg) {isUserLogin = false;} // error handler with errorcode and localised reason
-			);		*/
-		//}
+///// ***** (S) Umer 5/11/2016 : Comment this section to enable touch id
+			if (!isUserLogin && location.href.indexOf("#pgLogin") < 0 )
+			{
+				NavigatePage("#pgLogin");
+			}
+			else if (isUserLogin)
+			{	
+				$(".spanLoginUser").text("" +userInfoData.DisplayName);
+							
 
-		//alert(isUserLogin);
-		//alert(TouchIDAuth);
-		
+					
+				if (location.href.indexOf("#") < 0 || location.href.indexOf("#pgLogin") > 0)
+					NavigatePage("#pgHome");
+			}		
 
 
+///// ***** (E) Umer 5/11/2016 : Comment this section to enable touch id
 }
 
 
