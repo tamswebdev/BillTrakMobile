@@ -22,7 +22,7 @@ var PhotoNamesArray=[];
 	
 var AddEMRID="0";
 	
-var TouchIDAuthenticated="0";
+
 	
 	
 if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/) && location.href.toLowerCase().indexOf( 'http://' ) < 0 && location.href.toLowerCase().indexOf( 'https://' ) < 0) 
@@ -275,6 +275,7 @@ function callbackLogin( data ){
 			userInfoData.Email = data.d.results.email;
 			userInfoData.Phone = data.d.results.phone;
 			userInfoData.UserID = data.d.results.userid;	
+	
 			$(".spanLoginUser").text("" +userInfoData.DisplayName);
 			
 			if ($('#rememberMe').is(':checked'))
@@ -3330,11 +3331,6 @@ function checkUserLogin()
 
 		var TouchIDAuth="0";
 
-		if (CheckTouchIDAvailable)
-		{
-			if (TouchIDAuthenticated=="0")
-				TouchIDAuth=localstorage.get("TouchIDAuth");
-		}
 
 		if (userInfoData == null)
 		{
@@ -3348,49 +3344,57 @@ function checkUserLogin()
 			}
 		}
 		
-		
-		
-			
-
-					isUserLogin = (userInfoData.AuthenticationHeader != null && userInfoData.AuthenticationHeader != "" && 
+		isUserLogin = (userInfoData.AuthenticationHeader != null && userInfoData.AuthenticationHeader != "" && 
 						userInfoData.DisplayName != null && userInfoData.DisplayName != "" &&
 						userInfoData.Email != null && userInfoData.Email != "" && userInfoData.Expiration > getTimestamp());
 		
-				if( TouchIDAuth!="0" && TouchIDAuthenticated=="0")
-				{
-						// Authenticate user the Touch ID way
-					if (typeof touchid !== 'undefined')
-					{
-						touchid.authenticate(
-							function(msg) {
-								
-								LoginUserByTouchID(TouchIDAuth);
-								},
-							function(msg) {
-								TouchIDAuthenticated="0";
-								NavigatePage("#pgLogin");
-								}, 
-							"Scan your fingerprint please"
-							);
-					}
-				}
-				else
-				{
-					if (!isUserLogin && location.href.indexOf("#pgLogin") < 0 )
-					{
-						NavigatePage("#pgLogin");
-					}
-					else if (isUserLogin)
-					{	
-						$(".spanLoginUser").text("" +userInfoData.DisplayName);
-									
+		
+		
+		var TouchIDAuthenticated=userInfoData.TouchIDAuthenticated;
+		
+	
+		
+		if (CheckTouchIDAvailable)
+		{
+				TouchIDAuth=localstorage.get("TouchIDAuth");
+		}
 
+
+		if( TouchIDAuth!="0" && TouchIDAuthenticated!="1")
+		{
+				// Authenticate user the Touch ID way
+			if (typeof touchid !== 'undefined')
+			{
+				touchid.authenticate(
+					function(msg) {
+						
+						LoginUserByTouchID(TouchIDAuth);
+						},
+					function(msg) {
+						TouchIDAuthenticated="0";
+						NavigatePage("#pgLogin");
+						}, 
+					"Scan your fingerprint please"
+					);
+			}
+		}
+		else
+		{
+			if (!isUserLogin && location.href.indexOf("#pgLogin") < 0 )
+			{
+				NavigatePage("#pgLogin");
+			}
+			else if (isUserLogin)
+			{	
+				$(".spanLoginUser").text("" +userInfoData.DisplayName);
 							
-						if (location.href.indexOf("#") < 0 || location.href.indexOf("#pgLogin") > 0)
-							NavigatePage("#pgHome");
-					}					
-								
-				}
+
+					
+				if (location.href.indexOf("#") < 0 || location.href.indexOf("#pgLogin") > 0)
+					NavigatePage("#pgHome");
+			}					
+						
+		}
 
 				/*
 					window.plugins.touchid.verifyFingerprint(
@@ -3440,16 +3444,18 @@ function callbackLoginByTouchID( data ){
 			userInfoData.UserID = data.d.results.userid;	
 			$(".spanLoginUser").text("" +userInfoData.DisplayName);
 
-			userInfoData.Expiration = getTimestamp() + 1210000000;	//2 weeks
+			userInfoData.Expiration = getTimestamp() + 14400000; //4 hours
 
+			userInfoData.TouchIDAuthenticated = "1";
+			
 			localstorage.set("userInfoData", userInfoData);
 			
-			TouchIDAuthenticated="1";				
+						
 			
 			NavigatePage("#pgHome");
 		}
 		else {
-			TouchIDAuthenticated="0";
+			userInfoData.TouchIDAuthenticated = "0";
 			userInfoData = localstorage.getUserInfoDefault();
 			if (CheckTouchIDAvailable)
 			{
