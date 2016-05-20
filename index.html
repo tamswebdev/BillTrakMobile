@@ -35,7 +35,7 @@
 
 
 	
-	<script >var AppVersion = "Ver. 1.7.4";</script>
+	<script >var AppVersion = "Ver. 1.9.0";</script>
 	
 	<!--<script src="Scripts/SQLitePlugin.js"></script> -->
 
@@ -380,49 +380,50 @@
 
 						<tr>						
 							<td id="btnGoToConstruction" style="border-top: 0px;padding:1px !important;">
-								<a href="javascript:void(0);" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c"  data-role="button" data-icon="bullets"  onclick="GoToSectionWithID('Construction')">Construction</a>
+								<a href="javascript:void(0);" data-mini="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c"  data-role="button" data-icon="bullets"  onclick="GoToSectionWithID('Construction')">Construction</a>
+							</td>
+														<td id="btnGoToIPMActivity" style="border-top: 0px;padding:1px !important;">
+								<a href="javascript:void(0);"  data-mini="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" data-icon="comment"  onclick="GoToSectionWithID('IPMActivity')">IPM Activity</a>
 							</td>
 						</tr>
-						<tr>
-							<td id="btnGoToIPMActivity" style="border-top: 0px;padding:1px !important;">
-								<a href="javascript:void(0);"  data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" data-icon="comment"  onclick="GoToSectionWithID('IPMActivity')">IPM Activity</a>
-							</td>
-						</tr>
+
 						<tr>
 							<td id="btnSitePlanRequests" style="border-top: 0px;padding:1px !important;">
-								<a href="javascript:void(0);"  data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" data-icon="location"   onclick="GoToSectionWithID('SitePlanRequests')">Site Plan Requests</a>
+								<a href="javascript:void(0);" data-mini="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" data-icon="location"   onclick="GoToSectionWithID('SitePlanRequests')">Site Plan Req.</a>
 							</td>
-						</tr>
-						<tr>						
 							 <td id="btnGoToEMRF" style="border-top: 0px;padding:1px !important;">
-								<a href="javascript:void(0);"  data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  data-icon="navigation"  onclick="GoToSectionWithID('EMRF')">EMRF</a>
-							</td>
+								<a href="javascript:void(0);" data-mini="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  data-icon="navigation"  onclick="GoToSectionWithID('EMRF')">EMRF</a>
+							</td>							
 						</tr>
+
 
 						<tr>
 							 <td id="btnGoToAppsSchedule" style="border-top: 0px;padding:1px !important;">
-									<a href="javascript:void(0);" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" data-icon="calendar" data-iconpos="left"  onclick="GoToSectionWithID('AppsSchedule')" >Apps Schedule</a>
+									<a href="javascript:void(0);" data-mini="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" data-icon="calendar" data-iconpos="left"  onclick="GoToSectionWithID('AppsSchedule')" >Apps Schedule</a>
 
 							</td>
-							
+							 <td id="btnGoToSRCheckList" style="border-top: 0px;padding:1px !important;">
+									<a href="javascript:void(0);" data-mini="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" data-icon="check" data-iconpos="left"  onclick="GoToSectionWithID('SRCheckList')" >SR Checklist</a>
+
+							</td>								
+
+														
 						</tr>	
+
+
 						<tr>
 							 <td id="btnGoToContacts" style="border-top: 0px;padding:1px !important;">
-								<a href="javascript:void(0);"  data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  data-icon="user"  onclick="GoToSectionWithID('Contacts')">Contacts</a>
-							</td>
-							
-						</tr>
-
-						<tr>
+								<a href="javascript:void(0);" data-mini="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  data-icon="user"  onclick="GoToSectionWithID('Contacts')">Contacts</a>
+							</td>					
 							 <td id="btnGoToEmailEquipment" style="border-top: 0px;padding:1px !important;">
-									<a href="javascript:void(0);" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" data-icon="mail" data-iconpos="left"  onclick="GoToSectionWithID('EquipmentList')" >Email Equipment</a>
+									<a href="javascript:void(0);" data-mini="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" data-icon="mail" data-iconpos="left"  onclick="GoToSectionWithID('EquipmentList')" >Email Equip.</a>
 
 							</td>
 							
 						</tr>					
 						<tr >
-							 <td id="btnGoBack" style="border-top: 0px;padding:1px !important;">
-									<a href="javascript:void(0);" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" data-icon="arrow-l" data-iconpos="left"  onclick="NavigatePage('#pgSearch');" >Back to Search</a>
+							 <td id="btnGoBack" style="border-top: 0px;padding:1px !important; " align=center colspan="2"> 
+									<a href="javascript:void(0);" data-mini="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" data-icon="arrow-l" data-iconpos="left"  onclick="NavigatePage('#pgSearch');" >Back to Search</a>
 
 							</td>
 							
@@ -1783,6 +1784,175 @@
     </div>
 	
 
+	
+	
+	
+	
+
+
+	<div data-role="page" id="pgSRCheckList"  style="min-height: 560px !important;">
+	
+	    <div data-role="panel" id="pnlProjectDetails-SRCheckList" name="pnlProjectDetails-SRCheckList" style='height:200px;' data-theme="b" data-position="right" data-display="overlay"></div>
+	    <div data-role="panel" id="pnlProjectActivity-SRCheckList" name="pnlProjectActivity-SRCheckList"  data-theme="b" data-position="left" data-display="overlay"></div>
+	
+	
+        <div data-role="header" data-position="fixed">
+			<div style="display:none;"></div>
+			<table width="100%" cellspacing="0" cellpadding="0" class="header-table">
+				<tr>
+					<td class="header-left">
+						<div class="header-menu-button">
+							<a href="#popupMenu8" data-rel="popup" data-transition="slideup"><img src="Images/menu-button2.png" id="img-left-bars"></a>
+							<div data-role="popup" id="popupMenu10" data-theme="a">
+									<ul data-role="listview" data-inset="true" style="min-width:210px;">
+										<li data-role="list-divider">Choose an action</li>
+										<li><span class="spanLoginUser"></span></li>
+										<!--<li class="menu-back-btn"><a href="javascript:void(0);" onclick="goBack();">Back</a></li>-->
+										<li><a href="javascript:void(0);" onclick="goHome();">Home</a></li>
+										<li><a href="javascript:void(0);" onclick="NavigatePage('#pgSearch');">My Projects</a></li>
+										<li><a href="javascript:void(0);" onclick="ShowHelp();">Help</a></li>
+										<li><a href="javascript:void(0);" onclick="SignOut();">Sign Out</a></li>
+									</ul>
+							</div>
+						</div>
+                    </td>
+					<td class="header-middle">
+						<a href="javascript: void(0);" onclick="goHome();" style="" class="appLogoLink"><img src="Images/toshiba-logo.png" id="img-toshiba-logo"></a>
+                    </td>
+                    <td class="header-right">
+						&nbsp;
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div role="main" class="ui-content" id="Content-SRCheckList">
+			<center>
+				<div id="divAddSRCheckList">
+					<div class="div-catalogs-list error-message" id="error-div-SRCheckList"></div>
+					<div class="div-catalogs-list success-message" id="success-div-SRCheckList"></div>
+
+
+						
+                                                            <table style="width:100%;font-size:10px;" class="table table-condensed table-bordered" id="tblSRCheckList" >
+                                                                <tbody>
+                                                                    <tr >
+                                                                        <td colspan="2" id="tdSRCheckList_Customer"></td>
+                                                                    </tr>
+                                                                    <tr >
+                                                                        <td colspan="2" id="tdSRCheckList_Equipment" ></td>
+                                                                    </tr>
+																												
+																	<tr>
+																		<td style="width:50%" id="tdSRCheckList_Modality"></td>
+																		<td style="width:50%" id="tdSRCheckList_SID"></td>
+                                                                    </tr>		
+   
+																	<tr>
+																		<td style="width:50%" id="tdSRCheckList_SRD"></td>
+																		<td style="width:50%" id="tdSRCheckList_CustEng"></td>
+                                                                    </tr>		
+      
+																	<tr>
+																		<td style="width:50%" id="tdSRCheckList_ChecklistDate"></td>
+																		<td style="width:50%" id="tdSRCheckList_UpdatedBy"></td>
+                                                                    </tr>	
+																	<tr>
+																		<td style="width:50%" id="tdSRCheckList_OutstandingItems"></td>
+																		<td style="width:50%" id="tdSRCheckList_CompletedItems"></td>
+                                                                    </tr>		
+
+												
+																	<tr>
+																				<td colspan="3" class="explain-field">
+																					
+																					<textarea class="form-control" placeholder="Enter comma separated email addresses here..." name="txtEmailAddressSRCheckList" id="txtEmailAddressSRCheckList" rows="6" style="width: 100%;min-width:260px;" value=""></textarea>
+																				</td>																		
+
+                                                                    </tr>		
+   																	
+                                                                </tbody>
+                                                            </table>
+															
+
+					
+
+															
+					<table class="table add-status-buttons"  >
+						<tr ><td colspan="2" class="td-error-message" id="error-div2-SRCheckList" style="border-top: 0px;"></td></tr>
+
+						
+					</table>	
+
+					<style>
+					#SRCheckListGrid-SRCheckList th {
+						border-bottom: 1px solid #d6d6d6;
+					}
+
+					#SRCheckListGrid-SRCheckList tr.Yes {
+						background: LightGreen;
+						color: Black;
+					}
+					
+					#SRCheckListGrid-SRCheckList tr.NA {
+						background: White;
+						color: FireBrick;
+					}
+					
+					#SRCheckListGrid-SRCheckList tr.No {
+						background: White;
+						color: Black;
+					}
+					
+					#SRCheckListGrid-SRCheckList tr {
+						font-size: xx-small;
+					}
+					
+					#SRCheckListGrid-SRCheckList tr.trlongpressHide {
+						display: none;
+					}
+
+					#SRCheckListGrid-SRCheckList tr.trlongpressEdit {
+						background: Ivory;
+						color: Black;
+						border: 1px DarkGrey solid;
+					}
+						
+					}					
+					</style>
+										
+	
+				
+					<div class="ui-grid-b ui-responsive" id="SRCheckListGrid" name="SRCheckListGrid" >
+				
+						<div  data-role="collapsible"  id="divCollapsibleSRCheckList" name="divCollapsibleSRCheckList" >
+							<h1><span id="SRCheckListCount" name="SRCheckListCount">Checklist</span></h1>
+							<table id="SRCheckListGrid-SRCheckList" name="SRCheckListGrid-SRCheckList"  data-role="table" data-mode="columntoggle" class="ui-responsive ui-shadow" ><thead><tr><th>Check</th><th>Description</th><th>Comments</th></tr></thead><tbody></tbody></table>
+						</div>
+
+					
+					</div>
+
+					<div data-role="controlgroup" id="tblSRCheckListButtons" data-type="horizontal" >
+						<a href="javascript:void(0);" data-mini="true" data-role="button" data-icon="check" data-iconpos="left" style="padding-right:.5em !important;" onclick="SaveSRCheckList('Yes')">Save</a>
+						<a href="javascript:void(0);" data-mini="true"  data-role="button" data-icon="mail" data-iconpos="left" style="padding-right:.5em !important;" onclick="EmailSRCheckList()">Email</a>
+						<a href="javascript:void(0);" data-mini="true"  data-role="button" data-icon="delete" data-iconpos="left" onclick="cancelStatusSRCheckList()" style="padding-right:.5em !important;">Cancel</a>
+						<a href="javascript:void(0);" data-mini="true" data-role="button" data-icon="back" data-iconpos="left" onclick="backStatusSRCheckList()" style="padding-right:.5em !important;">Back</a>
+					</div>
+					
+
+
+
+					
+					</div>
+
+
+
+
+				</div>
+			</center>
+        </div>
+    </div>
 
 	
 	<div data-role="page" id="pgRedirect">

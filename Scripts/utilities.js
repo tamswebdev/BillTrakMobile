@@ -23,6 +23,7 @@ function GoToSectionWithID(section)
 	//	id='0';
 
 	var path='#pg' + section + '?id='+ id;
+
 	NavigatePage(path);
 }
 
@@ -45,38 +46,46 @@ function CheckTouchIDAvailable()
 	
 	var RetVal=false;
 	Model="";
+	
+
 	if (typeof device != 'undefined')
 	{
 
-		
-			
-			
-		
-		if (device.platform=='iOS' && parseInt(device.version.charAt(0))>=8)
+		if (typeof touchid != 'undefined')
 		{
-			Model=device.model.replace('iPhone','');
-			if (Model.charAt(0)=="6")
-			{
-				if (parseInt(Model.slice(-1))!=1)
-					RetVal=true;
-			}
-			else if (parseInt(Model.charAt(0))>6)
-			{
-				RetVal=true;
-			}
-			
-			else
-			{
-				RetVal=false;
-			}
-		
 
-		}
+					
 			
+			if (device.platform=='iOS' && parseInt(device.version.charAt(0))>=8)
+			{
+								
+				Model=device.model.replace('iPhone','');
+				if (Model.charAt(0)=="6")
+				{
+								
+					//if (parseInt(Model.slice(-1))!=1)
+						RetVal=true;
+				}
+				else if (parseInt(Model.charAt(0))>6)
+				{
+
+					RetVal=true;
+				}
+				
+				else
+				{
+		
+					RetVal=false;
+				}
+			
+
+			}
+				
+		}
 	}
+
 	return (RetVal);
 }
-
 
 				
 				

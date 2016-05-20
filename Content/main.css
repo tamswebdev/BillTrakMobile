@@ -54,6 +54,8 @@
  {
 }
 
+
+
 .no-connection-warning {
 	background-color: #F6D8CE;
 	border: 2px dashed #FF0000;
@@ -110,6 +112,7 @@ td.WeekCalTD
 #pgProjectOptions .ui-btn
 {
 	margin-bottom:0px;
+	width:145px;
 
 }
 

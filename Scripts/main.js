@@ -21,7 +21,7 @@ var PhotosArray = [];
 var PhotoNamesArray=[];
 	
 var AddEMRID="0";
-	
+
 
 	
 	
@@ -248,7 +248,7 @@ function LoginUser()
 	loginname = (loginname.indexOf("\\") > 0) ? loginname : "tamsdomain\\" + loginname;
 	loginname=loginname.trim();
 	
-			if (CheckTouchIDAvailable)
+			if (CheckTouchIDAvailable())
 			{
 				
 				localstorage.set("TouchIDAuth", loginname);
@@ -295,7 +295,7 @@ function callbackLogin( data ){
 		}
 		else {
 			userInfoData = localstorage.getUserInfoDefault();
-			if (CheckTouchIDAvailable)
+			if (CheckTouchIDAvailable())
 			{
 				
 				localstorage.set("TouchIDAuth", "0");
@@ -1029,6 +1029,20 @@ $(document).on('pageinit',"#pgEquipmentList",function(event){
 	});
 });
 
+/******************* Swipe SRCheckList ***********************/
+$(document).on('pageinit',"#pgSRCheckList",function(event){
+
+	$("#pgSRCheckList").on("swipeleft",function(){
+		$("#pnlProjectDetails-SRCheckList").panel( "open");
+	});
+	$("#pgSRCheckList").on("swiperight",function(){
+		$("#pnlProjectActivity-SRCheckList").panel( "open");
+	});
+	$("body").on("taphold","tr.LongPressBox",LongPressBoxHandler);	
+	
+	//$(".longpressButton").on("click",longpressButtonHandler);	
+	//$("body").on("click",".longpressButton",LongPressBoxHandler);
+});
 
 /******************* Load EquipmentList ***********************/
 $( document ).on( "pagebeforeshow", "#pgEquipmentList", function(event) {
@@ -1377,6 +1391,568 @@ function callbackEmailEquipmentList(data)
 	catch(err) { }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/******************* Load SRCheckList ***********************/
+$( document ).on( "pagebeforeshow", "#pgSRCheckList", function(event) {
+	checkUserLogin();
+	
+	
+	
+	$('#tblSRCheckList').hide();
+	$('#tblSRCheckListButtons').hide();
+
+	$('#error-div-SRCheckList').text("").append(getLoadingMini());
+//	$("#ddlSortBy-SRCheckList").val('ShipToSite').selectmenu('refresh', true);
+	$("#txtEmailAddressSRCheckList").val('');
+
+			
+	$('#divCollapsibleSRCheckList').collapsible( "option", 'collapsed',true );
+
+	
+	$('#SRCheckListGrid-SRCheckList tbody').children("tr").remove();
+
+	$('a[href="#SRCheckListGrid-SRCheckList-popup"]').hide();
+
+
+	
+	var id = $.urlParam("id");
+	if (id > 0)
+	{
+		var _url= serviceRootUrl + "svc.aspx?op=GetSRCheckListHeader&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id ;
+		Jsonp_Call(_url, false, "callbackLoadSRCheckListHeader");
+	
+		var _url2 = serviceRootUrl + "svc.aspx?op=GetSRCheckList&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id + "&AppName=BillTrak"   ;
+		Jsonp_Call(_url2, false, "callbackLoadSRCheckList");
+
+
+
+		}
+	else 
+	{
+		///
+			alert("App Error");
+	}
+	
+
+	
+});
+
+
+function callbackLoadSRCheckListHeader(data)
+{
+
+
+	try {
+
+
+				var catalog = data.d.results[0];
+				$('#tdSRCheckList_Customer').html('<B>Customer:</B> ' + catalog.AccountName);
+				$('#tdSRCheckList_Equipment').html('<B>Equipment:</B> ' + catalog.OpportunityProduct);
+				$('#tdSRCheckList_Modality').html('<B>Modality:</B> ' + catalog.OpportunityModality);
+
+				$('#tdSRCheckList_SID').html('<B>SID:</B> ' + catalog.SID);
+				$('#tdSRCheckList_SRD').html('<B>SRD:</B> ' + catalog.ForecastedSiteReadyDate);
+				
+				$('#tdSRCheckList_CustEng').html('<B>Cust. Eng.:</B> ' + catalog.CustomerEngineer);
+				$('#tdSRCheckList_ChecklistDate').html('<B>Checklist Date:</B> ' + catalog.LastModifiedDate);
+				$('#tdSRCheckList_UpdatedBy').html('<B>Updated By:</B> ' + catalog.LastModifiedBy);
+				$('#tdSRCheckList_OutstandingItems').html('<B>Outstanding Items:</B> ' + catalog.OutstandingItemsCount);
+				$('#tdSRCheckList_CompletedItems').html('<B>Completed Items:</B> ' + catalog.CompletedItemsCount);
+				
+				
+	
+
+
+	}
+	catch(err) {}
+}
+
+function LongPressBoxHandler(event)
+{
+	
+
+	//alert($(event.target).parent().prop('id'));
+	//alert($(event.target).siblings(":first").html());
+	var SelectedTR=($(event.target).parent().prop('id'));
+	SelectedTR=SelectedTR+'_B';
+	$('#' + SelectedTR).removeClass("trlongpressHide");
+	
+}
+
+function longpressButton_click(i)
+{
+	
+
+	$('#' + 'trlongpress-'+ i +'_B').addClass("trlongpressHide");
+	
+}
+
+function longpressNACheckbox_onchange(i)
+{
+	
+	if ($('#' + 'trlongpress-'+ i +'_CheckedNA').is(":checked")  )
+		$('#' + 'trlongpress-'+ i +'_CheckedValue').prop('checked', false);
+
+}
+
+function longpressCheckedValueCheckbox_onchange(i)
+{
+	
+	if ($('#' + 'trlongpress-'+ i +'_CheckedValue').is(":checked")  )
+		$('#' + 'trlongpress-'+ i +'_CheckedNA').prop('checked', false);
+
+}
+
+
+function callbackLoadSRCheckList(data)
+{
+
+
+	try {
+
+
+
+			for(var i=0; i < data.d.results.length; i++)
+			{
+				var catalog = data.d.results[i];
+				var row='<tr style="border: 1px LightGrey solid" class="LongPressBox ';
+				//'<tr><td>' + catalog.Item_Number + '</td><td>' + catalog.Description + '</td><td>' + catalog.Qty + '</td></tr>'
+				
+				row+= (catalog.CheckedValue.toUpperCase()=='YES') ? 'Yes' : (catalog.CheckedValue.toUpperCase()=='N/A') ? 'NA' : 'No';
+				row+= '" id="trlongpress-'+ i +'">';
+				row+= '<td style="display:none;" id="trlongpress-'+ i +'_ProjectSrChecklistID" >'+ catalog.ProjectSrChecklistID+'</td>';
+				row+= '<td>' ;
+				row+= (catalog.CheckedValue.toUpperCase()=='YES') ? catalog.LastModifiedDate : (catalog.CheckedValue.toUpperCase()=='N/A') ? 'N/A' : '';             
+				row+= '</td>';
+				row+= '<td>' ;
+				row+= catalog.Question;
+				row+= '</td>';
+				row+= '<td>' ;
+				row+= catalog.Comments;
+				row+= '</td>';				
+				row+= '</tr>';
+				row+= '<tr class="trlongpressHide trlongpressEdit" id="trlongpress-'+ i +'_B">';
+				row+= '<td style="display:none;" id="trlongpress-'+ i +'_SRCheckListItemID">'+ catalog.SRCheckListItemID+'</td>';
+				row+= '<td>' ;
+
+				
+				row+= '<fieldset data-role="controlgroup" data-type="horizontal">';
+				if (catalog.HasCheckBox.toUpperCase()=='YES')
+					{
+						if (catalog.CheckedValue.toUpperCase()=='YES')
+							row+= '<input onchange="longpressCheckedValueCheckbox_onchange('+ i +')" class="longpressCheckedValueCheckbox" value="YES" type="checkbox" maxlength="255" ' + 'name="trlongpress-'+ i +'_CheckedValue"' + ' id="trlongpress-'+ i +'_CheckedValue"' + ' checked>' + '<label style="font-size:xx-small !important;" for="trlongpress-'+ i +'_CheckedValue"' + '>Check</label>';
+						else
+							row+= '<input onchange="longpressCheckedValueCheckbox_onchange('+ i +')" class="longpressCheckedValueCheckbox" value="YES" type="checkbox" maxlength="255" ' + 'name="trlongpress-'+ i +'_CheckedValue"' + ' id="trlongpress-'+ i +'_CheckedValue"' + ' >' + '<label style="font-size:xx-small !important;" for="trlongpress-'+ i +'_CheckedValue"' + '>Check</label>';
+					}
+				else
+					{
+						row+= '';		
+					}			
+				if (catalog.HasNotApplicable.toUpperCase()=='YES')
+					{
+						if (catalog.CheckedValue.toUpperCase()=='N/A')
+							row+= '<input onchange="longpressNACheckbox_onchange('+ i +')" class="longpressNACheckbox" value="N/A" type="checkbox" maxlength="255" id="trlongpress-'+ i +'_CheckedNA"' + ' checked>'+ '<label  style="font-size:xx-small !important;" for="trlongpress-'+ i +'_CheckedNA"' + '>N/A</label>';
+						else
+							row+= '<input onchange="longpressNACheckbox_onchange('+ i +')" class="longpressNACheckbox" value="N/A" type="checkbox" maxlength="255" id="trlongpress-'+ i +'_CheckedNA"' + ' >'+ '<label  style="font-size:xx-small !important;" for="trlongpress-'+ i +'_CheckedNA"' + '>N/A</label>';
+					}
+				else
+					{
+						row+= '';		
+					}						
+				row+= '</fieldset></td>';
+				row+= '<td  colspan="2">' ;
+				if (catalog.HasComments.toUpperCase()=='YES')
+					row+= '<textarea placeholder="Enter Comments here..." style="margin:0px;width:200px;height:42px; maxlength="255" rows=3 id="trlongpress-'+ i +'_CommentBox"' + ' >' + catalog.Comments + '</textarea>';
+				else
+					row+= 'nbsp;';
+				row+= '<button onclick="longpressButton_click('+ i +')" class="longpressButton" type="button" style="margin:0px;width:200px;height:22px;" id="trlongpress-'+ i +'_Close"' + ' >Close</button>';
+				row+= '</td>';				
+				row+= '</tr>';				
+				
+				$('#SRCheckListGrid-SRCheckList tbody').append(row);				
+
+			}
+
+
+
+
+											
+			var id = $.urlParam("id");
+			if (id > 0)
+			{
+				var _url1 = serviceRootUrl + "svc.aspx?op=GetIPMActivity&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+				Jsonp_Call(_url1, true, "callbackLoadSRCheckListSidePanelIPMActivity");
+
+				var _url2 = serviceRootUrl + "svc.aspx?op=GetProjectHeaderById&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+				Jsonp_Call(_url2, true, "callbackLoadSRCheckListSidePanel");
+
+			}
+			else 
+			{
+				///
+					alert("App Error");
+			}
+					
+
+	}
+	catch(err) {}
+}
+
+function callbackLoadSRCheckListSidePanelIPMActivity(data)
+{
+
+
+	try {
+
+		
+		if (data.d.results.length > 0)
+		{
+			var temp = '<div class="ui-grid-b ui-responsive" id="SRCheckListGridSidePanel" name="SRCheckListGridSidePanel" style="padding-right:10px;">';
+			for(var i=0; i < data.d.results.length; i++)
+			{
+				var catalog = data.d.results[i];
+				temp += '<div style="margin: 5px 5px 5px 5px;padding: 2px 2px 2px 2px;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ActivityDate +' - '+ catalog.CreatedBy +' - '+ catalog.ActivityType +'</span><br><span style="font-size:x-small;">'+ catalog.Comments  +'</span></div>';
+
+			}
+			
+			temp += '</div>';
+
+			$("#pnlProjectActivity-SRCheckList" ).html(temp);
+
+					
+		}
+		else
+		{
+			//
+		}
+	}
+	catch(err) {}
+}
+
+
+function callbackLoadSRCheckListSidePanel(data)
+{
+
+
+
+	try {
+
+	
+			if (data.d.results.length > 0)
+			{
+
+				var temp = "";
+				
+				var catalog = data.d.results[0];
+				
+				temp=SidePanelOrderDetails(catalog);
+					
+				$("#pnlProjectDetails-SRCheckList" ).html(temp);
+
+
+				$('#error-div2-SRCheckList').text("");
+				$('#error-div-SRCheckList').text("");
+					
+				$('#tblSRCheckList').show();
+				$('#tblSRCheckListButtons').show();
+				
+			}
+		}
+	catch(err) {}
+}
+
+
+
+function cancelStatusSRCheckList() {
+
+
+		$('<div>').simpledialog2({
+			mode: 'blank',
+			headerText: 'Cancel',
+			headerClose: false,
+			transition: 'flip',
+			themeDialog: 'a',
+			zindex: 2000,
+			blankContent : 
+			  "<div style='padding: 15px;'><p>Cancel changes and go back to main screen?</p>"+
+			  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"NavigatePage('#pgHome');\">OK</a></td>" + 
+			  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
+			  }); 
+
+
+}
+function backStatusSRCheckList() {
+
+			$('<div>').simpledialog2({
+				mode: 'blank',
+				headerText: 'Back',
+				headerClose: false,
+				transition: 'flip',
+				themeDialog: 'a',
+				zindex: 2000,
+				blankContent : 
+				  "<div style='padding: 15px;'><p>Discard changes and go back to project options?</p>"+
+				  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"GoToSectionWithID('ProjectOptions');\">OK</a></td>" + 
+				  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
+			  }); 
+	
+
+
+}
+
+
+
+	
+	
+	
+
+
+function SaveSRCheckList(isFinal) {
+
+	
+		var confirmMessage=""
+
+
+		/*
+		
+		$scope = {
+			recordId : $.urlParam("id")
+
+
+		  ,CostCenter : $("#txt_AddEMRF_CostCenter").val()
+		  ,Riggers : $("#hdn_AddEMRF_RiggersName").val()
+		  ,RiggersPhone : $("#txt_AddEMRF_RiggersPhone").val()
+		  ,RiggersTruckline :  $('input[name=rdo_AddEMRF_RiggersOnSite]:checked').val() 
+		  ,RMA : $("#txt_AddEMRF_RMA").val()
+		  ,ShipToAddress : $("#txt_AddEMRF_Address").val()
+		  ,ShipToCity : $("#txt_AddEMRF_City").val()
+		  ,ShipToContact : $("#txt_AddEMRF_PrimContact").val()
+		  //,ShipToIPM : $("#").val()
+		  ,ShipToOther : $("#txt_AddEMRF_EndDest").val()
+		  ,ShipToSecondary : $("#txt_AddEMRF_SecContact").val()
+		  ,ShipToSite : $("#txt_AddEMRF_HospitalCo").val()
+		  ,ShipToState : $("#txt_AddEMRF_State").val()
+		  ,ShipToZip : $("#txt_AddEMRF_Zip").val()
+		  ,SpecialInstructions : $("#txt_AddEMRF_SpecialInstructions").val()
+		  ,Status : "Submitted to Planner"
+		  //,SubmittedToPlannerDate : $("#").val()
+		  ,SubmittedToPlannerName : $("#hdn_AddEMRF_PlannerName").val()  
+		  ,DTBy : $('input[name=rdo_AddEMRF_RDDOnBy]:checked').val() 
+		  ,TimeBy : $('input[name=rdo_AddEMRF_RDDAtBy]:checked').val() 
+		  //,ModifiedBy : $("#").val()
+		  //,Modified : $("#").val()
+		  ,ProjectId : $.urlParam("id")
+		  //,RequestedById : $("#").val()
+		  ,DeliverDateNote : $("#txt_AddEMRF_DeliverDateNote").val()
+		  ,RequestedDeliveryDatePrefix : $('input[name=rdo_AddEMRF_RDDOnBy]:checked').val() 
+		  ,RequestedDeliveryTimePrefix : $('input[name=rdo_AddEMRF_RDDAtBy]:checked').val() 
+		  //,CustomerName : $("#").val()
+			
+
+			
+
+		};
+
+*/
+
+		
+		
+		confirmMessage=confirmMessage + "Save Checklist and go back to project options?";
+		$('<div>').simpledialog2({
+			mode: 'blank',
+			headerText: 'Save Checklist',
+			headerClose: false,
+			transition: 'flip',
+			themeDialog: 'a',
+			width: 300,
+			zindex: 2000,
+			blankContent : 
+			  "<div style='padding: 15px;'><p>" + confirmMessage + "</p>"+
+			  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"SaveSRCheckListProcess('" + isFinal + "');\">OK</a></td>" + 
+			  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
+		});
+		
+	
+
+			showLoading(false);
+
+	
+	
+}
+
+
+
+	
+function SaveSRCheckListProcess(isFinal)
+{
+	
+		//show saving animation
+		$('#error-div').text("").append(getLoadingMini());
+		showTimedElem('error-div');
+		
+		$('#tblAddEMRF').hide();
+		$('#tblAddEMRFsButtons').hide();
+		
+		$.mobile.loading( 'show', {
+			text: 'Saving SR Checklist...',
+			textVisible: true,
+			theme: 'c',
+			html: ""
+				});
+		
+		var RowCount=(($('#SRCheckListGrid-SRCheckList tr').length-1)/2);		
+		var ProjectId=$.urlParam("id");	
+		AllCheckListSaved="0";
+		
+		for (i=0;i<RowCount;i++)
+		{
+			var CheckedValue='';
+			if ($('#' + 'trlongpress-'+ i +'_CheckedNA').prop('checked'))
+				CheckedValue='N/A';
+			else if ($('#' + 'trlongpress-'+ i +'_CheckedValue').prop('checked'))
+				CheckedValue='YES';	
+			else
+				CheckedValue='NO';
+			var Comments=($('#' + 'trlongpress-'+ i +'_CommentBox').val());
+			var SRCheckListItemID=($('#' + 'trlongpress-'+ i +'_SRCheckListItemID').html());
+			var ProjectSrChecklistID=($('#' + 'trlongpress-'+ i +'_ProjectSrChecklistID').html());
+			/*
+			alert($('#' + 'trlongpress-'+ i +'_CheckedValue').prop('checked'));
+			alert($('#' + 'trlongpress-'+ i +'_CheckedNA').prop('checked'));
+			alert($('#' + 'trlongpress-'+ i +'_CommentBox').val());
+			alert($('#' + 'trlongpress-'+ i +'_ProjectSrChecklistID').html());
+			alert($('#' + 'trlongpress-'+ i +'_SRCheckListItemID').html());
+			*/
+			var _url =  serviceRootUrl + "svc.aspx?op=SaveSRCheckList&SPUrl=" + spwebRootUrl + "sites/busops&recordId=" + ProjectId + "&CheckedValue=" + CheckedValue + "&Comments=" + Comments  + "&ProjectSrChecklistID=" + ProjectSrChecklistID+ "&SRCheckListItemID=" + SRCheckListItemID  + "&username=" + userInfoData.Email + "&userid=" + userInfoData.UserID+ "&authInfo=" + userInfoData.AuthenticationHeader;
+	
+
+
+			if (RowCount==i+1)
+				Jsonp_Call(_url, false, "callbackSaveSRCheckList");	
+			else
+				Jsonp_Call(_url, false, "");	
+			
+		}	
+			
+
+
+	
+
+}
+
+
+function callbackSaveSRCheckList(data)
+{
+
+				$('#error-div2').text("");
+				$('#error-div').text("");
+				
+
+				$.mobile.loading( 'hide' );
+
+				GoToSectionWithID('ProjectOptions');
+
+
+	
+	
+}
+
+	
+	
+
+
+function EmailSRCheckList() {
+
+	if ($("#txtEmailAddressSRCheckList").val() != ""){		
+
+		$scope = {
+			recordId : $.urlParam("id"),
+			txtEmailAddress : $("#txtEmailAddressSRCheckList").val()
+		};
+
+
+		var	confirmMessage="";
+
+		
+		confirmMessage=confirmMessage + "Email SR Checklist and go back to project options?";
+		$('<div>').simpledialog2({
+			mode: 'blank',
+			headerText: 'Email SR Checklist',
+			headerClose: false,
+			transition: 'flip',
+			themeDialog: 'a',
+			width: 300,
+			zindex: 2000,
+			blankContent : 
+			  "<div style='padding: 15px;'><p>" + confirmMessage + "</p>"+
+			  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"EmailSRCheckListProcess('" + 'a' + "');\">OK</a></td>" + 
+			  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
+		});
+		
+	}
+	else
+	{
+		alert("Please enter email addresses.");
+	}
+	
+}
+
+	
+function EmailSRCheckListProcess(a)
+{
+	if ($scope) {
+	
+		//show saving animation
+		$('#error-div-SRCheckList').text("").append(getLoadingMini());
+		showTimedElem('error-div-SRCheckList');
+
+		
+		$('#tblSRCheckList').hide();
+		$('#tblSRCheckListsButtons').hide();
+
+		if ($scope.recordId != "" && parseInt($scope.recordId) > 0)
+		{
+			//showLoading(true);
+			var _url =  serviceRootUrl + "svc.aspx?op=EmailSRCheckList&SPUrl=" + spwebRootUrl + "sites/busops&id=" + $scope.recordId + "&emailaddress=" + $scope.txtEmailAddress+ "&username=" + userInfoData.Email + "&userid=" + userInfoData.UserID + "&authInfo=" + userInfoData.AuthenticationHeader + "&statusId=" + $scope.StatusId;
+			
+			console.log(_url);
+			
+			Jsonp_Call(_url, true, "callbackEmailSRCheckList");
+		}
+
+
+		
+	}
+}
+
+function callbackEmailSRCheckList(data)
+{
+	try {
+
+			$('#error-div2-SRCheckList').text("");
+			$('#error-div-SRCheckList').text("");
+			GoToSectionWithID('ProjectOptions');
+
+	}
+	catch(err) { }
+}
 
 
 /******************* Load AppsSchedule ***********************/
@@ -3355,13 +3931,16 @@ function checkUserLogin()
 		/*
 		var TouchIDAuthenticated=userInfoData.TouchIDAuthenticated;
 		
-		if (CheckTouchIDAvailable)
+		if (CheckTouchIDAvailable())
 		{
 				TouchIDAuth=localstorage.get("TouchIDAuth");
 		}
 
+		if (userInfoData.Expiration <= getTimestamp())
+			TouchIDAuthenticated="0";
 
-		if( TouchIDAuth!="0" && TouchIDAuthenticated!="1" && CheckTouchIDAvailable)
+
+		if( TouchIDAuth!="0" && TouchIDAuthenticated!="1" && CheckTouchIDAvailable())
 		{
 				// Authenticate user the Touch ID way
 			if (typeof touchid !== 'undefined')
@@ -3375,7 +3954,7 @@ function checkUserLogin()
 						TouchIDAuthenticated="0";
 						NavigatePage("#pgLogin");
 						}, 
-					"Scan your fingerprint please to login"
+					"Please scan your fingerprint to login"
 					);
 			}
 		}
@@ -3427,7 +4006,7 @@ function checkUserLogin()
 
 function LoginUserByTouchID(TouchIDAuth)
 {
-
+	$("#td-error").text("").append(getLoadingMini());
 	
 	var loginname=TouchIDAuth;
 	
