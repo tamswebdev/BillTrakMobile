@@ -1906,8 +1906,14 @@
 					
 					#SRCheckListGrid-SRCheckList tr {
 						font-size: xx-small;
+						height:50px;
 					}
 					
+					#SRCheckListGrid-SRCheckList thead tr:first-child {
+						font-size: xx-small;
+						height:22px;
+					}
+									
 					#SRCheckListGrid-SRCheckList tr.trlongpressHide {
 						display: none;
 					}
@@ -1933,7 +1939,7 @@
 					
 					</div>
 
-					<div data-role="controlgroup" id="tblSRCheckListButtons" data-type="horizontal" >
+					<div data-role="controlgroup" id="tblSRCheckListButtons" data-type="horizontal" style="width:288px;" >
 						<a href="javascript:void(0);" data-mini="true" data-role="button" data-icon="check" data-iconpos="left" style="padding-right:.5em !important;" onclick="SaveSRCheckList('Yes')">Save</a>
 						<a href="javascript:void(0);" data-mini="true"  data-role="button" data-icon="mail" data-iconpos="left" style="padding-right:.5em !important;" onclick="EmailSRCheckList()">Email</a>
 						<a href="javascript:void(0);" data-mini="true"  data-role="button" data-icon="delete" data-iconpos="left" onclick="cancelStatusSRCheckList()" style="padding-right:.5em !important;">Cancel</a>

@@ -1038,7 +1038,7 @@ $(document).on('pageinit',"#pgSRCheckList",function(event){
 	$("#pgSRCheckList").on("swiperight",function(){
 		$("#pnlProjectActivity-SRCheckList").panel( "open");
 	});
-	$("body").on("taphold","tr.LongPressBox",LongPressBoxHandler);	
+	$("body").on("click","tr.LongPressBox",LongPressBoxHandler);	
 	
 	//$(".longpressButton").on("click",longpressButtonHandler);	
 	//$("body").on("click",".longpressButton",LongPressBoxHandler);
