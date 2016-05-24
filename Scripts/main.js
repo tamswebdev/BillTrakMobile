@@ -1926,13 +1926,20 @@ function EmailSRCheckListProcess(a)
 		
 		$('#tblSRCheckList').hide();
 		$('#tblSRCheckListsButtons').hide();
+		
+		$.mobile.loading( 'show', {
+			text: 'Emailing SR Checklist...',
+			textVisible: true,
+			theme: 'c',
+			html: ""
+				});
 
 		if ($scope.recordId != "" && parseInt($scope.recordId) > 0)
 		{
 			//showLoading(true);
-			var _url =  serviceRootUrl + "svc.aspx?op=EmailSRCheckList&SPUrl=" + spwebRootUrl + "sites/busops&id=" + $scope.recordId + "&emailaddress=" + $scope.txtEmailAddress+ "&username=" + userInfoData.Email + "&userid=" + userInfoData.UserID + "&authInfo=" + userInfoData.AuthenticationHeader + "&statusId=" + $scope.StatusId;
+			var _url =  serviceRootUrl + "svc.aspx?op=EmailSRCheckList&SPUrl=" + spwebRootUrl + "sites/busops&recordId=" + $scope.recordId + "&emailaddress=" + $scope.txtEmailAddress+ "&username=" + userInfoData.Email + "&userid=" + userInfoData.UserID + "&authInfo=" + userInfoData.AuthenticationHeader + "&statusId=" + $scope.StatusId;
 			
-			console.log(_url);
+		
 			
 			Jsonp_Call(_url, true, "callbackEmailSRCheckList");
 		}
@@ -1944,14 +1951,14 @@ function EmailSRCheckListProcess(a)
 
 function callbackEmailSRCheckList(data)
 {
-	try {
+
 
 			$('#error-div2-SRCheckList').text("");
 			$('#error-div-SRCheckList').text("");
+			$.mobile.loading( 'hide' );
 			GoToSectionWithID('ProjectOptions');
 
-	}
-	catch(err) { }
+
 }
 
 
