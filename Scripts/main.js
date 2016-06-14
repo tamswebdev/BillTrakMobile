@@ -1421,7 +1421,9 @@ $( document ).on( "pagebeforeshow", "#pgSRCheckList", function(event) {
 	$('#error-div-SRCheckList').text("").append(getLoadingMini());
 //	$("#ddlSortBy-SRCheckList").val('ShipToSite').selectmenu('refresh', true);
 	$("#txtEmailAddressSRCheckList").val('');
-
+		
+	var EmailAddressSRCheckList=localstorage.get('EmailAddressSRCheckList');
+	$('#txtEmailAddressSRCheckList').val(EmailAddressSRCheckList);
 			
 	$('#divCollapsibleSRCheckList').collapsible( "option", 'collapsed',true );
 
@@ -1538,14 +1540,14 @@ function callbackLoadSRCheckList(data)
 				row+= (catalog.CheckedValue.toUpperCase()=='YES') ? 'Yes' : (catalog.CheckedValue.toUpperCase()=='N/A') ? 'NA' : 'No';
 				row+= '" id="trlongpress-'+ i +'">';
 				row+= '<td style="display:none;" id="trlongpress-'+ i +'_ProjectSrChecklistID" >'+ catalog.ProjectSrChecklistID+'</td>';
-				row+= '<td>' ;
+				row+= '<td style="border-right: 1px LightGrey solid">' ;
 				row+= (catalog.CheckedValue.toUpperCase()=='YES') ? catalog.LastModifiedDate : (catalog.CheckedValue.toUpperCase()=='N/A') ? 'N/A' : '';             
 				row+= '</td>';
-				row+= '<td>' ;
+				row+= '<td style="border-right: 1px LightGrey solid">' ;
 				row+= catalog.Question;
-				row+= '</td>';
-				row+= '<td>' ;
-				row+= catalog.Comments;
+				//row+= '</td>';
+				//row+= '<td>' ;
+				row+= (catalog.Comments && catalog.Comments!='') ? '<br><br><i>Comment: '+catalog.Comments+'</i>' : '';
 				row+= '</td>';				
 				row+= '</tr>';
 				row+= '<tr class="trlongpressHide trlongpressEdit" id="trlongpress-'+ i +'_B">';
@@ -1821,6 +1823,9 @@ function SaveSRCheckListProcess(isFinal)
 		var ProjectId=$.urlParam("id");	
 		AllCheckListSaved="0";
 		
+		var EmailAddressSRCheckList=$('#txtEmailAddressSRCheckList').val();
+		localstorage.set("EmailAddressSRCheckList", EmailAddressSRCheckList);
+		
 		for (i=0;i<RowCount;i++)
 		{
 			var CheckedValue='';
@@ -1933,6 +1938,10 @@ function EmailSRCheckListProcess(a)
 			theme: 'c',
 			html: ""
 				});
+		
+		var EmailAddressSRCheckList=$('#txtEmailAddressSRCheckList').val();
+		localstorage.set("EmailAddressSRCheckList", EmailAddressSRCheckList);
+		
 
 		if ($scope.recordId != "" && parseInt($scope.recordId) > 0)
 		{
