@@ -20,7 +20,7 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
 		xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "io.tams.BillTrak"
-        version   = "1.9.0">
+        version   = "2.0.0">
 		
     <name>IPM Mobile</name>
     <description>
