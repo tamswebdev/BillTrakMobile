@@ -3944,7 +3944,7 @@ function checkUserLogin()
 		
 		
 		///// ***** (S) Umer 5/11/2016 : Comment this section to disable touch id
-		/*
+		
 		var TouchIDAuthenticated=userInfoData.TouchIDAuthenticated;
 		
 		if (CheckTouchIDAvailable())
@@ -3991,10 +3991,11 @@ function checkUserLogin()
 			}					
 						
 		}
-		*/
+		
 		///// ***** (E) Umer 5/11/2016 : Comment this section to disable touch id
 
 ///// ***** (S) Umer 5/11/2016 : Comment this section to enable touch id
+/*
 			if (!isUserLogin && location.href.indexOf("#pgLogin") < 0 )
 			{
 				NavigatePage("#pgLogin");
@@ -4009,7 +4010,7 @@ function checkUserLogin()
 					NavigatePage("#pgHome");
 			}		
 
-
+*/
 ///// ***** (E) Umer 5/11/2016 : Comment this section to enable touch id
 }
 
