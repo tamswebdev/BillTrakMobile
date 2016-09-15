@@ -1029,6 +1029,17 @@ $(document).on('pageinit',"#pgEquipmentList",function(event){
 	});
 });
 
+/******************* Swipe QuenchLine ***********************/
+$(document).on('pageinit',"#pgQuenchLine",function(event){
+
+	$("#pgQuenchLine").on("swipeleft",function(){
+		$("#pnlProjectDetails-QuenchLine").panel( "open");
+	});
+	$("#pgQuenchLine").on("swiperight",function(){
+		$("#pnlProjectActivity-QuenchLine").panel( "open");
+	});
+});
+
 /******************* Swipe SRCheckList ***********************/
 $(document).on('pageinit',"#pgSRCheckList",function(event){
 
@@ -1793,7 +1804,7 @@ function SaveSRCheckList(isFinal) {
 		
 	
 
-			showLoading(false);
+			//showLoading(false);
 
 	
 	
@@ -3282,6 +3293,643 @@ function callbackSaveIPMActivity(data)
 	catch(err) { }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/******************* Add Quench Line ***********************/
+$( document ).on( "pagebeforeshow", "#pgQuenchLine", function(event) {
+	checkUserLogin();
+	
+	$('#error-div-QuenchLine').text("").append(getLoadingMini());
+
+	$('#tblQuenchLine').hide();
+	$('#tblQuenchLineButtons').hide();
+
+	
+	$("#tblQuenchLine").find("input").each(function() {
+		if ($(this).attr("type") == "text" )
+			$(this).val("");
+		if ($(this).attr("type") == "date")
+			$(this).val(NowDate());
+			
+	});	
+
+
+	
+	$('#divCollapsibleQuenchLine').collapsible( "option", 'collapsed',true );
+
+	
+	$('#QuenchLineGrid tbody').children("tr").remove();
+
+	$('a[href="#QuenchLineGrid-popup"]').hide();
+
+
+	$('#ulQuenchLinePhotos').children("li").remove();
+	
+	
+	
+
+	//$("#QuenchLineGrid").text("");
+	
+	
+	
+	var id = $.urlParam("id");
+	
+	if (id > 0)
+	{
+	
+		var _url2 = serviceRootUrl + "svc.aspx?op=GetQuechLine&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+		
+		Jsonp_Call(_url2, false, "callbackLoadQuenchLine");
+	}
+	else 
+	{
+		
+			alert("App Error");
+	}
+	
+
+	
+});
+
+
+
+
+
+function ShowQuenchLinePhoto(PhotoRecID) {
+
+	if (PhotoRecID && PhotoRecID > 0){		
+
+	
+	$('#tblQuenchLine').hide();
+	$('#tblQuenchLineButtons').hide();
+
+	$('#error-div-QuenchLine').text("").append(getLoadingMini());
+
+		var _url = serviceRootUrl + "svc.aspx?op=GetQuenchLinePhoto&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + PhotoRecID ;
+		
+		Jsonp_Call(_url, false, "ShowQuenchLinePhotoDialog");
+		
+
+		
+	}
+	else
+	{
+		alert("App Error.");
+	}
+	
+}
+
+
+function ShowQuenchLinePhotoDialog(data)
+{
+
+
+	try {
+
+				
+		
+				
+				
+				var catalog = data.d.results[0];
+
+				
+					$('<div>').simpledialog2({
+						mode: 'blank',
+						headerText: 'View Photo',
+						headerClose: true,
+						transition: 'flip',
+						themeDialog: 'a',
+						useModal: true,
+						width: 300,
+						zindex: 2000,
+						blankContent : 
+						  "<div style='padding: 15px;'><center><img width='95%' alt='' title='' border=0 src=data:image/jpg;base64," + catalog.Contents +"></center></div>"
+					});
+				
+
+						
+	$('#tblQuenchLine').show();
+	$('#tblQuenchLineButtons').show();
+
+	$('#error-div-QuenchLine').text("");
+							
+
+	}
+	catch(err) {}
+}
+
+
+
+
+
+function callbackLoadQuenchLine(data)
+{
+
+
+	try {
+
+				$.mobile.loading( 'show', {
+				text: 'Loading Data...',
+				textVisible: true,
+				theme: 'c',
+				html: ""
+					});
+
+
+			for(var i=0; i < data.d.results.length; i++)
+			{
+				var catalog = data.d.results[i];
+				
+				$("#ulQuenchLinePhotos").append('<li><a href="/user/messages"><span style="font-size:x-small;"><a title="" style="text-decoration:none;" href="#" onclick="ShowQuenchLinePhoto('+ catalog.DocumentID + ')"><u>' + catalog.FileName + catalog.Extension + '</u></a></span></li>');
+				
+				
+				if (i<=0)
+				{
+					
+					if(catalog.QLPicSubmittedDate && catalog.QLPicSubmittedDate!=''){
+						$('#btnSubmitQuenchLine').css('opacity', 0.5);
+
+					}
+					else
+					{
+						$('#btnSubmitQuenchLine').css('opacity', 1);
+					}
+					
+					var row='<tr style="border: 1px LightGrey solid" class=" ';
+					row+= (catalog.QLPicSubmittedDate && catalog.QLPicSubmittedDate!='') ? 'Yes' : 'No';
+					row+= '">';
+					row+= '<td style="border-right: 1px LightGrey solid">Pictures Submitted</td>' ;
+					row+= '<td style="border-right: 1px LightGrey solid">' ;
+					row+= (catalog.QLPicSubmittedDate && catalog.QLPicSubmittedDate!='') ? getMMDDYYYYDate(catalog.QLPicSubmittedDate) : ' ';             
+					row+= '</td>';
+					row+= '<td style="border-right: 1px LightGrey solid">' ;
+					row+= catalog.QLPicSubmittedBy;
+					row+= '</td>';				
+					row+= '</tr>';
+					$('#QuenchLineGrid tbody').append(row);	
+					
+					
+					row='<tr style="border: 1px LightGrey solid" class=" ';
+					row+= (catalog.QLCalSubmittedDate && catalog.QLCalSubmittedDate!='') ? 'Yes' : 'No';
+					row+= '">';
+					row+= '<td style="border-right: 1px LightGrey solid">Calculations Submitted</td>' ;
+					row+= '<td style="border-right: 1px LightGrey solid">' ;
+					row+= (catalog.QLCalSubmittedDate && catalog.QLCalSubmittedDate!='') ? getMMDDYYYYDate(catalog.QLCalSubmittedDate) : '';             
+					row+= '</td>';
+					row+= '<td style="border-right: 1px LightGrey solid">' ;
+					row+= catalog.QLCalSubmittedBy;
+					row+= '</td>';				
+					row+= '</tr>';
+					$('#QuenchLineGrid tbody').append(row);	
+					
+					row='<tr style="border: 1px LightGrey solid" class=" ';
+					row+= (catalog.QLSteelInfoSubmittedDate && catalog.QLSteelInfoSubmittedDate!='') ? 'Yes' : 'No';
+					row+= '">';
+					row+= '<td style="border-right: 1px LightGrey solid">Steel Info Submitted</td>' ;
+					row+= '<td style="border-right: 1px LightGrey solid">' ;
+					row+= (catalog.QLSteelInfoSubmittedDate && catalog.QLSteelInfoSubmittedDate!='') ? getMMDDYYYYDate(catalog.QLSteelInfoSubmittedDate) : '';             
+					row+= '</td>';
+					row+= '<td style="border-right: 1px LightGrey solid">' ;
+					row+= catalog.QLSteelInfoSubmittedBy;
+					row+= '</td>';				
+					row+= '</tr>';
+					$('#QuenchLineGrid tbody').append(row);	
+					
+					
+					row='<tr style="border: 1px LightGrey solid" class=" ';
+					row+= (catalog.QLPicApprovedDate && catalog.QLPicApprovedDate!='') ? 'Yes' : 'No';
+					row+= '">';
+					row+= '<td style="border-right: 1px LightGrey solid">Pictures Approved</td>' ;
+					row+= '<td style="border-right: 1px LightGrey solid">' ;
+					row+= (catalog.QLPicApprovedDate && catalog.QLPicApprovedDate!='') ? getMMDDYYYYDate(catalog.QLPicApprovedDate) : '';             
+					row+= '</td>';
+					row+= '<td style="border-right: 1px LightGrey solid">' ;
+					row+= catalog.QLPicApprovedBy;
+					row+= '</td>';				
+					row+= '</tr>';
+					$('#QuenchLineGrid tbody').append(row);	
+
+					row='<tr style="border: 1px LightGrey solid" class=" ';
+					row+= (catalog.QLCalApprovedDate && catalog.QLCalApprovedDate!='') ? 'Yes' : 'No';
+					row+= '">';
+					row+= '<td style="border-right: 1px LightGrey solid">Calculations Approved</td>' ;
+					row+= '<td style="border-right: 1px LightGrey solid">' ;
+					row+= (catalog.QLCalApprovedDate && catalog.QLCalApprovedDate!='') ? getMMDDYYYYDate(catalog.QLCalApprovedDate) : '';             
+					row+= '</td>';
+					row+= '<td style="border-right: 1px LightGrey solid">' ;
+					row+= catalog.QLCalApprovedBy;
+					row+= '</td>';				
+					row+= '</tr>';
+
+					$('#QuenchLineGrid tbody').append(row);	
+					
+					row='<tr style="border: 1px LightGrey solid" class=" ';
+					row+= (catalog.QLSteelInfoApprovedDate && catalog.QLSteelInfoApprovedDate!='') ? 'Yes' : 'No';
+					row+= '">';
+					row+= '<td style="border-right: 1px LightGrey solid">Steel Info Approved</td>' ;
+					row+= '<td style="border-right: 1px LightGrey solid">' ;
+					row+= (catalog.QLSteelInfoApprovedDate && catalog.QLSteelInfoApprovedDate!='') ? getMMDDYYYYDate(catalog.QLSteelInfoApprovedDate) : '';             
+					row+= '</td>';
+					row+= '<td style="border-right: 1px LightGrey solid">' ;
+					row+= catalog.QLSteelInfoApprovedBy;
+					row+= '</td>';				
+					row+= '</tr>';
+									
+					
+					
+					
+					$('#QuenchLineGrid tbody').append(row);		
+				}				
+				
+
+
+			}
+
+
+
+
+											
+			var id = $.urlParam("id");
+			if (id > 0)
+			{
+				var _url1 = serviceRootUrl + "svc.aspx?op=GetIPMActivity&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+				Jsonp_Call(_url1, true, "callbackLoadQuenchLineSidePanelIPMActivity");
+
+				var _url2 = serviceRootUrl + "svc.aspx?op=GetProjectHeaderById&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+				Jsonp_Call(_url2, true, "callbackLoadQuenchLineSidePanel");
+
+			}
+			else 
+			{
+				///
+					alert("App Error");
+			}
+					
+			$('#error-div-QuenchLine').text("");
+			$.mobile.loading( 'hide' );
+	}
+	catch(err) {}
+}
+
+
+									
+
+
+function callbackLoadQuenchLineSidePanelIPMActivity(data)
+{
+
+
+	try {
+
+		
+		if (data.d.results.length > 0)
+		{
+			var temp = '<div class="ui-grid-b ui-responsive" id="QuenchLineGridSidePanel" name="QuenchLineGridSidePanel" style="padding-right:10px;">';
+			for(var i=0; i < data.d.results.length; i++)
+			{
+				var catalog = data.d.results[i];
+				temp += '<div style="margin: 5px 5px 5px 5px;padding: 2px 2px 2px 2px;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ActivityDate +' - '+ catalog.CreatedBy +' - '+ catalog.ActivityType +'</span><br><span style="font-size:x-small;">'+ catalog.Comments  +'</span></div>';
+
+			}
+			
+			temp += '</div>';
+
+			$("#pnlProjectActivity-QuenchLine" ).html(temp);
+
+					
+		}
+		else
+		{
+			//
+		}
+	}
+	catch(err) {}
+}
+
+
+
+
+
+
+
+
+
+
+function callbackLoadQuenchLineSidePanel(data)
+{
+
+
+
+	try {
+
+	
+			if (data.d.results.length > 0)
+			{
+
+				var temp = "";
+				
+				var catalog = data.d.results[0];
+				
+				temp=SidePanelOrderDetails(catalog);
+
+
+				$("#pnlProjectDetails-QuenchLine" ).html(temp);
+
+
+				$('#error-div2-QuenchLine').text("");
+				$('#error-div-QuenchLine').text("");
+					
+				$('#tblQuenchLine').show();
+				$('#tblQuenchLineButtons').show();
+				
+			}
+		}
+	catch(err) {}
+}
+
+
+
+function cancelStatusQuenchLine() {
+
+		$('<div>').simpledialog2({
+			mode: 'blank',
+			headerText: 'Cancel',
+			headerClose: false,
+			transition: 'flip',
+			themeDialog: 'a',
+			zindex: 2000,
+			blankContent : 
+			  "<div style='padding: 15px;'><p>Go back to main screen?</p>"+
+			  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"NavigatePage('#pgHome');\">OK</a></td>" + 
+			  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
+			  }); 
+
+
+}
+function backStatusQuenchLine() {
+
+
+			$('<div>').simpledialog2({
+				mode: 'blank',
+				headerText: 'Back',
+				headerClose: false,
+				transition: 'flip',
+				themeDialog: 'a',
+				zindex: 2000,
+				blankContent : 
+				  "<div style='padding: 15px;'><p>Go back to project options?</p>"+
+				  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"GoToSectionWithID('ProjectOptions');\">OK</a></td>" + 
+				  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
+			  }); 
+
+}
+
+
+
+function saveQuenchLine(isFinal) {
+
+	if ( $('#ulQuenchLinePhotos li').length > 0 ){		
+
+		$scope = {
+			recordId : $.urlParam("id")
+
+		};
+
+		
+		var	confirmMessage="";
+		confirmMessage=confirmMessage + "Submit QL pictures and go back to project options?";
+
+		
+		$('<div>').simpledialog2({
+			mode: 'blank',
+			headerText: 'Submit QL Pictures',
+			headerClose: false,
+			transition: 'flip',
+			themeDialog: 'a',
+			width: 300,
+			zindex: 2000,
+			blankContent : 
+			  "<div style='padding: 15px;'><p>" + confirmMessage + "</p>"+
+			  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"SaveQuenchLineProcess('" + isFinal + "');\">OK</a></td>" + 
+			  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
+		});
+		
+	}
+	else
+	{
+
+			alert("Please upload QL pictures.");
+		
+	}
+	
+}
+
+
+
+	
+function SaveQuenchLineProcess(isFinal)
+{
+	if ($scope) {
+		
+		//show saving animation
+		$('#error-div-QuenchLine').text("").append(getLoadingMini());
+		showTimedElem('error-div-QuenchLine');
+		
+		$('#tblQuenchLine').hide();
+		$('#tblQuenchLinesButtons').hide();
+	
+		if ($scope.recordId != "" && parseInt($scope.recordId) > 0)
+		{
+			//showLoading(true);
+			var _url =  serviceRootUrl + "svc.aspx?op=AddQuenchLine&SPUrl=" + spwebRootUrl + "sites/busops&recordId=" + $scope.recordId 
+			+ "&username=" + userInfoData.Email + "&userid=" + userInfoData.UserID + "&authInfo=" + userInfoData.AuthenticationHeader + "&statusId=" + $scope.StatusId;
+			
+			console.log(_url);
+			
+			Jsonp_Call(_url, true, "callbackSaveQuenchLine");
+		}
+
+
+		
+	}
+}
+
+
+
+
+
+function callbackSaveQuenchLine(data)
+{
+	try {
+
+			$('#error-div2-QuenchLine').text("");
+			$('#error-div-QuenchLine').text("");
+			GoToSectionWithID('ProjectOptions');
+
+	}
+	catch(err) { }
+}
+
+
+
+function SnapQuenchLinePhoto() {  
+
+       navigator.camera.getPicture(  
+         uploadQuenchLinePhoto,  
+         function(message) { alert('No picture taken'); },  
+         {  
+           quality     : 50,  
+           destinationType : navigator.camera.DestinationType.FILE_URI,  
+           sourceType   : navigator.camera.PictureSourceType.CAMERA,
+		   encodingType: navigator.camera.EncodingType.JPEG,
+		   targetWidth: 640,
+		   targetHeight: 480
+         }  
+       );  
+     }  
+
+	 
+ function SelectQuenchLineMultiPhoto() {  
+
+ 
+ 
+		window.imagePicker.getPictures(
+		
+		function(message) {
+			
+			PhotoArray=[];
+			PhotoNamesArray=[];
+			var PhotoNameNum=0;
+			
+			for (var i = 0; i < message.length; i++) {
+
+				
+				uploadQuenchLineMultiPhoto(message[i]);
+				
+			}
+
+			
+		}, function (error) {
+			alert('No picture selected');
+
+		}, {
+			quality     : 50, 
+			maximumImagesCount: 10,
+			width: 640,
+			height:480
+
+		}
+	);	 
+ 
+ 
+ 
+ }  
+ 
+ 
+ 
+ 
+function uploadQuenchLinePhoto(imageURI) {  
+
+   var options = new FileUploadOptions();  
+   
+
+	var SPURL=spwebRootUrl + "sites/busops";
+
+
+   options.fileKey="file";  
+   options.fileName="c:\\logs\\MobileImages\\" + imageURI.substr(imageURI.lastIndexOf('/')+1);  
+   options.mimeType="image/jpeg";  
+   var params = {};  
+   params.ProjectID = $.urlParam("id");  
+   params.CreatedBy = userInfoData.UserID ;  
+   params.SPURL = SPURL ;  
+   params.UserName = userInfoData.Email ;  
+   params.authInfo = userInfoData.AuthenticationHeader ;  
+   options.params = params;  
+   var ft = new FileTransfer();  
+   var _url =  serviceRootUrl + "svc.aspx?op=UploadQuenchLineFile";
+
+   
+   ft.upload(imageURI, encodeURI(_url), snapQuenchLinewin, snapQuenchLinefail, options); 
+		console.log(_url);
+   
+   
+}  
+ 
+ 
+ 	 
+function uploadQuenchLineMultiPhoto(imageURI,params) {  
+
+	var options = new FileUploadOptions();  
+
+	var SPURL=spwebRootUrl + "sites/busops";
+
+	options.fileKey="file";  
+	options.fileName="c:\\logs\\MobileImages\\" + imageURI.substr(imageURI.lastIndexOf('/')+1);  
+	options.mimeType="image/jpeg";  
+	var params = {};  
+	params.ProjectID = $.urlParam("id");  
+	params.CreatedBy = userInfoData.UserID ;  
+	params.SPURL = SPURL ;  
+	params.UserName = userInfoData.Email ;  
+	params.authInfo = userInfoData.AuthenticationHeader ;  
+	options.params = params;  
+	var ft = new FileTransfer();  
+	var _url =  serviceRootUrl + "svc.aspx?op=UploadQuenchLineFile";
+
+
+	ft.upload(imageURI, encodeURI(_url), snapQuenchLinewin, snapQuenchLinefail, options); 
+		console.log(_url);
+		
+}  
+
+ 
+  
+function MultiQuenchLinePhotoUploadSuccess(r) {  
+	$('#error-div2-QuenchLine').text("");
+	$('#error-div-QuenchLine').text("");
+
+}  
+
+function snapQuenchLinewin(r) {  
+	$('#error-div2-QuenchLine').text("");
+	$('#error-div-QuenchLine').text("");
+	GoToSectionWithID('ProjectOptions');
+
+}  
+function snapQuenchLinefail(error) {  
+alert("An error has occurred sending photo: Code = " + error.code);  
+$('#error-div2-QuenchLine').text("");
+$('#error-div-QuenchLine').text("");
+GoToSectionWithID('ProjectOptions');
+
+}  
+/******************* End Quench Line ***********************/
+
+
+
+
+
+
+
+
+
+
+
 /******************* Edit Construction ***********************/
 $( document ).on( "pagebeforeshow", "#pgConstruction", function(event) {
 	checkUserLogin();
@@ -4365,9 +5013,6 @@ function SelectPhoto() {
    ft.upload(imageURI, encodeURI(_url), snapwin, snapfail, options); 
 		console.log(_url);
 		
-   
-   
-   
  }  
  
  
@@ -4963,7 +5608,7 @@ function callbackLoadSidePanelAddEMRF(data)
 			$('#tblAddEMRF').show();
 			$('#tblAddEMRFButtons').show();
 				
-			showLoading(false);
+			//showLoading(false);
 
 
 			}
@@ -5539,7 +6184,7 @@ function submitEMRF(isFinal) {
 			showTimedElem('error-div-AddEMRF');
 			showTimedElem('error-div2-AddEMRF');
 			
-			showLoading(false);
+			//showLoading(false);
 
 	}
 	

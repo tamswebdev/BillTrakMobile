@@ -35,7 +35,7 @@
 
 
 	
-	<script >var AppVersion = "Ver. 2.7.1";</script>
+	<script >var AppVersion = "Ver. 2.7.5";</script>
 	
 	<!--<script src="Scripts/SQLitePlugin.js"></script> -->
 
@@ -420,7 +420,19 @@
 
 							</td>
 							
-						</tr>					
+						</tr>		
+
+						<tr>
+							 <td id="btnGoToQuenchLine" style="border-top: 0px;padding:1px !important;">
+								<a href="javascript:void(0);" data-mini="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  data-icon="forbidden"  onclick="GoToSectionWithID('QuenchLine')">Quench Line</a>
+							</td>					
+							 <td id="btnEmptySpace" style="border-top: 0px;padding:1px !important;">
+									&nbsp;
+
+							</td>
+							
+						</tr>
+						
 						<tr >
 							 <td id="btnGoBack" style="border-top: 0px;padding:1px !important; " align=center colspan="2"> 
 									<a href="javascript:void(0);" data-mini="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" data-icon="arrow-l" data-iconpos="left"  onclick="NavigatePage('#pgSearch');" >Back to Search</a>
@@ -1136,6 +1148,159 @@
 <!---------------------- End Add EMRF -------------------------------------->
 
 
+
+<!---------------------- Start Add QuenchLine -------------------------------------->
+	<div data-role="page" id="pgQuenchLine" style="min-height: 560px !important;">
+	
+	    <div data-role="panel" id="pnlProjectDetails-QuenchLine" name="pnlProjectDetails-QuenchLine" style='height:200px;' data-theme="b" data-position="right" data-display="overlay"></div>
+	    <div data-role="panel" id="pnlProjectActivity-QuenchLine" name="pnlProjectActivity-QuenchLine"  data-theme="b" data-position="left" data-display="overlay"></div>
+	
+	
+        <div data-role="header" data-position="fixed">
+			<div style="display:none;"></div>
+			<table width="100%" cellspacing="0" cellpadding="0" class="header-table">
+				<tr>
+					<td class="header-left">
+						<div class="header-menu-button">
+							<a href="#popupMenu4" data-rel="popup" data-transition="slideup"><img src="Images/menu-button2.png" id="img-left-bars"></a>
+							<div data-role="popup" id="popupMenu4" data-theme="a">
+									<ul data-role="listview" data-inset="true" style="min-width:210px;">
+										<li data-role="list-divider">Choose an action</li>
+										<li><span class="spanLoginUser"></span></li>
+										<!--<li class="menu-back-btn"><a href="javascript:void(0);" onclick="goBack();">Back</a></li>-->
+										<li><a href="javascript:void(0);" onclick="goHome();">Home</a></li>
+										<li><a href="javascript:void(0);" onclick="NavigatePage('#pgSearch');">My Projects</a></li>
+										<li><a href="javascript:void(0);" onclick="ShowHelp();">Help</a></li>
+										<li><a href="javascript:void(0);" onclick="SignOut();">Sign Out</a></li>
+									</ul>
+							</div>
+						</div>
+                    </td>
+					<td class="header-middle">
+						<a href="javascript: void(0);" onclick="goHome();" style="" class="appLogoLink"><img src="Images/toshiba-logo.png" id="img-toshiba-logo"></a>
+                    </td>
+                    <td class="header-right">
+						&nbsp;
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+		
+
+					
+        <div role="main" class="ui-content">
+			<center>
+				<div id="divAddQuenchLine">
+					<div class="div-catalogs-list error-message" id="error-div-QuenchLine"></div>
+					<div class="div-catalogs-list success-message" id="success-div-QuenchLine"></div>
+
+	
+
+                                                            <table style="width:100%;" class="table table-condensed table-bordered" id="tblQuenchLine">
+                                                                <tbody>
+                                                                    <tr class="tr-title">
+                                                                        <td colspan="3" >Quench Line Pictures</td>
+                                                                    </tr>
+																
+																	<tr>
+																				<td colspan="3" class="explain-field">
+																					
+																					<ul class="form-control" name="ulQuenchLinePhotos" id="ulQuenchLinePhotos" style="width: 100%;font-size:x-small;" value=""></ul>
+																				</td>																		
+
+                                                                    </tr>		
+                                                                    <tr>
+																				<td colspan="3" class="explain-field">
+																				<div data-role="controlgroup"  data-type="horizontal" align="center"  >
+																					<a href="javascript:void(0);" data-mini="true" data-role="button" data-icon="camera" data-iconpos="left" style="padding-right:.5em !important;" onclick="SnapQuenchLinePhoto()">Camera</a>
+																					<a href="javascript:void(0);" data-mini="true" data-role="button" data-icon="grid" data-iconpos="left" style="padding-right:.5em !important;" onclick="SelectQuenchLineMultiPhoto()">Gallery</a>
+																					<a href="javascript:void(0);" id="btnSubmitQuenchLine" name="btnSubmitQuenchLine" data-mini="true" data-role="button" data-icon="check" data-iconpos="left" style="padding-right:.5em !important;"  onclick="if ($('#btnSubmitQuenchLine').css('opacity')=='1') {saveQuenchLine('Yes');}else{alert('QL Pictures already submitted');}">Submit</a>
+																				</div>
+																				</td>																		
+
+                                                                    </tr>		
+																	<tr>
+																	
+
+
+                                                                    </tr>	
+                                                                </tbody>
+                                                            </table>
+															
+					<style>
+					#QuenchLineGrid th {
+						border-bottom: 1px solid #d6d6d6;
+					}
+
+					#QuenchLineGrid tr.Yes {
+						//background: Green;
+						color: DarkGreen;
+						height:22px;
+					}
+					
+					#QuenchLineGrid tr.No {
+						//background: White;
+						color: Red;
+						height:22px;
+					}
+					
+					#QuenchLineGrid tr {
+						font-size: xx-small;
+						height:50px;
+					}
+					
+					#QuenchLineGrid thead tr:first-child {
+						font-size: xx-small;
+						height:22px;
+					}
+									
+
+						
+					}					
+					</style>							
+					
+					<div class="ui-grid-b ui-responsive" id="QuenchLineGridContainer" name="QuenchLineGridContainer" >
+						<div  data-role="collapsible"  id="divCollapsibleQuenchLine" name="divCollapsibleQuenchLine" >
+							<h1><span id="QuenchLineCount" name="QuenchLineCount">Submissions/Approvals</span></h1>
+							<table id="QuenchLineGrid" name="QuenchLineGrid"  data-role="table" data-mode="columntoggle" class="ui-responsive ui-shadow" ><thead><tr><th>Status</th><th>Date</th><th>By</th></tr></thead><tbody></tbody></table>
+						</div>
+
+
+
+					</div>
+					
+					<div data-role="controlgroup" id="tblQuenchLineButtons" data-type="horizontal" >
+
+						<a href="javascript:void(0);"  data-role="button" data-icon="delete" data-iconpos="left" onclick="cancelStatusQuenchLine()" style="padding-right:.5em !important;">Cancel</a>
+						<a href="javascript:void(0);" data-role="button" data-icon="back" data-iconpos="left" onclick="backStatusQuenchLine()" style="padding-right:.5em !important;">Back</a>
+					</div>
+					
+															
+					<table class="table add-status-buttons"  >
+						<tr ><td colspan="2" class="td-error-message" id="error-div2-QuenchLine" style="border-top: 0px;"></td></tr>
+
+						
+					</table>	
+
+
+
+
+					<div class="ui-grid-b ui-responsive" id="QuenchLineGrid" name="QuenchLineGrid"></div>
+
+
+					
+					</div>
+
+
+
+
+				</div>
+			</center>
+        </div>
+    </div>
+	
+<!---------------------- End Add QuenchLine -------------------------------------->
 
 
 
