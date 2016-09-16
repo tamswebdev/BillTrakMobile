@@ -3860,7 +3860,7 @@ function uploadQuenchLinePhoto(imageURI) {
    var ft = new FileTransfer();  
    var _url =  serviceRootUrl + "svc.aspx?op=UploadQuenchLineFile";
 
-   alert("gayee tasweer");
+
    ft.upload(imageURI, encodeURI(_url), snapQuenchLinewin, snapQuenchLinefail, options); 
 		//console.log(_url);
    
