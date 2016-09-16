@@ -741,6 +741,101 @@
 																				</td>																		
                                                                     </tr>																			
 
+																	
+
+																				
+																	
+                                                                    <tr class="tr-title" id="MRSpecific6" style="display:none;">
+                                                                        <td colspan="3" >Quench Line Process</td>
+                                                                    </tr>
+																	
+                                                                    <tr id="MRSpecific7" style="display:none;">
+                                                                        <td class="col-sm-3 text-right active">Construction Type</td>
+																				<td colspan="2" class="radio-button-td">
+																					<fieldset data-role="controlgroup"  >
+																						<input type="radio" name="SR_QL_ConstructionType_Checked" id="rbSR_QL_ConstructionType_Checked1" value="New" onclick="javascript:document.getElementById('txtSR_QL_ETA_Date').setAttribute('disabled', 'disabled');document.getElementById('txtSR_QL_ETA_Date').style.backgroundColor = 'lightgray';"/>
+																						<label for="rbSR_QL_ConstructionType_Checked1">New</label>
+																						<input type="radio" name="SR_QL_ConstructionType_Checked" id="rbSR_QL_ConstructionType_Checked2" value="Existing" onclick="javascript:document.getElementById('txtSR_QL_ETA_Date').setAttribute('disabled', 'disabled');document.getElementById('txtSR_QL_ETA_Date').style.backgroundColor = 'lightgray';"/>
+																						<label for="rbSR_QL_ConstructionType_Checked2">Existing</label>
+																						<input type="radio" name="SR_QL_ConstructionType_Checked" id="rbSR_QL_ConstructionType_Checked3" value="Modular" onclick=
+																						"javascript:document.getElementById('txtSR_QL_ETA_Date').removeAttribute('disabled');document.getElementById('txtSR_QL_ETA_Date').style.backgroundColor = 'white';"/>
+																						<label for="rbSR_QL_ConstructionType_Checked3">Modular</label>
+																					</fieldset>
+																				</td>																		
+
+                                                                    </tr>																	
+
+                                                                    <tr id="MRSpecific8" style="display:none;">
+                                                                        <td class="col-sm-3 text-right active">ETA of Building Placement</td>
+																				<td colspan="2" class="explain-field">
+																					<input type="date" name="txtSR_QL_ETA_Date" id="txtSR_QL_ETA_Date"  value=""  />
+																				</td>																		
+                                                                    </tr>		
+																	
+                                                                    <tr class="tr-title" id="MRSpecific9" style="display:none;">
+                                                                        <td colspan="3" >
+																		
+																		<style>
+																			#QuenchLineConstructionGrid th {
+																				border-bottom: 1px solid #d6d6d6;
+																			}
+
+																			#QuenchLineConstructionGrid tr.Yes {
+																				//background: Green;
+																				color: DarkGreen;
+																				height:22px;
+																			}
+																			
+																			#QuenchLineConstructionGrid tr.No {
+																				//background: White;
+																				color: Red;
+																				height:22px;
+																			}
+																			
+																			#QuenchLineConstructionGrid tr {
+																				font-size: xx-small;
+																				height:50px;
+																			}
+																			
+																			#QuenchLineConstructionGrid thead tr:first-child {
+																				font-size: xx-small;
+																				height:22px;
+																			}
+																							
+
+																				
+																			}					
+																			</style>							
+																			
+																			<div class="ui-grid-b ui-responsive" id="QuenchLineConstructionGridContainer" name="QuenchLineConstructionGridContainer" >
+																				<div  data-role="collapsible"  id="divCollapsibleQuenchLineConstruction" name="divCollapsibleQuenchLineConstruction" >
+																					<h1><span id="QuenchLineConstructionCount" name="QuenchLineConstructionCount">QL Process Progress</span></h1>
+																					<table id="QuenchLineConstructionGrid" name="QuenchLineConstructionGrid"  data-role="table" data-mode="columntoggle" class="ui-responsive ui-shadow" ><thead><tr><th>Status</th><th>Date</th><th>By</th></tr></thead><tbody>
+																		
+																					
+																					</tbody></table>
+																				</div>
+																			</div>
+																			
+																		
+																		
+																		
+																		<a href="javascript:void(0);"  data-role="button" data-icon="check" data-iconpos="left" onclick="saveStatus('QL')" style="padding-right:.5em !important;">Submit QL Pictures</a>
+																		</td>
+                                                                    </tr>
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
                                                                 </tbody>
                                                             </table>
 															
@@ -1285,12 +1380,6 @@
 
 
 
-
-					<div class="ui-grid-b ui-responsive" id="QuenchLineGrid" name="QuenchLineGrid"></div>
-
-
-					
-					</div>
 
 
 

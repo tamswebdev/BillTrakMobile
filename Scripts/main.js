@@ -3401,9 +3401,6 @@ function ShowQuenchLinePhotoDialog(data)
 	try {
 
 				
-		
-				
-				
 				var catalog = data.d.results[0];
 
 				
@@ -3461,7 +3458,7 @@ function callbackLoadQuenchLine(data)
 				{
 					
 					if(catalog.QLPicSubmittedDate && catalog.QLPicSubmittedDate!=''){
-						$('#btnSubmitQuenchLine').css('opacity', 0.5);
+						$('#btnSubmitQuenchLine').css('opacity', 1); //0.5
 
 					}
 					else
@@ -3755,7 +3752,7 @@ function SaveQuenchLineProcess(isFinal)
 		if ($scope.recordId != "" && parseInt($scope.recordId) > 0)
 		{
 			//showLoading(true);
-			var _url =  serviceRootUrl + "svc.aspx?op=AddQuenchLine&SPUrl=" + spwebRootUrl + "sites/busops&recordId=" + $scope.recordId 
+			var _url =  serviceRootUrl + "svc.aspx?op=SubmitQuenchLine&SPUrl=" + spwebRootUrl + "sites/busops&recordId=" + $scope.recordId 
 			+ "&username=" + userInfoData.Email + "&userid=" + userInfoData.UserID + "&authInfo=" + userInfoData.AuthenticationHeader + "&statusId=" + $scope.StatusId;
 			
 			console.log(_url);
@@ -3863,9 +3860,9 @@ function uploadQuenchLinePhoto(imageURI) {
    var ft = new FileTransfer();  
    var _url =  serviceRootUrl + "svc.aspx?op=UploadQuenchLineFile";
 
-   
+   alert("gayee tasweer");
    ft.upload(imageURI, encodeURI(_url), snapQuenchLinewin, snapQuenchLinefail, options); 
-		console.log(_url);
+		//console.log(_url);
    
    
 }  
@@ -3951,6 +3948,10 @@ $( document ).on( "pagebeforeshow", "#pgConstruction", function(event) {
 	$("#ddlSR_Government_Agencies").val('None').selectmenu('refresh', true);
 	
 	
+		
+	$('#QuenchLineConstructionGrid tbody').children("tr").remove();
+
+	$('a[href="#QuenchLineConstructionGrid-popup"]').hide();
 	
 	var id = $.urlParam("id");
 	if (id > 0)
@@ -4170,6 +4171,135 @@ function callbackLoadProjectDetail(data)
 				$("#txtSR_Pre_Installation_Date").attr('disabled', 'disabled');
 				$("#txtSR_Pre_Installation_Date").css({'background-color' : 'lightgray'});
 			}
+			
+			
+			
+			SetRadioValue('SR_QL_ConstructionType_Checked', catalog.QLConstructionType);
+			$("#txtSR_QL_ETA_Date").val(getISODateString(catalog.QLETAOfBuildingPlacement));
+			if (catalog.QLConstructionType=="Modular")
+			{
+				$("#txtSR_QL_ETA_Date").removeAttr('disabled');
+				$("#txtSR_QL_ETA_Date").css({'background-color' : 'white'});
+			}
+			else
+			{
+				$("#txtSR_QL_ETA_Date").attr('disabled', 'disabled');
+				$("#txtSR_QL_ETA_Date").css({'background-color' : 'lightgray'});
+			}
+			
+			
+
+
+			var row='<tr style="border: 1px LightGrey solid" class=" ';
+			row+= (catalog.QLPicSubmittedDate && catalog.QLPicSubmittedDate!='') ? 'Yes' : 'No';
+			row+= '">';
+			row+= '<td style="border-right: 1px LightGrey solid">Pictures Submitted</td>' ;
+			row+= '<td style="border-right: 1px LightGrey solid">' ;
+			row+= (catalog.QLPicSubmittedDate && catalog.QLPicSubmittedDate!='') ? getMMDDYYYYDate(catalog.QLPicSubmittedDate) : ' ';             
+			row+= '</td>';
+			row+= '<td style="border-right: 1px LightGrey solid">' ;
+			row+= catalog.QLPicSubmittedBy;
+			row+= '</td>';				
+			row+= '</tr>';
+			$('#QuenchLineConstructionGrid tbody').append(row);	
+			
+			
+			row='<tr style="border: 1px LightGrey solid" class=" ';
+			row+= (catalog.QLCalSubmittedDate && catalog.QLCalSubmittedDate!='') ? 'Yes' : 'No';
+			row+= '">';
+			row+= '<td style="border-right: 1px LightGrey solid">Calculations Submitted</td>' ;
+			row+= '<td style="border-right: 1px LightGrey solid">' ;
+			row+= (catalog.QLCalSubmittedDate && catalog.QLCalSubmittedDate!='') ? getMMDDYYYYDate(catalog.QLCalSubmittedDate) : '';             
+			row+= '</td>';
+			row+= '<td style="border-right: 1px LightGrey solid">' ;
+			row+= catalog.QLCalSubmittedBy;
+			row+= '</td>';				
+			row+= '</tr>';
+			$('#QuenchLineConstructionGrid tbody').append(row);	
+			
+			row='<tr style="border: 1px LightGrey solid" class=" ';
+			row+= (catalog.QLSteelInfoSubmittedDate && catalog.QLSteelInfoSubmittedDate!='') ? 'Yes' : 'No';
+			row+= '">';
+			row+= '<td style="border-right: 1px LightGrey solid">Steel Info Submitted</td>' ;
+			row+= '<td style="border-right: 1px LightGrey solid">' ;
+			row+= (catalog.QLSteelInfoSubmittedDate && catalog.QLSteelInfoSubmittedDate!='') ? getMMDDYYYYDate(catalog.QLSteelInfoSubmittedDate) : '';             
+			row+= '</td>';
+			row+= '<td style="border-right: 1px LightGrey solid">' ;
+			row+= catalog.QLSteelInfoSubmittedBy;
+			row+= '</td>';				
+			row+= '</tr>';
+			$('#QuenchLineConstructionGrid tbody').append(row);	
+			
+			
+			row='<tr style="border: 1px LightGrey solid" class=" ';
+			row+= (catalog.QLPicApprovedDate && catalog.QLPicApprovedDate!='') ? 'Yes' : 'No';
+			row+= '">';
+			row+= '<td style="border-right: 1px LightGrey solid">Pictures Approved</td>' ;
+			row+= '<td style="border-right: 1px LightGrey solid">' ;
+			row+= (catalog.QLPicApprovedDate && catalog.QLPicApprovedDate!='') ? getMMDDYYYYDate(catalog.QLPicApprovedDate) : '';             
+			row+= '</td>';
+			row+= '<td style="border-right: 1px LightGrey solid">' ;
+			row+= catalog.QLPicApprovedBy;
+			row+= '</td>';				
+			row+= '</tr>';
+			$('#QuenchLineConstructionGrid tbody').append(row);	
+
+			row='<tr style="border: 1px LightGrey solid" class=" ';
+			row+= (catalog.QLCalApprovedDate && catalog.QLCalApprovedDate!='') ? 'Yes' : 'No';
+			row+= '">';
+			row+= '<td style="border-right: 1px LightGrey solid">Calculations Approved</td>' ;
+			row+= '<td style="border-right: 1px LightGrey solid">' ;
+			row+= (catalog.QLCalApprovedDate && catalog.QLCalApprovedDate!='') ? getMMDDYYYYDate(catalog.QLCalApprovedDate) : '';             
+			row+= '</td>';
+			row+= '<td style="border-right: 1px LightGrey solid">' ;
+			row+= catalog.QLCalApprovedBy;
+			row+= '</td>';				
+			row+= '</tr>';
+
+			$('#QuenchLineConstructionGrid tbody').append(row);	
+			
+			row='<tr style="border: 1px LightGrey solid" class=" ';
+			row+= (catalog.QLSteelInfoApprovedDate && catalog.QLSteelInfoApprovedDate!='') ? 'Yes' : 'No';
+			row+= '">';
+			row+= '<td style="border-right: 1px LightGrey solid">Steel Info Approved</td>' ;
+			row+= '<td style="border-right: 1px LightGrey solid">' ;
+			row+= (catalog.QLSteelInfoApprovedDate && catalog.QLSteelInfoApprovedDate!='') ? getMMDDYYYYDate(catalog.QLSteelInfoApprovedDate) : '';             
+			row+= '</td>';
+			row+= '<td style="border-right: 1px LightGrey solid">' ;
+			row+= catalog.QLSteelInfoApprovedBy;
+			row+= '</td>';				
+			row+= '</tr>';
+							
+			
+			
+			
+			$('#QuenchLineConstructionGrid tbody').append(row);					
+	
+	
+	
+			
+			
+			
+				
+	
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			if (catalog.OpportunityModality == "MR")
 			{
 
@@ -4178,6 +4308,10 @@ function callbackLoadProjectDetail(data)
 				$('#MRSpecific3').show();
 				$('#MRSpecific4').show();
 				$('#MRSpecific5').show();
+				$('#MRSpecific6').show();
+				$('#MRSpecific7').show();
+				$('#MRSpecific8').show();
+				$('#MRSpecific9').show();				
 			}
 
 				var temp = "";
@@ -4371,10 +4505,13 @@ var result = 0;
 		SR_Building_Permit_Approved : $('input[name=SR_Building_Permit_Approved]:checked').val(),
 		SR_Installation_Kit : $('input[name=SR_Installation_Kit]:checked').val(),
 		SR_Electronic_Checked : $('input[name=SR_Electronic_Checked]:checked').val(),
+		SR_Pre_Installation_Checked : $('input[name=SR_Pre_Installation_Checked]:checked').val(),
+		SR_QL_ConstructionType_Checked : $('input[name=SR_QL_ConstructionType_Checked]:checked').val(),
 		SR_Timeline_Published : $('input[name=SR_Timeline_Published]:checked').val(),
 		txtSR_Timeline_Published_Date : $("#txtSR_Timeline_Published_Date").val(),
 		txtSR_Electronic_Date : $("#txtSR_Electronic_Date").val(),
 		txtSR_Pre_Installation_Date : $("#txtSR_Pre_Installation_Date").val(),
+		txtSR_QL_ETA_Date : $("#txtSR_QL_ETA_Date").val(),
 		txtSR_Forecasted_Site_Ready_Date : $("#txtSR_Forecasted_Site_Ready_Date").val(),
 		txtSR_Riggers_Date : $("#txtSR_Riggers_Date").val(),
 		ExpectedBillDate : $("#hdnExpectedBillDate").val(),
@@ -4409,8 +4546,13 @@ var result = 0;
 	}
 	
 	
+			
+	if (isFinal=='QL')
+		confirmMessage=confirmMessage + "Save changes and go to QL Picture submission?";
+	else
+		confirmMessage=confirmMessage + "Save changes and go back to project options?";
 	
-	confirmMessage=confirmMessage + "Save changes and go back to project options?";
+	
 	$('<div>').simpledialog2({
 		mode: 'blank',
 		headerText: 'Save Changes',
@@ -4448,21 +4590,22 @@ function SaveStatusProcess(isFinal)
 		if ($scope.recordId != "" && parseInt($scope.recordId) > 0)
 		{
 			//showLoading(true);
-			var _url =  serviceRootUrl + "svc.aspx?op=SaveProject&SPUrl=" + spwebRootUrl + "sites/busops&recordId=" + $scope.recordId + "&GovernmentAgencies=" + $scope.ddlSR_Government_Agencies + "&ConstructionProgress=" + $scope.SR_Construction_Progress + "&ConstructionWeeks=" + $scope.txtSR_Construction_Weeks + "&ContractorSelectedDate=" + $scope.txtSR_Contractor_Selected_Date + "&IPMStatus=" + $scope.rbIP_Installation_Status + "&ConstructionRequired=" + $scope.SR_Required + "&ContractorSelected=" + $scope.SR_Contractor_Selected + "&PreConstructionMeetingScheduled=" + $scope.SR_PreConstruction_Meeting_Scheduled + "&FinalDrawingsReviewedByCustomer=" + $scope.SR_Final_Drawing_Reviewed + "&PreConstructionMeetingScheduledDate=" + $scope.txtSR_PreConstruction_Meeting_Scheduled_Date + "&FinalDrawingsReviewedByCustomerDate=" + $scope.txtSR_Final_Drawings_Reviewed_Date + "&ConstructionDrawingsApproved=" + $scope.rbSR_Drawing_Approved + "&BuildingPermitApproved=" + $scope.SR_Building_Permit_Approved + "&PreShipmentOfInstallationKitEpoxyKit=" + $scope.SR_Installation_Kit + "&Electronic=" + $scope.SR_Electronic_Checked + "&ConstructionTimelinePublished=" + $scope.SR_Timeline_Published + "&ElectronicDate=" + $scope.txtSR_Electronic_Date + "&PreInstallationDate=" + $scope.txtSR_Pre_Installation_Date + "&ForecastedSiteReadyDate=" + $scope.txtSR_Forecasted_Site_Ready_Date + "&RiggersDate=" + $scope.txtSR_Riggers_Date+ "&Confidence=" + $scope.Confidence + "&ConstructionTimelinePublishedDate=" + $scope.txtSR_Timeline_Published_Date
+			var _url =  serviceRootUrl + "svc.aspx?op=SaveProject&SPUrl=" + spwebRootUrl + "sites/busops&recordId=" + $scope.recordId + "&GovernmentAgencies=" + $scope.ddlSR_Government_Agencies + "&ConstructionProgress=" + $scope.SR_Construction_Progress + "&ConstructionWeeks=" + $scope.txtSR_Construction_Weeks + "&ContractorSelectedDate=" + $scope.txtSR_Contractor_Selected_Date + "&IPMStatus=" + $scope.rbIP_Installation_Status + "&ConstructionRequired=" + $scope.SR_Required + "&ContractorSelected=" + $scope.SR_Contractor_Selected + "&PreConstructionMeetingScheduled=" + $scope.SR_PreConstruction_Meeting_Scheduled + "&FinalDrawingsReviewedByCustomer=" + $scope.SR_Final_Drawing_Reviewed + "&PreConstructionMeetingScheduledDate=" + $scope.txtSR_PreConstruction_Meeting_Scheduled_Date + "&FinalDrawingsReviewedByCustomerDate=" + $scope.txtSR_Final_Drawings_Reviewed_Date + "&ConstructionDrawingsApproved=" + $scope.rbSR_Drawing_Approved + "&BuildingPermitApproved=" + $scope.SR_Building_Permit_Approved + "&PreShipmentOfInstallationKitEpoxyKit=" + $scope.SR_Installation_Kit + "&Electronic=" + $scope.SR_Electronic_Checked + "&ConstructionTimelinePublished=" + $scope.SR_Timeline_Published + "&ElectronicDate=" + $scope.txtSR_Electronic_Date + "&PreInstallationDate=" + $scope.txtSR_Pre_Installation_Date + "&ForecastedSiteReadyDate=" + $scope.txtSR_Forecasted_Site_Ready_Date + "&RiggersDate=" + $scope.txtSR_Riggers_Date+ "&Confidence=" + $scope.Confidence + "&ConstructionTimelinePublishedDate=" + $scope.txtSR_Timeline_Published_Date + "&QLETAOfBuildingPlacement=" + $scope.txtSR_QL_ETA_Date + "&QLConstructionType=" + $scope.SR_QL_ConstructionType_Checked +
+			"&PreInstallation=" + $scope.SR_Pre_Installation_Checked
 			+ "&username=" + userInfoData.Email + "&userid=" + userInfoData.UserID + "&authInfo=" + userInfoData.AuthenticationHeader + "&statusId=" + $scope.StatusId;
 			
 			console.log(_url);
 			
-			Jsonp_Call(_url, true, "callbackSaveStatus");
+			if (isFinal=='QL')
+				Jsonp_Call(_url, true, "callbackSaveStatusQL");
+			else
+				Jsonp_Call(_url, true, "callbackSaveStatus");
 		}
 
 
 		
 	}
 }
-
-
-
 
 
 function callbackSaveStatus(data)
@@ -4472,6 +4615,19 @@ function callbackSaveStatus(data)
 			$('#error-div2').text("");
 			$('#error-div').text("");
 			GoToSectionWithID('ProjectOptions');
+
+	}
+	catch(err) { }
+}
+
+
+function callbackSaveStatusQL(data)
+{
+	try {
+
+			$('#error-div2').text("");
+			$('#error-div').text("");
+			GoToSectionWithID('QuenchLine');
 
 	}
 	catch(err) { }
