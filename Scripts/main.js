@@ -128,13 +128,22 @@ $( document ).on( "pagebeforeshow", "#pgProjectOptions", function(event) {
 	$("#pnlProjectActivity-ProjectOptions" ).html("");
 	$("#pnlProjectDetails-ProjectOptions" ).html("");
 	
-			var id = $.urlParam("id");
+	
+	var ShowQuenchLineButton = $.urlParam("ShowQuenchLineButton");
+	
+	
+	if (ShowQuenchLineButton=='1')
+		$("#btnGoToQuenchLine").show();
+	else
+		$("#btnGoToQuenchLine").hide();
 
-				var _url1 = serviceRootUrl + "svc.aspx?op=GetIPMActivity&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
-				Jsonp_Call(_url1, true, "callbackLoadProjectOptionsSidePanelIPMActivity");
+	var id = $.urlParam("id");
 
-				var _url2 = serviceRootUrl + "svc.aspx?op=GetProjectHeaderById&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
-				Jsonp_Call(_url2, true, "callbackLoadProjectOptionsSidePanel");
+	var _url1 = serviceRootUrl + "svc.aspx?op=GetIPMActivity&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+	Jsonp_Call(_url1, true, "callbackLoadProjectOptionsSidePanelIPMActivity");
+
+	var _url2 = serviceRootUrl + "svc.aspx?op=GetProjectHeaderById&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+	Jsonp_Call(_url2, true, "callbackLoadProjectOptionsSidePanel");
 
 	
 });
@@ -346,6 +355,8 @@ function callbackPopulateSearchResults(data)
 				var catalog = data.d.results[i];
 				var temp = "";
 				
+			
+
 				var ModalityColorCode="Transparent";
 				/*switch (catalog.OpportunityModality)
 				{
@@ -592,10 +603,10 @@ function callbackPopulateSearchResults(data)
 					}
 
 
-					
-					
-					
-					
+					var ShowQuenchLineButton=0;
+					if (catalog.OpportunityModality=="MR")
+						ShowQuenchLineButton=1;
+				
 					if (catalog.Confidence < ConfidenceLevel)
 						temp += '<table class="search-item" ><tr><td style="width:3px;background: -webkit-linear-gradient(bottom, rgba(222,0,0,1) 0%, rgba(222,222,222,1) '+ catalog.Confidence +'%, rgba(255,255,255,1) '+ catalog.Confidence +'%);">&nbsp;</td>';
 					else
@@ -603,7 +614,7 @@ function callbackPopulateSearchResults(data)
 //					temp += '<table class="search-item" ><tr><td style="width:3px;background-color:'+ ModalityColorCode +'">&nbsp;</td>';
 //					temp += '<table class="search-item" ><tr>';
 					temp += '<td><div id="ProjectCard" class="panel-body" style="padding-bottom: 0;padding-left 2px;">';
-					temp += '<a href="#" onclick="EditProjectDetailsAction('+catalog.ProjectID+');" style="text-decoration:none;color: inherit; display: block;">'
+					temp += '<a href="#" onclick="EditProjectDetailsAction('+catalog.ProjectID+',' + ShowQuenchLineButton + ');" style="text-decoration:none;color: inherit; display: block;">'
 					temp += '<h2 style="color: blue; margin-top: 2px; margin-bottom: 2px;">';
 					temp += catalog.AccountName + '</h2>';
 					temp += '<div class="row"><div class="col-lg-6 col-md-6">';
@@ -779,8 +790,9 @@ function callbackLoadProjectOptionsSidePanelIPMActivity(data)
 			temp += '</div>';
 
 			$("#pnlProjectActivity-ProjectOptions" ).html(temp);
-
-					
+			
+			
+			
 		}
 		else
 		{
@@ -929,11 +941,14 @@ function callbackLoadProjectOptionsSidePanel(data)
 				var temp = "";
 				
 				var catalog = data.d.results[0];
+
+				
 				temp=SidePanelOrderDetails(catalog);
+				
 
 					
 				$("#pnlProjectDetails-ProjectOptions" ).html(temp);
-
+	
 				
 			}
 		}
@@ -3255,17 +3270,23 @@ function SaveIPMActivityProcess(isFinal)
 {
 	if ($scope) {
 		
+		
+		alert("ataaaaaa");
 		//show saving animation
 		$('#error-div-IPMActivity').text("").append(getLoadingMini());
 		showTimedElem('error-div-IPMActivity');
 		
 		$('#tblIPMActivity').hide();
 		$('#tblIPMActivitysButtons').hide();
-	
+		
+		$scope.txtComments = $scope.txtComments.replace(/&/g, "and");
+
 		if ($scope.recordId != "" && parseInt($scope.recordId) > 0)
 		{
 			//showLoading(true);
 			var _url =  serviceRootUrl + "svc.aspx?op=AddIPMActivity&SPUrl=" + spwebRootUrl + "sites/busops&recordId=" + $scope.recordId + "&ActivityTypeID=" + $scope.ddlActivityType + "&Comments=" + $scope.txtComments + "&ActivityDate=" + $scope.txtActivityDate + "&username=" + userInfoData.Email + "&userid=" + userInfoData.UserID + "&authInfo=" + userInfoData.AuthenticationHeader + "&statusId=" + $scope.StatusId;
+			
+			//_url=encodeURIComponent(_url);
 			
 			console.log(_url);
 			
@@ -3318,6 +3339,9 @@ $( document ).on( "pagebeforeshow", "#pgQuenchLine", function(event) {
 	$('#tblQuenchLine').hide();
 	$('#tblQuenchLineButtons').hide();
 
+
+
+				
 	
 	$("#tblQuenchLine").find("input").each(function() {
 		if ($(this).attr("type") == "text" )
@@ -3947,7 +3971,7 @@ $( document ).on( "pagebeforeshow", "#pgConstruction", function(event) {
 	$("#tblConstruction").find("input[type=radio]").checkboxradio("refresh");
 	$("#ddlSR_Government_Agencies").val('None').selectmenu('refresh', true);
 	
-	
+	$("#txtQuenchLineComments").val('');
 		
 	$('#QuenchLineConstructionGrid tbody').children("tr").remove();
 
@@ -4311,7 +4335,8 @@ function callbackLoadProjectDetail(data)
 				$('#MRSpecific6').show();
 				$('#MRSpecific7').show();
 				$('#MRSpecific8').show();
-				$('#MRSpecific9').show();				
+				$('#MRSpecific9').show();		
+				$('#MRSpecific10').show();					
 			}
 
 				var temp = "";
@@ -4512,6 +4537,7 @@ var result = 0;
 		txtSR_Electronic_Date : $("#txtSR_Electronic_Date").val(),
 		txtSR_Pre_Installation_Date : $("#txtSR_Pre_Installation_Date").val(),
 		txtSR_QL_ETA_Date : $("#txtSR_QL_ETA_Date").val(),
+		QuenchLineComments : $('#txtQuenchLineComments').val(),
 		txtSR_Forecasted_Site_Ready_Date : $("#txtSR_Forecasted_Site_Ready_Date").val(),
 		txtSR_Riggers_Date : $("#txtSR_Riggers_Date").val(),
 		ExpectedBillDate : $("#hdnExpectedBillDate").val(),
@@ -4591,7 +4617,7 @@ function SaveStatusProcess(isFinal)
 		{
 			//showLoading(true);
 			var _url =  serviceRootUrl + "svc.aspx?op=SaveProject&SPUrl=" + spwebRootUrl + "sites/busops&recordId=" + $scope.recordId + "&GovernmentAgencies=" + $scope.ddlSR_Government_Agencies + "&ConstructionProgress=" + $scope.SR_Construction_Progress + "&ConstructionWeeks=" + $scope.txtSR_Construction_Weeks + "&ContractorSelectedDate=" + $scope.txtSR_Contractor_Selected_Date + "&IPMStatus=" + $scope.rbIP_Installation_Status + "&ConstructionRequired=" + $scope.SR_Required + "&ContractorSelected=" + $scope.SR_Contractor_Selected + "&PreConstructionMeetingScheduled=" + $scope.SR_PreConstruction_Meeting_Scheduled + "&FinalDrawingsReviewedByCustomer=" + $scope.SR_Final_Drawing_Reviewed + "&PreConstructionMeetingScheduledDate=" + $scope.txtSR_PreConstruction_Meeting_Scheduled_Date + "&FinalDrawingsReviewedByCustomerDate=" + $scope.txtSR_Final_Drawings_Reviewed_Date + "&ConstructionDrawingsApproved=" + $scope.rbSR_Drawing_Approved + "&BuildingPermitApproved=" + $scope.SR_Building_Permit_Approved + "&PreShipmentOfInstallationKitEpoxyKit=" + $scope.SR_Installation_Kit + "&Electronic=" + $scope.SR_Electronic_Checked + "&ConstructionTimelinePublished=" + $scope.SR_Timeline_Published + "&ElectronicDate=" + $scope.txtSR_Electronic_Date + "&PreInstallationDate=" + $scope.txtSR_Pre_Installation_Date + "&ForecastedSiteReadyDate=" + $scope.txtSR_Forecasted_Site_Ready_Date + "&RiggersDate=" + $scope.txtSR_Riggers_Date+ "&Confidence=" + $scope.Confidence + "&ConstructionTimelinePublishedDate=" + $scope.txtSR_Timeline_Published_Date + "&QLETAOfBuildingPlacement=" + $scope.txtSR_QL_ETA_Date + "&QLConstructionType=" + $scope.SR_QL_ConstructionType_Checked +
-			"&PreInstallation=" + $scope.SR_Pre_Installation_Checked
+			"&PreInstallation=" + $scope.SR_Pre_Installation_Checked + "&QuenchLineComments=" + $scope.QuenchLineComments 
 			+ "&username=" + userInfoData.Email + "&userid=" + userInfoData.UserID + "&authInfo=" + userInfoData.AuthenticationHeader + "&statusId=" + $scope.StatusId;
 			
 			console.log(_url);

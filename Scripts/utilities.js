@@ -27,10 +27,10 @@ function GoToSectionWithID(section)
 	NavigatePage(path);
 }
 
-function EditProjectDetailsAction(Projectid)
+function EditProjectDetailsAction(Projectid,ShowQuenchLineButton)
 {
-
-	NavigatePage('#pgProjectOptions?id=' + Projectid);
+	
+	NavigatePage('#pgProjectOptions?id=' + Projectid + '&ShowQuenchLineButton=' + ShowQuenchLineButton);
 
 }
 
