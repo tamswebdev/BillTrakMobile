@@ -3050,9 +3050,13 @@ function callbackLoadIPMActivity(data)
 				{
 					IPMActivityChat=IPMActivityChat+'<table style="width:100%;" class="ui-responsive ui-block-a"><tr><td style="padding-top:6px;vertical-align:top;">';
 					if (catalog.Avatar.substring(0,7)=='<nopic>')
-						{IPMActivityChat=IPMActivityChat+'<img style="padding:2px;" alt="" title="" border=0 width=50px height=50px src="Images/person.gif">';}
+						{
+							IPMActivityChat=IPMActivityChat+'<img style="padding:2px;" alt="" title="" border=0 width=50px height=50px src="Images/person.gif">';
+						}
 					else
-						{IPMActivityChat=IPMActivityChat+'<img style="padding:2px;" alt="" title="" border=0 width=50px height=50px src=data:image/jpg;base64,'+catalog.Avatar+' />';}
+						{
+							IPMActivityChat=IPMActivityChat+'<img style="padding:2px;" alt="" title="" border=0 width=50px height=50px src=data:image/jpg;base64,'+catalog.Avatar+' />';
+						}
 					IPMActivityChat=IPMActivityChat+'<p style="font-size:x-small;color:silver;width: 50px;word-wrap: break-word;"><em>'+Username+' '+catalog.ActivityDate+'</em></p></td><td>';
 					IPMActivityChat=IPMActivityChat+'<div  name="SpeechBubble" id="SpeechBubble"><div class="bubblel" id="viewport-content"><div><div style="font-size:small;">';
 					IPMActivityChat=IPMActivityChat+ '<B>'+catalog.ActivityType +'</B><BR>'+ catalog.Comments + HasPhoto;
@@ -3068,7 +3072,7 @@ function callbackLoadIPMActivity(data)
 
 
 					if (catalog.Avatar.substring(0,7)=='<nopic>')
-						{IPMActivityChat=IPMActivityChat+'<img style="padding:2px;" alt="" title="" border=0 width=50px height=50px src="Images/person.gif">';}
+						{IPMActivityChat=IPMActivityChat+'<img style="padding:2px;" alt="" title="" border=0 width=50px height=50px src="Images/myself.gif">';}
 					else
 						{IPMActivityChat=IPMActivityChat+'<img style="padding:2px;" alt="" title="" border=0 width=50px height=50px src=data:image/jpg;base64,'+catalog.Avatar+' />';}
 					IPMActivityChat=IPMActivityChat+'<p style="font-size:x-small;color:silver;width: 50px;word-wrap: break-word;"><em>'+Username+' '+catalog.ActivityDate+'</em></p></td>';
