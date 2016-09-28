@@ -134,7 +134,7 @@ $( document ).on( "pagebeforeshow", "#pgProjectOptions", function(event) {
 	
 	if (ShowQuenchLineButton=='1')
 		$("#btnGoToQuenchLine").show();
-	else
+	else if (ShowQuenchLineButton=='0')
 		$("#btnGoToQuenchLine").hide();
 
 	var id = $.urlParam("id");
@@ -606,6 +606,7 @@ function callbackPopulateSearchResults(data)
 					var ShowQuenchLineButton=0;
 					if (catalog.OpportunityModality=="MR")
 						ShowQuenchLineButton=1;
+					
 				
 					if (catalog.Confidence < ConfidenceLevel)
 						temp += '<table class="search-item" ><tr><td style="width:3px;background: -webkit-linear-gradient(bottom, rgba(222,0,0,1) 0%, rgba(222,222,222,1) '+ catalog.Confidence +'%, rgba(255,255,255,1) '+ catalog.Confidence +'%);">&nbsp;</td>';
