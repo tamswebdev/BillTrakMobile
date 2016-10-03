@@ -198,7 +198,7 @@
 				<table width="100%" cellpadding="0" cellspacing="0">
 					<tr>
 						<td>
-							<input type="search" name="search" id="searchCatalogs" value="" />
+							<input type="search" name="search" id="searchCatalogs" value="" data-mini="true" />
 						</td>
 						<td style="width: 45px;padding-top: 3px;" align="right">
 							<a href="javascript: void(0);" onclick="performSearch();" style="" class="appSearchBtnLink"><img src="Images/search.png" id="img-search-btn" /></a>
@@ -212,13 +212,19 @@
 			<div class="div-modality">
                 <table width="100%">
                     <tr>
-                        <td>
-                            <select class="form-control" id="userSearchSortBy" name="userSearchSortBy" data-overlay-theme="b" data-theme="a" data-native-menu="false" tabindex="-1">
+                        <td style="width:75%">
+                            <select class="form-control" id="userSearchSortBy" name="userSearchSortBy" data-mini="true" data-overlay-theme="b" data-theme="a" data-native-menu="false" tabindex="-1">
                                 <option value="ACCOUNTNAME">Sort by: Project</option>
                                 <option value="ZONENAME">Sort by: Zone</option>
                                 <option value="OPPORTUNITYMODALITY">Sort by: Modality</option>
                             </select>
                         </td>
+						<td style="width:25%">
+							<label>
+									<input type="checkbox" name="chkClosed" id="chkClosed" data-mini="true" data-iconpos="right">Closed
+							</label>						
+						</td>
+						
                     </tr>
                 </table>                    
             </div>

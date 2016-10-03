@@ -231,6 +231,11 @@ $( document ).on( "pageinit", "#pgSearch", function(event) {
 	
 		performSearch();
 	});
+	
+	$("#chkClosed").bind( "change", function(event, ui) {
+	
+		performSearch();
+	});
 });
 
 ///////////////////////////////////////////////////////
@@ -334,8 +339,10 @@ function searchAction()
 	
 	userSearchText = $("#searchCatalogs").val();
 	userSearchSortBy = $("#userSearchSortBy").val();
+	chkClosed = $("#chkClosed").is(':checked') ? 1 : 0;
+	
 
-	var searchURL = serviceRootUrl + "svc.aspx?op=SearchProjects&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&userid=" + userInfoData.UserID + "&searchText=" + userSearchText + "&sortby=" + userSearchSortBy;
+	var searchURL = serviceRootUrl + "svc.aspx?op=SearchProjects&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&userid=" + userInfoData.UserID + "&searchText=" + userSearchText + "&sortby=" + userSearchSortBy + "&chkClosed=" + chkClosed;
 	
 	Jsonp_Call(searchURL, false, "callbackPopulateSearchResults");
 }
