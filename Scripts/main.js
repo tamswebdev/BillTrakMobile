@@ -3941,7 +3941,8 @@ function MultiQuenchLinePhotoUploadSuccess(r) {
 function snapQuenchLinewin(r) {  
 	$('#error-div2-QuenchLine').text("");
 	$('#error-div-QuenchLine').text("");
-	GoToSectionWithID('ProjectOptions');
+	//GoToSectionWithID('ProjectOptions');
+	GoToSectionWithID('QuenchLine');
 
 }  
 function snapQuenchLinefail(error) {  
