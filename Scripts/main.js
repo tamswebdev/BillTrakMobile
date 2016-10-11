@@ -3380,7 +3380,6 @@ $( document ).on( "pagebeforeshow", "#pgQuenchLine", function(event) {
 
 	//$("#QuenchLineGrid").text("");
 	
-	alert("1");
 	
 	var id = $.urlParam("id");
 	
@@ -3402,7 +3401,56 @@ $( document ).on( "pagebeforeshow", "#pgQuenchLine", function(event) {
 });
 
 
+function ForceReloadQuenchLine(id)
+{
+	
+	$('#error-div-QuenchLine').text("").append(getLoadingMini());
 
+	$('#tblQuenchLine').hide();
+	$('#tblQuenchLineButtons').hide();
+
+
+
+				
+	
+	$("#tblQuenchLine").find("input").each(function() {
+		if ($(this).attr("type") == "text" )
+			$(this).val("");
+		if ($(this).attr("type") == "date")
+			$(this).val(NowDate());
+			
+	});	
+
+
+	
+	$('#divCollapsibleQuenchLine').collapsible( "option", 'collapsed',true );
+
+	
+	$('#QuenchLineGrid tbody').children("tr").remove();
+
+	$('a[href="#QuenchLineGrid-popup"]').hide();
+
+
+	$('#ulQuenchLinePhotos').children("li").remove();
+	
+	
+
+	
+	if (id > 0)
+	{
+	
+		var _url2 = serviceRootUrl + "svc.aspx?op=GetQuechLine&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+		
+		Jsonp_Call(_url2, false, "callbackLoadQuenchLine");
+	}
+	else 
+	{
+		
+			alert("App Error");
+	}
+	
+
+}
 
 
 function ShowQuenchLinePhoto(PhotoRecID) {
@@ -3942,7 +3990,7 @@ function snapQuenchLinewin(r) {
 	$('#error-div2-QuenchLine').text("");
 	$('#error-div-QuenchLine').text("");
 	//GoToSectionWithID('ProjectOptions');
-	GoToSectionWithID('QuenchLine');
+	ForceReloadQuenchLine($.urlParam("id"));
 
 }  
 function snapQuenchLinefail(error) {  
