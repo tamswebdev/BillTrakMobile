@@ -3380,7 +3380,7 @@ $( document ).on( "pagebeforeshow", "#pgQuenchLine", function(event) {
 
 	//$("#QuenchLineGrid").text("");
 	
-	
+	alert("1");
 	
 	var id = $.urlParam("id");
 	
