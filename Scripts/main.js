@@ -3283,7 +3283,7 @@ function SaveIPMActivityProcess(isFinal)
 	if ($scope) {
 		
 		
-		alert("ataaaaaa");
+		
 		//show saving animation
 		$('#error-div-IPMActivity').text("").append(getLoadingMini());
 		showTimedElem('error-div-IPMActivity');
