@@ -1451,6 +1451,9 @@ $( document ).on( "pagebeforeshow", "#pgSRCheckList", function(event) {
 	
 	$('#tblSRCheckList').hide();
 	$('#tblSRCheckListButtons').hide();
+	
+	$('#SRCheckListMRMsg').hide();
+	
 
 	$('#error-div-SRCheckList').text("").append(getLoadingMini());
 //	$("#ddlSortBy-SRCheckList").val('ShipToSite').selectmenu('refresh', true);
@@ -1502,7 +1505,12 @@ function callbackLoadSRCheckListHeader(data)
 				$('#tdSRCheckList_Customer').html('<B>Customer:</B> ' + catalog.AccountName);
 				$('#tdSRCheckList_Equipment').html('<B>Equipment:</B> ' + catalog.OpportunityProduct);
 				$('#tdSRCheckList_Modality').html('<B>Modality:</B> ' + catalog.OpportunityModality);
-
+				
+				if (catalog.OpportunityModality=='MR')
+					$('#SRCheckListMRMsg').show();
+				else
+					$('#SRCheckListMRMsg').hide();
+				
 				$('#tdSRCheckList_SID').html('<B>SID:</B> ' + catalog.SID);
 				$('#tdSRCheckList_SRD').html('<B>SRD:</B> ' + catalog.ForecastedSiteReadyDate);
 				
