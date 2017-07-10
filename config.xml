@@ -20,7 +20,7 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
 		xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "io.tams.BillTrak"
-        version   = "2.7.7">
+        version   = "2.7.8">
 		
     <name>IPM Mobile</name>
     <description>
@@ -47,7 +47,8 @@
     -->
 	
 	<!-- Customize your app and platform with the preference element. -->
-    <preference name="phonegap-version"           value="3.7.0" />          <!-- all: current version of PhoneGap -->
+    <!-- <preference name="phonegap-version"           value="3.7.0" /> -->         <!-- all: current version of PhoneGap -->
+    <preference name="phonegap-version"           value="cli-6.5.0"/>          <!-- all: current version of PhoneGap -->
     <preference name="orientation"                value="default" />        <!-- all: default means both landscape and portrait are enabled -->
     <preference name="target-device"              value="universal" />      <!-- all: possible values handset, tablet, or universal -->
     <preference name="fullscreen"                 value="true" />           <!-- all: hides the status bar at the top of the screen -->
@@ -65,7 +66,7 @@
 
     <!-- Plugins -->
 
-    <!-- Core plugins -->
+    <!-- Core plugins OLD
     <gap:plugin name="org.apache.cordova.battery-status" />
     <gap:plugin name="org.apache.cordova.camera" />
     <gap:plugin name="org.apache.cordova.media-capture" />
@@ -84,20 +85,51 @@
     <gap:plugin name="org.apache.cordova.network-information" />
     <gap:plugin name="org.apache.cordova.splashscreen" />
     <gap:plugin name="org.apache.cordova.vibration" />
+	-->
     <!--
     <gap:plugin name="org.apache.cordova.storage" />
 	-->
 	
-	<!-- Third party plugins -->
-    <!-- A list of available plugins are available at https://build.phonegap.com/plugins -->
+	<!-- Core plugins -->
+	 <plugin name="cordova-plugin-battery-status" source="npm" spec="~1.1.1" />
+	 <plugin name="cordova-plugin-battery-status" source="npm" />
+	 <plugin name="cordova-plugin-camera" source="npm" />
+	 <plugin name="cordova-plugin-media-capture" source="npm" />
+	 <plugin name="cordova-plugin-console" source="npm" />
+	 <plugin name="cordova-plugin-contacts" source="npm" />
+	 <plugin name="cordova-plugin-device" source="npm" />
+	 <plugin name="cordova-plugin-device-motion" source="npm" />
+	 <plugin name="cordova-plugin-device-orientation" source="npm" />
+	 <plugin name="cordova-plugin-dialogs" source="npm" />
+	 <plugin name="cordova-plugin-file" source="npm" />
+	 <plugin name="cordova-plugin-file-transfer"/>
+	 <plugin name="cordova-plugin-geolocation" source="npm" />
+	 <plugin name="cordova-plugin-globalization" source="npm" />
+	 <plugin name="cordova-plugin-inappbrowser" source="npm" />
+	 <plugin name="cordova-plugin-media" source="npm" />
+	 <plugin name="cordova-plugin-network-information" source="npm" />
+	 <plugin name="cordova-plugin-splashscreen" source="npm" />
+	 <plugin name="cordova-plugin-vibration" source="npm" />
+	 <plugin name="cordova-plugin-appversion" source="npm" />
+	 <plugin name="cordova-plugin-nativesettings" source="npm" />
+  
+
+	
+	<!-- Third party plugins OLD
+
 	<gap:plugin name="com.phonegap.plugins.barcodescanner" />
 	<gap:plugin name="com.synconset.imagepicker"  />
 	<gap:plugin name="uk.co.ilee.touchid" source="pgb" />
-	
+	-->
+	    <!-- A list of available plugins are available at https://build.phonegap.com/plugins -->
 	<!--<gap:plugin name="com.millerjames01.sqlite-plugin" />-->
 
-	
-	
+	  <plugin name="cordova-plugin-barcodescanner" source="npm" />
+	  <plugin name="cordova-plugin-touch-id" source="npm" />	
+	  <plugin name="cordova-plugin-imagepicker" source="npm" />	
+
+ 
+		
 <!-- Define app icon for each platform. -->
     
 	<icon src="res/icon.png" />
