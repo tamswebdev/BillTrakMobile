@@ -3908,7 +3908,7 @@ function SnapQuenchLinePhoto() {
 			
 			for (var i = 0; i < message.length; i++) {
 
-				//message[i].
+				alert(message[i]["image"]);
 				uploadQuenchLineMultiPhoto(message[i]);
 					}
 
