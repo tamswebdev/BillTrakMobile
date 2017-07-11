@@ -3908,10 +3908,10 @@ function SnapQuenchLinePhoto() {
 			
 			for (var i = 0; i < message.length; i++) {
 
-				 alert("daddoo 1");
+				 alert(i);
+				 alert(message.length);
 				uploadQuenchLineMultiPhoto(message[i]);
-				
-			}
+				alert("daddoo 1");			}
 
 			
 		}, function (error) {
