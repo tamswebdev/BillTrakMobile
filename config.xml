@@ -126,8 +126,8 @@
 
 	  <plugin name="cordova-plugin-barcodescanner" source="npm" />
 	  <plugin name="cordova-plugin-touch-id" source="npm" />	
-	 
-<plugin name="multi-image-picker" source="npm" />	
+	  <plugin name="cordova-plugin-imagepicker" source="npm" />	
+
 	  
  
 		
