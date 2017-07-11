@@ -4769,7 +4769,7 @@ function Jsonp_Call_RecursiveCall(_url, _async, callback)
 function Jsonp_Call_Process(_url, _async, callback)
 {
 	try {	
-		alert(_url + "&nocachets=" + (new Date().getTime()) + "&deviceInfo=" + _encodeURIComponent(deviceInfo) + "&lon=" + userLongitude + "&lat=" + userLatitude);
+
 		$.ajax({
 				crossDomain: true,
 				type:"GET",
@@ -4781,8 +4781,7 @@ function Jsonp_Call_Process(_url, _async, callback)
 				dataType: "jsonp",                
 				jsonpCallback: callback,
 				error: function(jqXHR, textStatus, errorThrown) {
-					alert('daddoo 3');
-					alert(jqXHR.status);
+
 					if (textStatus.toLowerCase() == "error")
 					{
 						$("img[src='Images/loading.gif']").each(function () {
