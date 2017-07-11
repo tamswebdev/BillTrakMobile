@@ -272,15 +272,14 @@ function LoginUser()
 				
 				localstorage.set("TouchIDAuth", "0");
 			}			
-		alert('daddoo 1');	
+
 	
-	alert(serviceRootUrl);
+
 	userInfoData.AuthenticationHeader = Base64.encode(loginname + ":" + $('#password').val());
 	var _url = serviceRootUrl + "svc.aspx?op=Authenticate&SPUrl=" + spwebRootUrl + "sites/busops&authInfo=" + userInfoData.AuthenticationHeader + "&currentURL=" + serviceRootUrl + "main.html"
-alert(_url);	
 
 	Jsonp_Call(_url, true, "callbackLogin");
-	alert('daddoo 5');
+
 }
 
 function callbackLogin( data ){
@@ -4782,6 +4781,7 @@ function Jsonp_Call_Process(_url, _async, callback)
 				dataType: "jsonp",                
 				jsonpCallback: callback,
 				error: function(jqXHR, textStatus, errorThrown) {
+					alert(jqXHR.status);
 					if (textStatus.toLowerCase() == "error")
 					{
 						$("img[src='Images/loading.gif']").each(function () {
