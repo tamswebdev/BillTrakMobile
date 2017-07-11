@@ -3908,7 +3908,7 @@ function SnapQuenchLinePhoto() {
 			
 			for (var i = 0; i < message.length; i++) {
 
-alert("Daddoo 0" + message[i]);
+				message[i].
 				uploadQuenchLineMultiPhoto(message[i]);
 					}
 
@@ -3972,7 +3972,8 @@ alert("daddoo 2");
 	var SPURL=spwebRootUrl + "sites/busops";
 	alert("daddoo 3");
 	options.fileKey="file";  
-	options.fileName="c:\\logs\\MobileImages\\" + imageURI.substr(imageURI.lastIndexOf('/')+1);  
+	//options.fileName="c:\\logs\\MobileImages\\" + imageURI.substr(imageURI.lastIndexOf('/')+1);  
+	options.fileName="c:\\logs\\MobileImages\\" + "XXXXXXXXXX"); 
 	options.mimeType="image/jpeg";  
 	alert("daddoo 8");
 	var params = {};  
