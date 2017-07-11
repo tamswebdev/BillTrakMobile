@@ -3897,7 +3897,7 @@ function SnapQuenchLinePhoto() {
  function SelectQuenchLineMultiPhoto() {  
 
  
-
+alert("daddoo1");
 		window.imagePicker.getPictures(
 		
 		function(message) {
@@ -3905,6 +3905,7 @@ function SnapQuenchLinePhoto() {
 			PhotoArray=[];
 			PhotoNamesArray=[];
 			var PhotoNameNum=0;
+			alert("daddoo2");
 			
 			for (var i = 0; i < message.length; i++) {
 
