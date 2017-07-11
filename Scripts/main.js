@@ -4493,11 +4493,11 @@ var result = 0;
             //If Risk 			        0
             //If non booked 		    0 
 			
-			if ($("#hdnExpectedBillDate").val())
+			if ($("#hdnBookStatus").val())
 			{
 
 				
-				switch ($("#hdnExpectedBillDate").val().toUpperCase())
+				switch ($("#hdnBookStatus").val().toUpperCase())
 				{
 					case "APPROVED":
 						result = result + 30;
@@ -4846,6 +4846,8 @@ function checkUserLogin()
 		
 		var TouchIDAuthenticated=userInfoData.TouchIDAuthenticated;
 		
+		alert('daddoo 1');
+		
 		if (CheckTouchIDAvailable())
 		{
 				TouchIDAuth=localstorage.get("TouchIDAuth");
@@ -4857,6 +4859,7 @@ function checkUserLogin()
 
 		if( TouchIDAuth!="0" && TouchIDAuthenticated!="1" && CheckTouchIDAvailable())
 		{
+			alert('daddoo 2');
 				// Authenticate user the Touch ID way
 			if (typeof touchid !== 'undefined')
 			{
@@ -4875,6 +4878,7 @@ function checkUserLogin()
 		}
 		else
 		{
+			alert('daddoo 3');
 			if (!isUserLogin && location.href.indexOf("#pgLogin") < 0 )
 			{
 				NavigatePage("#pgLogin");
@@ -4891,6 +4895,7 @@ function checkUserLogin()
 						
 		}
 		
+				alert('daddoo 4');
 		///// ***** (E) Umer 5/11/2016 : Comment this section to disable touch id
 
 ///// ***** (S) Umer 5/11/2016 : Comment this section to enable touch id
