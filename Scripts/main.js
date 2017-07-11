@@ -3908,10 +3908,9 @@ function SnapQuenchLinePhoto() {
 			
 			for (var i = 0; i < message.length; i++) {
 
-				 alert(i);
-				 alert(message.length);
+
 				uploadQuenchLineMultiPhoto(message[i]);
-				alert("daddoo 1");			}
+					}
 
 			
 		}, function (error) {
@@ -3963,7 +3962,10 @@ function uploadQuenchLinePhoto(imageURI) {
  
  
  	 
-function uploadQuenchLineMultiPhoto(imageURI,params) {  
+function uploadQuenchLineMultiPhoto(imageURI) {  
+
+	alert("daddoo 1");
+	alert(imageURI);
 
 	var options = new FileUploadOptions();  
 
