@@ -3970,12 +3970,12 @@ function uploadQuenchLineMultiPhoto(imageURI) {
 	var options = new FileUploadOptions();  
 alert("daddoo 2");
 	var SPURL=spwebRootUrl + "sites/busops";
-	alert("daddoo 3");
+
 	options.fileKey="file";  
 	//options.fileName="c:\\logs\\MobileImages\\" + imageURI.substr(imageURI.lastIndexOf('/')+1);  
 	options.fileName="c:\\logs\\MobileImages\\" + "XXXXXXXXXX"; 
 	options.mimeType="image/jpeg";  
-	alert("daddoo 8");
+
 	var params = {};  
 	params.ProjectID = $.urlParam("id");  
 	params.CreatedBy = userInfoData.UserID ;  
@@ -3986,12 +3986,12 @@ alert("daddoo 2");
 
 	var ft = new FileTransfer();  
 	var _url =  serviceRootUrl + "svc.aspx?op=UploadQuenchLineFile";
-
+	alert("daddoo 3");
 
 
 	ft.upload(imageURI, encodeURI(_url), snapQuenchLinewin, snapQuenchLinefail, options); 
 		//console.log(_url);
-		
+			alert("daddoo 8");
 }  
 
  
