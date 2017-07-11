@@ -3908,7 +3908,7 @@ function SnapQuenchLinePhoto() {
 			
 			for (var i = 0; i < message.length; i++) {
 
-				 
+				 alert("daddoo 1");
 				uploadQuenchLineMultiPhoto(message[i]);
 				
 			}
@@ -3982,7 +3982,7 @@ function uploadQuenchLineMultiPhoto(imageURI,params) {
 	var ft = new FileTransfer();  
 	var _url =  serviceRootUrl + "svc.aspx?op=UploadQuenchLineFile";
 
-alert("daddoo 1");
+
 	ft.upload(imageURI, encodeURI(_url), snapQuenchLinewin, snapQuenchLinefail, options); 
 		console.log(_url);
 		
