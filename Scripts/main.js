@@ -244,6 +244,7 @@ $( document ).on( "pageinit", "#pgSearch", function(event) {
 
 function LoginUser()
 {
+	alert('daddoo 1');
 	if ($('#login') === undefined || $('#login').val() == '') {
 		$('#td-error').html('Please provide login.');
 		showTimedElem('td-error');
@@ -257,11 +258,11 @@ function LoginUser()
 	}
 
 	$("#td-error").text("").append(getLoadingMini());
-	
+	alert('daddoo 2');
 	var loginname = ($('#login').val().indexOf("@") > 0) ? $('#login').val().substring(0, $('#login').val().indexOf("@")) : $('#login').val();
 	loginname = (loginname.indexOf("\\") > 0) ? loginname : "tamsdomain\\" + loginname;
 	loginname=loginname.trim();
-	
+	alert('daddoo 3');
 			if (CheckTouchIDAvailable())
 			{
 				
@@ -271,13 +272,13 @@ function LoginUser()
 				
 				localstorage.set("TouchIDAuth", "0");
 			}			
-			
+		alert('daddoo 4');	
 	
 	userInfoData.AuthenticationHeader = Base64.encode(loginname + ":" + $('#password').val());
 	var _url = serviceRootUrl + "svc.aspx?op=Authenticate&SPUrl=" + spwebRootUrl + "sites/busops&authInfo=" + userInfoData.AuthenticationHeader + "&currentURL=" + serviceRootUrl + "main.html"
 
 	Jsonp_Call(_url, true, "callbackLogin");
-	
+	alert('daddoo 5');
 }
 
 function callbackLogin( data ){
@@ -4846,7 +4847,7 @@ function checkUserLogin()
 		
 		var TouchIDAuthenticated=userInfoData.TouchIDAuthenticated;
 		
-		alert('daddoo 1');
+		
 		
 		if (CheckTouchIDAvailable())
 		{
@@ -4859,7 +4860,7 @@ function checkUserLogin()
 
 		if( TouchIDAuth!="0" && TouchIDAuthenticated!="1" && CheckTouchIDAvailable())
 		{
-			alert('daddoo 2');
+			
 				// Authenticate user the Touch ID way
 			if (typeof touchid !== 'undefined')
 			{
@@ -4878,7 +4879,7 @@ function checkUserLogin()
 		}
 		else
 		{
-			alert('daddoo 3');
+			
 			if (!isUserLogin && location.href.indexOf("#pgLogin") < 0 )
 			{
 				NavigatePage("#pgLogin");
@@ -4895,7 +4896,7 @@ function checkUserLogin()
 						
 		}
 		
-				alert('daddoo 4');
+				
 		///// ***** (E) Umer 5/11/2016 : Comment this section to disable touch id
 
 ///// ***** (S) Umer 5/11/2016 : Comment this section to enable touch id
