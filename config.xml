@@ -128,7 +128,7 @@
 	  <plugin name="cordova-plugin-touch-id" source="npm" />	
 
 	  <plugin name="cordova-plugin-imagepicker-github" source="npm" />	
->	
+
 	  
  
 		
