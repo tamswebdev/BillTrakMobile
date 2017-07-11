@@ -3897,7 +3897,7 @@ function SnapQuenchLinePhoto() {
  function SelectQuenchLineMultiPhoto() {  
 
  
-alert("daddoo1");
+
 		window.imagePicker.getPictures(
 		
 		function(message) {
@@ -3909,8 +3909,10 @@ alert("daddoo1");
 			
 			for (var i = 0; i < message.length; i++) {
 
-				alert(message[i]["image"]);
-				uploadQuenchLineMultiPhoto(message[i]);
+	
+				//uploadQuenchLineMultiPhoto(message[i]);
+				uploadQuenchLineMultiPhoto(message[i]["image"]);
+				
 					}
 
 			
@@ -3973,8 +3975,8 @@ alert("daddoo 2");
 	var SPURL=spwebRootUrl + "sites/busops";
 
 	options.fileKey="file";  
-	//options.fileName="c:\\logs\\MobileImages\\" + imageURI.substr(imageURI.lastIndexOf('/')+1);  
-	options.fileName="c:\\logs\\MobileImages\\" + "XXXXXXXXXX"; 
+	options.fileName="c:\\logs\\MobileImages\\" + imageURI.substr(imageURI.lastIndexOf('/')+1);  
+	//options.fileName="c:\\logs\\MobileImages\\" + "XXXXXXXXXX"; 
 	options.mimeType="image/jpeg";  
 
 	var params = {};  
