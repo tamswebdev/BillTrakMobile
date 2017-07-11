@@ -3974,6 +3974,7 @@ function uploadQuenchLineMultiPhoto(imageURI) {
 	options.fileKey="file";  
 	options.fileName="c:\\logs\\MobileImages\\" + imageURI.substr(imageURI.lastIndexOf('/')+1);  
 	options.mimeType="image/jpeg";  
+	alert("daddoo 2");
 	var params = {};  
 	params.ProjectID = $.urlParam("id");  
 	params.CreatedBy = userInfoData.UserID ;  
@@ -3981,9 +3982,11 @@ function uploadQuenchLineMultiPhoto(imageURI) {
 	params.UserName = userInfoData.Email ;  
 	params.authInfo = userInfoData.AuthenticationHeader ;  
 	options.params = params;  
+	alert("daddoo 3");
 	var ft = new FileTransfer();  
 	var _url =  serviceRootUrl + "svc.aspx?op=UploadQuenchLineFile";
 
+alert("daddoo 8");
 
 	ft.upload(imageURI, encodeURI(_url), snapQuenchLinewin, snapQuenchLinefail, options); 
 		console.log(_url);
