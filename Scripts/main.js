@@ -244,7 +244,7 @@ $( document ).on( "pageinit", "#pgSearch", function(event) {
 
 function LoginUser()
 {
-	alert('daddoo 1');
+
 	if ($('#login') === undefined || $('#login').val() == '') {
 		$('#td-error').html('Please provide login.');
 		showTimedElem('td-error');
@@ -258,11 +258,11 @@ function LoginUser()
 	}
 
 	$("#td-error").text("").append(getLoadingMini());
-	alert('daddoo 2');
+
 	var loginname = ($('#login').val().indexOf("@") > 0) ? $('#login').val().substring(0, $('#login').val().indexOf("@")) : $('#login').val();
 	loginname = (loginname.indexOf("\\") > 0) ? loginname : "tamsdomain\\" + loginname;
 	loginname=loginname.trim();
-	alert('daddoo 3');
+
 			if (CheckTouchIDAvailable())
 			{
 				
@@ -272,10 +272,12 @@ function LoginUser()
 				
 				localstorage.set("TouchIDAuth", "0");
 			}			
-		alert('daddoo 4');	
+		alert('daddoo 1');	
 	
+	alert(serviceRootUrl);
 	userInfoData.AuthenticationHeader = Base64.encode(loginname + ":" + $('#password').val());
 	var _url = serviceRootUrl + "svc.aspx?op=Authenticate&SPUrl=" + spwebRootUrl + "sites/busops&authInfo=" + userInfoData.AuthenticationHeader + "&currentURL=" + serviceRootUrl + "main.html"
+alert(_url);	
 
 	Jsonp_Call(_url, true, "callbackLogin");
 	alert('daddoo 5');
@@ -4768,6 +4770,7 @@ function Jsonp_Call_RecursiveCall(_url, _async, callback)
 function Jsonp_Call_Process(_url, _async, callback)
 {
 	try {	
+	alert('daddoo 3');
 		$.ajax({
 				crossDomain: true,
 				type:"GET",
@@ -4797,7 +4800,7 @@ function Jsonp_Call_Process(_url, _async, callback)
 				}
 		});
 	}
-	catch(err) { }
+	catch(err) { alert('Error connecting to Server');}
 }
 
 function SignOut()
