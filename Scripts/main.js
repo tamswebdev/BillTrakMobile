@@ -3973,7 +3973,7 @@ alert("daddoo 2");
 	alert("daddoo 3");
 	options.fileKey="file";  
 	//options.fileName="c:\\logs\\MobileImages\\" + imageURI.substr(imageURI.lastIndexOf('/')+1);  
-	options.fileName="c:\\logs\\MobileImages\\" + "XXXXXXXXXX"); 
+	options.fileName="c:\\logs\\MobileImages\\" + "XXXXXXXXXX"; 
 	options.mimeType="image/jpeg";  
 	alert("daddoo 8");
 	var params = {};  
