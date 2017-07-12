@@ -125,6 +125,7 @@
 	<!--<gap:plugin name="com.millerjames01.sqlite-plugin" />-->
 
 	  <plugin name="cordova-plugin-barcodescanner" source="npm" />
+	  <plugin name="cordova-plugin-touchid" source="npm" />
 	  <plugin name="cordova-plugin-touch-id" source="npm" />	
 	  <plugin name="com.toshyodev.imagepicker" source="npm" />	
   
@@ -137,12 +138,12 @@
 	<icon src="res/icons/icon.png" />
 
 
-    <icon gap:qualifier="ldpi" src="res/icons/icon-57x57.png" gap:platform="android"/>
-    <icon gap:qualifier="mdpi" src="res/icons/icon-72x72.png" gap:platform="android"/>
-    <icon gap:qualifier="hdpi" src="res/icons/icon-76x76.png" gap:platform="android"/>
-    <icon gap:qualifier="xhdpi" src="res/icons/icon-120x120.png" gap:platform="android"/>
-    <icon gap:qualifier="xxhdpi" src="res/icons/icon-150x150.png" gap:platform="android"/>
-    <icon gap:qualifier="xxxhdpi" src="res/icons/icon-180x180.png" gap:platform="android"/>	
+    <icon src="res/icons/icon-57x57.png" gap:platform="android" gap:qualifier="ldpi"/>
+    <icon src="res/icons/icon-72x72.png" gap:platform="android" gap:qualifier="mdpi"/>
+    <icon src="res/icons/icon-76x76.png" gap:platform="android" gap:qualifier="hdpi"/>
+    <icon src="res/icons/icon-120x120.png" gap:platform="android" gap:qualifier="xhdpi"/>
+    <icon src="res/icons/icon-150x150.png" gap:platform="android" gap:qualifier="xxhdpi"/>
+    <icon src="res/icons/icon-180x180.png" gap:platform="android" gap:qualifier="xxxhdpi"/>	
 	
 	<icon src="res/icons/icon-29x29.png" gap:platform="ios" width="29" height="29"/>
     <icon src="res/icons/icon-58x58.png" gap:platform="ios" width="58" height="58"/>
