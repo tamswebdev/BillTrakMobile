@@ -5120,8 +5120,8 @@ function SelectPhoto() {
 					
 					
 					*/
-					
-					uploadMultiPhoto(message[i]);
+				
+					uploadMultiPhoto(message[i]["image"]);
 					
 				}
 
