@@ -3905,8 +3905,7 @@ function SnapQuenchLinePhoto() {
 			PhotoArray=[];
 			PhotoNamesArray=[];
 			var PhotoNameNum=0;
-			alert("daddoo2");
-			
+	
 			for (var i = 0; i < message.length; i++) {
 
 	
@@ -3967,11 +3966,9 @@ function uploadQuenchLinePhoto(imageURI) {
  	 
 function uploadQuenchLineMultiPhoto(imageURI) {  
 
-	alert("daddoo 1");
-	alert(imageURI);
 
 	var options = new FileUploadOptions();  
-alert("daddoo 2");
+
 	var SPURL=spwebRootUrl + "sites/busops";
 
 	options.fileKey="file";  
@@ -3989,12 +3986,10 @@ alert("daddoo 2");
 
 	var ft = new FileTransfer();  
 	var _url =  serviceRootUrl + "svc.aspx?op=UploadQuenchLineFile";
-	alert("daddoo 3");
 
 
 	ft.upload(imageURI, encodeURI(_url), snapQuenchLinewin, snapQuenchLinefail, options); 
-		//console.log(_url);
-			alert("daddoo 8");
+
 }  
 
  
