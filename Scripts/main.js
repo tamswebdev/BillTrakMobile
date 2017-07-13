@@ -632,7 +632,16 @@ function callbackPopulateSearchResults(data)
 						temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.RoomNumber+'</h3>';
 					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+catalog.SystemVal + '</h3>';
 					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ getMMDDYYYYDate(catalog.ExpectedBillDate) +'</h3>';
-					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
+					
+					var OrderNumber="/Not Found";
+					if (catalog.OrderNumber)
+					{
+						if (catalog.OrderNumber!="")
+							OrderNumber="/" + catalog.OrderNumber;
+					}
+						
+					
+					temp += '<h5>Proj/SID#/Order# '+ catalog.ProjectID + '/' + catalog.SID + OrderNumber + '</h5>';
 					
 					
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
@@ -827,7 +836,20 @@ function SidePanelOrderDetails(catalog)
 						temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.RoomNumber+'</h3>';
 					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+catalog.SystemVal + '</h3>';
 					temp += '<h3 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.BillTrakAmount +' on '+ catalog.ExpectedBillDate +'</h3>';
-					temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
+					
+					
+					var OrderNumber="/Not Found";
+					if (catalog.OrderNumber)
+					{
+						if (catalog.OrderNumber!="")
+							OrderNumber="/" + catalog.OrderNumber;
+					}
+						
+					
+					temp += '<h5>Proj/SID#/Order# '+ catalog.ProjectID + '/' + catalog.SID + OrderNumber + '</h5>';
+										
+					
+					//temp += '<h4>Project/SID# '+ catalog.ProjectID + '/' + catalog.SID +'</h4>';
 
 					
 					temp += '<h5 style="margin-top: 2px; margin-bottom: 2px;">'+ catalog.Address1 + catalog.Address2 + '</h5>';
@@ -4242,6 +4264,10 @@ function callbackLoadProjectDetail(data)
 								
 			
 			$("#txtSR_Riggers_Date").val(getISODateString(catalog.RiggersDate));
+			
+			$("#txtSR_Occupancy_Date").val(getISODateString(catalog.OccupancyDate));
+			
+			
 			SetRadioValue('SR_Installation_Kit', catalog.PreShipmentOfInstallationKitEpoxyKit);
 
 			SetRadioValue('SR_Electronic_Checked', catalog.Electronic);
@@ -4392,11 +4418,14 @@ function callbackLoadProjectDetail(data)
 			
 			
 			
+			if (catalog.OpportunityModality != "UL")
+			{
+
+				$('#trOccupancyDate').show();
 			
+			}			
 			
-			
-			
-			
+
 			
 			
 			if (catalog.OpportunityModality == "MR")
@@ -4579,6 +4608,8 @@ var result = 0;
             {
                 result = result + 10;
             }
+			
+			
 
             //it will never be 100, as one check is missing, as we don't know what compelling event is
             //Compeling event = 10
@@ -4615,6 +4646,7 @@ var result = 0;
 		QuenchLineComments : $('#txtQuenchLineComments').val(),
 		txtSR_Forecasted_Site_Ready_Date : $("#txtSR_Forecasted_Site_Ready_Date").val(),
 		txtSR_Riggers_Date : $("#txtSR_Riggers_Date").val(),
+		txtSR_Occupancy_Date : $("#txtSR_Occupancy_Date").val(),
 		ExpectedBillDate : $("#hdnExpectedBillDate").val(),
 		BookStatus : $("#hdnBookStatus").val(),
 		Confidence : result,
@@ -4692,10 +4724,10 @@ function SaveStatusProcess(isFinal)
 		{
 			//showLoading(true);
 			var _url =  serviceRootUrl + "svc.aspx?op=SaveProject&SPUrl=" + spwebRootUrl + "sites/busops&recordId=" + $scope.recordId + "&GovernmentAgencies=" + $scope.ddlSR_Government_Agencies + "&ConstructionProgress=" + $scope.SR_Construction_Progress + "&ConstructionWeeks=" + $scope.txtSR_Construction_Weeks + "&ContractorSelectedDate=" + $scope.txtSR_Contractor_Selected_Date + "&IPMStatus=" + $scope.rbIP_Installation_Status + "&ConstructionRequired=" + $scope.SR_Required + "&ContractorSelected=" + $scope.SR_Contractor_Selected + "&PreConstructionMeetingScheduled=" + $scope.SR_PreConstruction_Meeting_Scheduled + "&FinalDrawingsReviewedByCustomer=" + $scope.SR_Final_Drawing_Reviewed + "&PreConstructionMeetingScheduledDate=" + $scope.txtSR_PreConstruction_Meeting_Scheduled_Date + "&FinalDrawingsReviewedByCustomerDate=" + $scope.txtSR_Final_Drawings_Reviewed_Date + "&ConstructionDrawingsApproved=" + $scope.rbSR_Drawing_Approved + "&BuildingPermitApproved=" + $scope.SR_Building_Permit_Approved + "&PreShipmentOfInstallationKitEpoxyKit=" + $scope.SR_Installation_Kit + "&Electronic=" + $scope.SR_Electronic_Checked + "&ConstructionTimelinePublished=" + $scope.SR_Timeline_Published + "&ElectronicDate=" + $scope.txtSR_Electronic_Date + "&PreInstallationDate=" + $scope.txtSR_Pre_Installation_Date + "&ForecastedSiteReadyDate=" + $scope.txtSR_Forecasted_Site_Ready_Date + "&RiggersDate=" + $scope.txtSR_Riggers_Date+ "&Confidence=" + $scope.Confidence + "&ConstructionTimelinePublishedDate=" + $scope.txtSR_Timeline_Published_Date + "&QLETAOfBuildingPlacement=" + $scope.txtSR_QL_ETA_Date + "&QLConstructionType=" + $scope.SR_QL_ConstructionType_Checked +
-			"&PreInstallation=" + $scope.SR_Pre_Installation_Checked + "&QuenchLineComments=" + $scope.QuenchLineComments 
+			"&PreInstallation=" + $scope.SR_Pre_Installation_Checked + "&QuenchLineComments=" + $scope.QuenchLineComments +  "&OccupancyDate=" + $scope.txtSR_Occupancy_Date
 			+ "&username=" + userInfoData.Email + "&userid=" + userInfoData.UserID + "&authInfo=" + userInfoData.AuthenticationHeader + "&statusId=" + $scope.StatusId;
 			
-			console.log(_url);
+			//console.log(_url);
 			
 			if (isFinal=='QL')
 				Jsonp_Call(_url, true, "callbackSaveStatusQL");
