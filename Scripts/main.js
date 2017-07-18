@@ -64,7 +64,8 @@ function onDeviceReady() {
 	checkUserLogin();	
 
 	isPageLoadReady = true;
-	
+
+
 };
 
 /////////////////////////Database Functions//////////////////////////////
@@ -1472,8 +1473,8 @@ $( document ).on( "pagebeforeshow", "#pgSRCheckList", function(event) {
 	checkUserLogin();
 	
 	
-	
 	$('#tblSRCheckList').hide();
+	$('#tblSRCheckList2').hide();
 	$('#tblSRCheckListButtons').hide();
 	
 	$('#SRCheckListMRMsg').hide();
@@ -1483,9 +1484,11 @@ $( document ).on( "pagebeforeshow", "#pgSRCheckList", function(event) {
 //	$("#ddlSortBy-SRCheckList").val('ShipToSite').selectmenu('refresh', true);
 	$("#txtEmailAddressSRCheckList").val('');
 		
+		/*
 	var EmailAddressSRCheckList=localstorage.get('EmailAddressSRCheckList');
 	$('#txtEmailAddressSRCheckList').val(EmailAddressSRCheckList);
-			
+		*/
+		
 	$('#divCollapsibleSRCheckList').collapsible( "option", 'collapsed',true );
 
 	
@@ -1514,8 +1517,139 @@ $( document ).on( "pagebeforeshow", "#pgSRCheckList", function(event) {
 	}
 	
 
+
+
+
+
+
+
+
+
+
+
+	
+	    $( "#ddlEmailSRCheckList" ).on( "filterablebeforefilter", function ( e, data ) {
+        var $ul = $( this ),
+            $input = $( data.input ),
+            value = $input.val(),
+            html = "";
+        $ul.html( "" );
+
+		$('#ddlEmailSRCheckList').show(); 
+        /////if ( value && value.length > 2 ) {
+			
+			var ServiceURL=serviceRootUrl + "svc.aspx?op=GetEmailRecepients&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&PartialName=" + value+ "&id=" + id;
+            $ul.html( "<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>" );
+            $ul.listview( "refresh" );
+            $.ajax({
+                url: ServiceURL,
+                dataType: "jsonp",
+                crossDomain: true,
+
+            })
+            .then( function ( response ) {
+
+                $.each( response, function ( i, val ) {
+					
+					if (val.results.length > 0)
+					{
+						val.results.forEach(function (Rec){
+
+						//html += "<li style='max-width: 168px;'>" +  Rec.FullName + "<font color=white>~" +Rec.EmpId + "~</font><BR><font color=blue>"+ Rec.JobTitle+"</font></li>";
+						html += "<li style='max-width: 270px;'>" +  Rec.FullName +  "<br><font size=xxsmall><font color=white>~</font>" +  Rec.JobTitle  +"<br><font color=blue><font color=white>~</font>" + Rec.Email    + "</font></font>" + "<font color=white>~" +Rec.EmpId + "~" +Rec.ContactType + "</font></li>";
+						
+						} );
+					}
+					
+                });
+                $ul.html( html );
+                $ul.listview( "refresh" );
+                $ul.trigger( "updatelayout");
+            });
+        /////}
+    });
+	
+
+	
+    $( document).on( "click", "#ddlEmailSRCheckList li", function() {      
+	
+      var selectedItem = $(this).html();
+	  
+	  var EmpName = selectedItem.split("~")[0].replace('<br><font size="xxsmall"><font color="white">','');
+	  var EmpEmail = selectedItem.split("~")[2].replace('</font></font><font color="white">','').replace('</font>','');
+	  var EmpID = selectedItem.split("~")[3].replace("","");
+	  var ContactType = selectedItem.split("~")[4].replace("</font>","");
+
+	  
+	  var EmailRecepients=$("#txtEmailAddressSRCheckList").val() + EmpEmail + ';';
+	  $("#txtEmailAddressSRCheckList").val(EmailRecepients );
+	  
+
+	  var listItem = "<li  data-icon='delete' id='lstEmailSRCheckList_"+EmpID+"'><a href='#' tag='~"+EmpEmail+"~' onclick='DelEmailSRCheckList("+ EmpID +");'>" + EmpName + "</a></li>";	 
+	 
+	  $("#lstEmailSRCheckList").append(listItem);
+	  $('#lstEmailSRCheckList').listview('refresh');
+	  $('#ddlEmailSRCheckList').parent().parent().find('input').val('');
+		
+	  
+      $('.autocomplete').hide();     
+	
+	  
+	
+	
+	
+	
+	
+	});
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
 	
 });
+
+
+
+function RefreshtxtEmailAddressSRCheckList()
+{
+	
+	$("#txtEmailAddressSRCheckList").val('');
+	var Emails = "";
+	$( "#lstEmailSRCheckList li" ).each(function( index ) {
+		var selectedItem = $(this).html();
+	
+		var EmpEmail = selectedItem.split("~")[1];
+		Emails += EmpEmail + ';';
+        });
+		
+	$("#txtEmailAddressSRCheckList").val(Emails);
+	
+
+
+}
+
+
+
+function DelEmailSRCheckList(EmpID)
+{
+		$("#lstEmailSRCheckList_"+EmpID).remove();
+	  //$("#lstEmailSRCheckList").append("<li data-icon='delete' data-id='"+EmpID+"'><a href='DelEmailSRCheckList('"+ EmpID +"')'>" + EmpEmail + "</a></li>");
+	  $('#lstEmailSRCheckList').listview('refresh');
+	  RefreshtxtEmailAddressSRCheckList();
+}
+
+
 
 
 function callbackLoadSRCheckListHeader(data)
@@ -1739,6 +1873,7 @@ function callbackLoadSRCheckListSidePanel(data)
 				$('#error-div-SRCheckList').text("");
 					
 				$('#tblSRCheckList').show();
+				$('#tblSRCheckList2').show();
 				$('#tblSRCheckListButtons').show();
 				
 			}
@@ -1889,8 +2024,10 @@ function SaveSRCheckListProcess(isFinal)
 		var ProjectId=$.urlParam("id");	
 		AllCheckListSaved="0";
 		
+		/*
 		var EmailAddressSRCheckList=$('#txtEmailAddressSRCheckList').val();
 		localstorage.set("EmailAddressSRCheckList", EmailAddressSRCheckList);
+		*/
 		
 		for (i=0;i<RowCount;i++)
 		{
@@ -1994,8 +2131,8 @@ function EmailSRCheckListProcess(a)
 		$('#error-div-SRCheckList').text("").append(getLoadingMini());
 		showTimedElem('error-div-SRCheckList');
 
-		
 		$('#tblSRCheckList').hide();
+		$('#tblSRCheckList2').hide();
 		$('#tblSRCheckListsButtons').hide();
 		
 		$.mobile.loading( 'show', {
@@ -2005,9 +2142,10 @@ function EmailSRCheckListProcess(a)
 			html: ""
 				});
 		
+		/*
 		var EmailAddressSRCheckList=$('#txtEmailAddressSRCheckList').val();
 		localstorage.set("EmailAddressSRCheckList", EmailAddressSRCheckList);
-		
+		*/
 
 		if ($scope.recordId != "" && parseInt($scope.recordId) > 0)
 		{
@@ -2975,7 +3113,13 @@ $( document ).on( "pagebeforeshow", "#pgIPMActivity", function(event) {
 			alert("App Error");
 	}
 	
-
+	
+	
+	
+	
+	
+	
+	
 	
 });
 
@@ -5520,7 +5664,7 @@ $( document ).on( "pagebeforeshow", "#pgAddEMRF", function(event) {
 	
 
 	
-	    $( "#ddl_AddEMRF_ShipTo" ).on( "filterablebeforefilter", function ( e, data ) {
+	    $( "#b" ).on( "filterablebeforefilter", function ( e, data ) {
         var $ul = $( this ),
             $input = $( data.input ),
             value = $input.val(),
