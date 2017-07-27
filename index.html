@@ -393,7 +393,7 @@
 
 						<tr>
 							<td id="btnSitePlanRequests" style="border-top: 0px;padding:1px !important;">
-								<a href="javascript:void(0);" data-mini="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" data-icon="location"   onclick="GoToSectionWithID('SitePlanRequests')">Site Plan Req.</a>
+								<a href="javascript:void(0);" data-mini="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" data-icon="home"   onclick="GoToSectionWithID('SitePlanRequests')">Site Plan Req.</a>
 							</td>
 							 <td id="btnGoToEMRF" style="border-top: 0px;padding:1px !important;">
 								<a href="javascript:void(0);" data-mini="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  data-icon="navigation"  onclick="GoToSectionWithID('EMRF')">EMRF</a>
@@ -426,7 +426,7 @@
 							
 						</tr>		
 
-						<tr>
+						<!--<tr>
 							 <td id="btnGoToICRForm" style="border-top: 0px;padding:1px !important;">
 									<a href="javascript:void(0);" data-mini="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button" data-icon="bullets" data-iconpos="left"  onclick="GoToSectionWithID('ICRForm')" >ICR Form</a>
 
@@ -436,18 +436,23 @@
 
 							</td>						
 
-						</tr>
+						</tr>-->
 
 						<tr>
+							 <td id="btnGoToIPMCheckIn" style="border-top: 0px;padding:1px !important;" >
+								<a href="javascript:void(0);" data-mini="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  data-icon="location"  onclick="GoToSectionWithID('IPMCheckIn')">IPM Check-In</a>
+							</td>	
+
+						
 							 <td id="btnGoToQuenchLine" style="border-top: 0px;padding:1px !important;" >
 								<a href="javascript:void(0);" data-mini="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  data-icon="forbidden"  onclick="GoToSectionWithID('QuenchLine')">Quench Line</a>
 							</td>	
 
 							
-							 <td id="btnEmptySpace" style="border-top: 0px;padding:1px !important;">
+							<!-- <td id="btnEmptySpace" style="border-top: 0px;padding:1px !important;">
 									&nbsp;
 
-							</td>
+							</td>-->
 							
 						</tr>
 
@@ -2079,6 +2084,142 @@
 	
 
 	
+	<div data-role="page" id="pgIPMCheckIn"  style="min-height: 560px !important;">
+	
+	    <div data-role="panel" id="pnlProjectDetails-IPMCheckIn" name="pnlProjectDetails-IPMCheckIn" style='height:200px;' data-theme="b" data-position="right" data-display="overlay"></div>
+	    <div data-role="panel" id="pnlProjectActivity-IPMCheckIn" name="pnlProjectActivity-IPMCheckIn"  data-theme="b" data-position="left" data-display="overlay"></div>
+	
+	
+        <div data-role="header" data-position="fixed">
+			<div style="display:none;"></div>
+			<table width="100%" cellspacing="0" cellpadding="0" class="header-table">
+				<tr>
+					<td class="header-left">
+						<div class="header-menu-button">
+							<a href="#popupMenu8" data-rel="popup" data-transition="slideup"><img src="Images/menu-button2.png" id="img-left-bars"></a>
+							<div data-role="popup" id="popupMenu10" data-theme="a">
+									<ul data-role="listview" data-inset="true" style="min-width:210px;">
+										<li data-role="list-divider">Choose an action</li>
+										<li><span class="spanLoginUser"></span></li>
+										<!--<li class="menu-back-btn"><a href="javascript:void(0);" onclick="goBack();">Back</a></li>-->
+										<li><a href="javascript:void(0);" onclick="goHome();">Home</a></li>
+										<li><a href="javascript:void(0);" onclick="NavigatePage('#pgSearch');">My Projects</a></li>
+										<li><a href="javascript:void(0);" onclick="ShowHelp();">Help</a></li>
+										<li><a href="javascript:void(0);" onclick="SignOut();">Sign Out</a></li>
+									</ul>
+							</div>
+						</div>
+                    </td>
+					<td class="header-middle">
+						<a href="javascript: void(0);" onclick="goHome();" style="" class="appLogoLink"><img src="Images/toshiba-logo.png" id="img-toshiba-logo"></a>
+                    </td>
+                    <td class="header-right">
+						&nbsp;
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div role="main" class="ui-content" id="Content-IPMCheckIn">
+			<center>
+				<div id="divAddIPMCheckIn">
+					<div class="div-catalogs-list error-message" id="error-div-IPMCheckIn"></div>
+					<div class="div-catalogs-list success-message" id="success-div-IPMCheckIn"></div>
+
+
+						
+                                                            <table style="width:100%;font-size:10px;" class="table table-condensed table-bordered" id="tblIPMCheckIn" >
+                                                                <tbody>
+                                                                    <tr >
+                                                                        <td colspan="2" id="tdIPMCheckIn_Customer"></td>
+                                                                    </tr>
+                                                                    <tr >
+                                                                        <td colspan="2" id="tdIPMCheckIn_Equipment" ></td>
+                                                                    </tr>
+																												
+																	<tr>
+																		<td style="width:50%" id="tdIPMCheckIn_Modality"></td>
+																		<td style="width:50%" id="tdIPMCheckIn_SID"></td>
+                                                                    </tr>		
+   
+																	<tr>
+																		<td style="width:50%" id="tdIPMCheckIn_SRD"></td>
+																		<td style="width:50%" id="tdIPMCheckIn_CustEng"></td>
+                                                                    </tr>		
+      
+
+
+                                                                    <tr>
+
+																				<td colspan="3" class="explain-field">
+																						
+																							<span id="spnCurrentAddress" ></span>
+																					
+																		</td> 			
+
+                                                                    <tr>
+
+																				<td colspan="3" class="explain-field" style="text-align:center;">
+																						
+																							<img id="imgCurrentLoc" src="" />
+																					
+																		</td> 															
+
+
+                                                                    </tr>																	
+
+                                                                    <tr>
+
+																				<td colspan="3" class="explain-field">
+																				
+																				
+																				<input type="checkbox" name="chkCertify" id="chkCertify" />
+																				<label for="chkCertify">I certify the system associated with this SID is installed and available for patient use.</label>
+																					
+																		</td> 			
+
+                                                                    <tr>
+																	
+											   																	
+                                                                </tbody>
+                                                            </table>
+																																
+
+
+																	
+
+
+					
+
+															
+					<table class="table add-status-buttons"  >
+						<tr ><td colspan="2" class="td-error-message" id="error-div2-IPMCheckIn" style="border-top: 0px;"></td></tr>
+
+						
+					</table>																		
+
+
+
+					<div data-role="controlgroup" id="tblIPMCheckInButtons" data-type="horizontal"  >
+						<a href="javascript:void(0);"  data-mini="true"  data-role="button" data-icon="check" data-iconpos="left" style="font-size: 12px;padding-right:.4em !important;" onclick="SaveIPMCheckIn('Yes')">Submit</a>
+			
+						<a href="javascript:void(0);"  data-mini="true"  data-role="button" data-icon="delete" data-iconpos="left" onclick="cancelStatusIPMCheckIn()" style="font-size: 12px;padding-right:.4em !important;">Cancel</a>
+						<a href="javascript:void(0);"  data-mini="true"  data-role="button" data-icon="back" data-iconpos="left" onclick="backStatusIPMCheckIn()" style="font-size: 12px;padding-right:.4em !important;">Back</a>
+					</div>
+
+										
+
+					
+					</div>
+
+
+
+
+				</div>
+			</center>
+        </div>
+    </div>
+
 	
 	
 	
@@ -2220,11 +2361,6 @@
 					
 					</div>
 															
-					<table class="table add-status-buttons"  >
-						<tr ><td colspan="2" class="td-error-message" id="error-div2-SRCheckList" style="border-top: 0px;"></td></tr>
-
-						
-					</table>																		
 
 																	
 						
@@ -2288,6 +2424,11 @@
                                                             </table>
 															
 
+					<table class="table add-status-buttons"  >
+						<tr ><td colspan="2" class="td-error-message" id="error-div2-SRCheckList" style="border-top: 0px;"></td></tr>
+
+						
+					</table>																		
 					
 
 

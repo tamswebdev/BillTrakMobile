@@ -1428,7 +1428,7 @@ function EmailEquipmentListProcess(a)
 			//showLoading(true);
 			var _url =  serviceRootUrl + "svc.aspx?op=EmailEquipmentList&SPUrl=" + spwebRootUrl + "sites/busops&id=" + $scope.recordId + "&emailaddress=" + $scope.txtEmailAddress+ "&username=" + userInfoData.Email + "&userid=" + userInfoData.UserID + "&authInfo=" + userInfoData.AuthenticationHeader + "&statusId=" + $scope.StatusId;
 			
-			console.log(_url);
+			//console.log(_url);
 			
 			Jsonp_Call(_url, true, "callbackEmailEquipmentList");
 		}
@@ -1581,14 +1581,22 @@ $( document ).on( "pagebeforeshow", "#pgSRCheckList", function(event) {
 	  var ContactType = selectedItem.split("~")[4].replace("</font>","");
 
 	  
-	  var EmailRecepients=$("#txtEmailAddressSRCheckList").val() + EmpEmail + ';';
-	  $("#txtEmailAddressSRCheckList").val(EmailRecepients );
+	  var EmailRecepients=$("#txtEmailAddressSRCheckList").val();
+	  if( EmailRecepients.indexOf(EmpEmail + ';') == -1)
+	  {
+
+		  	EmailRecepients=EmailRecepients + EmpEmail + ';';
+			$("#txtEmailAddressSRCheckList").val(EmailRecepients );
+			var listItem = "<li  data-icon='delete' id='lstEmailSRCheckList_"+EmpID+"'><a href='#' tag='~"+EmpEmail+"~' onclick='DelEmailSRCheckList("+ EmpID +");'>" + EmpName + "</a></li>";	 
+			 
+			$("#lstEmailSRCheckList").append(listItem);
+			$('#lstEmailSRCheckList').listview('refresh');			
+	  }
+			  
+
 	  
 
-	  var listItem = "<li  data-icon='delete' id='lstEmailSRCheckList_"+EmpID+"'><a href='#' tag='~"+EmpEmail+"~' onclick='DelEmailSRCheckList("+ EmpID +");'>" + EmpName + "</a></li>";	 
-	 
-	  $("#lstEmailSRCheckList").append(listItem);
-	  $('#lstEmailSRCheckList').listview('refresh');
+
 	  $('#ddlEmailSRCheckList').parent().parent().find('input').val('');
 		
 	  
@@ -2173,6 +2181,477 @@ function callbackEmailSRCheckList(data)
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/******************* Load IPMCheckIn ***********************/
+$( document ).on( "pagebeforeshow", "#pgIPMCheckIn", function(event) {
+	checkUserLogin();
+	
+	
+	$('#tblIPMCheckIn').hide();
+	$('#tblIPMCheckIn2').hide();
+	$('#tblIPMCheckInButtons').hide();
+	
+
+
+	$('#error-div-IPMCheckIn').text("").append(getLoadingMini());
+
+
+		
+
+
+	
+	var id = $.urlParam("id");
+	
+	if (id > 0)
+	{
+		var _url= serviceRootUrl + "svc.aspx?op=GetSRCheckListHeader&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id ;
+		Jsonp_Call(_url, false, "callbackLoadIPMCheckInHeader");
+	
+		var _url2 = serviceRootUrl + "svc.aspx?op=GetSRCheckList&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id + "&AppName=BillTrak"   ;
+		Jsonp_Call(_url2, false, "callbackLoadIPMCheckIn");
+
+
+
+		}
+	else 
+	{
+		///
+			alert("App Error");
+	}
+	
+
+	var CurrentLocLong ='';
+	var CurrentLocLat ='';
+	
+	navigator.geolocation.getCurrentPosition(function (position) {
+		
+
+		CurrentLocLat = position.coords.latitude;
+		CurrentLocLong = position.coords.longitude;
+		
+		
+		var CurrentLocImgURL="https://maps.googleapis.com/maps/api/staticmap?zoom=19&size=260x260&maptype=hybrid&sensor=false&markers=color:red%7Clabel:%7C" + CurrentLocLat + "," + CurrentLocLong + "&center=" + CurrentLocLat + "," + CurrentLocLong  +"&zoom=15&key=" + "AIzaSyAoQj57A0o_4ihX7Ts5kcVFs66St62LisU";
+		
+
+		$("#imgCurrentLoc").attr('src',CurrentLocImgURL); 
+		//alert(CurrentLocImgURL);
+		
+		
+		
+		var CurrentAddress="https://maps.googleapis.com/maps/api/geocode/json?latlng=" + CurrentLocLat + "," + CurrentLocLong + "&sensor=false";//"&key=" + "AIzaSyAoQj57A0o_4ihX7Ts5kcVFs66St62LisU";
+		//Jsonp_Call(CurrentAddress, false, "callbackLoadIPMCheckInCurrentAddress");
+		
+		$.getJSON(CurrentAddress,function(json){
+		//var address = JSON.parse(json);
+		//console.log(json);
+		//alert(json.results[0].formatted_address);
+		$("#spnCurrentAddress").text("Current Location: " + json.results[0].formatted_address);
+		
+		});
+				
+		//return LocCoordinates;
+	} //, alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n')
+
+	);
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+	
+});
+
+function callbackLoadIPMCheckInCurrentAddress(data)
+{
+	
+	alert(data);
+}
+
+
+
+function callbackLoadIPMCheckInHeader(data)
+{
+
+
+	try {
+
+
+				var catalog = data.d.results[0];
+				$('#tdIPMCheckIn_Customer').html('<B>Customer:</B> ' + catalog.AccountName);
+				$('#tdIPMCheckIn_Equipment').html('<B>Equipment:</B> ' + catalog.OpportunityProduct);
+				$('#tdIPMCheckIn_Modality').html('<B>Modality:</B> ' + catalog.OpportunityModality);
+				
+				
+				$('#tdIPMCheckIn_SID').html('<B>SID:</B> ' + catalog.SID);
+				$('#tdIPMCheckIn_SRD').html('<B>SRD:</B> ' + catalog.ForecastedSiteReadyDate);
+				
+				$('#tdIPMCheckIn_CustEng').html('<B>Cust. Eng.:</B> ' + catalog.CustomerEngineer);
+				$('#tdIPMCheckIn_ChecklistDate').html('<B>Checklist Date:</B> ' + catalog.LastModifiedDate);
+
+				
+	
+
+
+	}
+	catch(err) {}
+}
+
+
+
+function callbackLoadIPMCheckIn(data)
+{
+
+
+	try {
+
+
+
+			for(var i=0; i < data.d.results.length; i++)
+			{
+				var catalog = data.d.results[i];
+				var row='<tr style="border: 1px LightGrey solid" class="LongPressBox ';
+				//'<tr><td>' + catalog.Item_Number + '</td><td>' + catalog.Description + '</td><td>' + catalog.Qty + '</td></tr>'
+				
+				row+= (catalog.CheckedValue.toUpperCase()=='YES') ? 'Yes' : (catalog.CheckedValue.toUpperCase()=='N/A') ? 'NA' : 'No';
+				row+= '" id="trlongpress-'+ i +'">';
+				row+= '<td style="display:none;" id="trlongpress-'+ i +'_ProjectIPMCheckInID" >'+ catalog.ProjectIPMCheckInID+'</td>';
+				row+= '<td style="border-right: 1px LightGrey solid">' ;
+				row+= (catalog.CheckedValue.toUpperCase()=='YES') ? catalog.LastModifiedDate : (catalog.CheckedValue.toUpperCase()=='N/A') ? 'N/A' : '';             
+				row+= '</td>';
+				row+= '<td style="border-right: 1px LightGrey solid">' ;
+				row+= catalog.Question;
+				//row+= '</td>';
+				//row+= '<td>' ;
+				row+= (catalog.Comments && catalog.Comments!='') ? '<br><br><i>Comment: '+catalog.Comments+'</i>' : '';
+				row+= '</td>';				
+				row+= '</tr>';
+				row+= '<tr class="trlongpressHide trlongpressEdit" id="trlongpress-'+ i +'_B">';
+				row+= '<td style="display:none;" id="trlongpress-'+ i +'_IPMCheckInItemID">'+ catalog.IPMCheckInItemID+'</td>';
+				row+= '<td>' ;
+
+				
+				row+= '<fieldset data-role="controlgroup" data-type="horizontal">';
+				if (catalog.HasCheckBox.toUpperCase()=='YES')
+					{
+						if (catalog.CheckedValue.toUpperCase()=='YES')
+							row+= '<input onchange="longpressCheckedValueCheckbox_onchange('+ i +')" class="longpressCheckedValueCheckbox" value="YES" type="checkbox" maxlength="255" ' + 'name="trlongpress-'+ i +'_CheckedValue"' + ' id="trlongpress-'+ i +'_CheckedValue"' + ' checked>' + '<label style="font-size:xx-small !important;" for="trlongpress-'+ i +'_CheckedValue"' + '>Check</label>';
+						else
+							row+= '<input onchange="longpressCheckedValueCheckbox_onchange('+ i +')" class="longpressCheckedValueCheckbox" value="YES" type="checkbox" maxlength="255" ' + 'name="trlongpress-'+ i +'_CheckedValue"' + ' id="trlongpress-'+ i +'_CheckedValue"' + ' >' + '<label style="font-size:xx-small !important;" for="trlongpress-'+ i +'_CheckedValue"' + '>Check</label>';
+					}
+				else
+					{
+						row+= '';		
+					}			
+				if (catalog.HasNotApplicable.toUpperCase()=='YES')
+					{
+						if (catalog.CheckedValue.toUpperCase()=='N/A')
+							row+= '<input onchange="longpressNACheckbox_onchange('+ i +')" class="longpressNACheckbox" value="N/A" type="checkbox" maxlength="255" id="trlongpress-'+ i +'_CheckedNA"' + ' checked>'+ '<label  style="font-size:xx-small !important;" for="trlongpress-'+ i +'_CheckedNA"' + '>N/A</label>';
+						else
+							row+= '<input onchange="longpressNACheckbox_onchange('+ i +')" class="longpressNACheckbox" value="N/A" type="checkbox" maxlength="255" id="trlongpress-'+ i +'_CheckedNA"' + ' >'+ '<label  style="font-size:xx-small !important;" for="trlongpress-'+ i +'_CheckedNA"' + '>N/A</label>';
+					}
+				else
+					{
+						row+= '';		
+					}						
+				row+= '</fieldset></td>';
+				row+= '<td  colspan="2">' ;
+				if (catalog.HasComments.toUpperCase()=='YES')
+					row+= '<textarea placeholder="Enter Comments here..." style="margin:0px;width:200px;height:42px; maxlength="255" rows=3 id="trlongpress-'+ i +'_CommentBox"' + ' >' + catalog.Comments + '</textarea>';
+				else
+					row+= 'nbsp;';
+				row+= '<button onclick="longpressButton_click('+ i +')" class="longpressButton" type="button" style="margin:0px;width:200px;height:22px;" id="trlongpress-'+ i +'_Close"' + ' >Close</button>';
+				row+= '</td>';				
+				row+= '</tr>';				
+				
+				$('#IPMCheckInGrid-IPMCheckIn tbody').append(row);				
+
+			}
+
+
+
+
+											
+			var id = $.urlParam("id");
+			if (id > 0)
+			{
+				var _url1 = serviceRootUrl + "svc.aspx?op=GetIPMActivity&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+				Jsonp_Call(_url1, true, "callbackLoadIPMCheckInSidePanelIPMActivity");
+
+				var _url2 = serviceRootUrl + "svc.aspx?op=GetProjectHeaderById&SPUrl=" + spwebRootUrl + "sites/busops&username=" + userInfoData.Email + "&id=" + id;
+				Jsonp_Call(_url2, true, "callbackLoadIPMCheckInSidePanel");
+
+			}
+			else 
+			{
+				///
+					alert("App Error");
+			}
+					
+
+	}
+	catch(err) {}
+}
+
+function callbackLoadIPMCheckInSidePanelIPMActivity(data)
+{
+
+
+	try {
+
+		
+		if (data.d.results.length > 0)
+		{
+			var temp = '<div class="ui-grid-b ui-responsive" id="IPMCheckInGridSidePanel" name="IPMCheckInGridSidePanel" style="padding-right:10px;">';
+			for(var i=0; i < data.d.results.length; i++)
+			{
+				var catalog = data.d.results[i];
+				temp += '<div style="margin: 5px 5px 5px 5px;padding: 2px 2px 2px 2px;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.ActivityDate +' - '+ catalog.CreatedBy +' - '+ catalog.ActivityType +'</span><br><span style="font-size:x-small;">'+ catalog.Comments  +'</span></div>';
+
+			}
+			
+			temp += '</div>';
+
+			$("#pnlProjectActivity-IPMCheckIn" ).html(temp);
+
+					
+		}
+		else
+		{
+			//
+		}
+	}
+	catch(err) {}
+}
+
+
+function callbackLoadIPMCheckInSidePanel(data)
+{
+
+
+
+	try {
+
+	
+			if (data.d.results.length > 0)
+			{
+
+				var temp = "";
+				
+				var catalog = data.d.results[0];
+				
+				temp=SidePanelOrderDetails(catalog);
+					
+				$("#pnlProjectDetails-IPMCheckIn" ).html(temp);
+
+
+				$('#error-div2-IPMCheckIn').text("");
+				$('#error-div-IPMCheckIn').text("");
+					
+				$('#tblIPMCheckIn').show();
+				$('#tblIPMCheckIn2').show();
+				$('#tblIPMCheckInButtons').show();
+				
+			}
+		}
+	catch(err) {}
+}
+
+
+
+function cancelStatusIPMCheckIn() {
+
+
+		$('<div>').simpledialog2({
+			mode: 'blank',
+			headerText: 'Cancel',
+			headerClose: false,
+			transition: 'flip',
+			themeDialog: 'a',
+			zindex: 2000,
+			blankContent : 
+			  "<div style='padding: 15px;'><p>Cancel changes and go back to main screen?</p>"+
+			  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"NavigatePage('#pgHome');\">OK</a></td>" + 
+			  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
+			  }); 
+
+
+}
+function backStatusIPMCheckIn() {
+
+			$('<div>').simpledialog2({
+				mode: 'blank',
+				headerText: 'Back',
+				headerClose: false,
+				transition: 'flip',
+				themeDialog: 'a',
+				zindex: 2000,
+				blankContent : 
+				  "<div style='padding: 15px;'><p>Discard changes and go back to project options?</p>"+
+				  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"GoToSectionWithID('ProjectOptions');\">OK</a></td>" + 
+				  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
+			  }); 
+	
+
+
+}
+
+
+
+	
+	
+	
+
+
+function SaveIPMCheckIn(isFinal) {
+
+	
+		var confirmMessage=""
+
+
+		
+		
+		confirmMessage=confirmMessage + "Save Checklist and go back to project options?";
+		$('<div>').simpledialog2({
+			mode: 'blank',
+			headerText: 'Save Checklist',
+			headerClose: false,
+			transition: 'flip',
+			themeDialog: 'a',
+			width: 300,
+			zindex: 2000,
+			blankContent : 
+			  "<div style='padding: 15px;'><p>" + confirmMessage + "</p>"+
+			  "<table width='100%' cellpadding='0' cellspacing='0'><tr><td width='50%'><a rel='close' data-role='button' href='#' onclick=\"SaveIPMCheckInProcess('" + isFinal + "');\">OK</a></td>" + 
+			  "<td width='50%'><a rel='close' data-role='button' href='#'>Cancel</a></td></tr></table></div>"
+		});
+		
+	
+
+			//showLoading(false);
+
+	
+	
+}
+
+
+
+	
+function SaveIPMCheckInProcess(isFinal)
+{
+	
+		//show saving animation
+		$('#error-div').text("").append(getLoadingMini());
+		showTimedElem('error-div');
+		
+		$('#tblAddEMRF').hide();
+		$('#tblAddEMRFsButtons').hide();
+		
+		$.mobile.loading( 'show', {
+			text: 'Saving SR Checklist...',
+			textVisible: true,
+			theme: 'c',
+			html: ""
+				});
+		
+		var RowCount=(($('#IPMCheckInGrid-IPMCheckIn tr').length-1)/2);		
+		var ProjectId=$.urlParam("id");	
+		AllCheckListSaved="0";
+		
+		/*
+		var EmailAddressIPMCheckIn=$('#txtEmailAddressIPMCheckIn').val();
+		localstorage.set("EmailAddressIPMCheckIn", EmailAddressIPMCheckIn);
+		*/
+		
+		for (i=0;i<RowCount;i++)
+		{
+			var CheckedValue='';
+			if ($('#' + 'trlongpress-'+ i +'_CheckedNA').prop('checked'))
+				CheckedValue='N/A';
+			else if ($('#' + 'trlongpress-'+ i +'_CheckedValue').prop('checked'))
+				CheckedValue='YES';	
+			else
+				CheckedValue='NO';
+			var Comments=($('#' + 'trlongpress-'+ i +'_CommentBox').val());
+			var IPMCheckInItemID=($('#' + 'trlongpress-'+ i +'_IPMCheckInItemID').html());
+			var ProjectIPMCheckInID=($('#' + 'trlongpress-'+ i +'_ProjectIPMCheckInID').html());
+			/*
+			alert($('#' + 'trlongpress-'+ i +'_CheckedValue').prop('checked'));
+			alert($('#' + 'trlongpress-'+ i +'_CheckedNA').prop('checked'));
+			alert($('#' + 'trlongpress-'+ i +'_CommentBox').val());
+			alert($('#' + 'trlongpress-'+ i +'_ProjectIPMCheckInID').html());
+			alert($('#' + 'trlongpress-'+ i +'_IPMCheckInItemID').html());
+			*/
+			var _url =  serviceRootUrl + "svc.aspx?op=SaveIPMCheckIn&SPUrl=" + spwebRootUrl + "sites/busops&recordId=" + ProjectId + "&CheckedValue=" + CheckedValue + "&Comments=" + Comments  + "&ProjectIPMCheckInID=" + ProjectIPMCheckInID+ "&IPMCheckInItemID=" + IPMCheckInItemID  + "&username=" + userInfoData.Email + "&userid=" + userInfoData.UserID+ "&authInfo=" + userInfoData.AuthenticationHeader;
+	
+
+
+			if (RowCount==i+1)
+				Jsonp_Call(_url, false, "callbackSaveIPMCheckIn");	
+			else
+				Jsonp_Call(_url, false, "");	
+			
+		}	
+			
+
+
+	
+
+}
+
+
+function callbackSaveIPMCheckIn(data)
+{
+
+				$('#error-div2').text("");
+				$('#error-div').text("");
+				
+
+				$.mobile.loading( 'hide' );
+
+				GoToSectionWithID('ProjectOptions');
+
+
+	
+	
+}
+
+	
+	
+
+
+
+
+
+
+
+
+
+
 
 
 /******************* Load AppsSchedule ***********************/
@@ -3476,7 +3955,7 @@ function SaveIPMActivityProcess(isFinal)
 			
 			//_url=encodeURIComponent(_url);
 			
-			console.log(_url);
+			//console.log(_url);
 			
 			Jsonp_Call(_url, true, "callbackSaveIPMActivity");
 		}
@@ -4015,7 +4494,7 @@ function SaveQuenchLineProcess(isFinal)
 			var _url =  serviceRootUrl + "svc.aspx?op=SubmitQuenchLine&SPUrl=" + spwebRootUrl + "sites/busops&recordId=" + $scope.recordId 
 			+ "&username=" + userInfoData.Email + "&userid=" + userInfoData.UserID + "&authInfo=" + userInfoData.AuthenticationHeader + "&statusId=" + $scope.StatusId;
 			
-			console.log(_url);
+			//console.log(_url);
 			
 			Jsonp_Call(_url, true, "callbackSaveQuenchLine");
 		}
@@ -4919,6 +5398,7 @@ $( document ).on( "pagebeforeshow", "#pgRedirect", function(event) {
 });
 
 var Jsonp_Call_Count = 0;
+
 function Jsonp_Call(_url, _async, callback)
 {
 	try {
@@ -4961,6 +5441,7 @@ function Jsonp_Call_Process(_url, _async, callback)
 				dataType: "jsonp",                
 				jsonpCallback: callback,
 				error: function(jqXHR, textStatus, errorThrown) {
+					
 
 					if (textStatus.toLowerCase() == "error")
 					{
@@ -5365,7 +5846,7 @@ function SelectPhoto() {
    var _url =  serviceRootUrl + "svc.aspx?op=UploadFile";
 
    ft.upload(imageURI, encodeURI(_url), snapwin, snapfail, options); 
-		console.log(_url);
+		//console.log(_url);
 
    
  }  
@@ -5408,7 +5889,7 @@ function SelectPhoto() {
 //	$('#tblIPMActivitysButtons').hide();	
    
    ft.upload(imageURI, encodeURI(_url), snapwin, snapfail, options); 
-		console.log(_url);
+		//console.log(_url);
 		
 //			Jsonp_Call(_url, true, "callbackSaveStatus");
    
@@ -5451,7 +5932,7 @@ function SelectPhoto() {
 
 
    ft.upload(imageURI, encodeURI(_url), snapwin, snapfail, options); 
-		console.log(_url);
+		//console.log(_url);
 		
  }  
  
@@ -6414,7 +6895,7 @@ function SaveEMRFProcess(isFinal)
 			"&ShipToContact=" + $scope.ShipToContact + "&ShipToOther=" + $scope.ShipToOther + "&ShipToSecondary=" + $scope.ShipToSecondary + "&ShipToSite=" + encodeURIComponent($scope.ShipToSite) + "&ShipToState=" + $scope.ShipToState + "&ShipToZip=" + $scope.ShipToZip + "&SpecialInstructions=" + $scope.SpecialInstructions + "&Status=" + $scope.Status + "&SubmittedToPlannerName=" + $scope.SubmittedToPlannerName+ "&DTBy=" + $scope.DTBy + "&TimeBy=" + $scope.TimeBy +"&DeliverDateNote=" + $scope.DeliverDateNote + "&RequestedDeliveryDatePrefix=" + $scope.RequestedDeliveryDatePrefix + "&RequestedDeliveryTimePrefix=" + $scope.RequestedDeliveryTimePrefix + "&ProjectId=" + $scope.ProjectId +					
 			"&username=" + userInfoData.Email + "&userid=" + userInfoData.UserID+ "&EMRID=" + AddEMRID + "&authInfo=" + userInfoData.AuthenticationHeader + "&statusId=" + $scope.StatusId;
 	
-			console.log(_url);
+			//console.log(_url);
 			
 			Jsonp_Call(_url, true, "callbackAddEMRF");
 		}
@@ -6661,7 +7142,7 @@ function SubmitEMRFProcess(isFinal)
 			"&ShipToContact=" + $scope.ShipToContact + "&ShipToOther=" + $scope.ShipToOther + "&ShipToSecondary=" + $scope.ShipToSecondary + "&ShipToSite=" + encodeURIComponent($scope.ShipToSite) + "&ShipToState=" + $scope.ShipToState + "&ShipToZip=" + $scope.ShipToZip + "&SpecialInstructions=" + $scope.SpecialInstructions + "&Status=" + $scope.Status + "&SubmittedToPlannerName=" + $scope.SubmittedToPlannerName+ "&DTBy=" + $scope.DTBy + "&TimeBy=" + $scope.TimeBy +"&DeliverDateNote=" + $scope.DeliverDateNote + "&RequestedDeliveryDatePrefix=" + $scope.RequestedDeliveryDatePrefix + "&RequestedDeliveryTimePrefix=" + $scope.RequestedDeliveryTimePrefix + "&ProjectId=" + $scope.ProjectId +					
 			"&username=" + userInfoData.Email + "&userid=" + userInfoData.UserID+ "&EMRID=" + AddEMRID + "&authInfo=" + userInfoData.AuthenticationHeader + "&statusId=" + $scope.StatusId;
 	
-			console.log(_url);
+			//console.log(_url);
 			
 			Jsonp_Call(_url, true, "callbackSubmitEMRF");
 		}

@@ -18,6 +18,7 @@ function isOdd(num) { return num % 2;}
 
 function GoToSectionWithID(section)
 {
+
 	var id=($.urlParam("id"));
 	//if (id == "")
 	//	id='0';
@@ -294,3 +295,11 @@ function ShowHelpSection(id)
         scrollTop: $(id).offset().top -80
     }, 1000);
 }
+
+
+
+
+
+
+
+
