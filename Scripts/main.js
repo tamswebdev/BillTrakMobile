@@ -2191,7 +2191,7 @@ function callbackEmailSRCheckList(data)
 
 
 
-
+ 
 
 
 
@@ -3081,6 +3081,9 @@ $( document ).on( "pagebeforeshow", "#pgContacts", function(event) {
 	
 	$('#tblContacts').hide();
 	$('#tblContactsButtons').hide();
+	$('#divContacts').hide();
+	$('#btnAddContacts').show();
+	$('#btnSaveContacts').hide();
 
 	$('#error-div-Contacts').text("").append(getLoadingMini());
 	//$("#ddlSortBy-Contacts").val('ShipToSite').selectmenu('refresh', true);
@@ -3235,7 +3238,7 @@ function callbackLoadContacts(data)
 			for(var i=0; i < data.d.results.length; i++)
 			{
 				var catalog = data.d.results[i];
-				var TableRow = $('<div style="width:100%;margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.Name +'</span><br><span style="font-size:x-small;">Phone: <a href="tel:' + catalog.Phone + '">'+ catalog.Phone +'</a></span></div>');
+				var TableRow = $('<div style="width:100%;margin: 5px 0px 5px 0px;padding: 2px 2px 2px 2px;background-color:#f2f2f2;border:1px solid #dddddd;border-radius: 5px;text-align:left;" class="ui-block-a my-breakpoint ui-responsive"><span style="font-size:small;font-weight:bold;">' + catalog.Name +'</span><br><span style="font-size:x-small;">'+ (catalog.JobTitle == null || catalog.JobTitle == ''  ? "(Job Title not available)" : catalog.JobTitle) +'</span><br><span style="font-size:x-small;">Phone: <a href="tel:' + catalog.Phone + '">'+ catalog.Phone +'</a></span><br><span style="font-size:x-small;">Email: <a href="mailto:' + catalog.Email + '">'+ catalog.Email +'</a></span></div>');
 				TableRow.appendTo($("#ContactsGrid"));
 				
 
@@ -3329,6 +3332,157 @@ function callbackLoadContactsSidePanel(data)
 		}
 	catch(err) {}
 }
+
+function addContacts() {
+
+		$('#divContacts').show();
+		$('#btnAddContacts').hide();
+		$('#btnSaveContacts').show();
+		
+
+}
+
+
+
+function ValidateContacts() {
+
+		var RetMessage="";
+		if ($("#txtContactsName").val() == ""){	
+			RetMessage+="Name Missing,";
+		}
+			
+		if ($("#txtContactsEmail").val() == ""){	
+			RetMessage+="Email Missing,";
+		}
+		else
+		{
+			if (!isEmail($("#txtContactsEmail").val())) {	
+				RetMessage+="Invalid Email Format,";
+			}			
+		}
+
+		if (RetMessage!="")
+			RetMessage=RetMessage.slice(0,-1);
+
+		return RetMessage;
+
+}
+
+
+
+
+
+
+function SaveContacts() {
+
+		
+	var _ValidateContacts=ValidateContacts();
+	if (_ValidateContacts == ""){		
+
+		$('#divContacts').hide();
+		$('#btnSaveContacts').hide();
+		$('#btnAddContacts').show();			
+
+		$scope = {
+			recordId : $.urlParam("id"),
+			txtContactsName : $("#txtContactsName").val(),
+			txtContactsEmail : $("#txtContactsEmail").val(),
+			txtContactsPhone : $("#txtContactsPhone").val(),
+			txtContactsJobTitle : $("#txtContactsJobTitle").val()
+		};
+
+
+		SaveContactsProcess('a');
+	}
+	else
+	{
+				
+		alert("Please fix following: "+ _ValidateContacts);
+	}
+	
+}
+
+	
+function SaveContactsProcess(a)
+{
+	if ($scope) {
+	
+		//show saving animation
+		$('#error-div-Contacts').text("").append(getLoadingMini());
+		showTimedElem('error-div-Contacts');
+
+		$('#ContactsTeamGrid').hide();
+		$('#ContactsGrid').hide();
+		$('#tblContactsButtons').hide();
+		
+		$.mobile.loading( 'show', {
+			text: 'Saving Contact...',
+			textVisible: true,
+			theme: 'c',
+			html: ""
+				});
+		
+
+
+		if ($scope.recordId != "" && parseInt($scope.recordId) > 0)
+		{
+			//showLoading(true);
+			var _url =  serviceRootUrl + "svc.aspx?op=SaveContacts&SPUrl=" + spwebRootUrl + "sites/busops&recordId=" + $scope.recordId + "&name=" + $scope.txtContactsName + "&email=" + $scope.txtContactsEmail + "&phone=" + $scope.txtContactsPhone + "&jobtitle=" + $scope.txtContactsJobTitle + "&username=" + userInfoData.Email + "&userid=" + userInfoData.UserID + "&authInfo=" + userInfoData.AuthenticationHeader + "&statusId=" + $scope.StatusId;
+			
+		
+			
+			Jsonp_Call(_url, true, "callbackSaveContacts");
+		}
+
+
+		
+	}
+}
+
+function callbackSaveContacts(data)
+{
+
+
+			$('#error-div2-Contacts').text("");
+			$('#error-div-Contacts').text("");
+
+			//$('#ContactsTeamGrid').show();
+			//$('#ContactsGrid').show();
+			//$('#tblContactsButtons').show();
+			
+			$.mobile.loading( 'hide' );
+			
+			location.reload();
+			//$('#pgContacts').reload();
+			//GoToSectionWithID('Contacts');
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

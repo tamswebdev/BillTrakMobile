@@ -439,15 +439,15 @@
 						</tr>-->
 
 						<tr>
+
+						
+							 <td id="btnGoToIssueICR" style="border-top: 0px;padding:1px !important;" >
+								<a href="javascript:void(0);" data-mini="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  data-icon="action"  onclick="GoToSectionWithID('IssueICR')">Issue ICR</a>
+							</td>	
+
 							 <td id="btnGoToIPMCheckIn" style="border-top: 0px;padding:1px !important;" >
 								<a href="javascript:void(0);" data-mini="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  data-icon="location"  onclick="GoToSectionWithID('IPMCheckIn')">IPM Check-In</a>
 							</td>	
-
-						
-							 <td id="btnGoToQuenchLine" style="border-top: 0px;padding:1px !important;" >
-								<a href="javascript:void(0);" data-mini="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  data-icon="forbidden"  onclick="GoToSectionWithID('QuenchLine')">Quench Line</a>
-							</td>	
-
 							
 							<!-- <td id="btnEmptySpace" style="border-top: 0px;padding:1px !important;">
 									&nbsp;
@@ -456,6 +456,19 @@
 							
 						</tr>
 
+
+						
+							 <td id="btnGoToQuenchLine" style="border-top: 0px;padding:1px !important;" >
+								<a href="javascript:void(0);" data-mini="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" data-role="button"  data-icon="forbidden"  onclick="GoToSectionWithID('QuenchLine')">Quench Line</a>
+							</td>	
+
+							
+							<td id="btnEmptySpace" style="border-top: 0px;padding:1px !important;">
+									&nbsp;
+
+							</td>
+							
+						</tr>
 						
 						<tr >
 							 <td id="btnGoBack" style="border-top: 0px;padding:1px !important; " align=center colspan="2"> 
@@ -1872,22 +1885,66 @@
 				<div id="divAddContacts">
 					<div class="div-catalogs-list error-message" id="error-div-Contacts"></div>
 					<div class="div-catalogs-list success-message" id="success-div-Contacts"></div>
+																			
 
 
-						
+															<div class="ui-grid-b ui-responsive" id="ContactsGrid" name="ContactsGrid" ></div>
 
-																			<div class="add-new-status"  id="tblContacts">
+															<div class="ui-grid-b ui-responsive" id="ContactsTeamGrid" name="ContactsTeamGrid" ></div>					
 
-																			</div>
+															<div style="display:none;" id="divContacts" name="divContacts">
+                                                            <table style="width:100%;font-size:10px;" class="table table-condensed table-bordered" id="tblContacts" >
+                                                                <tbody>
+                                                                    <tr >
 
+                                                                        <td class="col-sm-3 text-right active">Name*</td>
+																		
+																		<td colspan="2" class="explain-field">
+																			<input  name="txtContactsName" id="txtContactsName"  value="" maxlength="50" />
+																		</td>					
+                                                                    </tr>
+														
+                                                                    <tr >
 
-																					<div class="ui-grid-b ui-responsive" id="ContactsGrid" name="ContactsGrid" ></div>
+                                                                        <td class="col-sm-3 text-right active">Email*</td>
+																		
+																		<td colspan="2" class="explain-field">
+																			<input type="email" name="txtContactsEmail" id="txtContactsEmail"  value="" maxlength="50"  />
+																		</td>					
+                                                                    </tr>
+														
+                                                             
+                                                                                                                                    <tr >
 
-																					<div class="ui-grid-b ui-responsive" id="ContactsTeamGrid" name="ContactsTeamGrid" ></div>
+                                                                        <td class="col-sm-3 text-right active">Phone</td>
+																		
+																		<td colspan="2" class="explain-field">
+																			<input type="tel" name="txtContactsPhone" id="txtContactsPhone"  value="" maxlength="14"  />
+																		</td>					
+                                                                    </tr>
+														
+                                                                    <tr >
 
-	
+                                                                        <td class="col-sm-3 text-right active">Job Title</td>
+																		
+																		<td colspan="2" class="explain-field">
+																			<input  name="txtContactsJobTitle" id="txtContactsJobTitle"  value="" maxlength="50"  />
+																		</td>					
+                                                                    </tr>
+														
+   
+
+                                                                </tbody>
+                                                            </table>	
+															</div>
+
+																			
+
+										
+
 					<div data-role="controlgroup" id="tblContactsButtons" data-type="horizontal" >
-						<a href="javascript:void(0);"  data-role="button" data-icon="check" data-iconpos="left" style="padding-right:.5em !important;" class="ui-disabled" >Save</a>
+						<a href="javascript:void(0);"  data-role="button" data-icon="plus" data-iconpos="left" onclick="addContacts()" style="padding-right:.5em !important;" id="btnAddContacts" name="btnAddContacts">Add</a>
+						<a href="javascript:void(0);"  data-role="button" data-icon="check" data-iconpos="left" onclick="SaveContacts()" style="padding-right:.5em !important;" id="btnSaveContacts" name="btnSaveContacts">Save</a>
 						<a href="javascript:void(0);"  data-role="button" data-icon="delete" data-iconpos="left" onclick="cancelStatusContacts()" style="padding-right:.5em !important;">Cancel</a>
 						<a href="javascript:void(0);" data-role="button" data-icon="back" data-iconpos="left" onclick="backStatusContacts()" style="padding-right:.5em !important;">Back</a>
 					</div>
